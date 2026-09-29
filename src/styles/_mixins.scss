@@ -1,0 +1,8 @@
+@mixin typography($font-size, $line-height, $font-weight: null) {
+  font-size: $font-size;
+  line-height: $line-height;
+
+  @if $font-weight != null {
+    font-weight: $font-weight;
+  }
+}

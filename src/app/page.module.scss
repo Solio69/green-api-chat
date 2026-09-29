@@ -1,0 +1,33 @@
+@use '../styles/tokens' as tokens;
+@use '../styles/mixins' as mixins;
+
+.foundation {
+  width: min(100%, tokens.$content-max-width);
+  margin-inline: auto;
+  padding: tokens.$padding-panel;
+  border: tokens.$border-width solid tokens.$color-border;
+  border-radius: tokens.$radius-panel;
+  background: tokens.$color-surface;
+
+  &__title {
+    @include mixins.typography(
+      $font-size: tokens.$font-size-heading,
+      $line-height: tokens.$line-height-heading,
+      $font-weight: tokens.$font-weight-bold
+    );
+
+    margin: 0;
+    color: tokens.$color-text-primary;
+    overflow-wrap: anywhere;
+  }
+
+  &__description {
+    @include mixins.typography(
+      $font-size: tokens.$font-size-body,
+      $line-height: tokens.$line-height-body
+    );
+
+    margin: tokens.$space-sm 0 0;
+    color: tokens.$color-text-secondary;
+  }
+}

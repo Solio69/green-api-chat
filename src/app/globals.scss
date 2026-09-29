@@ -1,0 +1,19 @@
+@use '../styles/tokens' as tokens;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  display: grid;
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0;
+  padding: tokens.$padding-page;
+  place-items: center;
+  background: tokens.$color-canvas;
+  color: tokens.$color-text-primary;
+  font-family: tokens.$font-family-base;
+}

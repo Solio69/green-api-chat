@@ -1,0 +1,11 @@
+/src/** text eol=lf
+/package.json text eol=lf
+/package-lock.json text eol=lf
+/tsconfig.json text eol=lf
+/next.config.ts text eol=lf
+/eslint.config.mjs text eol=lf
+/prettier.config.mjs text eol=lf
+/README.md text eol=lf
+/.gitignore text eol=lf
+/.prettierignore text eol=lf
+/.gitattributes text eol=lf
