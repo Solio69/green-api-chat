@@ -91,6 +91,12 @@ page.module.scss: блок foundation, элементы через &__title и &
 
 GET в src/app/api/health/route.ts: Node runtime, await connection(),
 Response.json с единственным полем status: ok и Cache-Control: no-store.
+HTTP_STATUS.OK, HTTP_HEADERS.CACHE_CONTROL и CACHE_CONTROL.NO_STORE
+переиспользуются из src/lib/http/constants.ts. API_RESPONSE_STATUS.OK хранится
+в общем src/lib/api/constants.ts отдельно от HTTP-кодов. Все объекты — as const.
+Перед GET константы деструктурируются на уровне модуля: HTTP_OK, RESPONSE_OK,
+CACHE_CONTROL_HEADER и NO_STORE. Ответ использует эти имена.
+Набор ограничен используемыми значениями, Content-Type формирует Response.json.
 Handler не использует секреты, токены, сессию и сетевые запросы.
 Health не вызывается страницей и не превращается в постоянный опрос.
 Источник назначения функций — research, точный ответ — контракт.
@@ -108,8 +114,10 @@ package-lock.json создаётся только установкой поль�
 .gitattributes закрепляет LF для новых файлов приложения: локальный core.autocrlf=true
 не должен вызывать повторные ошибки форматтера после checkout. next.config.ts
 явно включается в typecheck вместе с исходниками.
-Правила и тесты процесса сохраняются побайтно, кроме согласованного дополнения
-AGENTS.md о константах и миксинах во всех стилях проекта.
+Реализация приложения сохраняет действующие правила и тесты процесса.
+AGENTS.md закрепляет согласованные правила стилей, общих API-констант,
+их деструктуризации и обязательный TDD;
+изменения процесса требуют отдельного согласования пользователя.
 
 ## Project Structure
 
@@ -135,6 +143,8 @@ AGENTS.md о константах и миксинах во всех стилях
 | src/styles/_tokens.scss | Цвета и общие значения оформления |
 | src/styles/_mixins.scss | Повторяющиеся группы свойств; typography используется дважды |
 | src/app/api/health/route.ts | Серверный health |
+| src/lib/http/constants.ts | Общие HTTP-коды, имена заголовков и значения Cache-Control |
+| src/lib/api/constants.ts | Общие статусы JSON-ответов API |
 
 Служебные артефакты npm/Next/TypeScript: node_modules/, .next/,
 next-env.d.ts, *.tsbuildinfo. Они не включаются в Git.
@@ -149,8 +159,10 @@ checklists/acceptance.md и analysis.md в specs/002-nextjs-foundation/.
 
 После реализации: добавить specs/002-nextjs-foundation/verification.md,
 актуализировать tasks.md, checklists/acceptance.md и статусы spec/plan/обзора.
-GIT_POLICY.md, .agents/, .specify/, docs/spec-kit-*, docs/licenses/,
-tests/spec-kit/ и specs/001-project-workflow/ не изменяются.
+GIT_POLICY.md, docs/licenses/, tests/spec-kit/ и specs/001-project-workflow/
+не изменяются. Правило TDD в AGENTS.md, .agents/, .specify/ и
+docs/spec-kit-workflow.md согласовано пользователем отдельно;
+рефакторинг HTTP-констант не меняет комплект процесса.
 
 Если перечисленный новый файл появился у пользователя до реализации,
 сначала прочитать его и сопоставить изменения; не перезаписывать шаблоном.
@@ -171,6 +183,13 @@ tests/spec-kit/ и specs/001-project-workflow/ не изменяются.
 прогресс объясняется пользователю по результатам каждого этапа.
 
 ## Verification
+
+Для извлечения констант HTTP и JSON-ответов сначала подтвердить действующий контракт
+реальными HTTP-запросами к dev, затем выполнить рефакторинг, повторить контракт,
+typecheck, lint, format:check и production build/HTTP. Сохранить результаты
+в verification.md. Поведение API не меняется, искусственный Red не нужен.
+Конфигурация и стили проверяются способами ниже; новые изменения поведения
+выполняются по обязательному TDD из действующих правил проекта.
 
 - Установка: наличие lock-файла, npm ls --depth=0 без missing/invalid;
   установка по lock-файлу пользователем для подтверждения воспроизводимости.
