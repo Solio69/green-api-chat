@@ -1,13 +1,14 @@
-import styles from './page.module.scss';
+import { LoginForm } from '@/components/LoginForm';
+import { LOGIN_COPY } from '@/components/LoginForm/constants';
+import styles from './HomePage.module.scss';
+
+const { HEADING } = LOGIN_COPY;
 
 export default function HomePage() {
   return (
-    <main className={styles.foundation}>
-      <h1 className={styles.foundation__title}>GREEN-API Chat</h1>
-      <p className={styles.foundation__description}>
-        Основа приложения готова. Подключение к Telegram и переписка появятся на
-        следующих этапах.
-      </p>
+    <main className={styles.login}>
+      <h1 className={styles.login__title}>{HEADING}</h1>
+      <LoginForm />
     </main>
   );
 }

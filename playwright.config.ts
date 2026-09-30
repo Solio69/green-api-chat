@@ -1,5 +1,4 @@
 import { defineConfig, devices } from '@playwright/test';
-
 import {
   BASE_URL,
   ROUTES,

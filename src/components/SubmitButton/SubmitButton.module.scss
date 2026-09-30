@@ -1,0 +1,26 @@
+@use '../../styles/tokens' as tokens;
+@use '../../styles/mixins' as mixins;
+
+.submitButton {
+  @include mixins.focus-ring;
+
+  width: 100%;
+  min-height: tokens.$control-min-height;
+  padding: tokens.$space-xs tokens.$space-sm;
+  border: tokens.$border-width solid tokens.$color-interactive;
+  border-radius: tokens.$radius-control;
+  background: tokens.$color-interactive;
+  color: tokens.$color-on-interactive;
+  font: inherit;
+  font-weight: tokens.$font-weight-medium;
+  cursor: pointer;
+
+  &:enabled:hover {
+    border-color: tokens.$color-interactive-hover;
+    background: tokens.$color-interactive-hover;
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+}

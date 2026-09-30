@@ -1,8 +1,29 @@
 $color-canvas: #f4f7f4;
 $color-surface: #fff;
-$color-border: #dce4dd;
-$color-text-primary: #183a24;
-$color-text-secondary: #4b5e52;
+$color-transparent: transparent;
+$color-border: #b7eb8f;
+$color-card-stripe: #abffac;
+$color-panel-shadow: rgba(0, 0, 0, 0.1);
+$color-text-primary: rgba(0, 0, 0, 0.88);
+$color-text-secondary: rgba(0, 0, 0, 0.66);
+$color-brand: #3b9702;
+$color-interactive: #337f02;
+$color-interactive-hover: #276400;
+$color-on-interactive: $color-surface;
+$color-error: #b42318;
+$color-control-border: #7e9184;
+$color-focus: $color-brand;
+$color-control-shadow: rgba(0, 0, 0, 0.08);
+$color-control-focus-shadow: rgba(59, 151, 2, 0.18);
+$color-control-error-shadow: rgba(180, 35, 24, 0.16);
+$shadow-panel: 0 0.75rem 2rem $color-panel-shadow;
+$shadow-control: 0 0.125rem 0.5rem $color-control-shadow;
+$shadow-control-focus:
+  0 0 0 0.25rem $color-control-focus-shadow,
+  $shadow-control;
+$shadow-control-error:
+  0 0 0 0.25rem $color-control-error-shadow,
+  $shadow-control;
 
 $font-family-base:
   system-ui,
@@ -11,18 +32,29 @@ $font-family-base:
   'Segoe UI',
   sans-serif;
 $font-size-body: 1rem;
-$font-size-heading: clamp(1.75rem, 5vw, 2.5rem);
+$font-size-caption: 0.875rem;
+$font-weight-medium: 600;
+$line-height-control: 1.5;
+$font-size-heading: clamp(1.5rem, 5vw, 2rem);
 $font-weight-bold: 700;
 $line-height-heading: 1.2;
-$line-height-body: 1.7;
 
+$space-xs: 0.5rem;
 $space-sm: 1rem;
 $space-md: 1.5rem;
 $space-lg: 2rem;
-$space-xl: 3rem;
 
-$content-max-width: 40rem;
+$content-max-width: 32rem;
+$control-min-height: 3rem;
+$control-icon-button-size: 2.75rem;
+$control-icon-size: 1.25rem;
+$error-min-height: $font-size-caption * $line-height-control;
+$radius-control: 0.625rem;
+$focus-width: 3px;
+$control-focus-width: 2px;
+$focus-offset: 3px;
 $border-width: 1px;
+$card-stripe-width: 0.375rem;
 $radius-panel: 1.5rem;
 $padding-page: clamp($space-sm, 4vw, $space-lg);
-$padding-panel: clamp($space-md, 5vw, $space-xl);
+$padding-panel: clamp($space-md, 5vw, $space-lg);

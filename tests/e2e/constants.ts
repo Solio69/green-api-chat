@@ -22,27 +22,53 @@ export const ROUTES = {
   HEALTH: '/api/health',
 } as const;
 
-export const PAGE = {
-  HEADING: 'GREEN-API Chat',
+// Expected public behavior is independent of the constants used by the app.
+export const LOGIN_CONTRACT = {
+  HEADING: 'Подключение к GREEN-API',
+  ID_LABEL: 'idInstance',
+  TOKEN_LABEL: 'apiTokenInstance',
+  REQUIRED_HINT: 'Оба поля обязательны',
+  SUBMIT: 'Войти',
+  SHOW_TOKEN: 'Показать токен',
+  HIDE_TOKEN: 'Скрыть токен',
+  ID_ERROR: 'Введите idInstance',
+  TOKEN_ERROR: 'Введите apiTokenInstance',
+  HELP_QUESTION: 'Где взять реквизиты?',
+  CABINET_LABEL: 'Открыть личный кабинет GREEN-API',
+  CABINET_URL: 'https://console.green-api.com/',
+  NEW_TAB: 'Откроется в новой вкладке.',
+  NO_SCRIPT: 'Для работы формы включите JavaScript в браузере',
 } as const;
 
-export const HTTP_STATUS = {
-  OK: 200,
+export const HTML_CONTRACT = {
+  INPUT_TEXT: 'text',
+  INPUT_PASSWORD: 'password',
+  ARIA_LIVE_POLITE: 'polite',
+  LINK_TARGET_NEW_TAB: '_blank',
+  LINK_REL_EXTERNAL: ['noopener', 'noreferrer'],
+} as const;
+
+export const HEALTH_CONTRACT = {
+  HTTP_OK: 200,
   METHOD_NOT_ALLOWED: 405,
+  CONTENT_TYPE_HEADER: 'content-type',
+  CACHE_CONTROL_HEADER: 'cache-control',
+  CACHE_CONTROL_VALUE: 'no-store',
+  RESPONSE_STATUS: 'ok',
 } as const;
 
-export const HTTP_HEADERS = {
-  CONTENT_TYPE: 'content-type',
-  CACHE_CONTROL: 'cache-control',
+export const MIN_TOUCH_TARGET_SIZE = 44;
+export const WHITESPACE_ONLY = '   ';
+
+export const CREDENTIALS = {
+  ID: '0000123456789',
+  TOKEN: ' fictional-token-ONLY-for-e2e-42&<> ',
 } as const;
 
-export const HEALTH_RESPONSE = {
-  status: 'ok',
-} as const;
-
-export const CACHE_CONTROL = {
-  NO_STORE: 'no-store',
-} as const;
+export const VIEWPORTS = [
+  { width: 320, height: 568 },
+  { width: 1280, height: 720 },
+] as const;
 
 export const JSON_CONTENT_TYPE =
   /^application\/json(?:\s*;\s*charset\s*=\s*(?:utf-8|"utf-8"))?\s*$/i;
