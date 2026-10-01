@@ -25,9 +25,7 @@ export const LOGIN_COPY = {
   HIDE_TOKEN: 'Скрыть токен',
   SUBMIT: 'Войти',
   SUBMITTING: 'Проверка...',
-  HELP_QUESTION: 'Где взять реквизиты?',
   CABINET_LABEL: 'Открыть личный кабинет GREEN-API',
-  NEW_TAB: 'Откроется в новой вкладке.',
   NO_SCRIPT: 'Для работы формы включите JavaScript в браузере',
   ACCESS_LOST: 'Доступ к инстансу больше не подтверждён. Войдите снова.',
 } as const
@@ -37,6 +35,10 @@ export const LOGIN_FIELD_ID_SUFFIX = {
   TOKEN: '-token',
   INSTANCE_ERROR: '-instance-error',
   TOKEN_ERROR: '-token-error',
+} as const
+
+export const LOGIN_LINKS = {
+  CABINET: 'https://console.green-api.com/',
 } as const
 
 export const LOGIN_ERROR_COPY = {
@@ -56,8 +58,4 @@ export const LOGIN_ERROR_COPY = {
   [INVALID_UPSTREAM_RESPONSE]:
     'Не удалось проверить состояние инстанса. Повторите попытку.',
   [SERVER_UNAVAILABLE]: 'Сервис временно недоступен. Повторите попытку позже.',
-} as const
-
-export const LOGIN_LINKS = {
-  CABINET: 'https://console.green-api.com/',
 } as const

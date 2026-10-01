@@ -307,8 +307,8 @@ test('opens the cabinet in a separate safe tab and preserves input', async ({
   await page.getByLabel(ID_LABEL, { exact: true }).fill(ID)
   await page.getByLabel(TOKEN_LABEL, { exact: true }).fill(TOKEN)
   const link = page.getByRole(ROLE_LINK, { name: CABINET_LABEL, exact: true })
-  await expect(page.getByText(HELP_QUESTION, { exact: true })).toBeVisible()
-  await expect(page.getByText(NEW_TAB, { exact: true })).toBeVisible()
+  await expect(page.getByText(HELP_QUESTION, { exact: true })).toHaveCount(0)
+  await expect(page.getByText(NEW_TAB, { exact: true })).toHaveCount(0)
   await expect(link).toHaveAttribute(ATTR_HREF, CABINET_URL)
   await expect(link).toHaveAttribute(ATTR_TARGET, LINK_TARGET_NEW_TAB)
   expect((await link.getAttribute(ATTR_REL))?.split(/\s+/)).toEqual(

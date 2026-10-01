@@ -1,0 +1,88 @@
+# Implementation Plan: D05 — поиск получателя MAX
+
+**Spec:** [spec.md](spec.md). **Дата:** 2026-10-01.
+**Согласование spec.md:** поручение полного комплекта 2026-10-01 после предъявления; placeholder согласован отдельно.
+**Разрешение на реализацию:** получено; пользователь подтвердил старт после завершения чата правил кода.
+
+## Summary
+
+Перекомпоновать существующую форму в боковой панели 015, выделить представление ModeSwitch/Result, использовать прежние Field/SubmitButton. Серверный контракт/owner остаются. Для подписи найденного получателя добавить маленькую чистую функцию над готовым RecipientQuery с TDD. «Написать» пока no-op с комментарием D06 по решению пользователя.
+
+## Considered Options
+
+| Вариант                                | Преимущества                   | Риски                           | Выбор    |
+| -------------------------------------- | ------------------------------ | ------------------------------- | -------- |
+| Чистое представление + прежний owner   | Сохраняет 009 и число запросов | Нужно проверить пропсы/label    | Выбран   |
+| Полная переделка поиска на Query/store | Единый инструмент              | Меняет несогласованный контракт | Отклонён |
+| Локальный wrapper SubmitButton         | Не затрагивает login           | Проверить ширину pending        | Выбран   |
+| Общие button variants                  | Возможная унификация           | Лишняя абстракция               | Отклонён |
+
+## Technical Context
+
+React/TypeScript/SCSS Modules проекта; Playwright интеграционный runner для чистой функции и Chromium E2E для формы. Общая тема текущая; CSS допускает перенос. Новых зависимостей, API и БД нет. Read-only исходная база описана в research; её тесты этой задачей не запускались.
+
+## Constitution Check
+
+| Принцип | Статус | Основание                                                            |
+| ------- | ------ | -------------------------------------------------------------------- |
+| C1      | PASS   | Placeholder — прямое решение пользователя, без выдуманного поведения |
+| C2      | PASS   | 015/014/server/history/D06 не объединены                             |
+| C3      | PASS   | Spec и код согласованы                                               |
+| C4      | PASS   | Git read-only                                                        |
+| C5      | PASS   | Нет установки/миграций                                               |
+| C6      | PASS   | Фиктивные тесты, сохранить общие правки                              |
+| C7      | PASS   | Red для нового label → код → Green/Refactor; UI/регрессия отдельно   |
+| C8      | PASS   | Два элемента представления и один helper, без нового store           |
+
+## Research and Design
+
+[clarify.md](clarify.md), [research.md](research.md), [data-model.md](data-model.md), [search-form-ui.md](contracts/search-form-ui.md), [search-result-ui.md](contracts/search-result-ui.md), [quickstart.md](quickstart.md). HTTP-контракт отсутствует: не меняется 009.
+
+## Project Structure
+
+Новые компоненты:
+
+| Папка                                       | Файлы                                                                                | Назначение                                     |
+| ------------------------------------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------- |
+| `src/components/RecipientSearchModeSwitch/` | `RecipientSearchModeSwitch.tsx`, `RecipientSearchModeSwitch.module.scss`, `index.ts` | Две доступные кнопки режима                    |
+| `src/components/RecipientSearchResult/`     | `RecipientSearchResult.tsx`, `RecipientSearchResult.module.scss`, `index.ts`         | Статус/карточка/отрицательный результат/ошибка |
+
+constants создаются только при фактически используемых локальных значениях; прежние общие тексты не дублируются. Не создавать пустой constants ради схемы.
+
+Новый `src/components/RecipientSearchForm/format-recipient-label.ts` — чистый formatter RecipientQuery. Изменяемые `RecipientSearchForm.tsx`, `RecipientSearchForm.module.scss`, `RecipientSearchForm/constants.ts` (нужные тексты статус/placeholder), `RecipientSearchField.module.scss` и при необходимости `RecipientSearchField.tsx` для отдельного layout error; публичный контракт поля сохраняется. `src/styles/_tokens.scss` — только нужные размеры/цветовые semantic значения после сверки темы. `_mixins.scss` изменять только при реальной повторяемой группе новых стилей после проверки отсутствия готового миксина; не менять тему/login.
+
+Тесты: новые `tests/integration/recipient-label.spec.ts`, `tests/e2e/recipient-search-ui.spec.ts`; общие ожидания берутся из `tests/constants.ts`, отдельный файл констант не нужен; изменение `tests/e2e/recipient-search.spec.ts` и `tests/constants.ts` только UI-ожиданиями подписи/новых текстов, без изменения API-контракта. Существующие `ui-theme.helpers.ts` используются без копии вычисления контраста. При необходимости общего фиктивного delayed/malformed сценария — согласованное расширение `tests/e2e/fixtures/fake-green-api.ts`, не изменение server product.
+
+Документы завершения: `specs/016-recipient-search-ui/verification.md`, статусы комплекта, согласованные строки D05 общего UI-документа после сверки принадлежности. Product-файлы SubmitButton, 014, серверные recipients/auth и login этой задачей не изменяются.
+
+## Tasks and Dependencies
+
+T001 актуальная база/015 → T002 label-test и подтверждённый Red → T003 formatter → T004 выделение mode/result/placeholder → T005 стили/ожидание/a11y → T006 полный Green → T007 Review/Refactor → T008 отчёт. Для T004 нужен Red T002, поскольку добавляется label в found-result. Задачи и coverage в [tasks.md](tasks.md).
+
+## Verification
+
+Red: `npm run test:integration -- tests/integration/recipient-label.spec.ts`. При необходимости минимальный типизированный formatter-stub только для запуска теста отсутствующего поведения; падение импорта не Red. Expected Red — неверная/пустая подпись username/телефона, не сборка. Formatter-тест остаётся в проекте.
+
+Итог после всех правок: `npm run test:integration`, `npm run test:e2e`, `npm run lint`, `npm run lint:styles`, `npm run typecheck`, `npm run format:check`. Полный E2E включает build и существующие вход/выход/профиль/поиск. Проверить fixture delays, one POST, подпись captured query, no-op без запросов, обе темы, 320/360/390/768/1280, 200% текст, фокус/error ring, status вне fieldset, reduced-motion, hydration/no-JS. Искусственный Red оформления не требуется; его тесты подготовлены до изменений представления.
+
+## Post-design Constitution Check
+
+C1–C8 PASS. Placeholder — известное ограничение по выбору пользователя, не непроверенное полноценное открытие. Применяется текущий ESLint; blanket-disable или новые fake-действия не вводятся. Проверить готовность 015 и владение общими файлами до кода.
+
+## Complexity Tracking
+
+Два компонента отражают самостоятельные роли; formatter оправдан нормализацией подписи и собственным покрытием. Новые store/query/button-framework не требуются.
+
+## Фактическая реализация и проверка
+
+2026-10-02. Разрешение из переписки получено; отдельные подтверждения не нужны. Работающий localhost:3000 сохранён. Для production E2E использована временная копия с отдельным .next, существующими зависимостями через junction и фиктивным GREEN-API. Сборка копии — next build --webpack; конфигурация основного проекта не менялась. Прямой tsc --noEmit --incremental false проверил исходный проект без записи Next typegen поверх dev. См. [verification.md](verification.md).
+
+Созданы ModeSwitch/Result и formatter; constants новых представлений не созданы, поскольку используются тексты существующей формы. Дополнительные миксины и расширение test fixture не потребовались. Новые test constants-файлы не созданы: однократные значения не оправдывают отдельные модули. Обработчик «Написать» пустой с комментарием D06.
+
+## Уточнения интерфейса — 2026-10-02
+
+Добавить текст username в константы формы. Обе подсказки разместить в одной области CSS Grid: скрытая подсказка участвует в расчёте естественной высоты, но имеет visibility:hidden и aria-hidden. Видна и доступна для чтения только активная подсказка; aria-describedby указывает на действующее описание. Для подписи применить тот же естественный расчёт: связанный label и скрытый aria-hidden span являются соседями в одной ячейке Grid. Не задавать фиксированную высоту формы и не измерять DOM через JavaScript.
+
+Проверить точный текст username и одинаковую высоту пустой формы до/после переключения в обоих направлениях на 320/390/1280 px и при тексте 200%, включая переносы. Убедиться, что вспомогательные технологии получают только активную подсказку; переключение не отправляет запрос. Повторить существующую регрессию поиска.
+
+Условие начала выполнено: завершение задачи 014 подтверждено итоговым сообщением соседнего чата. QueryProvider/useChats сохранены; консольного потребителя в продукте нет.

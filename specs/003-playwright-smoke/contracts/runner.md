@@ -6,11 +6,11 @@
 
 ## Команды
 
-| npm script | Значение | Назначение |
-| --- | --- | --- |
-| test:e2e | playwright test | Полный регрессионный прогон с собственным сервером |
-| test:report | playwright show-report | Открыть HTML-отчёт; завершает пользователь Ctrl+C |
-| test:install-browser | playwright install chromium | Явная установка браузера только пользователем |
+| npm script           | Значение                    | Назначение                                         |
+| -------------------- | --------------------------- | -------------------------------------------------- |
+| test:e2e             | playwright test             | Полный регрессионный прогон с собственным сервером |
+| test:report          | playwright show-report      | Открыть HTML-отчёт; завершает пользователь Ctrl+C  |
+| test:install-browser | playwright install chromium | Явная установка браузера только пользователем      |
 
 @playwright/test фиксируется в devDependencies как 1.63.0.
 Все команды обращаются к установленному локальному CLI; npx и автоматические
@@ -114,7 +114,7 @@ Playwright транспилирует TS, поэтому этот шаг про�
 
 ### V05 — отсутствие тестов
 
-npm run test:e2e -- --grep __missing_smoke_probe__
+npm run test:e2e -- --grep **missing_smoke_probe**
 Ожидается отсутствие найденных тестов и exit !=0. Пакеты/исходники не меняются;
 порт не должен оставаться занят проверочным сервером.
 

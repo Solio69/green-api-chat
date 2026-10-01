@@ -1,7 +1,7 @@
-import { LoginForm } from '@/components/LoginForm'
 import { LOGIN_COPY } from '@/components/LoginForm/constants'
 import { AUTH_QUERY } from '@/lib/auth/constants'
 import { HTML_VALUES } from '@/lib/ui/constants'
+import { LoginForm } from '@/components/LoginForm'
 import styles from './LoginPage.module.scss'
 
 const { HEADING, ACCESS_LOST: ACCESS_LOST_COPY } = LOGIN_COPY

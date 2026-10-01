@@ -68,14 +68,14 @@ Verification фиксирует команды, причины Red и резул
 
 Пример для текущего проекта (заменить имя feature на обсуждаемую задачу):
 
-~~~powershell
+```powershell
 Set-Location -LiteralPath 'D:\Pet-projects\green-api-chat'
 $env:SPECIFY_FEATURE_DIRECTORY = 'specs/001-project-workflow'
 $taskFeature = [IO.Path]::GetFullPath(
     (Join-Path (Get-Location).Path 'specs/001-project-workflow')
 )
 & '.\.specify\scripts\powershell\check-prerequisites.ps1' -Json -PathsOnly -ExpectedFeatureDirectory $taskFeature
-~~~
+```
 
 Проверить exit code и буквальное совпадение FEATURE_DIR с $taskFeature.
 SPECIFY_FEATURE_DIRECTORY разрешает абсолютный или относительный от корня путь;
@@ -86,6 +86,7 @@ specs/NNN-slug: не менее трёх цифр, строчные латинс
 между произвольными процессами.
 
 Во всех командах далее передавать -ExpectedFeatureDirectory $taskFeature:
+
 - check-prerequisites -PathsOnly — проверить только контекст; spec может отсутствовать.
 - setup-spec — создать отсутствующую spec.md из локального шаблона.
 - check-prerequisites -RequireSpec — этапы clarify, plan и checklist.
@@ -104,16 +105,16 @@ specs/NNN-slug: не менее трёх цифр, строчные латинс
 
 ## Инструкции этапов
 
-| Этап | Локальная инструкция |
-| --- | --- |
-| Принципы | [speckit-constitution](../.agents/skills/speckit-constitution/SKILL.md) |
-| Спецификация | [speckit-specify](../.agents/skills/speckit-specify/SKILL.md) |
-| Уточнение | [speckit-clarify](../.agents/skills/speckit-clarify/SKILL.md) |
-| План | [speckit-plan](../.agents/skills/speckit-plan/SKILL.md) |
-| Задачи | [speckit-tasks](../.agents/skills/speckit-tasks/SKILL.md) |
-| Анализ | [speckit-analyze](../.agents/skills/speckit-analyze/SKILL.md) |
-| Реализация | [speckit-implement](../.agents/skills/speckit-implement/SKILL.md) |
-| Чек-лист | [speckit-checklist](../.agents/skills/speckit-checklist/SKILL.md) |
+| Этап         | Локальная инструкция                                                    |
+| ------------ | ----------------------------------------------------------------------- |
+| Принципы     | [speckit-constitution](../.agents/skills/speckit-constitution/SKILL.md) |
+| Спецификация | [speckit-specify](../.agents/skills/speckit-specify/SKILL.md)           |
+| Уточнение    | [speckit-clarify](../.agents/skills/speckit-clarify/SKILL.md)           |
+| План         | [speckit-plan](../.agents/skills/speckit-plan/SKILL.md)                 |
+| Задачи       | [speckit-tasks](../.agents/skills/speckit-tasks/SKILL.md)               |
+| Анализ       | [speckit-analyze](../.agents/skills/speckit-analyze/SKILL.md)           |
+| Реализация   | [speckit-implement](../.agents/skills/speckit-implement/SKILL.md)       |
+| Чек-лист     | [speckit-checklist](../.agents/skills/speckit-checklist/SKILL.md)       |
 
 Можно попросить агента применить инструкцию по этому пути. Автоматическое
 обнаружение skills и slash-команды зависят от интерфейса; их доступность
@@ -157,9 +158,9 @@ specs/NNN-slug: не менее трёх цифр, строчные латинс
 
 Контрактные проверки комплекта:
 
-~~~powershell
+```powershell
 & '.\tests\spec-kit\workflow.tests.ps1'
-~~~
+```
 
 Они работают на отдельной временной копии. При Failed/Blocked вывод содержит
 причину; полный успех при непроведённой проверке не заявляется.

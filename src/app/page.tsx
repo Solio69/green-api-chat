@@ -1,13 +1,23 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { LogoutButton } from '@/components/LogoutButton'
-import { RecipientSearchForm } from '@/components/RecipientSearchForm'
-import { HOME_RESULT_KIND, IS_PRODUCTION } from '@/lib/auth/constants'
+import { getQueryScope } from '@/lib/auth/get-query-scope'
 import { resolveHome } from '@/lib/auth/resolve-home'
-import { openSession, readCredentials } from '@/lib/auth/session'
-import { getStateInstance } from '@/lib/green-api/get-state'
+import {
+  hasSessionPassword,
+  openSession,
+  readCredentials,
+} from '@/lib/auth/session'
+import { getAccountSettings } from '@/lib/green-api/get-account-settings'
+import { WORKSPACE_COPY } from '@/components/ChatWorkspace/constants'
+import { HOME_RESULT_KIND, IS_PRODUCTION } from '@/lib/auth/constants'
 import { ROUTES } from '@/lib/routes/constants'
 import { HOME_COPY } from './constants'
+import { AccountHeader } from '@/components/AccountHeader'
+import { ChatWorkspace } from '@/components/ChatWorkspace'
+import { LogoutButton } from '@/components/LogoutButton'
+import { QueryProvider } from '@/components/QueryProvider'
+import { RecipientSearchForm } from '@/components/RecipientSearchForm'
+import styles from './HomePage.module.scss'
 
 const { HOME, LOGIN, END_SESSION } = ROUTES
 const {
@@ -16,35 +26,41 @@ const {
   RETRY: RETRY_CHECK,
 } = HOME_RESULT_KIND
 const { RETRY, RETRY_LINK, LOGOUT } = HOME_COPY
-
+const { CHATS } = WORKSPACE_COPY
 const HomePage = async () => {
-  const session = await openSession(
-    await cookies(),
-    process.env.SESSION_PASSWORD,
-    IS_PRODUCTION,
-  )
+  const password = process.env.SESSION_PASSWORD
+  const session = await openSession(await cookies(), password, IS_PRODUCTION)
   const credentials = session && readCredentials(session)
-  const result = await resolveHome(credentials, getStateInstance)
-
+  const result = await resolveHome({ credentials, getAccountSettings })
   if (result.kind === REQUIRE_LOGIN) redirect(LOGIN)
   if (result.kind === END_CURRENT_SESSION) redirect(END_SESSION)
-
-  const content =
-    result.kind === RETRY_CHECK ? (
-      <>
-        <p>{RETRY}</p>
-        <a href={HOME}>{RETRY_LINK}</a>
-      </>
-    ) : (
-      <RecipientSearchForm />
+  if (result.kind === RETRY_CHECK)
+    return (
+      <main className={styles.homePage}>
+        <div className={styles.homePage__content}>
+          <p>{RETRY}</p>
+          <a className={styles.homePage__retryLink} href={HOME}>
+            {RETRY_LINK}
+          </a>
+          <LogoutButton label={LOGOUT} />
+        </div>
+      </main>
     )
-
+  if (!session) redirect(LOGIN)
+  if (!hasSessionPassword(password)) redirect(LOGIN)
+  const connectionScope = getQueryScope({ session, password })
   return (
-    <main>
-      {content}
-      <LogoutButton label={LOGOUT} />
+    <main className={styles.homePage}>
+      <QueryProvider key={connectionScope} connectionScope={connectionScope}>
+        <ChatWorkspace
+          account={
+            <AccountHeader account={result.body.profile} logoutLabel={LOGOUT} />
+          }
+          search={<RecipientSearchForm />}
+          chatList={<h2 className={styles.homePage__listHeading}>{CHATS}</h2>}
+        />
+      </QueryProvider>
     </main>
   )
 }
-
 export default HomePage

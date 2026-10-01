@@ -4,6 +4,7 @@ export const API_RESPONSE_STATUS = {
 } as const
 
 export const API_ERROR_CODE = {
+  CONNECTION_CHANGED: 'connection_changed',
   INVALID_REQUEST: 'invalid_request',
   SESSION_REQUIRED: 'session_required',
   INVALID_TOKEN: 'invalid_token',

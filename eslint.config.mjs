@@ -29,6 +29,11 @@ export default defineConfig([
             "VariableDeclarator[id.name=/^handle/] > ArrowFunctionExpression[async=false][body.type='BlockStatement'][body.body.length=1] > BlockStatement > ExpressionStatement[expression.type='CallExpression']",
           message: 'Use a concise body for a single-call handler.',
         },
+        {
+          selector:
+            'ImportDeclaration[source.value=/\\.(?:scss|css)$/] ~ ImportDeclaration:not([source.value=/\\.(?:scss|css)$/])',
+          message: 'Place stylesheet imports after all other imports.',
+        },
       ],
       'prefer-template': 'error',
       'no-nested-ternary': 'error',
@@ -45,7 +50,30 @@ export default defineConfig([
             ['parent', 'sibling', 'index'],
           ],
           pathGroups: [
-            { pattern: '**/*.scss', group: 'index', position: 'after' },
+            { pattern: './**/*.{css,scss}', group: 'index', position: 'after' },
+            { pattern: '**/*.{css,scss}', group: 'index', position: 'after' },
+            {
+              pattern: '@/**/{constants,*.constants}',
+              group: 'internal',
+              position: 'after',
+            },
+            {
+              pattern: '../**/{constants,*.constants}',
+              group: 'internal',
+              position: 'after',
+            },
+            {
+              pattern: './**/{constants,*.constants}',
+              group: 'internal',
+              position: 'after',
+            },
+            {
+              pattern: '@/components/**',
+              group: 'internal',
+              position: 'after',
+            },
+            { pattern: './**', group: 'internal' },
+            { pattern: '../**', group: 'internal' },
             { pattern: '@/**', group: 'internal' },
           ],
           pathGroupsExcludedImportTypes: ['builtin'],
@@ -55,6 +83,23 @@ export default defineConfig([
         },
       ],
       'import/newline-after-import': ['error', { count: 1, exactCount: true }],
+    },
+  },
+  {
+    files: ['src/**/*.{js,cjs,mjs,ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              regex: '^[.][.]/',
+              message:
+                'Use the @/ alias for imports outside the current directory.',
+            },
+          ],
+        },
+      ],
     },
   },
   {
@@ -72,6 +117,8 @@ export default defineConfig([
   prettier,
   globalIgnores([
     '.next/**',
+    'tests/fixtures/query-app/.next/**',
+    'tests/fixtures/query-app/next-env.d.ts',
     'out/**',
     'build/**',
     'coverage/**',

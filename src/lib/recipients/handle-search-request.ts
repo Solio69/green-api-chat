@@ -1,15 +1,15 @@
-import { API_ERROR_CODE } from '@/lib/api/constants'
+import { resolveSearchResult, searchErrorResponse } from './resolve-search'
+import { parseSearchRequest } from './validate-search'
+import type { RecipientQuery } from './validate-search'
 import type { CheckAccountResult } from '@/lib/green-api/check-account'
 import type { InstanceCredentials } from '@/lib/green-api/get-state'
+import { API_ERROR_CODE } from '@/lib/api/constants'
 import {
   HTTP_CONTENT_TYPE,
   HTTP_HEADERS,
   HTTP_STATUS,
   HTTP_SYNTAX,
 } from '@/lib/http/constants'
-import { resolveSearchResult, searchErrorResponse } from './resolve-search'
-import { parseSearchRequest } from './validate-search'
-import type { RecipientQuery } from './validate-search'
 
 const {
   INVALID_REQUEST,

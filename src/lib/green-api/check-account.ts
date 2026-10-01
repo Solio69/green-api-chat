@@ -1,3 +1,6 @@
+import type { InstanceCredentials } from './get-state'
+import { isRecord } from '@/lib/api/is-record'
+import type { RecipientQuery } from '@/lib/recipients/validate-search'
 import { API_ERROR_CODE } from '@/lib/api/constants'
 import {
   CACHE_CONTROL,
@@ -8,9 +11,7 @@ import {
   HTTP_STATUS,
 } from '@/lib/http/constants'
 import { RECIPIENT_RESULT_KIND } from '@/lib/recipients/constants'
-import type { RecipientQuery } from '@/lib/recipients/validate-search'
 import { GREEN_API_BAD_REQUEST, GREEN_API_CONFIG } from './constants'
-import type { InstanceCredentials } from './get-state'
 
 const {
   INVALID_TOKEN,
@@ -62,24 +63,20 @@ export type CheckAccountResult =
     }
 
 const classifyBody = (value: unknown): CheckAccountResult => {
-  if (!value || typeof value !== 'object' || Array.isArray(value))
-    return { kind: INVALID_UPSTREAM_RESPONSE }
-  const body = value as Record<string, unknown>
+  if (!isRecord(value)) return { kind: INVALID_UPSTREAM_RESPONSE }
+  const body = value
   const data = body[DATA]
-  if (
+  const isRateLimited =
     body[STATUS] === false &&
-    data &&
-    typeof data === 'object' &&
-    !Array.isArray(data) &&
-    (data as Record<string, unknown>)[REASON] === RATE_LIMIT_EXCEEDED
-  )
-    return { kind: RATE_LIMITED }
+    isRecord(data) &&
+    data[REASON] === RATE_LIMIT_EXCEEDED
+  if (isRateLimited) return { kind: RATE_LIMITED }
   if (body[STATUS] === false) return { kind: INVALID_UPSTREAM_RESPONSE }
   if (body[EXIST] === false) return { kind: NOT_FOUND }
   if (body[EXIST] === true) {
     const chatId = body[CHAT_ID]
-    if (typeof chatId === 'string' && chatId.trim().length > 0)
-      return { kind: FOUND, chatId }
+    const isChatId = typeof chatId === 'string' && chatId.trim().length > 0
+    if (isChatId) return { kind: FOUND, chatId }
   }
   return { kind: INVALID_UPSTREAM_RESPONSE }
 }
@@ -101,18 +98,17 @@ export const checkAccount = async (
       redirect: REDIRECT_ERROR,
       signal: AbortSignal.timeout(TIMEOUT_MS),
     })
-    if (
+    const isRateLimited =
       response.status === HTTP_TOO_MANY_REQUESTS ||
       response.status === PROVIDER_RATE_LIMITED
-    )
-      return { kind: RATE_LIMITED }
+    if (isRateLimited) return { kind: RATE_LIMITED }
     if (response.status === HTTP_UNAUTHORIZED) return { kind: INVALID_TOKEN }
     if (response.status >= SERVER_ERROR_START)
       return { kind: SERVICE_UNAVAILABLE }
     if (response.status === HTTP_BAD_REQUEST) {
       const detail = (await response.text()).toLowerCase()
-      if (detail.includes(STARTING) || detail.includes(AMBIGUOUS))
-        return { kind: RETRY_LATER }
+      const isStarting = detail.includes(STARTING) || detail.includes(AMBIGUOUS)
+      if (isStarting) return { kind: RETRY_LATER }
       return { kind: INVALID_UPSTREAM_RESPONSE }
     }
     if (response.status !== HTTP_OK) return { kind: INVALID_UPSTREAM_RESPONSE }

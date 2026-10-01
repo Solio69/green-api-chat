@@ -6,11 +6,11 @@
 
 ## 1. Проверить окружение
 
-~~~powershell
+```powershell
 Set-Location -LiteralPath 'D:\Pet-projects\green-api-chat'
 node --version
 npm --version
-~~~
+```
 
 Ожидаются Node 24.x и npm 11.x. В окружении агента обнаружены 24.14.1 / 11.11.0.
 Если в терминале пользователя версии отличаются, сначала проверить выбранный
@@ -20,17 +20,17 @@ npm --version
 
 Для первой подготовки, пока package-lock.json отсутствует:
 
-~~~powershell
+```powershell
 npm install
-~~~
+```
 
 Команда скачивает зависимости по package.json и создаёт lock-файл.
 Затем для проверки воспроизводимой установки, а также после получения
 готового репозитория с package-lock.json:
 
-~~~powershell
+```powershell
 npm ci
-~~~
+```
 
 npm ci пересоздаёт node_modules и использует зафиксированное дерево.
 Не запускать эту команду при работающем сервере; не использовать --force
@@ -38,12 +38,12 @@ npm ci пересоздаёт node_modules и использует зафикс�
 
 ## 3. Проверить зависимости и качество
 
-~~~powershell
+```powershell
 npm ls --depth=0
 npm run typecheck
 npm run lint
 npm run format:check
-~~~
+```
 
 Продолжать после успешного завершения каждой команды. При missing/invalid
 не запускать Next до исправления установки пользователем.
@@ -53,17 +53,17 @@ npm run format — отдельная команда изменения форм
 
 ## 4. Запустить разработку
 
-~~~powershell
+```powershell
 npm run dev
-~~~
+```
 
 Открыть http://localhost:3000/ в браузере; проверить заголовок, пояснение,
 применённые стили и консоль. Если порт занят, остановить свой предыдущий процесс
 или выбрать свободный порт:
 
-~~~powershell
+```powershell
 npm run dev -- --port 3001
-~~~
+```
 
 Дальнейшие запросы направлять на реально используемый порт.
 Не завершать чужие процессы только для освобождения порта.
@@ -72,13 +72,13 @@ npm run dev -- --port 3001
 
 При порте 3000:
 
-~~~powershell
+```powershell
 $taskHealth = Invoke-WebRequest -UseBasicParsing -Uri 'http://localhost:3000/api/health'
 $taskHealth.StatusCode
 $taskHealth.Headers['Content-Type']
 $taskHealth.Headers['Cache-Control']
 $taskHealth.Content
-~~~
+```
 
 Ожидается 200, application/json, no-store и {"status":"ok"}.
 Повторить запрос. POST по тому же адресу должен дать 405; PowerShell может
@@ -89,10 +89,10 @@ $taskHealth.Content
 
 Остановить свой dev-сервер Ctrl+C. Выполнить:
 
-~~~powershell
+```powershell
 npm run build
 npm run start
-~~~
+```
 
 start выполняется только после успешного build. Повторить проверки / и
 /api/health, включая браузер. По окончании остановить свой сервер Ctrl+C.

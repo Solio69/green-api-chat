@@ -1,0 +1,29 @@
+{
+  "username": {
+    "id": "900000000001",
+    "username": "@account_demo",
+    "phone": "+10000000000"
+  },
+  "phone": { "id": "900000000002", "phone": "+10000000001" },
+  "empty": { "id": "900000000003" },
+  "avatar": {
+    "id": "900000000004",
+    "username": "@photo_demo",
+    "avatar": "https://avatars.example.test/account.png"
+  },
+  "brokenAvatar": {
+    "id": "900000000005",
+    "username": "@broken_photo_demo",
+    "avatar": "https://avatars.example.test/missing.png",
+    "replacementAvatar": "https://avatars.example.test/replacement.png"
+  },
+  "longLabel": {
+    "id": "900000000006",
+    "username": "@long_connected_account_label_for_mobile_layout_check"
+  },
+  "temporary": { "id": "900000000007", "username": "@retry_demo" },
+  "unauthorized": { "id": "900000000008" },
+  "rateLimited": { "id": "900000000009", "username": "@rate_limit_demo" },
+  "themeMobile": { "id": "900000000010", "phone": "+10000000002" },
+  "themeDesktop": { "id": "900000000011", "phone": "+10000000003" }
+}

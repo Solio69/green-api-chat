@@ -1,4 +1,73 @@
+import accountScenarios from './e2e/fixtures/account-scenarios.json'
 import recipientScenarios from './e2e/fixtures/scenarios.json'
+
+export const ACCOUNT_SCENARIOS = accountScenarios
+
+export const ACCOUNT_CONTRACT = {
+  METHOD: 'getAccountSettings',
+  REGION: 'Ваш Telegram-аккаунт',
+  DEFAULT_LABEL: 'Telegram-аккаунт',
+  CONNECTED: 'Telegram подключён',
+  IMAGE_SELECTOR: 'img',
+  REFERRER_POLICY_ATTRIBUTE: 'referrerpolicy',
+  REFERRER_POLICY: 'no-referrer',
+  RETRY_LINK: 'Повторить проверку',
+  MOBILE_VIEWPORT: { width: 360, height: 780 },
+  DESKTOP_VIEWPORT: { width: 1280, height: 720 },
+  PNG_CONTENT_TYPE: 'image/png',
+  // One transparent pixel; a local fixture, never an external download.
+  PNG_BASE64:
+    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/l9sAAAAASUVORK5CYII=',
+  PROFILE: {
+    label: '@account_demo',
+    avatarUrl: 'https://avatars.example.test/account.png',
+  },
+  UNSUPPORTED_STATUS: 418,
+  SERVER_ERROR_STATUS: 500,
+  NETWORK_ERROR: 'fictional provider network failure',
+  TIMEOUT_ERROR: 'TimeoutError',
+  MISSING_IMAGE_STATUS: 404,
+  IMAGE_WIDTH_PROPERTY: 'naturalWidth',
+  IMAGE_ENCODING: 'base64',
+  ACCESS_LOST_URL_PATTERN: /\/login\?reason=access_lost$/,
+} as const
+
+export const THEME_CONTRACT = {
+  LIGHT: {
+    CANVAS: 'rgb(239, 245, 251)',
+    SURFACE: 'rgb(255, 255, 255)',
+    ACTION: 'rgb(82, 102, 246)',
+    TEXT: 'rgb(23, 25, 29)',
+    MUTED: 'rgb(98, 110, 126)',
+    ERROR: 'rgb(180, 35, 24)',
+  },
+  DARK: {
+    CANVAS: 'rgb(17, 20, 25)',
+    SURFACE: 'rgb(32, 33, 38)',
+    ACTION: 'rgb(100, 117, 255)',
+    TEXT: 'rgb(241, 243, 246)',
+    MUTED: 'rgb(146, 152, 165)',
+    ERROR: 'rgb(255, 147, 145)',
+  },
+  MIN_TEXT_CONTRAST: 4.5,
+} as const
+
+export const THEME_BROWSER = {
+  COLOR_SCHEME_LIGHT: 'light',
+  COLOR_SCHEME_DARK: 'dark',
+  ACTION_PROPERTY: '--ui-action-color',
+  RGB_COMPONENTS: /[\d.]+/g,
+  SRGB_MAX_CHANNEL: 255,
+  SRGB_LINEAR_THRESHOLD: 0.04045,
+  SRGB_LINEAR_DIVISOR: 12.92,
+  SRGB_OFFSET: 0.055,
+  SRGB_SCALE: 1.055,
+  SRGB_EXPONENT: 2.4,
+  LUMINANCE_RED_WEIGHT: 0.2126,
+  LUMINANCE_GREEN_WEIGHT: 0.7152,
+  LUMINANCE_BLUE_WEIGHT: 0.0722,
+  CONTRAST_OFFSET: 0.05,
+} as const
 
 export const TEST_SERVER = {
   HOST: '127.0.0.1',
@@ -106,6 +175,7 @@ export const HTML_CONTRACT = {
 } as const
 
 export const TEST_UI = {
+  ROLE_REGION: 'region',
   ROLE_BUTTON: 'button',
   ROLE_HEADING: 'heading',
   ROLE_LINK: 'link',
@@ -118,6 +188,8 @@ export const TEST_UI = {
   H1_SELECTOR: 'h1',
   CONTROL_SELECTOR: 'input, button, a',
   ATTR_TYPE: 'type',
+  ATTR_SRC: 'src',
+  ATTR_ALT: 'alt',
   ATTR_TITLE: 'title',
   ATTR_ID: 'id',
   ATTR_REQUIRED: 'required',
@@ -239,6 +311,7 @@ export const LOGOUT_CONTRACT = {
 } as const
 
 export const TEST_PROVIDER_FIXTURES = {
+  NULL_JSON: 'null',
   DETAIL: 'provider detail',
   IGNORED_EXTRA: 'ignored',
   UNKNOWN_ERROR: 'unknown provider error',

@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import {
   useId,
   useRef,
@@ -7,8 +8,7 @@ import {
   useSyncExternalStore,
   type SubmitEvent,
 } from 'react'
-import { CredentialField } from '@/components/CredentialField'
-import { SubmitButton } from '@/components/SubmitButton'
+import { isRecord } from '@/lib/api/is-record'
 import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
 import {
   CACHE_CONTROL,
@@ -25,6 +25,8 @@ import {
   LOGIN_FIELD_ID_SUFFIX,
   LOGIN_LINKS,
 } from './constants'
+import { CredentialField } from '@/components/CredentialField'
+import { SubmitButton } from '@/components/SubmitButton'
 import styles from './LoginForm.module.scss'
 
 const {
@@ -37,13 +39,12 @@ const {
   HIDE_TOKEN,
   SUBMIT,
   SUBMITTING,
-  HELP_QUESTION,
-  CABINET_LABEL,
-  NEW_TAB,
   NO_SCRIPT,
+  CABINET_LABEL,
 } = LOGIN_COPY
+const { ROLE_ALERT, ROLE_STATUS, LINK_TARGET_NEW_TAB, LINK_REL_EXTERNAL } =
+  HTML_VALUES
 const { CABINET } = LOGIN_LINKS
-const { LINK_TARGET_NEW_TAB, LINK_REL_EXTERNAL, ROLE_ALERT } = HTML_VALUES
 const {
   INVALID_TOKEN,
   INVALID_INSTANCE,
@@ -64,21 +65,20 @@ const subscribe = () => () => undefined
 const getClientSnapshot = () => true
 const getServerSnapshot = () => false
 
-const readErrorCode = (value: unknown): string | null => {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) return null
+type LoginErrorCode = keyof typeof LOGIN_ERROR_COPY
 
-  const { status, code } = value as Record<string, unknown>
+const isLoginErrorCode = (value: unknown): value is LoginErrorCode =>
+  typeof value === 'string' && Object.hasOwn(LOGIN_ERROR_COPY, value)
 
-  if (
-    status !== RESPONSE_ERROR ||
-    typeof code !== 'string' ||
-    !Object.hasOwn(LOGIN_ERROR_COPY, code)
-  )
-    return null
-  return code
+const readErrorCode = (value: unknown): LoginErrorCode | null => {
+  if (!isRecord(value)) return null
+  const { status, code } = value
+  const isKnownError = status === RESPONSE_ERROR && isLoginErrorCode(code)
+  return isKnownError ? code : null
 }
 
 export const LoginForm = () => {
+  const router = useRouter()
   const formId = useId()
   const idInputId = `${formId}${INSTANCE}`
   const tokenInputId = `${formId}${TOKEN}`
@@ -99,23 +99,27 @@ export const LoginForm = () => {
   const [hasSubmitted, setHasSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isTokenVisible, setIsTokenVisible] = useState(false)
-  const [serverErrorCode, setServerErrorCode] = useState<string>(EMPTY_STRING)
+  const [serverErrorCode, setServerErrorCode] = useState<
+    LoginErrorCode | typeof EMPTY_STRING
+  >(EMPTY_STRING)
   const { idInstance, apiTokenInstance } = values
   const isIdMissing = idInstance.trim().length === 0
   const isTokenMissing = apiTokenInstance.trim().length === 0
-  const serverError =
-    LOGIN_ERROR_COPY[serverErrorCode as keyof typeof LOGIN_ERROR_COPY] ??
-    EMPTY_STRING
+  const serverError = serverErrorCode
+    ? LOGIN_ERROR_COPY[serverErrorCode]
+    : EMPTY_STRING
+  const hasIdError = hasSubmitted && isIdMissing
+  const hasTokenError = hasSubmitted && isTokenMissing
   let idError = EMPTY_STRING
   let tokenError = EMPTY_STRING
 
-  if (hasSubmitted && isIdMissing) {
+  if (hasIdError) {
     idError = ID_REQUIRED
   } else if (serverErrorCode === INVALID_INSTANCE) {
     idError = serverError
   }
 
-  if (hasSubmitted && isTokenMissing) {
+  if (hasTokenError) {
     tokenError = TOKEN_REQUIRED
   } else if (serverErrorCode === INVALID_TOKEN) {
     tokenError = serverError
@@ -172,14 +176,13 @@ export const LoginForm = () => {
         setServerErrorCode(INVALID_UPSTREAM_RESPONSE)
         return
       }
-      if (
+      const isLoginConfirmed =
         response.status === HTTP_OK &&
-        payload &&
-        typeof payload === 'object' &&
-        !Array.isArray(payload) &&
-        (payload as Record<string, unknown>).status === RESPONSE_OK
-      ) {
-        window.location.assign(HOME)
+        isRecord(payload) &&
+        payload.status === RESPONSE_OK
+
+      if (isLoginConfirmed) {
+        router.replace(HOME)
         return
       }
       setServerErrorCode(readErrorCode(payload) ?? INVALID_UPSTREAM_RESPONSE)
@@ -226,23 +229,25 @@ export const LoginForm = () => {
             {generalError}
           </p>
         )}
-        <SubmitButton label={isSubmitting ? SUBMITTING : SUBMIT} />
+        <SubmitButton
+          label={isSubmitting ? SUBMITTING : SUBMIT}
+          isLoading={isSubmitting}
+        />
       </fieldset>
+      <p className={styles.form__status} role={ROLE_STATUS}>
+        {isSubmitting ? SUBMITTING : EMPTY_STRING}
+      </p>
       <noscript>
         <p className={styles.form__error}>{NO_SCRIPT}</p>
       </noscript>
-      <p className={styles.form__help}>
-        <span className={styles.form__question}>{HELP_QUESTION}</span>
-        <a
-          className={styles.form__link}
-          href={CABINET}
-          target={LINK_TARGET_NEW_TAB}
-          rel={LINK_REL_EXTERNAL}
-        >
-          {CABINET_LABEL}
-        </a>
-        <span className={styles.form__note}>{NEW_TAB}</span>
-      </p>
+      <a
+        className={styles.form__link}
+        href={CABINET}
+        target={LINK_TARGET_NEW_TAB}
+        rel={LINK_REL_EXTERNAL}
+      >
+        {CABINET_LABEL}
+      </a>
     </form>
   )
 }

@@ -1,6 +1,6 @@
 import type { ChangeEvent, Ref } from 'react'
-import { TokenVisibilityButton } from '@/components/TokenVisibilityButton'
 import { HTML_VALUES } from '@/lib/ui/constants'
+import { TokenVisibilityButton } from '@/components/TokenVisibilityButton'
 import styles from './CredentialField.module.scss'
 
 const {

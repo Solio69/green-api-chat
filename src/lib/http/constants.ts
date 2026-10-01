@@ -23,6 +23,7 @@ export const FETCH_REDIRECT = {
 } as const
 
 export const HTTP_HEADERS = {
+  CONNECTION_SCOPE: 'X-Connection-Scope',
   CONTENT_TYPE: 'Content-Type',
   CACHE_CONTROL: 'Cache-Control',
   LOCATION: 'Location',

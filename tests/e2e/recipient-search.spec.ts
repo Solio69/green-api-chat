@@ -88,7 +88,7 @@ test('recipient search: fixture signs in and opens protected home', async ({
   await expect(page.getByRole(ROLE_BUTTON, { name: LOGOUT })).toBeVisible()
 })
 
-test('recipient search: phone lookup shows the found chatId', async ({
+test('recipient search: phone lookup shows the submitted recipient', async ({
   page,
 }) => {
   const searches: string[] = []
@@ -110,7 +110,7 @@ test('recipient search: phone lookup shows the found chatId', async ({
   await page.getByLabel(PHONE_LABEL).fill(foundPhone)
   await page.getByRole(ROLE_BUTTON, { name: SUBMIT, exact: true }).click()
   await expect(page.getByText(FOUND, { exact: true })).toBeVisible()
-  await expect(page.getByText(chatId)).toBeVisible()
+  await expect(page.getByText(foundPhone, { exact: true })).toBeVisible()
   await expect(page.locator(OUTPUT_SELECTOR)).toHaveCount(0)
   expect(searches).toEqual([
     JSON.stringify({ mode: MODE_PHONE, value: foundPhone }),
@@ -147,10 +147,14 @@ test('recipient search: phone miss offers username without automatic lookup', as
     0,
   )
   await page.getByRole(ROLE_BUTTON, { name: SUBMIT, exact: true }).click()
-  await expect(page.getByText(chatId)).toBeVisible()
+  await expect(
+    page.getByText(`@${foundUsername}`, { exact: true }),
+  ).toBeVisible()
   await page.getByLabel(USERNAME_LABEL).fill(foundUsername)
   await page.getByRole(ROLE_BUTTON, { name: SUBMIT, exact: true }).click()
-  await expect(page.getByText(chatId)).toBeVisible()
+  await expect(
+    page.getByText(`@${foundUsername}`, { exact: true }),
+  ).toBeVisible()
   expect(searches).toHaveLength(4)
 })
 
@@ -171,7 +175,7 @@ test('recipient search: invalid input is corrected before a request', async ({
   await page.getByLabel(PHONE_LABEL).fill(foundPhone)
   await expect(page.getByText(PHONE_INVALID, { exact: true })).toHaveCount(0)
   await page.getByLabel(PHONE_LABEL).press(TEST_UI.KEY_ENTER)
-  await expect(page.getByText(chatId)).toBeVisible()
+  await expect(page.getByText(foundPhone, { exact: true })).toBeVisible()
   expect(searches).toHaveLength(1)
   await page.getByRole(ROLE_BUTTON, { name: USERNAME_MODE }).click()
   await page.getByRole(ROLE_BUTTON, { name: SUBMIT, exact: true }).click()
@@ -193,10 +197,14 @@ test('recipient search: pending state blocks edits and reload clears result', as
   await expect(page.getByRole(ROLE_BUTTON, { name: PENDING })).toBeDisabled()
   await expect(page.getByRole(ROLE_BUTTON, { name: PHONE_MODE })).toBeDisabled()
   await expect(page.getByLabel(USERNAME_LABEL)).toBeDisabled()
-  await expect(page.getByText(chatId)).toBeVisible()
+  await expect(
+    page.getByText(`@${delayedUsername}`, { exact: true }),
+  ).toBeVisible()
   await page.reload()
   await expect(page.getByLabel(PHONE_LABEL)).toHaveValue(EMPTY_STRING)
-  await expect(page.getByText(chatId)).toHaveCount(0)
+  await expect(
+    page.getByText(`@${delayedUsername}`, { exact: true }),
+  ).toHaveCount(0)
 })
 
 test('recipient search: limit and outage preserve the session for retry', async ({
@@ -215,7 +223,9 @@ test('recipient search: limit and outage preserve the session for retry', async 
   await expect(page).toHaveURL(HOME)
   await page.getByLabel(USERNAME_LABEL).fill(foundUsername)
   await page.getByRole(ROLE_BUTTON, { name: SUBMIT, exact: true }).click()
-  await expect(page.getByText(chatId)).toBeVisible()
+  await expect(
+    page.getByText(`@${foundUsername}`, { exact: true }),
+  ).toBeVisible()
 })
 
 test('recipient search: confirmed invalid token ends the browser session', async ({

@@ -1,10 +1,11 @@
 import { expect, test } from '@playwright/test'
 import { GET as endSession } from '@/app/api/auth/end-session/route'
 import { resolveHome } from '@/lib/auth/resolve-home'
-import type { StateResult } from '@/lib/green-api/get-state'
+import type { AccountSettingsResult } from '@/lib/green-api/get-account-settings'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import {
   CREDENTIALS,
+  ACCOUNT_CONTRACT,
   GREEN_API_CONTRACT,
   HOME_CONTRACT,
   LOGIN_API_CONTRACT,
@@ -36,12 +37,29 @@ const {
   RATE_LIMITED,
 } = LOGIN_API_CONTRACT
 const { COOKIE_NAME, EXPIRED_COOKIE_PATTERN } = SESSION_CONTRACT
+const { PROFILE } = ACCOUNT_CONTRACT
+
+test('home-flow: passes only the prepared profile from the account loader', async () => {
+  const body = { stateInstance: AUTHORIZED, profile: PROFILE } as const
+  expect(
+    await resolveHome({
+      credentials,
+      getAccountSettings: async () => ({ kind: AUTHORIZED, body }),
+    }),
+  ).toEqual({ kind: AUTHORIZED, body })
+})
 
 test('home-flow: missing session never calls GREEN-API', async () => {
   let calls = 0
-  const result = await resolveHome(null, async () => {
-    calls += 1
-    return { kind: AUTHORIZED, body: { stateInstance: AUTHORIZED } }
+  const result = await resolveHome({
+    credentials: null,
+    getAccountSettings: async () => {
+      calls += 1
+      return {
+        kind: AUTHORIZED,
+        body: { stateInstance: AUTHORIZED, profile: PROFILE },
+      }
+    },
   })
   expect(result).toEqual({ kind: LOGIN })
   expect(calls).toBe(0)
@@ -49,20 +67,20 @@ test('home-flow: missing session never calls GREEN-API', async () => {
 
 test('home-flow: authorized rechecks and returns state for home', async () => {
   let calls = 0
-  const getState = async () => {
+  const getAccountSettings = async () => {
     calls += 1
     return {
       kind: AUTHORIZED,
-      body: { stateInstance: AUTHORIZED },
+      body: { stateInstance: AUTHORIZED, profile: PROFILE },
     } as const
   }
-  expect(await resolveHome(credentials, getState)).toEqual({
+  expect(await resolveHome({ credentials, getAccountSettings })).toEqual({
     kind: AUTHORIZED,
-    body: { stateInstance: AUTHORIZED },
+    body: { stateInstance: AUTHORIZED, profile: PROFILE },
   })
-  expect(await resolveHome(credentials, getState)).toEqual({
+  expect(await resolveHome({ credentials, getAccountSettings })).toEqual({
     kind: AUTHORIZED,
-    body: { stateInstance: AUTHORIZED },
+    body: { stateInstance: AUTHORIZED, profile: PROFILE },
   })
   expect(calls).toBe(2)
 })
@@ -75,7 +93,7 @@ for (const kind of [
   INSTANCE_EXPIRED,
 ] as const) {
   test(`home-flow: ${kind} ends the session`, async () => {
-    let state: StateResult
+    let state: AccountSettingsResult
 
     if (kind === NEEDS_AUTHORIZATION) {
       state = { kind, stateInstance: NOT_AUTHORIZED }
@@ -85,7 +103,9 @@ for (const kind of [
       state = { kind }
     }
 
-    expect(await resolveHome(credentials, async () => state)).toEqual({
+    expect(
+      await resolveHome({ credentials, getAccountSettings: async () => state }),
+    ).toEqual({
       kind: END_SESSION,
     })
   })
@@ -97,15 +117,23 @@ for (const kind of [
   INVALID_UPSTREAM_RESPONSE,
 ] as const) {
   test(`home-flow: ${kind} preserves the session for retry`, async () =>
-    expect(await resolveHome(credentials, async () => ({ kind }))).toEqual({
+    expect(
+      await resolveHome({
+        credentials,
+        getAccountSettings: async () => ({ kind }),
+      }),
+    ).toEqual({
       kind: RETRY,
     }))
 }
 
 test('home-flow: thrown provider error preserves the session', async () =>
   expect(
-    await resolveHome(credentials, async () => {
-      throw new Error(TOKEN)
+    await resolveHome({
+      credentials,
+      getAccountSettings: async () => {
+        throw new Error(TOKEN)
+      },
     }),
   ).toEqual({ kind: RETRY }))
 
@@ -121,5 +149,8 @@ test('home-flow: end-session deletes only the app cookie and fixes redirect', as
 
 test('home-flow: rate limit preserves the existing session for manual retry', async () =>
   expect(
-    await resolveHome(credentials, async () => ({ kind: RATE_LIMITED })),
+    await resolveHome({
+      credentials,
+      getAccountSettings: async () => ({ kind: RATE_LIMITED }),
+    }),
   ).toEqual({ kind: RETRY }))

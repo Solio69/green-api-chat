@@ -1,5 +1,5 @@
-import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
 import type { CheckAccountResult } from '@/lib/green-api/check-account'
+import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
 import { CACHE_CONTROL, HTTP_HEADERS, HTTP_STATUS } from '@/lib/http/constants'
 import { RECIPIENT_RESULT_KIND } from './constants'
 

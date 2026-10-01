@@ -76,6 +76,7 @@ AVAILABLE_DOCS. В режиме PathsOnly список AVAILABLE_DOCS пуст:
 Параметры: ExpectedFeatureDirectory, Json, Help.
 
 После проверки контекста:
+
 - существующий обычный spec.md сохраняется побайтно;
 - если spec.md отсутствует, сначала проверяется локальный spec-template.md,
   затем создаётся каталог выбранной feature и документ;
@@ -119,16 +120,16 @@ plan-template.md. Правила шаблона, CreateNew и сохранени
 
 ## Соответствие этапам
 
-| Skill | Подготовка | Минимальные документы |
-| --- | --- | --- |
-| speckit-constitution | check-prerequisites -PathsOnly | Локальные правила и согласованные принципы |
-| speckit-specify | check-prerequisites -PathsOnly; setup-spec | Согласованное описание задачи |
-| speckit-clarify | check-prerequisites -RequireSpec | spec.md |
-| speckit-plan | check-prerequisites -RequireSpec; setup-plan | Согласованный spec.md и constitution |
-| speckit-tasks | check-prerequisites; setup-tasks | spec.md, plan.md и доступные документы проекта решения |
-| speckit-checklist | check-prerequisites -RequireSpec | spec.md; план читается только при необходимости |
-| speckit-analyze | check-prerequisites -RequireTasks -IncludeTasks | spec.md, plan.md, tasks.md, constitution |
-| speckit-implement | check-prerequisites -RequireTasks -IncludeTasks | Подготовленный комплект, анализ и разрешение пользователя |
+| Skill                | Подготовка                                      | Минимальные документы                                     |
+| -------------------- | ----------------------------------------------- | --------------------------------------------------------- |
+| speckit-constitution | check-prerequisites -PathsOnly                  | Локальные правила и согласованные принципы                |
+| speckit-specify      | check-prerequisites -PathsOnly; setup-spec      | Согласованное описание задачи                             |
+| speckit-clarify      | check-prerequisites -RequireSpec                | spec.md                                                   |
+| speckit-plan         | check-prerequisites -RequireSpec; setup-plan    | Согласованный spec.md и constitution                      |
+| speckit-tasks        | check-prerequisites; setup-tasks                | spec.md, plan.md и доступные документы проекта решения    |
+| speckit-checklist    | check-prerequisites -RequireSpec                | spec.md; план читается только при необходимости           |
+| speckit-analyze      | check-prerequisites -RequireTasks -IncludeTasks | spec.md, plan.md, tasks.md, constitution                  |
+| speckit-implement    | check-prerequisites -RequireTasks -IncludeTasks | Подготовленный комплект, анализ и разрешение пользователя |
 
 Все вызовы передают ExpectedFeatureDirectory и проверяют FEATURE_DIR в ответе.
 Skills не выводят разрешение из наличия документов или кода выхода 0.

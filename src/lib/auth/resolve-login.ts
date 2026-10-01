@@ -1,9 +1,9 @@
-import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
-import { GREEN_API_STATES } from '@/lib/green-api/constants'
 import type {
   InstanceCredentials,
   StateResult,
 } from '@/lib/green-api/get-state'
+import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
+import { GREEN_API_STATES } from '@/lib/green-api/constants'
 import { HTTP_BODY_LIMIT, HTTP_STATUS } from '@/lib/http/constants'
 
 const {

@@ -19,15 +19,15 @@ engines.npm: 11.x, packageManager: npm@11.11.0.
 
 ## Команды package.json
 
-| Команда пользователя | Содержимое script | Назначение |
-| --- | --- | --- |
-| npm run dev | next dev | Локальная разработка |
-| npm run build | next build | Production-сборка |
-| npm run start | next start | Запуск готовой сборки |
-| npm run typecheck | next typegen && tsc --noEmit | Генерация маршрутных типов и проверка TypeScript |
-| npm run lint | eslint . --max-warnings=0 | Проверка JS/TS; предупреждения также блокируют успех |
-| npm run format:check | prettier --check . | Проверка форматирования в заданной области |
-| npm run format | prettier --write . | Явное форматирование этой области по запросу |
+| Команда пользователя | Содержимое script            | Назначение                                           |
+| -------------------- | ---------------------------- | ---------------------------------------------------- |
+| npm run dev          | next dev                     | Локальная разработка                                 |
+| npm run build        | next build                   | Production-сборка                                    |
+| npm run start        | next start                   | Запуск готовой сборки                                |
+| npm run typecheck    | next typegen && tsc --noEmit | Генерация маршрутных типов и проверка TypeScript     |
+| npm run lint         | eslint . --max-warnings=0    | Проверка JS/TS; предупреждения также блокируют успех |
+| npm run format:check | prettier --check .           | Проверка форматирования в заданной области           |
+| npm run format       | prettier --write .           | Явное форматирование этой области по запросу         |
 
 Проверки не выполняют автоисправление исходников. typecheck вправе создать
 служебные .next/types и next-env.d.ts; tsc не эмитирует JS.
@@ -43,7 +43,7 @@ Turbopack используется по умолчанию; отдельной �
 - TypeScript: strict, noEmit, moduleResolution bundler, esModuleInterop,
   resolveJsonModule, isolatedModules, jsx react-jsx, plugin next.
   Алиас @/* → ./src/* без необходимости искусственно использовать его.
-  include: next-env.d.ts, next.config.ts, src/**/*.ts, src/**/*.tsx, .next/types/**/*.ts,
+  include: next-env.d.ts, next.config.ts, src/**/\*.ts, src/**/_.tsx, .next/types/\**/_.ts,
   .next/dev/types/**/*.ts; exclude: node_modules.
 - ESLint: flat config с eslint-config-next/core-web-vitals,
   eslint-config-next/typescript и eslint-config-prettier/flat.
@@ -57,7 +57,7 @@ Turbopack используется по умолчанию; отдельной �
   README.md остаётся в проверке. Игнорирование старых документов относится
   только к форматтеру, а не к содержательному ревью и Git.
 - .gitignore: node_modules/, .next/, out/, build/, coverage/, .vercel/,
-  .env*, *.tsbuildinfo, next-env.d.ts, npm-debug.log* и *.log.
+  .env*, _.tsbuildinfo, next-env.d.ts, npm-debug.log_ и *.log.
   package-lock.json, правила, skills, specs и документация не игнорируются.
   Когда понадобится безопасный .env.example, исключение проектируется в той задаче.
 

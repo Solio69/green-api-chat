@@ -16,6 +16,7 @@ export const RECIPIENT_COPY = {
   PHONE_LABEL: 'Номер телефона',
   USERNAME_LABEL: 'Telegram username',
   PHONE_HINT: 'Введите номер с кодом страны, только цифры.',
+  USERNAME_HINT: 'Можно вводить с @ или без него',
   SUBMIT: 'Найти',
   SUBMITTING: 'Поиск...',
   PHONE_REQUIRED: 'Введите номер телефона',
@@ -23,7 +24,7 @@ export const RECIPIENT_COPY = {
   USERNAME_REQUIRED: 'Введите @username',
   USERNAME_INVALID: 'Введите корректный @username',
   FOUND: 'Пользователь найден',
-  CHAT_ID_LABEL: 'chatId',
+  WRITE: 'Написать',
   PHONE_NOT_FOUND:
     'Не удалось найти пользователя по номеру. Проверьте номер или попробуйте поиск по @username',
   USERNAME_NOT_FOUND:
@@ -45,4 +46,5 @@ export const RECIPIENT_ERROR_COPY = {
 export const RECIPIENT_FIELD_ID_SUFFIX = {
   FIELD: '-recipient',
   ERROR: '-recipient-error',
+  HINT: '-recipient-hint',
 } as const

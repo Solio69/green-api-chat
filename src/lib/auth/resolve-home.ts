@@ -1,9 +1,7 @@
+import type { AccountSettingsResult } from '@/lib/green-api/get-account-settings'
+import type { InstanceCredentials } from '@/lib/green-api/get-state'
 import { API_ERROR_CODE } from '@/lib/api/constants'
 import { GREEN_API_STATES } from '@/lib/green-api/constants'
-import type {
-  InstanceCredentials,
-  StateResult,
-} from '@/lib/green-api/get-state'
 import { HOME_RESULT_KIND } from './constants'
 
 const { AUTHORIZED } = GREEN_API_STATES
@@ -20,15 +18,22 @@ export type HomeResult =
   | { kind: typeof LOGIN }
   | { kind: typeof END_SESSION }
   | { kind: typeof RETRY }
-  | { kind: typeof AUTHORIZED; body: { stateInstance: typeof AUTHORIZED } }
+  | Extract<AccountSettingsResult, { kind: typeof AUTHORIZED }>
 
-export const resolveHome = async (
-  credentials: InstanceCredentials | null,
-  getState: (credentials: InstanceCredentials) => Promise<StateResult>,
-): Promise<HomeResult> => {
+type ResolveHomeOptions = {
+  credentials: InstanceCredentials | null
+  getAccountSettings: (options: {
+    credentials: InstanceCredentials
+  }) => Promise<AccountSettingsResult>
+}
+
+export const resolveHome = async ({
+  credentials,
+  getAccountSettings,
+}: ResolveHomeOptions): Promise<HomeResult> => {
   if (!credentials) return { kind: LOGIN }
   try {
-    const state = await getState(credentials)
+    const state = await getAccountSettings({ credentials })
     if (state.kind === AUTHORIZED) return { kind: AUTHORIZED, body: state.body }
     switch (state.kind) {
       case INVALID_TOKEN:

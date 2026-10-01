@@ -2,8 +2,9 @@
 
 import { useId, useRef, useState, useSyncExternalStore } from 'react'
 import type { SubmitEvent } from 'react'
-import { RecipientSearchField } from '@/components/RecipientSearchField'
-import { SubmitButton } from '@/components/SubmitButton'
+import { formatRecipientLabel } from './format-recipient-label'
+import { isRecord } from '@/lib/api/is-record'
+import { parseSearchRequest } from '@/lib/recipients/validate-search'
 import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
 import {
   CACHE_CONTROL,
@@ -16,7 +17,6 @@ import {
   RECIPIENT_RESULT_KIND,
   RECIPIENT_SEARCH_MODE,
 } from '@/lib/recipients/constants'
-import { parseSearchRequest } from '@/lib/recipients/validate-search'
 import { ROUTES } from '@/lib/routes/constants'
 import { EMPTY_STRING, HTML_VALUES } from '@/lib/ui/constants'
 import {
@@ -24,30 +24,28 @@ import {
   RECIPIENT_ERROR_COPY,
   RECIPIENT_FIELD_ID_SUFFIX,
 } from './constants'
+import { RecipientSearchField } from '@/components/RecipientSearchField'
+import { RecipientSearchModeSwitch } from '@/components/RecipientSearchModeSwitch'
+import { RecipientSearchResult } from '@/components/RecipientSearchResult'
+import type { RecipientSearchDisplayResult } from '@/components/RecipientSearchResult'
+import { SubmitButton } from '@/components/SubmitButton'
 import styles from './RecipientSearchForm.module.scss'
 
 const {
   HEADING,
-  MODE_LABEL,
-  PHONE_MODE,
-  USERNAME_MODE,
   PHONE_LABEL,
   USERNAME_LABEL,
   PHONE_HINT,
+  USERNAME_HINT,
   SUBMIT,
   SUBMITTING,
   PHONE_REQUIRED,
   PHONE_INVALID,
   USERNAME_REQUIRED,
   USERNAME_INVALID,
-  FOUND: FOUND_COPY,
-  CHAT_ID_LABEL,
-  PHONE_NOT_FOUND,
-  USERNAME_NOT_FOUND,
-  SWITCH_TO_USERNAME,
   NO_SCRIPT,
 } = RECIPIENT_COPY
-const { FIELD, ERROR } = RECIPIENT_FIELD_ID_SUFFIX
+const { FIELD, ERROR, HINT } = RECIPIENT_FIELD_ID_SUFFIX
 const { PHONE, USERNAME } = RECIPIENT_SEARCH_MODE
 const { FOUND, NOT_FOUND } = RECIPIENT_RESULT_KIND
 const { INVALID_REQUEST, INVALID_UPSTREAM_RESPONSE, SERVICE_UNAVAILABLE } =
@@ -59,7 +57,7 @@ const { CONTENT_TYPE } = HTTP_HEADERS
 const { JSON: JSON_CONTENT_TYPE } = HTTP_CONTENT_TYPE
 const { NO_STORE } = CACHE_CONTROL
 const { RECIPIENT_SEARCH_API, LOGIN } = ROUTES
-const { BUTTON, ROLE_ALERT, ROLE_STATUS, ROLE_GROUP } = HTML_VALUES
+const { ROLE_STATUS } = HTML_VALUES
 
 type SearchResult =
   { kind: typeof FOUND; chatId: string } | { kind: typeof NOT_FOUND }
@@ -69,27 +67,37 @@ const getClientSnapshot = () => true
 const getServerSnapshot = () => false
 
 const readSearchResult = (value: unknown): SearchResult | null => {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) return null
-  const { status, result, chatId } = value as Record<string, unknown>
+  if (!isRecord(value)) return null
+  const { status, result, chatId } = value
   if (status !== RESPONSE_OK) return null
-  if (result === FOUND && typeof chatId === 'string' && chatId.trim())
-    return { kind: FOUND, chatId }
+  const isFound =
+    result === FOUND && typeof chatId === 'string' && chatId.trim().length > 0
+  if (isFound) return { kind: FOUND, chatId }
   if (result === NOT_FOUND) return { kind: NOT_FOUND }
   return null
 }
 
-const readErrorCode = (value: unknown): string | null => {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) return null
-  const { status, code } = value as Record<string, unknown>
-  if (status !== RESPONSE_ERROR || typeof code !== 'string') return null
-  if (code === INVALID_REQUEST) return code
-  if (Object.hasOwn(RECIPIENT_ERROR_COPY, code)) return code
-  return null
+type SearchErrorCode =
+  keyof typeof RECIPIENT_ERROR_COPY | typeof INVALID_REQUEST
+
+const isSearchErrorCode = (value: unknown): value is SearchErrorCode => {
+  const isKnownCode =
+    typeof value === 'string' &&
+    (value === INVALID_REQUEST || Object.hasOwn(RECIPIENT_ERROR_COPY, value))
+  return isKnownCode
+}
+
+const readErrorCode = (value: unknown): SearchErrorCode | null => {
+  if (!isRecord(value)) return null
+  const { status, code } = value
+  const isKnownError = status === RESPONSE_ERROR && isSearchErrorCode(code)
+  return isKnownError ? code : null
 }
 
 export const RecipientSearchForm = () => {
   const formId = useId()
   const inputId = `${formId}${FIELD}`
+  const hintId = `${formId}${HINT}`
   const errorId = `${formId}${ERROR}`
   const inputRef = useRef<HTMLInputElement>(null)
   const requestPending = useRef(false)
@@ -102,24 +110,30 @@ export const RecipientSearchForm = () => {
   const [value, setValue] = useState(EMPTY_STRING)
   const [hasSubmitted, setHasSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [result, setResult] = useState<SearchResult | null>(null)
-  const [serverErrorCode, setServerErrorCode] = useState(EMPTY_STRING)
+  const [result, setResult] = useState<RecipientSearchDisplayResult | null>(
+    null,
+  )
+  const [serverErrorCode, setServerErrorCode] = useState<
+    SearchErrorCode | typeof EMPTY_STRING
+  >(EMPTY_STRING)
 
   const isPhone = mode === PHONE
   const fieldLabel = isPhone ? PHONE_LABEL : USERNAME_LABEL
   const parsedInput = parseSearchRequest({ mode, value })
   let fieldError = EMPTY_STRING
-  if (hasSubmitted && !parsedInput) {
+  const hasLocalError = hasSubmitted && !parsedInput
+  if (hasLocalError) {
     if (value.trim().length === 0)
       fieldError = isPhone ? PHONE_REQUIRED : USERNAME_REQUIRED
     else fieldError = isPhone ? PHONE_INVALID : USERNAME_INVALID
   }
   if (serverErrorCode === INVALID_REQUEST)
     fieldError = isPhone ? PHONE_INVALID : USERNAME_INVALID
-  const generalError =
-    RECIPIENT_ERROR_COPY[
-      serverErrorCode as keyof typeof RECIPIENT_ERROR_COPY
-    ] ?? EMPTY_STRING
+  const hasGeneralError =
+    serverErrorCode !== EMPTY_STRING && serverErrorCode !== INVALID_REQUEST
+  const generalError = hasGeneralError
+    ? RECIPIENT_ERROR_COPY[serverErrorCode]
+    : EMPTY_STRING
 
   const selectMode = (nextMode: typeof PHONE | typeof USERNAME) => {
     if (requestPending.current) return
@@ -172,8 +186,13 @@ export const RecipientSearchForm = () => {
         return
       }
       const searchResult = readSearchResult(payload)
-      if (response.status === HTTP_OK && searchResult) {
-        setResult(searchResult)
+      const isSuccessfulSearch = response.status === HTTP_OK && searchResult
+      if (isSuccessfulSearch) {
+        setResult(
+          searchResult.kind === FOUND
+            ? { ...searchResult, label: formatRecipientLabel(parsedInput) }
+            : searchResult,
+        )
         return
       }
       setServerErrorCode(readErrorCode(payload) ?? INVALID_UPSTREAM_RESPONSE)
@@ -185,6 +204,10 @@ export const RecipientSearchForm = () => {
     }
   }
 
+  const handleWrite = () => {
+    // D06: connect opening the selected conversation here.
+  }
+
   return (
     <section className={styles.recipientSearchForm}>
       <h1 className={styles.recipientSearchForm__heading}>{HEADING}</h1>
@@ -193,75 +216,60 @@ export const RecipientSearchForm = () => {
           className={styles.recipientSearchForm__fields}
           disabled={!isInteractive || isSubmitting}
         >
-          <div
-            className={styles.recipientSearchForm__modes}
-            role={ROLE_GROUP}
-            aria-label={MODE_LABEL}
-          >
-            <button
-              className={styles.recipientSearchForm__mode}
-              type={BUTTON}
-              aria-pressed={isPhone}
-              onClick={handlePhoneModeSelect}
-            >
-              {PHONE_MODE}
-            </button>
-            <button
-              className={styles.recipientSearchForm__mode}
-              type={BUTTON}
-              aria-pressed={!isPhone}
-              onClick={handleUsernameModeSelect}
-            >
-              {USERNAME_MODE}
-            </button>
-          </div>
-          <RecipientSearchField
-            id={inputId}
-            errorId={errorId}
-            label={fieldLabel}
-            value={value}
-            error={fieldError}
+          <RecipientSearchModeSwitch
             isPhone={isPhone}
-            inputRef={inputRef}
-            onValueChange={handleValueChange}
+            onPhoneSelect={handlePhoneModeSelect}
+            onUsernameSelect={handleUsernameModeSelect}
           />
-          {isPhone && (
-            <p className={styles.recipientSearchForm__hint}>{PHONE_HINT}</p>
-          )}
-          {generalError && (
-            <p className={styles.recipientSearchForm__error} role={ROLE_ALERT}>
-              {generalError}
+          <div className={styles.recipientSearchForm__row}>
+            <RecipientSearchField
+              id={inputId}
+              errorId={errorId}
+              hintId={hintId}
+              label={fieldLabel}
+              alternateLabel={isPhone ? USERNAME_LABEL : PHONE_LABEL}
+              value={value}
+              error={fieldError}
+              isPhone={isPhone}
+              inputRef={inputRef}
+              onValueChange={handleValueChange}
+            />
+            <div className={styles.recipientSearchForm__submit}>
+              <SubmitButton
+                label={isSubmitting ? SUBMITTING : SUBMIT}
+                isLoading={isSubmitting}
+              />
+            </div>
+          </div>
+          <div className={styles.recipientSearchForm__hints} id={hintId}>
+            <p
+              className={styles.recipientSearchForm__hint}
+              aria-hidden={!isPhone}
+            >
+              {PHONE_HINT}
             </p>
-          )}
-          <SubmitButton label={isSubmitting ? SUBMITTING : SUBMIT} />
+            <p
+              className={styles.recipientSearchForm__hint}
+              aria-hidden={isPhone}
+            >
+              {USERNAME_HINT}
+            </p>
+          </div>
         </fieldset>
+        <p className={styles.recipientSearchForm__pending} role={ROLE_STATUS}>
+          {isSubmitting ? SUBMITTING : EMPTY_STRING}
+        </p>
       </form>
       <noscript>
         <p className={styles.recipientSearchForm__error}>{NO_SCRIPT}</p>
       </noscript>
-      {result && (
-        <div className={styles.recipientSearchForm__result} role={ROLE_STATUS}>
-          {result.kind === FOUND ? (
-            <>
-              <p>{FOUND_COPY}</p>
-              <p>{`${CHAT_ID_LABEL}: ${result.chatId}`}</p>
-            </>
-          ) : (
-            <>
-              <p>{isPhone ? PHONE_NOT_FOUND : USERNAME_NOT_FOUND}</p>
-              {isPhone && (
-                <button
-                  className={styles.recipientSearchForm__switch}
-                  type={BUTTON}
-                  onClick={handleUsernameModeSelect}
-                >
-                  {SWITCH_TO_USERNAME}
-                </button>
-              )}
-            </>
-          )}
-        </div>
-      )}
+      <RecipientSearchResult
+        result={result}
+        error={generalError}
+        isPhone={isPhone}
+        onUsernameSelect={handleUsernameModeSelect}
+        onWrite={handleWrite}
+      />
     </section>
   )
 }

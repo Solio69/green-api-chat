@@ -1,0 +1,1214 @@
+<style>
+  #max-chat-mock {
+    --mc-panel: light-dark(#ffffff, #202126);
+    --mc-bg: light-dark(#eff5fb, #111419);
+    --mc-text: light-dark(#17191d, #f1f3f6);
+    --mc-muted: light-dark(#737d8c, #9298a5);
+    --mc-line: light-dark(#e8ebef, #303239);
+    --mc-input: light-dark(#f3f4f7, #2c2e35);
+    --mc-accent: light-dark(#5266f6, #6475ff);
+    --mc-selected: light-dark(#edf0ff, #30374e);
+    --mc-incoming: light-dark(#ffffff, #30333d);
+    --mc-outgoing: light-dark(#dfe8ff, #344d85);
+    --mc-bubble-text: light-dark(#19243a, #f3f6ff);
+    --mc-pattern: light-dark(#78a8d0, #245484);
+    --mc-error: light-dark(#b42318, #ff9391);
+    --mc-sidebar: 310px;
+    --mc-radius: 17px;
+    font-family:
+      Inter,
+      system-ui,
+      -apple-system,
+      'Segoe UI',
+      sans-serif;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--mc-text);
+  }
+  #max-chat-mock * {
+    box-sizing: border-box;
+  }
+  #max-chat-mock button,
+  #max-chat-mock input,
+  #max-chat-mock textarea {
+    font: inherit;
+  }
+  #max-chat-mock button {
+    color: inherit;
+  }
+  #max-chat-mock .mc-shell {
+    display: grid;
+    grid-template-columns: var(--mc-sidebar) minmax(0, 1fr);
+    min-height: 650px;
+    border: 1px solid var(--mc-line);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--mc-panel);
+  }
+  #max-chat-mock .mc-sidebar {
+    border-right: 1px solid var(--mc-line);
+    background: var(--mc-panel);
+  }
+  #max-chat-mock .mc-account {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 19px 18px;
+    border-bottom: 1px solid var(--mc-line);
+  }
+  #max-chat-mock .mc-avatar {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    background: var(--mc-selected);
+    color: var(--mc-accent);
+    font-weight: 500;
+  }
+  #max-chat-mock .mc-account-copy {
+    min-width: 0;
+    flex: 1;
+  }
+  #max-chat-mock .mc-name {
+    font-weight: 500;
+    overflow-wrap: anywhere;
+  }
+  #max-chat-mock .mc-secondary {
+    color: var(--mc-muted);
+    font-size: 12px;
+  }
+  #max-chat-mock .mc-exit {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 0;
+    border: 0;
+    background: transparent;
+    color: var(--mc-muted);
+    font-size: 12px;
+  }
+  #max-chat-mock .mc-search {
+    padding: 21px 18px 18px;
+    border-bottom: 1px solid var(--mc-line);
+  }
+  #max-chat-mock .mc-search-title {
+    margin: 0 0 13px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  #max-chat-mock .mc-modes {
+    display: flex;
+    gap: 3px;
+    padding: 3px;
+    background: var(--mc-input);
+    border-radius: 9px;
+    margin-bottom: 14px;
+  }
+  #max-chat-mock .mc-mode {
+    flex: 1;
+    padding: 7px 5px;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: var(--mc-muted);
+    font-size: 13px;
+  }
+  #max-chat-mock .mc-mode[aria-pressed='true'] {
+    color: var(--mc-accent);
+    background: var(--mc-panel);
+  }
+  #max-chat-mock .mc-label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: var(--mc-muted);
+  }
+  #max-chat-mock .mc-search-row {
+    display: flex;
+    gap: 7px;
+  }
+  #max-chat-mock .mc-search-input {
+    min-width: 0;
+    width: 100%;
+    padding: 10px 11px;
+    border: 1px solid var(--mc-line);
+    border-radius: 9px;
+    background: var(--mc-input);
+    color: var(--mc-text);
+  }
+  #max-chat-mock .mc-search-input:focus {
+    outline: none;
+    border-color: var(--mc-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--mc-accent) 18%, transparent);
+  }
+  #max-chat-mock .mc-find {
+    border: 0;
+    padding: 9px 12px;
+    border-radius: 9px;
+    background: var(--mc-accent);
+    color: #fff;
+  }
+  #max-chat-mock .mc-hint {
+    margin: 8px 0 0;
+    font-size: 12px;
+    color: var(--mc-muted);
+  }
+  #max-chat-mock .mc-result {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--mc-accent);
+    overflow-wrap: anywhere;
+  }
+  #max-chat-mock .mc-result[data-error='true'] {
+    color: var(--mc-error);
+    padding: 10px 12px;
+    border-radius: 9px;
+    background: color-mix(in srgb, var(--mc-error) 8%, var(--mc-panel));
+  }
+  #max-chat-mock .mc-found {
+    margin-top: 14px;
+  }
+  #max-chat-mock .mc-found-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+    padding: 12px;
+    border-radius: 10px;
+    background: var(--mc-selected);
+  }
+  #max-chat-mock .mc-found-name {
+    flex: 1 1 auto;
+    max-width: 100%;
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+  #max-chat-mock .mc-found-row .mc-start {
+    flex: none;
+  }
+  #max-chat-mock .mc-no-chats {
+    padding: 8px 18px;
+    color: var(--mc-muted);
+  }
+  #max-chat-mock button:disabled {
+    opacity: 0.6;
+  }
+  #max-chat-mock .mc-login-section {
+    display: grid;
+    place-items: center;
+    min-height: 650px;
+    padding: 28px 18px;
+    background: var(--mc-bg);
+    border-radius: 16px;
+  }
+  #max-chat-mock .mc-login-card {
+    width: 100%;
+    max-width: 440px;
+    margin: 0;
+    padding: 30px;
+    border: 1px solid var(--mc-line);
+    border-radius: 22px;
+    background: var(--mc-panel);
+    box-shadow: 0 15px 40px light-dark(#26326814, #00000035);
+  }
+  #max-chat-mock .mc-login-title {
+    font-size: 24px;
+    font-weight: 500;
+    margin: 0 0 16px;
+  }
+  #max-chat-mock .mc-login-label {
+    display: block;
+    margin: 20px 0 7px;
+    font-weight: 500;
+  }
+  #max-chat-mock .mc-login-field {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--mc-line);
+    border-radius: 10px;
+    color: var(--mc-text);
+    background: var(--mc-panel);
+  }
+  #max-chat-mock .mc-login-field:focus {
+    outline: none;
+    border-color: var(--mc-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--mc-accent) 18%, transparent);
+  }
+  #max-chat-mock .mc-login-field[aria-invalid='true'] {
+    border-color: var(--mc-error);
+  }
+  #max-chat-mock .mc-login-error {
+    color: var(--mc-error);
+    margin-top: 6px;
+    font-size: 12px;
+  }
+  #max-chat-mock .mc-token-wrap {
+    position: relative;
+  }
+  #max-chat-mock .mc-token-wrap input {
+    padding-right: 50px;
+  }
+  #max-chat-mock .mc-eye {
+    position: absolute;
+    right: 4px;
+    top: 2px;
+    width: 43px;
+    height: 43px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    color: var(--mc-accent);
+  }
+  #max-chat-mock .mc-login-submit {
+    width: 100%;
+    margin-top: 27px;
+    padding: 12px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--mc-accent);
+    color: #fff;
+    font-weight: 500;
+  }
+  #max-chat-mock .mc-login-submit[data-loading='true']::before {
+    content: '';
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-right: 9px;
+    vertical-align: -2px;
+    border: 2px solid color-mix(in srgb, currentColor 35%, transparent);
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: mc-login-spin 0.7s linear infinite;
+  }
+  @keyframes mc-login-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #max-chat-mock .mc-login-submit[data-loading='true']::before {
+      animation: none;
+    }
+  }
+  #max-chat-mock .mc-start {
+    border: 0;
+    border-radius: 8px;
+    padding: 9px 13px;
+    background: var(--mc-accent);
+    color: #fff;
+  }
+  #max-chat-mock .mc-back {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    border: 0;
+    background: transparent;
+    padding: 8px 0;
+    color: var(--mc-accent);
+  }
+  #max-chat-mock .mc-draft {
+    position: relative;
+    flex: 1;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    padding: 30px;
+    gap: 8px;
+    min-height: 400px;
+  }
+  #max-chat-mock .mc-list-title {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 18px 18px 9px;
+    border: 0;
+    background: transparent;
+    text-align: left;
+    font-size: 17px;
+    font-weight: 500;
+  }
+  #max-chat-mock .mc-chat-item {
+    width: calc(100% - 16px);
+    margin: 0 8px;
+    padding: 12px 10px;
+    display: flex;
+    gap: 11px;
+    border: 0;
+    border-radius: 10px;
+    text-align: left;
+    background: var(--mc-selected);
+  }
+  #max-chat-mock .mc-chat-item[aria-pressed='false'] {
+    background: transparent;
+  }
+  #max-chat-mock .mc-chat-info {
+    min-width: 0;
+    flex: 1;
+  }
+  #max-chat-mock .mc-chat-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  #max-chat-mock .mc-preview {
+    margin-top: 4px;
+    color: var(--mc-muted);
+    font-size: 13px;
+  }
+  #max-chat-mock .mc-time {
+    font-size: 11px;
+    color: var(--mc-muted);
+    white-space: nowrap;
+  }
+  #max-chat-mock .mc-pane {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: var(--mc-bg);
+  }
+  #max-chat-mock .mc-pattern {
+    position: absolute;
+    inset: 0;
+    padding: 80px 8px 0;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-auto-rows: 72px;
+    justify-items: center;
+    align-items: center;
+    color: var(--mc-accent);
+    opacity: 0.16;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  #max-chat-mock .mc-pattern svg {
+    width: 34px;
+    height: 34px;
+    transform: rotate(-18deg);
+    stroke-width: 1.25;
+  }
+  #max-chat-mock .mc-pattern svg:nth-child(3n) {
+    width: 26px;
+    height: 26px;
+    transform: translate(8px, -12px) rotate(24deg);
+  }
+  #max-chat-mock .mc-pattern svg:nth-child(4n) {
+    transform: translate(-10px, 15px) rotate(-36deg);
+  }
+  #max-chat-mock .mc-pattern svg:nth-child(5n) {
+    width: 41px;
+    height: 41px;
+    transform: translate(5px, 8px) rotate(12deg);
+  }
+  #max-chat-mock .mc-pattern svg:nth-child(7n) {
+    opacity: 0.65;
+  }
+  #max-chat-mock .mc-brand-mark {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    transform: rotate(-14deg);
+  }
+  #max-chat-mock .mc-brand-mark svg {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    transform: none;
+  }
+  #max-chat-mock .mc-brand-mark span {
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: -4px;
+  }
+  #max-chat-mock .mc-brand-mark:nth-child(3n) {
+    transform: translate(8px, -12px) rotate(16deg);
+  }
+  @media (max-width: 680px) {
+    #max-chat-mock .mc-pattern {
+      grid-template-columns: repeat(5, 1fr);
+      grid-auto-rows: 70px;
+      padding-top: 70px;
+    }
+  }
+  #max-chat-mock .mc-pattern[hidden] {
+    display: none;
+  }
+  #max-chat-mock .mc-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-height: 82px;
+    padding: 15px 25px;
+    border-bottom: 1px solid var(--mc-line);
+    background: var(--mc-panel);
+  }
+  #max-chat-mock .mc-header .mc-avatar {
+    width: 40px;
+    height: 40px;
+  }
+  #max-chat-mock .mc-close {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    margin-left: auto;
+    flex: none;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--mc-muted);
+  }
+  #max-chat-mock .mc-close:hover {
+    background: var(--mc-input);
+  }
+  #max-chat-mock .mc-connection {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--mc-muted);
+    font-size: 12px;
+  }
+  #max-chat-mock .mc-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--mc-accent);
+  }
+  #max-chat-mock .mc-thread {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 12px;
+    padding: 23px 28px 30px;
+  }
+  #max-chat-mock .mc-date {
+    align-self: center;
+    background: var(--mc-panel);
+    padding: 4px 12px;
+    border-radius: 20px;
+    color: var(--mc-muted);
+    font-size: 11px;
+    margin-bottom: 17px;
+  }
+  #max-chat-mock .mc-message {
+    max-width: 82%;
+    align-self: flex-start;
+    padding: 11px 13px 7px;
+    border-radius: var(--mc-radius) var(--mc-radius) var(--mc-radius) 5px;
+    background: var(--mc-incoming);
+    color: var(--mc-bubble-text);
+    box-shadow: 0 1px 2px light-dark(#19243a0d, #0000001a);
+  }
+  #max-chat-mock .mc-message[data-own='true'] {
+    align-self: flex-end;
+    background: var(--mc-outgoing);
+    border-radius: var(--mc-radius) var(--mc-radius) 5px var(--mc-radius);
+  }
+  #max-chat-mock .mc-message-time {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 5px;
+    margin-top: 5px;
+    color: var(--mc-muted);
+    font-size: 11px;
+  }
+  #max-chat-mock .mc-message-status {
+    display: inline-flex;
+    align-items: center;
+  }
+  #max-chat-mock .mc-message-status[data-status='read'] {
+    color: var(--mc-accent);
+  }
+  #max-chat-mock .mc-message-status svg {
+    width: 15px;
+    height: 15px;
+  }
+  #max-chat-mock .mc-composer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 10px;
+    margin: 0;
+    padding: 15px 22px;
+    background: var(--mc-panel);
+    border-top: 1px solid var(--mc-line);
+  }
+  #max-chat-mock .mc-compose-input {
+    flex: 1;
+    min-width: 0;
+    resize: none;
+    height: 43px;
+    padding: 10px 13px;
+    border: 1px solid transparent;
+    border-radius: 13px;
+    background: var(--mc-input);
+    color: var(--mc-text);
+  }
+  #max-chat-mock .mc-compose-input:focus {
+    outline: none;
+    border-color: var(--mc-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--mc-accent) 18%, transparent);
+  }
+  #max-chat-mock .mc-send {
+    display: grid;
+    place-items: center;
+    width: 43px;
+    height: 43px;
+    flex: none;
+    border: 0;
+    border-radius: 50%;
+    color: #fff;
+    background: var(--mc-accent);
+  }
+  #max-chat-mock .mc-empty {
+    position: relative;
+    flex: 1;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    padding: 35px;
+    gap: 8px;
+    min-height: 520px;
+  }
+  #max-chat-mock .mc-empty-icon {
+    margin: 0 auto 9px;
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    color: var(--mc-accent);
+    background: var(--mc-selected);
+  }
+  #max-chat-mock .mc-empty-icon svg {
+    width: 30px;
+    height: 30px;
+  }
+  #max-chat-mock [hidden] {
+    display: none !important;
+  }
+  @media (max-width: 680px) {
+    #max-chat-mock .mc-shell {
+      grid-template-columns: 1fr;
+      min-height: 600px;
+    }
+    #max-chat-mock[data-view='sidebar'] .mc-pane {
+      display: none;
+    }
+    #max-chat-mock[data-view='chat'] .mc-sidebar {
+      display: none;
+    }
+    #max-chat-mock .mc-sidebar {
+      border-right: 0;
+    }
+    #max-chat-mock .mc-back {
+      display: flex;
+    }
+    #max-chat-mock .mc-account {
+      padding: 14px 16px;
+    }
+    #max-chat-mock .mc-search {
+      padding: 15px 16px;
+    }
+    #max-chat-mock .mc-header {
+      min-height: 70px;
+      padding: 13px 16px;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+    #max-chat-mock .mc-thread {
+      padding: 20px 16px;
+      min-height: 350px;
+    }
+    #max-chat-mock .mc-chat-item {
+      margin-bottom: 12px;
+    }
+    #max-chat-mock .mc-message {
+      max-width: 88%;
+    }
+    #max-chat-mock .mc-empty {
+      min-height: 350px;
+    }
+    #max-chat-mock input,
+    #max-chat-mock textarea {
+      font-size: 16px;
+    }
+    #max-chat-mock .mc-mode,
+    #max-chat-mock .mc-find,
+    #max-chat-mock .mc-back,
+    #max-chat-mock .mc-exit,
+    #max-chat-mock .mc-start {
+      min-height: 44px;
+    }
+  }
+</style>
+<div
+  id="max-chat-mock"
+  data-view="sidebar"
+  aria-label="Макет страницы чата в стиле MAX"
+>
+  <section class="mc-login-section" aria-label="Вход">
+    <form class="mc-login-card" novalidate>
+      <h1 class="mc-login-title">Подключение к GREEN-API</h1>
+      <div class="mc-secondary">Оба поля обязательны</div>
+      <label class="mc-login-label" for="mc-login-id">idInstance</label>
+      <input
+        class="mc-login-field"
+        id="mc-login-id"
+        inputmode="numeric"
+        autocomplete="off"
+        aria-describedby="mc-login-id-error"
+      />
+      <div class="mc-login-error" id="mc-login-id-error" hidden></div>
+      <label class="mc-login-label" for="mc-login-token"
+        >apiTokenInstance</label
+      >
+      <div class="mc-token-wrap">
+        <input
+          class="mc-login-field"
+          id="mc-login-token"
+          type="password"
+          autocomplete="off"
+          aria-describedby="mc-login-token-error"
+        /><button
+          class="mc-eye cursor-interaction"
+          type="button"
+          aria-label="Показать токен"
+          aria-pressed="false"
+        >
+          <i data-lucide="eye" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="mc-login-error" id="mc-login-token-error" hidden></div>
+      <button class="mc-login-submit cursor-interaction" type="submit">
+        Войти
+      </button>
+    </form>
+  </section>
+  <div class="mc-shell" hidden>
+    <aside class="mc-sidebar" aria-label="Аккаунт, поиск и чаты">
+      <div class="mc-account">
+        <div class="mc-avatar" aria-label="Аватар своего аккаунта">
+          <i data-lucide="user-round" aria-hidden="true"></i>
+        </div>
+        <div class="mc-account-copy">
+          <div class="mc-name">@marina_demo</div>
+          <div class="mc-connection">
+            <span class="mc-dot"></span>Telegram подключён
+          </div>
+        </div>
+        <button
+          class="mc-exit cursor-interaction"
+          type="button"
+          aria-label="Выйти из приложения"
+        >
+          <i data-lucide="log-out" aria-hidden="true"></i>Выйти
+        </button>
+      </div>
+      <form class="mc-search">
+        <h2 class="mc-search-title">Найти получателя</h2>
+        <div class="mc-modes" role="group" aria-label="Способ поиска">
+          <button
+            class="mc-mode cursor-interaction"
+            type="button"
+            data-mode="phone"
+            aria-pressed="true"
+          >
+            Телефон
+          </button>
+          <button
+            class="mc-mode cursor-interaction"
+            type="button"
+            data-mode="username"
+            aria-pressed="false"
+          >
+            @username
+          </button>
+        </div>
+        <label class="mc-label" for="mc-recipient">Номер телефона</label>
+        <div class="mc-search-row">
+          <input
+            class="mc-search-input"
+            id="mc-recipient"
+            inputmode="tel"
+            placeholder="12025550123"
+            autocomplete="off"
+          /><button class="mc-find cursor-interaction" type="submit">
+            Найти
+          </button>
+        </div>
+        <p class="mc-hint">С кодом страны, только цифры</p>
+        <div class="mc-result" role="status" hidden></div>
+        <div class="mc-found" hidden>
+          <div class="mc-secondary">Пользователь найден</div>
+          <div class="mc-found-row">
+            <div class="mc-name mc-found-name"></div>
+            <button class="mc-start cursor-interaction" type="button">
+              Написать
+            </button>
+          </div>
+        </div>
+      </form>
+      <button
+        class="mc-list-title cursor-interaction"
+        type="button"
+        aria-label="Показать состояние без выбранного чата"
+      >
+        Чаты
+      </button>
+      <div class="mc-no-chats">Пока нет чатов</div>
+      <button
+        class="mc-chat-item cursor-interaction"
+        type="button"
+        aria-pressed="false"
+        hidden
+      >
+        <span class="mc-avatar">А</span
+        ><span class="mc-chat-info"
+          ><span class="mc-chat-top"
+            ><span class="mc-name">@alex_demo</span
+            ><span class="mc-time">14:12</span></span
+          ><span class="mc-preview">Да, сообщение пришло!</span></span
+        >
+      </button>
+    </aside>
+    <main class="mc-pane" aria-label="Переписка">
+      <div class="mc-pattern" aria-hidden="true">
+        <span class="mc-brand-mark"
+          ><i data-lucide="message-square"></i><span>G</span></span
+        ><i data-lucide="messages-square"></i
+        ><i data-lucide="message-circle"></i
+        ><span class="mc-brand-mark"
+          ><i data-lucide="message-square"></i><span>G</span></span
+        ><i data-lucide="message-circle-more"></i
+        ><i data-lucide="message-square-text"></i
+        ><span class="mc-brand-mark"
+          ><i data-lucide="message-square"></i><span>G</span></span
+        ><i data-lucide="messages-square"></i
+        ><i data-lucide="message-circle"></i
+        ><i data-lucide="message-square-text"></i
+        ><i data-lucide="message-circle-more"></i
+        ><i data-lucide="messages-square"></i
+        ><span class="mc-brand-mark"
+          ><i data-lucide="message-square"></i><span>G</span></span
+        ><i data-lucide="message-circle"></i
+        ><i data-lucide="message-square-text"></i
+        ><span class="mc-brand-mark"
+          ><i data-lucide="message-square"></i><span>G</span></span
+        ><i data-lucide="message-circle-more"></i
+        ><i data-lucide="messages-square"></i
+        ><i data-lucide="message-circle"></i
+        ><span class="mc-brand-mark"
+          ><i data-lucide="message-square"></i><span>G</span></span
+        ><i data-lucide="message-square-text"></i
+        ><i data-lucide="message-circle"></i
+        ><span class="mc-brand-mark"
+          ><i data-lucide="message-square"></i><span>G</span></span
+        ><i data-lucide="messages-square"></i
+        ><i data-lucide="message-circle-more"></i>
+      </div>
+      <header class="mc-header" hidden>
+        <button
+          class="mc-back cursor-interaction"
+          type="button"
+          aria-label="К аккаунту, поиску и чатам"
+        >
+          <i data-lucide="arrow-left" aria-hidden="true"></i>Чаты
+        </button>
+        <div class="mc-avatar">А</div>
+        <div>
+          <div class="mc-name">@alex_demo</div>
+          <div class="mc-secondary">Telegram</div>
+        </div>
+        <button
+          class="mc-close cursor-interaction"
+          type="button"
+          aria-label="Закрыть чат"
+          data-tooltip="Закрыть чат"
+        >
+          <i data-lucide="x" aria-hidden="true"></i>
+        </button>
+      </header>
+      <div class="mc-thread" aria-live="polite" hidden></div>
+      <div class="mc-empty">
+        <div class="mc-empty-icon">
+          <i data-lucide="messages-square" aria-hidden="true"></i>
+        </div>
+        <div class="mc-name">Выберите чат</div>
+        <div class="mc-secondary">
+          Или найдите получателя слева,<br />чтобы начать переписку
+        </div>
+      </div>
+      <div class="mc-draft" hidden>
+        <div class="mc-name">Переписка ещё не начата</div>
+        <div class="mc-secondary">Отправьте первое сообщение</div>
+      </div>
+      <form class="mc-composer" hidden>
+        <textarea
+          class="mc-compose-input"
+          aria-label="Сообщение"
+          placeholder="Сообщение"
+          data-tooltip="Enter — отправить, Shift+Enter — новая строка"
+          rows="1"
+        ></textarea
+        ><button
+          class="mc-send cursor-interaction"
+          type="submit"
+          aria-label="Отправить сообщение"
+          data-tooltip="Отправить сообщение"
+        >
+          <i data-lucide="send" aria-hidden="true"></i>
+        </button>
+      </form>
+    </main>
+  </div>
+</div>
+<script>
+  ;(() => {
+    const root = document.getElementById('max-chat-mock')
+    const pattern = root.querySelector('.mc-pattern')
+    const patternMarks = Array.from(pattern.children)
+    for (let repeat = 0; repeat < 2; repeat += 1)
+      patternMarks.forEach((mark) => pattern.append(mark.cloneNode(true)))
+    const loginSection = root.querySelector('.mc-login-section')
+    const shell = root.querySelector('.mc-shell')
+    const loginId = root.querySelector('#mc-login-id')
+    const loginToken = root.querySelector('#mc-login-token')
+    let loginSubmitted = false
+    const timers = new Set()
+    function schedule(callback, delay) {
+      const timer = setTimeout(() => {
+        timers.delete(timer)
+        callback()
+      }, delay)
+      timers.add(timer)
+    }
+    const field = root.querySelector('.mc-search-input')
+    const label = root.querySelector('.mc-label')
+    const hint = root.querySelector('.mc-hint')
+    const result = root.querySelector('.mc-result')
+    const chat = root.querySelector('.mc-chat-item')
+    const thread = root.querySelector('.mc-thread')
+    const header = root.querySelector('.mc-header')
+    const composer = root.querySelector('.mc-composer')
+    const empty = root.querySelector('.mc-empty')
+    const found = root.querySelector('.mc-found')
+    const draft = root.querySelector('.mc-draft')
+    const histories = new Map()
+    const noChats = root.querySelector('.mc-no-chats')
+    const findButton = root.querySelector('.mc-find')
+    let searchVersion = 0
+    let recipient = '@alex_demo'
+    let foundRecipient = ''
+    let mode = 'phone'
+    function refreshIcons() {
+      if (globalThis.lucide)
+        lucide.createIcons({ attrs: { width: 16, height: 16 } })
+    }
+    function clearSearch() {
+      searchVersion += 1
+      findButton.disabled = false
+      findButton.textContent = 'Найти'
+      result.hidden = found.hidden = true
+    }
+    function openRecipient(name) {
+      recipient = name
+      const history = histories.get(name)
+      thread.replaceChildren(...(history || []))
+      thread.hidden = !history
+      draft.hidden = Boolean(history)
+      header.hidden = composer.hidden = false
+      empty.hidden = true
+      root.dataset.view = 'chat'
+      header.querySelector('.mc-name').textContent = name
+      header.querySelector('.mc-avatar').textContent = name
+        .replace('@', '')
+        .slice(0, 1)
+        .toUpperCase()
+      root
+        .querySelectorAll('.mc-chat-item')
+        .forEach((item) =>
+          item.setAttribute(
+            'aria-pressed',
+            String(item.dataset.recipient === name),
+          ),
+        )
+      refreshIcons()
+    }
+    chat.dataset.recipient = '@alex_demo'
+    root.querySelectorAll('[data-mode]').forEach((button) =>
+      button.addEventListener('click', () => {
+        mode = button.dataset.mode
+        root
+          .querySelectorAll('[data-mode]')
+          .forEach((item) =>
+            item.setAttribute('aria-pressed', String(item === button)),
+          )
+        field.value = ''
+        field.placeholder = mode === 'phone' ? '12025550123' : '@alex_demo'
+        field.inputMode = mode === 'phone' ? 'tel' : 'text'
+        label.textContent =
+          mode === 'phone' ? 'Номер телефона' : 'Telegram username'
+        hint.textContent =
+          mode === 'phone'
+            ? 'С кодом страны, только цифры'
+            : 'Можно вводить с @ или без него'
+        clearSearch()
+      }),
+    )
+    root.querySelector('.mc-search').addEventListener('submit', (event) => {
+      event.preventDefault()
+      clearSearch()
+      result.hidden = false
+      result.setAttribute('role', 'status')
+      const valid =
+        mode === 'phone'
+          ? /^[1-9]\d{0,14}$/.test(field.value)
+          : /^@?[a-zA-Z0-9_]{1,32}$/.test(field.value)
+      result.dataset.error = String(!valid)
+      if (!valid) {
+        result.setAttribute('role', 'alert')
+        result.textContent =
+          mode === 'phone'
+            ? 'Введите номер с кодом страны, только цифры'
+            : 'Введите корректный @username'
+        return
+      }
+      const version = searchVersion
+      const query = field.value.replace(/^@/, '').toLowerCase()
+      const searchMode = mode
+      result.dataset.error = 'false'
+      result.textContent = 'Ищем пользователя…'
+      findButton.disabled = true
+      findButton.textContent = 'Поиск…'
+      schedule(() => {
+        if (version !== searchVersion) return
+        findButton.disabled = false
+        findButton.textContent = 'Найти'
+        const exists = searchMode === 'username' && query === 'alex_demo'
+        result.hidden = exists
+        found.hidden = !exists
+        if (exists) {
+          foundRecipient = '@alex_demo'
+          found.querySelector('.mc-found-name').textContent = foundRecipient
+        } else {
+          result.dataset.error = 'true'
+          result.setAttribute('role', 'alert')
+          result.textContent =
+            searchMode === 'phone'
+              ? 'Не удалось найти по номеру. Он может быть скрыт настройками приватности. Попробуйте @username.'
+              : 'Пользователь не найден. Проверьте @username.'
+        }
+      }, 650)
+    })
+    field.addEventListener('input', clearSearch)
+    found
+      .querySelector('.mc-start')
+      .addEventListener('click', () => openRecipient(foundRecipient))
+    chat.addEventListener('click', () => openRecipient(chat.dataset.recipient))
+    root.querySelector('.mc-back').addEventListener('click', () => {
+      root.dataset.view = 'sidebar'
+    })
+    root
+      .querySelector('.mc-close')
+      .addEventListener('click', () =>
+        root.querySelector('.mc-list-title').click(),
+      )
+    root.querySelector('.mc-list-title').addEventListener('click', () => {
+      root.dataset.view = 'sidebar'
+      thread.hidden = draft.hidden = header.hidden = composer.hidden = true
+      empty.hidden = false
+      root
+        .querySelectorAll('.mc-chat-item')
+        .forEach((item) => item.setAttribute('aria-pressed', 'false'))
+    })
+    root
+      .querySelector('.mc-compose-input')
+      .addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' || event.shiftKey || event.isComposing) return
+        event.preventDefault()
+        if (!root.querySelector('.mc-send').disabled) composer.requestSubmit()
+      })
+    composer.addEventListener('submit', (event) => {
+      event.preventDefault()
+      const input = root.querySelector('.mc-compose-input')
+      if (!input.value.trim()) return
+      const message = document.createElement('div')
+      message.className = 'mc-message'
+      message.dataset.own = 'true'
+      message.append(document.createTextNode(input.value.trim()))
+      const time = document.createElement('span')
+      time.className = 'mc-message-time'
+      time.textContent = '14:13'
+      message.append(time)
+      thread.append(message)
+      thread.hidden = false
+      draft.hidden = true
+      const messageRecipient = recipient
+      let item = Array.from(root.querySelectorAll('.mc-chat-item')).find(
+        (button) => button.dataset.recipient === recipient,
+      )
+      if (!item) {
+        item = chat.cloneNode(true)
+        item.hidden = false
+        item.dataset.recipient = recipient
+        item.querySelector('.mc-name').textContent = recipient
+        item.querySelector('.mc-avatar').textContent = recipient
+          .replace('@', '')
+          .slice(0, 1)
+          .toUpperCase()
+        item.addEventListener('click', () =>
+          openRecipient(item.dataset.recipient),
+        )
+        chat.parentElement.append(item)
+      }
+      noChats.hidden = true
+      item.setAttribute('aria-pressed', 'true')
+      item.querySelector('.mc-preview').textContent = input.value.trim()
+      item.querySelector('.mc-time').textContent = '14:13'
+      input.value = ''
+      const status = document.createElement('span')
+      status.className = 'mc-message-status'
+      status.setAttribute('role', 'img')
+      function updateStatus(value, name, icon) {
+        status.dataset.status = value
+        status.setAttribute('aria-label', name)
+        status.dataset.tooltip = name
+        const mark = document.createElement('i')
+        mark.dataset.lucide = icon
+        mark.setAttribute('aria-hidden', 'true')
+        status.replaceChildren(mark)
+        refreshIcons()
+      }
+      item.hidden = false
+      time.append(status)
+      const messages = histories.get(messageRecipient) || []
+      messages.push(message)
+      histories.set(messageRecipient, messages)
+      updateStatus('pending', 'Отправляется', 'clock-3')
+      const sendButton = root.querySelector('.mc-send')
+      sendButton.disabled = true
+      schedule(() => {
+        updateStatus('delivered', 'Доставлено', 'check')
+        sendButton.disabled = false
+      }, 650)
+      schedule(() => {
+        updateStatus('read', 'Прочитано', 'check-check')
+        const reply = document.createElement('div')
+        reply.className = 'mc-message'
+        reply.textContent = 'Привет! Сообщение получила, всё работает.'
+        const replyTime = document.createElement('span')
+        replyTime.className = 'mc-message-time'
+        replyTime.textContent = '14:14'
+        reply.append(replyTime)
+        histories.get(messageRecipient).push(reply)
+        if (recipient === messageRecipient) thread.append(reply)
+        item.querySelector('.mc-preview').textContent =
+          'Привет! Сообщение получила, всё работает.'
+        item.querySelector('.mc-time').textContent = '14:14'
+      }, 1600)
+    })
+    function validateLogin() {
+      const idError = /^\d+$/.test(loginId.value)
+        ? ''
+        : loginId.value
+          ? 'Введите idInstance: только цифры'
+          : 'Введите idInstance'
+      const tokenError = loginToken.value.trim()
+        ? ''
+        : 'Введите apiTokenInstance'
+      ;[
+        [loginId, '#mc-login-id-error', idError],
+        [loginToken, '#mc-login-token-error', tokenError],
+      ].forEach(([input, selector, error]) => {
+        const element = root.querySelector(selector)
+        input.setAttribute('aria-invalid', String(Boolean(error)))
+        element.textContent = error
+        element.hidden = !error
+      })
+      return !idError && !tokenError
+    }
+    root.querySelector('.mc-login-card').addEventListener('submit', (event) => {
+      event.preventDefault()
+      loginSubmitted = true
+      if (!validateLogin()) return
+      const button = root.querySelector('.mc-login-submit')
+      button.disabled = true
+      button.dataset.loading = 'true'
+      root.querySelector('.mc-login-card').setAttribute('aria-busy', 'true')
+      button.textContent = 'Входим…'
+      schedule(() => {
+        loginSection.hidden = true
+        shell.hidden = false
+        button.disabled = false
+        button.dataset.loading = 'false'
+        root.querySelector('.mc-login-card').setAttribute('aria-busy', 'false')
+        button.textContent = 'Войти'
+        loginToken.value = ''
+      }, 650)
+    })
+    ;[loginId, loginToken].forEach((input) =>
+      input.addEventListener('input', () => {
+        if (loginSubmitted) validateLogin()
+      }),
+    )
+    root.querySelector('.mc-eye').addEventListener('click', (event) => {
+      const button = event.currentTarget
+      const visible = loginToken.type === 'password'
+      loginToken.type = visible ? 'text' : 'password'
+      button.setAttribute(
+        'aria-label',
+        visible ? 'Скрыть токен' : 'Показать токен',
+      )
+      button.setAttribute('aria-pressed', String(visible))
+      button.innerHTML = visible
+        ? '<i data-lucide="eye-off" aria-hidden="true"></i>'
+        : '<i data-lucide="eye" aria-hidden="true"></i>'
+      refreshIcons()
+    })
+    root.querySelector('.mc-exit').addEventListener('click', () => {
+      timers.forEach(clearTimeout)
+      timers.clear()
+      histories.clear()
+      root.querySelectorAll('.mc-chat-item').forEach((item) => {
+        if (item !== chat) item.remove()
+      })
+      chat.hidden = true
+      noChats.hidden = false
+      thread.replaceChildren()
+      root.querySelector('.mc-list-title').click()
+      clearSearch()
+      field.value = ''
+      root.querySelector('.mc-compose-input').value = ''
+      root.querySelector('.mc-send').disabled = false
+      shell.hidden = true
+      loginSection.hidden = false
+      loginId.value = loginToken.value = ''
+      loginSubmitted = false
+      loginToken.type = 'password'
+      const eyeButton = root.querySelector('.mc-eye')
+      eyeButton.setAttribute('aria-label', 'Показать токен')
+      eyeButton.setAttribute('aria-pressed', 'false')
+      eyeButton.innerHTML = '<i data-lucide="eye" aria-hidden="true"></i>'
+      refreshIcons()
+      root.querySelectorAll('.mc-login-error').forEach((element) => {
+        element.hidden = true
+      })
+      ;[loginId, loginToken].forEach((input) =>
+        input.removeAttribute('aria-invalid'),
+      )
+      loginId.focus()
+    })
+  })()
+</script>

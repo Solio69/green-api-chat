@@ -1,0 +1,17 @@
+@use '../../styles/tokens' as tokens;
+
+.chatWorkspace {
+  display: grid;
+  grid-template-columns: tokens.$chat-sidebar-width minmax(0, 1fr);
+  min-width: 0;
+  min-height: tokens.$chat-workspace-min-height;
+  border: tokens.$border-width solid var(--ui-panel-border-color);
+  border-radius: tokens.$max-home-radius;
+  background: var(--ui-surface-color);
+  box-shadow: var(--ui-panel-shadow);
+
+  @media (max-width: tokens.$chat-mobile-breakpoint) {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+}

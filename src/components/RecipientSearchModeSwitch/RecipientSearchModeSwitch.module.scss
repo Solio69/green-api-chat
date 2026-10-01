@@ -1,0 +1,40 @@
+@use '../../styles/tokens' as tokens;
+@use '../../styles/mixins' as mixins;
+
+.recipientSearchModeSwitch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: tokens.$search-control-gap;
+  padding: tokens.$search-control-gap;
+  border-radius: tokens.$radius-control;
+  background: var(--ui-canvas-color);
+
+  &__button {
+    @include mixins.focus-ring;
+
+    flex: 1;
+    min-height: tokens.$control-icon-button-size;
+    padding: tokens.$space-xs;
+    border: 0;
+    border-radius: tokens.$radius-control;
+    background: tokens.$color-transparent;
+    color: var(--ui-muted-color);
+    font: inherit;
+    font-size: tokens.$font-size-caption;
+    cursor: pointer;
+
+    &[aria-pressed='true'] {
+      background: var(--ui-surface-color);
+      box-shadow: tokens.$shadow-control;
+      color: var(--ui-text-color);
+    }
+
+    &:enabled:hover {
+      color: var(--ui-text-color);
+    }
+
+    &:disabled {
+      cursor: default;
+    }
+  }
+}

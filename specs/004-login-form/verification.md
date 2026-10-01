@@ -22,11 +22,11 @@ Production-build и существующие HTTP-проверки health про
 
 npm run test:e2e -- tests/e2e/home.spec.ts tests/e2e/login-form.spec.ts tests/e2e/login-form-safety.spec.ts
 
-| Этап | Фактический результат |
-| --- | --- |
-| Red | Подтверждён: exit 1, 14 failed; отсутствуют новый h1 или поле idInstance, element(s) not found. Сборка и сервер работают; продуктовый код ещё не изменён |
-| Green | Passed: 14 passed, 9.8 s, exit 0; та же команда |
-| Refactor | Passed: 14 passed, 9.9 s, exit 0; та же команда |
+| Этап     | Фактический результат                                                                                                                                    |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Red      | Подтверждён: exit 1, 14 failed; отсутствуют новый h1 или поле idInstance, element(s) not found. Сборка и сервер работают; продуктовый код ещё не изменён |
+| Green    | Passed: 14 passed, 9.8 s, exit 0; та же команда                                                                                                          |
+| Refactor | Passed: 14 passed, 9.9 s, exit 0; та же команда                                                                                                          |
 
 Тесты сохранены в проекте. Проверяются пользовательское поведение и побочные
 эффекты; ожидания контрактов независимы от кода приложения. Общие
@@ -57,16 +57,16 @@ npm run test:e2e -- tests/e2e/login-form.spec.ts --grep 'hides and reveals|place
 
 ## Итоговые проверки
 
-| Проверка | Статус | Результат |
-| --- | --- | --- |
-| npm run typecheck | Passed | Exit 0 после правок ревью |
-| npm run lint | Passed | Exit 0, без предупреждений ESLint |
-| npm run format:check | Passed | Exit 0 |
-| npm run test:e2e | Passed | Итоговый прогон: 17 passed, 9.5 s, exit 0; без skipped |
-| Production-build | Passed | Входит в итоговый test:e2e |
-| npm run test:e2e -- --list --reporter=list | Passed | 17 тестов в 4 файлах, один Chromium-проект |
-| git diff --check | Passed | Нет ошибок пробелов; Git предупреждает о политике LF/CRLF |
-| Очистка процессов | Passed | Серверы тестов и визуальной приёмки завершены; порты свободны |
+| Проверка                                   | Статус | Результат                                                     |
+| ------------------------------------------ | ------ | ------------------------------------------------------------- |
+| npm run typecheck                          | Passed | Exit 0 после правок ревью                                     |
+| npm run lint                               | Passed | Exit 0, без предупреждений ESLint                             |
+| npm run format:check                       | Passed | Exit 0                                                        |
+| npm run test:e2e                           | Passed | Итоговый прогон: 17 passed, 9.5 s, exit 0; без skipped        |
+| Production-build                           | Passed | Входит в итоговый test:e2e                                    |
+| npm run test:e2e -- --list --reporter=list | Passed | 17 тестов в 4 файлах, один Chromium-проект                    |
+| git diff --check                           | Passed | Нет ошибок пробелов; Git предупреждает о политике LF/CRLF     |
+| Очистка процессов                          | Passed | Серверы тестов и визуальной приёмки завершены; порты свободны |
 
 Полный набор: 15 браузерных проверок формы и 2 неизменённых HTTP-теста health.
 Отдельных unit-тестов и unit-runner пока нет; уровень тестирования следующих

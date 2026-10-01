@@ -1,4 +1,9 @@
 @use '../styles/tokens' as tokens;
+@use '../styles/theme' as theme;
+
+:root {
+  @include theme.system-theme;
+}
 
 *,
 *::before,
@@ -11,7 +16,7 @@ body {
   min-height: 100svh;
   margin: 0;
   padding: tokens.$padding-page;
-  background: tokens.$color-canvas;
-  color: tokens.$color-text-primary;
+  background: var(--ui-canvas-color);
+  color: var(--ui-text-color);
   font-family: tokens.$font-family-base;
 }

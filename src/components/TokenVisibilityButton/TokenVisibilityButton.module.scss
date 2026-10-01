@@ -2,7 +2,7 @@
 @use '../../styles/mixins' as mixins;
 
 .tokenVisibilityButton {
-  @include mixins.focus-ring;
+  @include mixins.focus-ring(var(--ui-focus-color, #{tokens.$color-focus}));
 
   position: absolute;
   inset-inline-end: tokens.$border-width * 2;
@@ -16,7 +16,7 @@
   place-items: center;
   transform: translateY(-50%);
   background: tokens.$color-transparent;
-  color: tokens.$color-brand;
+  color: var(--ui-action-color, #{tokens.$color-brand});
   font: inherit;
   cursor: pointer;
 
@@ -25,7 +25,7 @@
   }
 
   &:enabled:hover {
-    color: tokens.$color-interactive;
+    color: var(--ui-action-hover-color, #{tokens.$color-interactive});
   }
 
   &:disabled {

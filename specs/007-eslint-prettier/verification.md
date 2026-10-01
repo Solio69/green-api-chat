@@ -16,9 +16,9 @@
 Установка нужной зависимости прямо разрешена пользователем в этом чате.
 Выполнена команда:
 
-~~~powershell
+```powershell
 npm install --save-dev --save-exact eslint-plugin-import@2.32.0 --ignore-scripts
-~~~
+```
 
 Exit code 0, audit: 0 vulnerabilities. Плагин уже был установлен транзитивно;
 lock-файл получает только прямую корневую devDependency. Версии остальных пакетов
@@ -29,17 +29,17 @@ lock-файл получает только прямую корневую devDep
 ESLint API и Prettier проверены на строках в памяти, без постоянных нарушающих
 файлов или нового тест-раннера: 18 Passed, 0 Failed.
 
-| Проверка | Результат |
-| --- | --- |
-| any, unused TS value, implicit type import | Соответствующие ошибки ESLint |
-| Arrow body с одним return, строковый +, boolean-тернарник | Соответствующие ошибки ESLint |
+| Проверка                                                                   | Результат                     |
+| -------------------------------------------------------------------------- | ----------------------------- |
+| any, unused TS value, implicit type import                                 | Соответствующие ошибки ESLint |
+| Arrow body с одним return, строковый +, boolean-тернарник                  | Соответствующие ошибки ESLint |
 | Порядок импортов, пустая строка между imports, отсутствие строки после них | Соответствующие ошибки ESLint |
-| Arrow body и unused value в mjs | Ошибки применимых JS-правил |
-| Корректные примеры по путям src, tests и корневой mjs | Без ошибок |
-| Действующие правила Next.js/React | Сохранены |
-| Prettier semi false | Обычные конечные ; удалены |
-| ASI-опасная строка | Защитный ; сохранён |
-| Повторное форматирование примера | Результат неизменен |
+| Arrow body и unused value в mjs                                            | Ошибки применимых JS-правил   |
+| Корректные примеры по путям src, tests и корневой mjs                      | Без ошибок                    |
+| Действующие правила Next.js/React                                          | Сохранены                     |
+| Prettier semi false                                                        | Обычные конечные ; удалены    |
+| ASI-опасная строка                                                         | Защитный ; сохранён           |
+| Повторное форматирование примера                                           | Результат неизменен           |
 
 Первый lint:fix выявил оставшийся inline import типа Page в login-flow.spec.ts.
 Он оформлен отдельным import type; следующий lint:fix прошёл.
@@ -48,11 +48,11 @@ ESLint API и Prettier проверены на строках в памяти, �
 
 ## Автоисправления и совместимость
 
-~~~powershell
+```powershell
 npm run lint:fix
 npm run format
 npm exec --no -- eslint-config-prettier src/components/LoginForm/LoginForm.tsx src/lib/green-api/get-state.ts tests/e2e/login-flow.spec.ts eslint.config.mjs prettier.config.mjs
-~~~
+```
 
 - Итоговые команды: exit code 0.
 - Проверка eslint-config-prettier: конфликтующих правил нет.
@@ -65,15 +65,15 @@ npm exec --no -- eslint-config-prettier src/components/LoginForm/LoginForm.tsx s
 Перед production-проверками подтверждено отсутствие dev-сервера в этой папке.
 Проверки выполнены после всей серии изменений.
 
-| Команда | Exit code | Результат |
-| --- | --- | --- |
-| npm run lint | 0 | Passed, без предупреждений линтера |
-| npm run format:check | 0 | Passed |
-| npm run typecheck | 0 | Passed |
-| npm run test:integration | 0 | 66 Passed, 0 skipped |
-| npm run test:e2e | 0 | Production build и 24 Passed, 0 skipped |
-| git --no-optional-locks diff --check | 0 | Passed |
-| git --no-optional-locks diff --cached --check | 0 | Passed |
+| Команда                                       | Exit code | Результат                               |
+| --------------------------------------------- | --------- | --------------------------------------- |
+| npm run lint                                  | 0         | Passed, без предупреждений линтера      |
+| npm run format:check                          | 0         | Passed                                  |
+| npm run typecheck                             | 0         | Passed                                  |
+| npm run test:integration                      | 0         | 66 Passed, 0 skipped                    |
+| npm run test:e2e                              | 0         | Production build и 24 Passed, 0 skipped |
+| git --no-optional-locks diff --check          | 0         | Passed                                  |
+| git --no-optional-locks diff --cached --check | 0         | Passed                                  |
 
 Предупреждение Node о NO_COLOR/FORCE_COLOR относится к тестовому окружению
 и не является ошибкой тестов. Проверки Spec Kit повторно не запускались:

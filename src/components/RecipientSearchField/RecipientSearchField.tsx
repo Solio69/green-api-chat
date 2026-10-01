@@ -13,7 +13,9 @@ const {
 type RecipientSearchFieldProps = {
   id: string
   errorId: string
+  hintId: string
   label: string
+  alternateLabel: string
   value: string
   error: string
   isPhone: boolean
@@ -24,7 +26,9 @@ type RecipientSearchFieldProps = {
 export const RecipientSearchField = ({
   id,
   errorId,
+  hintId,
   label,
+  alternateLabel,
   value,
   error,
   isPhone,
@@ -36,9 +40,14 @@ export const RecipientSearchField = ({
 
   return (
     <div className={styles.recipientSearchField}>
-      <label className={styles.recipientSearchField__label} htmlFor={id}>
-        {label}
-      </label>
+      <div className={styles.recipientSearchField__labels}>
+        <label className={styles.recipientSearchField__label} htmlFor={id}>
+          {label}
+        </label>
+        <span className={styles.recipientSearchField__label} aria-hidden="true">
+          {alternateLabel}
+        </span>
+      </div>
       <input
         className={styles.recipientSearchField__input}
         id={id}
@@ -52,7 +61,7 @@ export const RecipientSearchField = ({
         value={value}
         onChange={handleValueChange}
         aria-invalid={Boolean(error)}
-        aria-describedby={error ? errorId : undefined}
+        aria-describedby={error ? `${hintId} ${errorId}` : hintId}
       />
       <p
         className={styles.recipientSearchField__error}

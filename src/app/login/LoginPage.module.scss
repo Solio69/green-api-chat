@@ -3,30 +3,30 @@
 
 .page {
   display: grid;
-  min-height: 100svh;
+  min-height: calc(100svh - 2 * tokens.$padding-page);
   place-items: center;
 }
 
 .login {
-  width: min(100%, tokens.$content-max-width);
+  width: min(100%, tokens.$max-login-width);
   min-width: 0;
   margin-inline: auto;
-  padding: tokens.$padding-panel;
-  border: tokens.$border-width solid tokens.$color-border;
-  border-top: tokens.$card-stripe-width solid tokens.$color-card-stripe;
-  border-radius: tokens.$radius-panel;
-  background: tokens.$color-surface;
-  box-shadow: tokens.$shadow-panel;
+  padding: tokens.$max-login-padding;
+  border: tokens.$border-width solid var(--ui-panel-border-color);
+  border-radius: tokens.$max-login-radius;
+  background: var(--ui-surface-color);
+  box-shadow: var(--ui-panel-shadow);
+  color: var(--ui-text-color);
 
   &__title {
     @include mixins.typography(
-      $font-size: tokens.$font-size-heading,
+      $font-size: tokens.$max-heading-size,
       $line-height: tokens.$line-height-heading,
-      $font-weight: tokens.$font-weight-bold
+      $font-weight: tokens.$max-heading-weight
     );
 
     margin: 0 0 tokens.$space-md;
-    color: tokens.$color-text-primary;
+    color: var(--ui-text-color);
     overflow-wrap: anywhere;
   }
 }

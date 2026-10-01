@@ -1,9 +1,15 @@
 @use 'tokens';
 
-@mixin focus-ring {
+@mixin focus-ring($color: var(--ui-focus-color, #{tokens.$color-focus})) {
   &:focus-visible {
-    outline: tokens.$focus-width solid tokens.$color-focus;
+    outline: tokens.$focus-width solid $color;
     outline-offset: tokens.$focus-offset;
+  }
+
+  @media (forced-colors: active) {
+    &:focus-visible {
+      outline-color: tokens.$color-system-focus;
+    }
   }
 }
 
@@ -21,7 +27,7 @@
 @mixin error-message {
   min-height: tokens.$error-min-height;
   margin: 0;
-  color: tokens.$color-error;
+  color: var(--ui-error-color, #{tokens.$color-error});
   font-size: tokens.$font-size-caption;
   overflow-wrap: anywhere;
 }

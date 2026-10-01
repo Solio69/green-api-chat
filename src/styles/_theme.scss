@@ -1,0 +1,43 @@
+@use 'tokens';
+
+@mixin system-theme {
+  --ui-link-color: #{tokens.$color-max-action};
+  --ui-action-color: #{tokens.$color-max-action};
+  --ui-action-hover-color: #{tokens.$color-max-action-hover};
+  --ui-focus-color: #{tokens.$color-max-action};
+  --ui-field-border-color: #{tokens.$color-max-field-border};
+  --ui-text-color: #{tokens.$color-max-text};
+  --ui-muted-color: #{tokens.$color-max-muted};
+  --ui-focus-shadow: #{tokens.$shadow-max-focus};
+  --ui-canvas-color: #{tokens.$color-max-canvas};
+  --ui-surface-color: #{tokens.$color-surface};
+  --ui-on-action-color: #{tokens.$color-on-interactive};
+  --ui-error-color: #{tokens.$color-error};
+  --ui-error-shadow: #{tokens.$shadow-max-error};
+  --ui-panel-border-color: #{tokens.$color-max-card-border};
+  --ui-panel-shadow: #{tokens.$shadow-max-panel};
+  --ui-selected-color: #{tokens.$color-max-selected};
+  --ui-success-color: #{tokens.$color-brand};
+
+  color-scheme: light dark;
+
+  @media (prefers-color-scheme: dark) {
+    --ui-link-color: #{tokens.$color-max-action-hover-dark};
+    --ui-action-color: #{tokens.$color-max-action-dark};
+    --ui-action-hover-color: #{tokens.$color-max-action-hover-dark};
+    --ui-focus-color: #{tokens.$color-max-action-dark};
+    --ui-field-border-color: #{tokens.$color-max-border-dark};
+    --ui-text-color: #{tokens.$color-max-text-dark};
+    --ui-muted-color: #{tokens.$color-max-muted-dark};
+    --ui-focus-shadow: #{tokens.$shadow-max-focus-dark};
+    --ui-canvas-color: #{tokens.$color-max-canvas-dark};
+    --ui-surface-color: #{tokens.$color-max-surface-dark};
+    --ui-on-action-color: #{tokens.$color-max-canvas-dark};
+    --ui-error-color: #{tokens.$color-max-error-dark};
+    --ui-error-shadow: #{tokens.$shadow-max-error-dark};
+    --ui-panel-border-color: #{tokens.$color-max-border-dark};
+    --ui-panel-shadow: #{tokens.$shadow-max-panel-dark};
+    --ui-selected-color: #{tokens.$color-max-selected-dark};
+    --ui-success-color: #{tokens.$color-border};
+  }
+}

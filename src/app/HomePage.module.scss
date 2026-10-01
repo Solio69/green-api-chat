@@ -1,0 +1,34 @@
+@use '../styles/tokens' as tokens;
+@use '../styles/mixins' as mixins;
+
+.homePage {
+  width: 100%;
+  min-width: 0;
+  margin-inline: auto;
+
+  &__content {
+    max-width: tokens.$content-max-width;
+    margin-inline: auto;
+    padding: tokens.$account-header-padding-inline;
+    border: tokens.$border-width solid var(--ui-panel-border-color);
+    border-radius: tokens.$max-home-radius;
+    background: var(--ui-surface-color);
+    box-shadow: var(--ui-panel-shadow);
+  }
+
+  &__listHeading {
+    margin: 0;
+    font-size: tokens.$font-size-caption;
+    font-weight: tokens.$max-heading-weight;
+  }
+
+  &__retryLink {
+    @include mixins.focus-ring;
+
+    color: var(--ui-link-color);
+
+    &:hover {
+      color: var(--ui-action-hover-color);
+    }
+  }
+}

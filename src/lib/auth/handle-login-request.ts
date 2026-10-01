@@ -1,8 +1,9 @@
-import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
+import { resolveLogin } from './resolve-login'
 import type {
   InstanceCredentials,
   StateResult,
 } from '@/lib/green-api/get-state'
+import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
 import {
   CACHE_CONTROL,
   HTTP_CONTENT_TYPE,
@@ -10,7 +11,6 @@ import {
   HTTP_STATUS,
   HTTP_SYNTAX,
 } from '@/lib/http/constants'
-import { resolveLogin } from './resolve-login'
 
 const { INVALID_REQUEST } = API_ERROR_CODE
 const { ERROR: RESPONSE_ERROR } = API_RESPONSE_STATUS

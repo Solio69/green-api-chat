@@ -1,4 +1,5 @@
 import { setTimeout as wait } from 'node:timers/promises'
+import { isRecord } from '@/lib/api/is-record'
 import { API_ERROR_CODE } from '@/lib/api/constants'
 import {
   CACHE_CONTROL,
@@ -73,19 +74,22 @@ export type StateResult =
         | typeof INVALID_UPSTREAM_RESPONSE
     }
 
-const classifyBadRequest = (responseText: string): StateResult => {
+export const classifyBadRequest = (
+  responseText: string,
+): Exclude<StateResult, { kind: typeof AUTHORIZED }> => {
   const normalized = responseText.toLowerCase()
-  if (normalized.includes(ERROR_STARTING) || normalized.includes(AMBIGUOUS))
-    return { kind: RETRY_LATER }
+  const isStarting =
+    normalized.includes(ERROR_STARTING) || normalized.includes(AMBIGUOUS)
+  if (isStarting) return { kind: RETRY_LATER }
   if (normalized.includes(EXPIRED.toLowerCase()))
     return { kind: INSTANCE_EXPIRED }
+
   return { kind: INVALID_UPSTREAM_RESPONSE }
 }
 
-const classifyState = (value: unknown): StateResult => {
-  if (!value || typeof value !== 'object' || Array.isArray(value))
-    return { kind: INVALID_UPSTREAM_RESPONSE }
-  const stateInstance = (value as Record<string, unknown>).stateInstance
+export const classifyState = (value: unknown): StateResult => {
+  if (!isRecord(value)) return { kind: INVALID_UPSTREAM_RESPONSE }
+  const { stateInstance } = value
   switch (stateInstance) {
     case AUTHORIZED:
       return { kind: AUTHORIZED, body: { stateInstance: AUTHORIZED } }

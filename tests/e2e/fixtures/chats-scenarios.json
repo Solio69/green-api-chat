@@ -1,0 +1,17 @@
+{
+  "99001401": {
+    "body": [
+      {
+        "chatId": "chat-1",
+        "type": "user",
+        "name": "Демо",
+        "username": "@demo",
+        "phoneNumber": 0
+      },
+      { "chatId": "group-1", "type": "group" }
+    ]
+  },
+  "99001402": { "body": [] },
+  "99001403": { "body": {}, "status": 401 },
+  "99001404": { "body": {}, "status": 503 }
+}

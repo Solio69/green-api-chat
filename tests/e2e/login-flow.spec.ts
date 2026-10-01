@@ -35,6 +35,7 @@ const {
   OUTPUT_SELECTOR,
   ATTR_ARIA_INVALID,
   BOOLEAN_TRUE,
+  EVENT_REQUEST,
 } = TEST_UI
 
 const fillCredentials = async (page: Page) => {
@@ -65,6 +66,12 @@ test('login flow: authorized response opens home after one POST', async ({
   })
   await page.goto(LOGIN)
   await fillCredentials(page)
+  let documentNavigations = 0
+  page.on(EVENT_REQUEST, (request) => {
+    const isMainNavigation =
+      request.isNavigationRequest() && request.frame() === page.mainFrame()
+    if (isMainNavigation) documentNavigations += 1
+  })
   await page.getByRole(ROLE_BUTTON, { name: SUBMIT, exact: true }).click()
   await expect(page).toHaveURL(HOME)
   await expect(
@@ -72,6 +79,7 @@ test('login flow: authorized response opens home after one POST', async ({
   ).toBeVisible()
   await expect(page.locator(OUTPUT_SELECTOR)).toHaveCount(0)
   expect(posts).toBe(1)
+  expect(documentNavigations).toBe(0)
 })
 
 test('login flow: invalid token is shown at token field and input remains', async ({

@@ -11,7 +11,7 @@
 
 Для терминала:
 
-~~~powershell
+```powershell
 npm run lint:fix
 npm run format
 npm run lint
@@ -19,7 +19,7 @@ npm run format:check
 npm run typecheck
 npm run test:integration
 npm run test:e2e
-~~~
+```
 
 После git clone использовать npm ci. Зависимость eslint-plugin-import
 объявлена напрямую для воспроизводимого подключения правил.

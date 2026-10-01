@@ -18,7 +18,7 @@
 
   &__hint {
     margin: 0;
-    color: tokens.$color-text-secondary;
+    color: var(--ui-muted-color, #{tokens.$color-text-secondary});
     font-size: tokens.$font-size-caption;
   }
 
@@ -26,30 +26,28 @@
     @include mixins.error-message;
   }
 
-  &__help {
-    margin: tokens.$space-md 0 0;
-    color: tokens.$color-text-secondary;
+  &__link {
+    @include mixins.focus-ring(var(--ui-focus-color, #{tokens.$color-focus}));
+
+    display: block;
+    margin-top: tokens.$space-sm;
+    color: var(--ui-link-color, #{tokens.$color-interactive});
     font-size: tokens.$font-size-caption;
     overflow-wrap: anywhere;
-  }
-
-  &__question {
-    display: block;
-    margin-bottom: tokens.$space-xs;
-  }
-
-  &__link {
-    @include mixins.focus-ring;
-
-    color: tokens.$color-interactive;
 
     &:hover {
-      color: tokens.$color-interactive-hover;
+      color: var(--ui-action-hover-color, #{tokens.$color-interactive-hover});
     }
   }
 
-  &__note {
-    display: block;
-    margin-top: tokens.$space-xs;
+  &__status {
+    position: absolute;
+    width: tokens.$visually-hidden-size;
+    height: tokens.$visually-hidden-size;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 }

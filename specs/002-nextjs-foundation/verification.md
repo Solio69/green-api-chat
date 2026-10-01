@@ -16,34 +16,34 @@ JSON-ответов — в src/lib/api/constants.ts. В health они дестр
 
 ## Проверки
 
-| Проверка | Статус | Фактический результат |
-| --- | --- | --- |
-| Среда | Passed | Node 24.14.1, npm 11.11.0 |
-| npm install и npm ci | Passed | Выполнены пользователем; npm ci: 356 пакетов, audit 357, 0 vulnerabilities по предоставленному выводу |
-| Lock-файл | Passed | lockfileVersion 3; 12 прямых версий совпадают; хеш после npm ci не изменился; resolved URL только registry.npmjs.org |
-| npm ls --depth=0 | Passed | exit 0, отсутствуют missing/invalid; optional/extraneous описаны ниже |
-| npm run typecheck | Passed | exit 0 на итоговой конфигурации |
-| npm run lint | Passed | exit 0, предупреждений нет |
-| npm run format:check | Passed | exit 0 |
-| Отрицательный пример TypeScript | Passed | Несовместимый тип дал TS2322 и exit 2 |
-| Отрицательный пример ESLint | Passed | Неиспользуемая переменная дала no-unused-vars и exit 1 |
-| Отрицательный пример Prettier | Passed | Неформатированный quality-probe.ts дал exit 1 |
-| Удаление временного примера | Passed | Удалён только созданный агентом src/quality-probe.ts; итоговые проверки повторены успешно |
-| npm run dev | Passed | Локальный запуск; / возвращает 200, согласованный заголовок и текст |
-| Health dev | Passed | Два GET: 200, application/json, no-store, только {"status":"ok"}; POST: 405 |
-| Браузер dev | Passed | Страница просмотрена; один main/h1, lang=ru, CSS Modules и цвета применены; ошибок/предупреждений консоли нет |
-| npm run build | Passed | exit 0; Next 16.3.7/Turbopack; / статический, /api/health отмечен ƒ Dynamic |
-| npm run start | Passed | Production-сервер запускается; / возвращает 200 |
-| Health production | Passed | Два GET и POST повторяют контракт dev |
-| Браузер production | Passed | Содержимое и стили подтверждены; один main/h1, lang=ru; ошибок/предупреждений консоли нет |
-| Геометрия production | Passed | Viewport 1280×720 и 360×800; панели 640px и 328px; текст читаем, scrollWidth равен ширине viewport |
-| SCSS | Passed | 20 используемых переменных, цвета только в tokens; typography применяется дважды; Sass компилируется в build |
-| Правила Git ignore | Passed | 13 исключаемых путей и 8 сохраняемых путей проверены через git check-ignore --no-index |
-| diff | Passed | git diff --check и git diff --cached --check: exit 0 |
-| Сохранность | Passed | Исполняемые файлы Spec Kit и Git-политика сохранены; AGENTS.md содержит согласованные правила TDD и API-констант |
-| Git index | Passed | Совпадает со снимком начала проверок; агент staging не менял |
-| Очистка проверки | Passed | Собственные dev/production-процессы остановлены; порт 3101 освобождён |
-| Итоговый read-only анализ | Passed | Список и SHA-256 66 файлов неизменны; покрытие 17 FR/SC полное; 114 локальных ссылок без пропусков |
+| Проверка                        | Статус | Фактический результат                                                                                                |
+| ------------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------- |
+| Среда                           | Passed | Node 24.14.1, npm 11.11.0                                                                                            |
+| npm install и npm ci            | Passed | Выполнены пользователем; npm ci: 356 пакетов, audit 357, 0 vulnerabilities по предоставленному выводу                |
+| Lock-файл                       | Passed | lockfileVersion 3; 12 прямых версий совпадают; хеш после npm ci не изменился; resolved URL только registry.npmjs.org |
+| npm ls --depth=0                | Passed | exit 0, отсутствуют missing/invalid; optional/extraneous описаны ниже                                                |
+| npm run typecheck               | Passed | exit 0 на итоговой конфигурации                                                                                      |
+| npm run lint                    | Passed | exit 0, предупреждений нет                                                                                           |
+| npm run format:check            | Passed | exit 0                                                                                                               |
+| Отрицательный пример TypeScript | Passed | Несовместимый тип дал TS2322 и exit 2                                                                                |
+| Отрицательный пример ESLint     | Passed | Неиспользуемая переменная дала no-unused-vars и exit 1                                                               |
+| Отрицательный пример Prettier   | Passed | Неформатированный quality-probe.ts дал exit 1                                                                        |
+| Удаление временного примера     | Passed | Удалён только созданный агентом src/quality-probe.ts; итоговые проверки повторены успешно                            |
+| npm run dev                     | Passed | Локальный запуск; / возвращает 200, согласованный заголовок и текст                                                  |
+| Health dev                      | Passed | Два GET: 200, application/json, no-store, только {"status":"ok"}; POST: 405                                          |
+| Браузер dev                     | Passed | Страница просмотрена; один main/h1, lang=ru, CSS Modules и цвета применены; ошибок/предупреждений консоли нет        |
+| npm run build                   | Passed | exit 0; Next 16.3.7/Turbopack; / статический, /api/health отмечен ƒ Dynamic                                          |
+| npm run start                   | Passed | Production-сервер запускается; / возвращает 200                                                                      |
+| Health production               | Passed | Два GET и POST повторяют контракт dev                                                                                |
+| Браузер production              | Passed | Содержимое и стили подтверждены; один main/h1, lang=ru; ошибок/предупреждений консоли нет                            |
+| Геометрия production            | Passed | Viewport 1280×720 и 360×800; панели 640px и 328px; текст читаем, scrollWidth равен ширине viewport                   |
+| SCSS                            | Passed | 20 используемых переменных, цвета только в tokens; typography применяется дважды; Sass компилируется в build         |
+| Правила Git ignore              | Passed | 13 исключаемых путей и 8 сохраняемых путей проверены через git check-ignore --no-index                               |
+| diff                            | Passed | git diff --check и git diff --cached --check: exit 0                                                                 |
+| Сохранность                     | Passed | Исполняемые файлы Spec Kit и Git-политика сохранены; AGENTS.md содержит согласованные правила TDD и API-констант     |
+| Git index                       | Passed | Совпадает со снимком начала проверок; агент staging не менял                                                         |
+| Очистка проверки                | Passed | Собственные dev/production-процессы остановлены; порт 3101 освобождён                                                |
+| Итоговый read-only анализ       | Passed | Список и SHA-256 66 файлов неизменны; покрытие 17 FR/SC полное; 114 локальных ссылок без пропусков                   |
 
 Для запуска использованы команды npm run dev / npm run start с
 -- --hostname 127.0.0.1 --port 3000. В процессах проверки временно задано

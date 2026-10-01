@@ -9,20 +9,20 @@
 
 ## Проверки
 
-| Проверка | Статус | Результат |
-| --- | --- | --- |
-| Исходная стандартная конфигурация | Passed как baseline | 29 диагностик в 11 файлах до настройки. |
-| Корректный SCSS через stdin | Passed | Exit 0: `@use`, Sass-переменная и вложенный БЭМ. |
-| Некорректный БЭМ-класс через stdin | Passed | Exit 1, путь, строка 1 и `scss/selector-class-pattern`. |
-| Незакрытый блок через stdin | Passed | Exit 1, путь, строка 1 и `CssSyntaxError`. |
-| `npm run lint:styles` | Passed | Exit 0; JSON-вывод подтвердил 11/11 файлов и 0 ошибок. |
-| `npm run format:check` | Passed | Exit 0 для проекта. |
-| `npm run lint` | Passed | Exit 0. |
-| `npm run typecheck` | Passed | Exit 0. |
-| `npm run build` | Passed | Exit 0, production-сборка. |
-| `npm run test:e2e` | Passed | Exit 0, 34 браузерных/HTTP-сценария. |
-| `git diff --check` для затронутых файлов | Passed | Ошибок пробелов нет. |
-| Пиксельное сравнение интерфейса | NotRun | Эталонных скриншотов нет; числовые значения цветов сохранены. |
+| Проверка                                 | Статус              | Результат                                                     |
+| ---------------------------------------- | ------------------- | ------------------------------------------------------------- |
+| Исходная стандартная конфигурация        | Passed как baseline | 29 диагностик в 11 файлах до настройки.                       |
+| Корректный SCSS через stdin              | Passed              | Exit 0: `@use`, Sass-переменная и вложенный БЭМ.              |
+| Некорректный БЭМ-класс через stdin       | Passed              | Exit 1, путь, строка 1 и `scss/selector-class-pattern`.       |
+| Незакрытый блок через stdin              | Passed              | Exit 1, путь, строка 1 и `CssSyntaxError`.                    |
+| `npm run lint:styles`                    | Passed              | Exit 0; JSON-вывод подтвердил 11/11 файлов и 0 ошибок.        |
+| `npm run format:check`                   | Passed              | Exit 0 для проекта.                                           |
+| `npm run lint`                           | Passed              | Exit 0.                                                       |
+| `npm run typecheck`                      | Passed              | Exit 0.                                                       |
+| `npm run build`                          | Passed              | Exit 0, production-сборка.                                    |
+| `npm run test:e2e`                       | Passed              | Exit 0, 34 браузерных/HTTP-сценария.                          |
+| `git diff --check` для затронутых файлов | Passed              | Ошибок пробелов нет.                                          |
+| Пиксельное сравнение интерфейса          | NotRun              | Эталонных скриншотов нет; числовые значения цветов сохранены. |
 
 Stylelint и Prettier в режиме проверки не меняют исходники. После форматирования затронутых файлов повторный `format:check` прошёл; цикла конфликтующих правок нет. Искусственный TDD Red неприменим к конфигурации без новой бизнес-логики и серверного контракта.
 
