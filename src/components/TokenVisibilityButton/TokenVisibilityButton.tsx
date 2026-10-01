@@ -1,14 +1,14 @@
-import { HTML_VALUES } from '@/lib/ui/constants';
-import styles from './TokenVisibilityButton.module.scss';
+import { HTML_VALUES } from '@/lib/ui/constants'
+import styles from './TokenVisibilityButton.module.scss'
 
-const { BUTTON } = HTML_VALUES;
+const { BUTTON } = HTML_VALUES
 
 type TokenVisibilityButtonProps = {
-  isVisible: boolean;
-  label: string;
-  controls: string;
-  onToggle: () => void;
-};
+  isVisible: boolean
+  label: string
+  controls: string
+  onToggle: () => void
+}
 
 export function TokenVisibilityButton({
   isVisible,
@@ -41,5 +41,5 @@ export function TokenVisibilityButton({
         {isVisible && <path d="m3 3 18 18" />}
       </svg>
     </button>
-  );
+  )
 }

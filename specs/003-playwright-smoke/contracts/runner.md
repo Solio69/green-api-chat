@@ -24,7 +24,7 @@
 ## Конфигурация
 
 - playwright.config.ts импортирует defineConfig/devices из @playwright/test
-  и общие тестовые параметры из tests/e2e/constants.ts.
+  и общие тестовые параметры из tests/constants.ts.
 - testDir: ./tests/e2e; testMatch: **/*.spec.ts. Spec Kit в tests/spec-kit
   не включается. Только проект chromium с Desktop Chrome, headless.
 - workers: 1; fullyParallel: false; retries: 0; forbidOnly: true.
@@ -96,7 +96,7 @@ npm run typecheck, npm run lint, npm run format:check; затем npm run test:e
 
 ### V03 — контрольная ошибка ожидания
 
-В tests/e2e/constants.ts временно заменить только значение ожидаемого JSON-status
+В tests/constants.ts временно заменить только значение ожидаемого JSON-status
 на smoke-control-mismatch. Запустить npm run test:e2e.
 Должен упасть HTTP-тест с несовпадением тела, exit !=0; сервер освобождается.
 Проверить HTML-отчёт. Восстановить исходное значение по снимку.

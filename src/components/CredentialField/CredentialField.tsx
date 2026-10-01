@@ -1,7 +1,7 @@
-import type { Ref } from 'react';
-import { TokenVisibilityButton } from '@/components/TokenVisibilityButton';
-import { HTML_VALUES } from '@/lib/ui/constants';
-import styles from './CredentialField.module.scss';
+import type { ChangeEvent, Ref } from 'react'
+import { TokenVisibilityButton } from '@/components/TokenVisibilityButton'
+import { HTML_VALUES } from '@/lib/ui/constants'
+import styles from './CredentialField.module.scss'
 
 const {
   INPUT_TEXT,
@@ -9,24 +9,24 @@ const {
   AUTOCOMPLETE_OFF,
   AUTOCAPITALIZE_NONE,
   ARIA_LIVE_POLITE,
-} = HTML_VALUES;
+} = HTML_VALUES
 
 type RevealControl = {
-  isVisible: boolean;
-  label: string;
-  onToggle: () => void;
-};
+  isVisible: boolean
+  label: string
+  onToggle: () => void
+}
 
 type CredentialFieldProps = {
-  id: string;
-  label: string;
-  value: string;
-  onValueChange: (value: string) => void;
-  inputRef: Ref<HTMLInputElement>;
-  errorId: string;
-  error: string;
-  reveal?: RevealControl;
-};
+  id: string
+  label: string
+  value: string
+  onValueChange: (value: string) => void
+  inputRef: Ref<HTMLInputElement>
+  errorId: string
+  error: string
+  reveal?: RevealControl
+}
 
 export function CredentialField({
   id,
@@ -38,10 +38,14 @@ export function CredentialField({
   error,
   reveal,
 }: CredentialFieldProps) {
-  const inputType = reveal && !reveal.isVisible ? INPUT_PASSWORD : INPUT_TEXT;
+  const inputType = reveal && !reveal.isVisible ? INPUT_PASSWORD : INPUT_TEXT
   const inputClassName = reveal
     ? `${styles.credentialField__input} ${styles['credentialField__input--withToggle']}`
-    : styles.credentialField__input;
+    : styles.credentialField__input
+
+  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
+    onValueChange(event.currentTarget.value)
+  }
 
   return (
     <div className={styles.credentialField}>
@@ -60,7 +64,7 @@ export function CredentialField({
           spellCheck={false}
           autoCapitalize={AUTOCAPITALIZE_NONE}
           value={value}
-          onChange={({ currentTarget }) => onValueChange(currentTarget.value)}
+          onChange={handleInputChange}
           aria-invalid={Boolean(error)}
           aria-describedby={error ? errorId : undefined}
         />
@@ -81,5 +85,5 @@ export function CredentialField({
         {error}
       </p>
     </div>
-  );
+  )
 }

@@ -84,7 +84,7 @@ trim определяет только пустоту и не переписыв
 | `src/app/page.tsx`, `src/app/HomePage.module.scss` | Серверная карточка, заголовок и стили страницы |
 | `src/lib/ui/constants.ts` | Общие значения интерфейса |
 | `src/styles/_tokens.scss`, `src/styles/_mixins.scss` | Общие значения оформления и повторяющиеся группы свойств |
-| `tests/e2e/constants.ts` | Независимые ожидания контрактов, фиктивные данные и размеры экранов |
+| `tests/constants.ts` | Независимые ожидания контрактов, фиктивные данные и размеры экранов |
 | `tests/e2e/home.spec.ts`, `tests/e2e/login-form.spec.ts`, `tests/e2e/login-form-safety.spec.ts` | Поведение, доступность и безопасность формы |
 | `README.md`, `docs/CODE_STYLE.md` | Текущее состояние и правила кода |
 

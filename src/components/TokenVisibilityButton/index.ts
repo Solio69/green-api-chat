@@ -1,1 +1,1 @@
-export { TokenVisibilityButton } from './TokenVisibilityButton';
+export { TokenVisibilityButton } from './TokenVisibilityButton'

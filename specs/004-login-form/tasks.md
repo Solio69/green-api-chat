@@ -13,7 +13,7 @@
   остановить свой сервер. Выполнить исходный npm run test:e2e: текущие 3 теста
   должны пройти. Начать specs/004-login-form/verification.md с окружением
   и исходным результатом. Зависимость: отдельное разрешение реализации.
-- [x] T002 [US1–US3] Обновить ожидания в tests/e2e/constants.ts и
+- [x] T002 [US1–US3] Обновить ожидания в tests/constants.ts и
   tests/e2e/home.spec.ts; создать tests/e2e/login-form.spec.ts и
   tests/e2e/login-form-safety.spec.ts с постоянными проверками всех 11 сценариев
   spec и edge cases. Ожидания независимы от src, реквизиты вымышленные.

@@ -3,10 +3,33 @@
 param([ValidateSet('V01','V02','V03','V04','V05','V06','V07','V08','V09','V10','V11','V12')][string[]]$Case = @())
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
+$script:Fixture = @{
+    FeaturePath = 'specs/001-fixture'
+    Common = 'common'
+    CheckPrerequisites = 'check-prerequisites'
+    SetupSpec = 'setup-spec'
+    SetupPlan = 'setup-plan'
+    SetupTasks = 'setup-tasks'
+    SpecFile = 'spec.md'
+    PlanFile = 'plan.md'
+    TasksFile = 'tasks.md'
+    SpecKind = 'spec'
+    PlanKind = 'plan'
+    TasksKind = 'tasks'
+    PathsOnlyOption = 'PathsOnly'
+    RequireSpecOption = 'RequireSpec'
+    RequireTasksOption = 'RequireTasks'
+}
 if (-not $IsWindows) { throw 'Contract tests require Windows and PowerShell 7.' }
 $projectRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
 $pwshPath = (Get-Process -Id $PID).Path
-foreach ($name in @('common','check-prerequisites','setup-spec','setup-plan','setup-tasks')) {
+foreach ($name in @(
+    $script:Fixture.Common,
+    $script:Fixture.CheckPrerequisites,
+    $script:Fixture.SetupSpec,
+    $script:Fixture.SetupPlan,
+    $script:Fixture.SetupTasks
+)) {
     if (-not (Test-Path -LiteralPath "$projectRoot/.specify/scripts/powershell/$name.ps1" -PathType Leaf)) {
         throw "Infrastructure missing: $name.ps1. No behavioral test has run."
     }
@@ -39,7 +62,7 @@ function Add-Document([string]$Path, [string]$Content = 'fixture content') {
     [IO.File]::WriteAllText($Path, $Content, [Text.UTF8Encoding]::new($false))
 }
 function Invoke-Tool {
-    param([string]$Root, [string]$Name = 'check-prerequisites',
+    param([string]$Root, [string]$Name = $script:Fixture.CheckPrerequisites,
         [hashtable]$Options = @{Json=$true;PathsOnly=$true},
         [AllowNull()][string]$Feature, [AllowNull()][string]$Expected,
         [string]$Cwd = $Root, [switch]$OmitExpected)
@@ -124,7 +147,7 @@ function Remove-OwnedFixture([string]$Path) {
 }
 try {
     Test-Case V01 {
-        $root=New-Fixture 'проект с пробелами'; $feature=Join-Path $root 'specs/001-fixture'
+        $root=New-Fixture 'проект с пробелами'; $feature=Join-Path $root $script:Fixture.FeaturePath
         $nested=Join-Path $root 'nested'; $null=[IO.Directory]::CreateDirectory($nested)
         $a=Assert-Success (Invoke-Tool -Root $root -Feature $feature -Expected $feature)
         $b=Assert-Success (Invoke-Tool -Root $root -Feature $feature -Expected $feature -Cwd $nested)
@@ -133,16 +156,16 @@ try {
         Assert-True (-not (Test-Path -LiteralPath "$root/.git")) 'Repository created'
     }
     Test-Case V02 {
-        $root=New-Fixture 'missing-context'; $feature=Join-Path $root 'specs/001-fixture'
+        $root=New-Fixture 'missing-context'; $feature=Join-Path $root $script:Fixture.FeaturePath
         foreach ($missing in @($null,'',' ')) { Assert-Failure (Invoke-Tool -Root $root -Feature $missing -Expected $feature) 'missing env' }
         Assert-Failure (Invoke-Tool -Root $root -Feature $feature -OmitExpected) 'missing expected'
-        Assert-Failure (Invoke-Tool -Root $root -Feature $feature -Expected 'specs/001-fixture') 'relative expected'
+        Assert-Failure (Invoke-Tool -Root $root -Feature $feature -Expected $script:Fixture.FeaturePath) 'relative expected'
     }
     Test-Case V03 {
-        $root=New-Fixture 'boundary'; $outside=Join-Path $testRoot 'boundary-neighbor/specs/001-fixture'
-        Add-Document "$outside/spec.md" 'outside sentinel'; $before=Get-Snapshot $testRoot
-        foreach ($selection in @($outside,'../boundary-neighbor/specs/001-fixture')) {
-            Assert-Failure (Invoke-Tool -Root $root -Name setup-spec -Options @{Json=$true} -Feature $selection -Expected $outside) 'outside'
+        $root=New-Fixture 'boundary'; $outside=Join-Path $testRoot "boundary-neighbor/$($script:Fixture.FeaturePath)"
+        Add-Document "$outside/$($script:Fixture.SpecFile)" 'outside sentinel'; $before=Get-Snapshot $testRoot
+        foreach ($selection in @($outside,"../boundary-neighbor/$($script:Fixture.FeaturePath)")) {
+            Assert-Failure (Invoke-Tool -Root $root -Name $script:Fixture.SetupSpec -Options @{Json=$true} -Feature $selection -Expected $outside) 'outside'
         }
         foreach ($invalid in @('specs/not-numbered','specs/001-x/child')) {
             $path=Join-Path $root $invalid
@@ -151,9 +174,9 @@ try {
         Assert-True ((Get-Snapshot $testRoot) -ceq $before) 'Outside selection changed files'
     }
     Test-Case V04 {
-        $root=New-Fixture 'mismatch'; $feature=Join-Path $root 'specs/001-fixture'; $other=Join-Path $root 'specs/002-other'
-        Add-Document "$feature/spec.md"; Add-Document "$other/spec.md" 'other sentinel'; $before=Get-Snapshot $root
-        Assert-Failure (Invoke-Tool -Root $root -Name setup-plan -Options @{Json=$true} -Feature $other -Expected $feature) 'mismatch'
+        $root=New-Fixture 'mismatch'; $feature=Join-Path $root $script:Fixture.FeaturePath; $other=Join-Path $root 'specs/002-other'
+        Add-Document "$feature/$($script:Fixture.SpecFile)"; Add-Document "$other/$($script:Fixture.SpecFile)" 'other sentinel'; $before=Get-Snapshot $root
+        Assert-Failure (Invoke-Tool -Root $root -Name $script:Fixture.SetupPlan -Options @{Json=$true} -Feature $other -Expected $feature) 'mismatch'
         Assert-Failure (Invoke-Tool -Root $root -Feature $feature -Expected $feature -Cwd $testRoot) 'outside cwd'
         Assert-True ((Get-Snapshot $root) -ceq $before) 'Wrong feature changed'
     }
@@ -163,24 +186,24 @@ try {
         $null=[IO.Directory]::CreateDirectory("$root/specs"); $feature=Join-Path $root 'specs/001-linked'
         try { $null=New-Item -ItemType Junction -Path $feature -Target $outside }
         catch { throw "BLOCKED: cannot create junction fixture: $($_.Exception.Message)" }
-        Assert-Failure (Invoke-Tool -Root $root -Name setup-spec -Options @{Json=$true} -Feature $feature -Expected $feature) 'junction feature'
+        Assert-Failure (Invoke-Tool -Root $root -Name $script:Fixture.SetupSpec -Options @{Json=$true} -Feature $feature -Expected $feature) 'junction feature'
         Assert-Failure (Invoke-Tool -Root $root -Feature $feature -Expected $feature) 'junction PathsOnly'
         $normal=Join-Path $root 'specs/002-normal'; $null=[IO.Directory]::CreateDirectory($normal)
-        $null=New-Item -ItemType Junction -Path "$normal/spec.md" -Target $outside
-        Assert-Failure (Invoke-Tool -Root $root -Name setup-spec -Options @{Json=$true} -Feature $normal -Expected $normal) 'junction artifact'
+        $null=New-Item -ItemType Junction -Path "$normal/$($script:Fixture.SpecFile)" -Target $outside
+        Assert-Failure (Invoke-Tool -Root $root -Name $script:Fixture.SetupSpec -Options @{Json=$true} -Feature $normal -Expected $normal) 'junction artifact'
         Assert-True ((Get-Snapshot $outside) -ceq $before) 'Link target changed'
     }
     Test-Case V06 {
-        $root=New-Fixture 'ещё пробелы'; $feature=Join-Path $root 'specs/001-fixture'
+        $root=New-Fixture 'ещё пробелы'; $feature=Join-Path $root $script:Fixture.FeaturePath
         $variant=$feature.ToUpperInvariant().Replace('\','/')
         $result=Assert-Success (Invoke-Tool -Root $root -Feature $variant -Expected $feature)
         Assert-True ($result.FEATURE_DIR -eq $feature) "Windows normalization mismatch: actual=$($result.FEATURE_DIR); expected=$feature"
-        $result=Assert-Success (Invoke-Tool -Root $root -Feature 'specs/001-fixture' -Expected $feature)
+        $result=Assert-Success (Invoke-Tool -Root $root -Feature $script:Fixture.FeaturePath -Expected $feature)
         Assert-True ($result.FEATURE_DIR -eq $feature) 'Relative selection mismatch'
     }
     Test-Case V07 {
-        $root=New-Fixture 'repeat'; $feature=Join-Path $root 'specs/001-fixture'
-        foreach ($entry in @(@('setup-spec','spec.md'),@('setup-plan','plan.md'))) {
+        $root=New-Fixture 'repeat'; $feature=Join-Path $root $script:Fixture.FeaturePath
+        foreach ($entry in @(@($script:Fixture.SetupSpec,$script:Fixture.SpecFile),@($script:Fixture.SetupPlan,$script:Fixture.PlanFile))) {
             $first=Assert-Success (Invoke-Tool -Root $root -Name $entry[0] -Options @{Json=$true} -Feature $feature -Expected $feature)
             Assert-True ($first.CREATED -eq $true) 'First setup did not create'
             Add-Document "$feature/$($entry[1])" "user document $($entry[1])"
@@ -194,72 +217,80 @@ try {
         }
     }
     Test-Case V08 {
-        $root=New-Fixture 'modes'; $feature=Join-Path $root 'specs/001-fixture'
+        $root=New-Fixture 'modes'; $feature=Join-Path $root $script:Fixture.FeaturePath
         $null=Assert-Success (Invoke-Tool -Root $root -Feature $feature -Expected $feature)
         Assert-Failure (Invoke-Tool -Root $root -Options @{Json=$true;RequireSpec=$true} -Feature $feature -Expected $feature) 'missing spec'
-        Assert-Failure (Invoke-Tool -Root $root -Name setup-plan -Options @{Json=$true} -Feature $feature -Expected $feature) 'plan before spec'
-        Add-Document "$feature/spec.md"
+        Assert-Failure (Invoke-Tool -Root $root -Name $script:Fixture.SetupPlan -Options @{Json=$true} -Feature $feature -Expected $feature) 'plan before spec'
+        Add-Document "$feature/$($script:Fixture.SpecFile)"
         $null=Assert-Success (Invoke-Tool -Root $root -Options @{Json=$true;RequireSpec=$true} -Feature $feature -Expected $feature)
         Assert-Failure (Invoke-Tool -Root $root -Options @{Json=$true} -Feature $feature -Expected $feature) 'missing plan'
-        Add-Document "$feature/plan.md"
+        Add-Document "$feature/$($script:Fixture.PlanFile)"
         $null=Assert-Success (Invoke-Tool -Root $root -Options @{Json=$true} -Feature $feature -Expected $feature)
         Assert-Failure (Invoke-Tool -Root $root -Options @{Json=$true;RequireTasks=$true} -Feature $feature -Expected $feature) 'missing tasks'
-        Add-Document "$feature/tasks.md"
+        Add-Document "$feature/$($script:Fixture.TasksFile)"
         $null=Assert-Success (Invoke-Tool -Root $root -Options @{Json=$true;RequireTasks=$true} -Feature $feature -Expected $feature)
         $before=Get-Snapshot $root
-        foreach ($pair in @(@('PathsOnly','RequireSpec'),@('PathsOnly','RequireTasks'),@('RequireSpec','RequireTasks'))) {
+        foreach ($pair in @(
+            @($script:Fixture.PathsOnlyOption,$script:Fixture.RequireSpecOption),
+            @($script:Fixture.PathsOnlyOption,$script:Fixture.RequireTasksOption),
+            @($script:Fixture.RequireSpecOption,$script:Fixture.RequireTasksOption)
+        )) {
             $options=@{Json=$true}; foreach ($flag in $pair) {$options[$flag]=$true}
             Assert-Failure (Invoke-Tool -Root $root -Options $options -Feature $feature -Expected $feature) 'conflicting modes'
         }
         Assert-True ((Get-Snapshot $root) -ceq $before) 'Mode check wrote files'
     }
     Test-Case V09 {
-        foreach ($entry in @(@('setup-spec','spec'),@('setup-plan','plan'),@('setup-tasks','tasks'))) {
-            $root=New-Fixture ("missing-template-" + $entry[1]); $feature=Join-Path $root 'specs/001-fixture'
-            if ($entry[1] -ne 'spec') { Add-Document "$feature/spec.md" }
-            if ($entry[1] -eq 'tasks') { Add-Document "$feature/plan.md" }
+        foreach ($entry in @(
+            @($script:Fixture.SetupSpec,$script:Fixture.SpecKind),
+            @($script:Fixture.SetupPlan,$script:Fixture.PlanKind),
+            @($script:Fixture.SetupTasks,$script:Fixture.TasksKind)
+        )) {
+            $root=New-Fixture ("missing-template-" + $entry[1]); $feature=Join-Path $root $script:Fixture.FeaturePath
+            if ($entry[1] -ne $script:Fixture.SpecKind) { Add-Document "$feature/$($script:Fixture.SpecFile)" }
+            if ($entry[1] -eq $script:Fixture.TasksKind) { Add-Document "$feature/$($script:Fixture.PlanFile)" }
             Remove-OwnedFixture "$root/.specify/templates/$($entry[1])-template.md"
             Assert-Failure (Invoke-Tool -Root $root -Name $entry[0] -Options @{Json=$true} -Feature $feature -Expected $feature) 'missing template'
             Assert-True (-not (Test-Path -LiteralPath "$feature/$($entry[1]).md")) 'Empty artifact created'
-            if ($entry[1] -eq 'spec') { Assert-True (-not (Test-Path -LiteralPath $feature)) 'Empty feature created' }
+            if ($entry[1] -eq $script:Fixture.SpecKind) { Assert-True (-not (Test-Path -LiteralPath $feature)) 'Empty feature created' }
         }
-        $root=New-Fixture 'directory-artifact'; $feature=Join-Path $root 'specs/001-fixture'
-        $null=[IO.Directory]::CreateDirectory("$feature/spec.md")
-        Assert-Failure (Invoke-Tool -Root $root -Name setup-spec -Options @{Json=$true} -Feature $feature -Expected $feature) 'directory spec'
+        $root=New-Fixture 'directory-artifact'; $feature=Join-Path $root $script:Fixture.FeaturePath
+        $null=[IO.Directory]::CreateDirectory("$feature/$($script:Fixture.SpecFile)")
+        Assert-Failure (Invoke-Tool -Root $root -Name $script:Fixture.SetupSpec -Options @{Json=$true} -Feature $feature -Expected $feature) 'directory spec'
         Assert-Failure (Invoke-Tool -Root $root -Options @{Json=$true;RequireSpec=$true} -Feature $feature -Expected $feature) 'directory prerequisite'
     }
     Test-Case V10 {
-        $root=New-Fixture 'output'; $feature=Join-Path $root 'specs/001-fixture'
-        foreach ($name in @('check-prerequisites','setup-spec','setup-plan','setup-tasks')) {
+        $root=New-Fixture 'output'; $feature=Join-Path $root $script:Fixture.FeaturePath
+        foreach ($name in @($script:Fixture.CheckPrerequisites,$script:Fixture.SetupSpec,$script:Fixture.SetupPlan,$script:Fixture.SetupTasks)) {
             $help=Invoke-Tool -Root $root -Name $name -Options @{Help=$true} -Feature $null -OmitExpected -Cwd $testRoot
             Assert-True ($help.Code -eq 0 -and $help.Out -match 'ExpectedFeatureDirectory') 'Help contract failed'
             Assert-True ([string]::IsNullOrWhiteSpace($help.Err)) 'Help stderr'
         }
-        Add-Document "$feature/tasks.md"
+        Add-Document "$feature/$($script:Fixture.TasksFile)"
         $result=Assert-Success (Invoke-Tool -Root $root -Feature $feature -Expected $feature -Options @{Json=$true;PathsOnly=$true;IncludeTasks=$true})
         Assert-True ($result.AVAILABLE_DOCS -is [array] -and $result.AVAILABLE_DOCS.Count -eq 0) 'PathsOnly exposed docs'
         Assert-True ('BRANCH' -notin $result.PSObject.Properties.Name) 'Branch field exposed'
         Assert-Failure (Invoke-Tool -Root $root -Feature $null -Expected $feature) 'error streams'
     }
     Test-Case V11 {
-        $root=New-Fixture 'read-only'; $feature=Join-Path $root 'specs/001-fixture'
+        $root=New-Fixture 'read-only'; $feature=Join-Path $root $script:Fixture.FeaturePath
         foreach ($name in @('spec','plan','tasks','research','data-model','quickstart')) { Add-Document "$feature/$name.md" }
         Add-Document "$feature/contracts/sample.md"; $before=Get-Snapshot $root
-        $import=Invoke-Tool -Root $root -Name common -Options @{} -Feature $null -OmitExpected
+        $import=Invoke-Tool -Root $root -Name $script:Fixture.Common -Options @{} -Feature $null -OmitExpected
         Assert-True ($import.Code -eq 0 -and [string]::IsNullOrWhiteSpace($import.Out) -and [string]::IsNullOrWhiteSpace($import.Err)) 'Library import had side effects'
         $a=Assert-Success (Invoke-Tool -Root $root -Feature $feature -Expected $feature -Options @{Json=$true;RequireTasks=$true;IncludeTasks=$true})
-        Assert-True ('tasks.md' -in $a.AVAILABLE_DOCS -and 'contracts/' -in $a.AVAILABLE_DOCS) 'Docs incomplete'
-        $b=Assert-Success (Invoke-Tool -Root $root -Name setup-tasks -Options @{Json=$true} -Feature $feature -Expected $feature)
+        Assert-True ($script:Fixture.TasksFile -in $a.AVAILABLE_DOCS -and 'contracts/' -in $a.AVAILABLE_DOCS) 'Docs incomplete'
+        $b=Assert-Success (Invoke-Tool -Root $root -Name $script:Fixture.SetupTasks -Options @{Json=$true} -Feature $feature -Expected $feature)
         Assert-True ([IO.Path]::IsPathFullyQualified($b.TASKS_TEMPLATE)) 'Template not absolute'
         Assert-True ((Get-Snapshot $root) -ceq $before) 'Read-only scripts changed files'
     }
     Test-Case V12 {
-        $root=New-Fixture 'standalone'; $feature=Join-Path $root 'specs/001-fixture'
-        foreach ($name in @('setup-spec','setup-plan','setup-tasks')) {
+        $root=New-Fixture 'standalone'; $feature=Join-Path $root $script:Fixture.FeaturePath
+        foreach ($name in @($script:Fixture.SetupSpec,$script:Fixture.SetupPlan,$script:Fixture.SetupTasks)) {
             $result=Assert-Success (Invoke-Tool -Root $root -Name $name -Options @{Json=$true} -Feature $feature -Expected $feature)
             Assert-True ($result.PROJECT_ROOT -eq $root -and $result.FEATURE_DIR -eq $feature) 'External dependency'
         }
-        Assert-True (-not (Test-Path -LiteralPath "$feature/tasks.md")) 'setup-tasks wrote tasks'
+        Assert-True (-not (Test-Path -LiteralPath "$feature/$($script:Fixture.TasksFile)")) 'setup-tasks wrote tasks'
     }
 } finally {
     try { Remove-OwnedFixture $testRoot }

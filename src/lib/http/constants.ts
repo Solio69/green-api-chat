@@ -1,13 +1,42 @@
 export const HTTP_STATUS = {
   OK: 200,
+  SEE_OTHER: 303,
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
   METHOD_NOT_ALLOWED: 405,
-} as const;
+  CONFLICT: 409,
+  TOO_MANY_REQUESTS: 429,
+  BAD_GATEWAY: 502,
+  SERVICE_UNAVAILABLE: 503,
+  SERVER_ERROR_START: 500,
+} as const
+
+export const HTTP_METHOD = {
+  GET: 'GET',
+  POST: 'POST',
+} as const
+
+export const FETCH_REDIRECT = {
+  ERROR: 'error',
+} as const
 
 export const HTTP_HEADERS = {
   CONTENT_TYPE: 'Content-Type',
   CACHE_CONTROL: 'Cache-Control',
-} as const;
+} as const
 
 export const CACHE_CONTROL = {
   NO_STORE: 'no-store',
-} as const;
+} as const
+export const HTTP_CONTENT_TYPE = {
+  JSON: 'application/json',
+} as const
+
+export const HTTP_SYNTAX = {
+  CONTENT_TYPE_PARAMETER_SEPARATOR: ';',
+} as const
+
+export const TEXT_ENCODING = {
+  UTF_8: 'utf-8',
+} as const

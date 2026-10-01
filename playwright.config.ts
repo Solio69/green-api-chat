@@ -1,14 +1,9 @@
-import { defineConfig, devices } from '@playwright/test';
-import {
-  BASE_URL,
-  ROUTES,
-  TEST_SERVER,
-  TEST_TIMEOUTS,
-} from './tests/e2e/constants';
+import { defineConfig, devices } from '@playwright/test'
+import { BASE_URL, ROUTES, TEST_SERVER, TEST_TIMEOUTS } from './tests/constants'
 
-const { HOME } = ROUTES;
-const { HOST, PORT } = TEST_SERVER;
-const { ACTION, EXPECT, NAVIGATION, RUN, SERVER_START, TEST } = TEST_TIMEOUTS;
+const { HOME } = ROUTES
+const { HOST, PORT } = TEST_SERVER
+const { ACTION, EXPECT, NAVIGATION, RUN, SERVER_START, TEST } = TEST_TIMEOUTS
 
 export default defineConfig({
   testDir: './tests/e2e',
@@ -53,4 +48,4 @@ export default defineConfig({
       NEXT_TELEMETRY_DISABLED: '1',
     },
   },
-});
+})

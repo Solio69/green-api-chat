@@ -112,7 +112,7 @@ test-results/ и playwright-report/. Скриншоты, трассы и отч�
 | Путь | Действие и назначение |
 | --- | --- |
 | playwright.config.ts | Создать конфигурацию runner, Chromium, webServer и отчётов |
-| tests/e2e/constants.ts | Создать независимые ожидания, адреса и лимиты |
+| tests/constants.ts | Создать независимые ожидания, адреса и лимиты |
 | tests/e2e/home.spec.ts | Создать один браузерный smoke |
 | tests/e2e/health.spec.ts | Создать два HTTP-теста |
 | package.json | Добавить точную devDependency и три npm scripts |

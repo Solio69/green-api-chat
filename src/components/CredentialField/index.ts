@@ -1,1 +1,1 @@
-export { CredentialField } from './CredentialField';
+export { CredentialField } from './CredentialField'
