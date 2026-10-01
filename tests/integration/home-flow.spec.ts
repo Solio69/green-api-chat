@@ -75,12 +75,16 @@ for (const kind of [
   INSTANCE_EXPIRED,
 ] as const) {
   test(`home-flow: ${kind} ends the session`, async () => {
-    const state: StateResult =
-      kind === NEEDS_AUTHORIZATION
-        ? { kind, stateInstance: NOT_AUTHORIZED }
-        : kind === INSTANCE_RESTRICTED
-          ? { kind, stateInstance: BLOCKED }
-          : { kind }
+    let state: StateResult
+
+    if (kind === NEEDS_AUTHORIZATION) {
+      state = { kind, stateInstance: NOT_AUTHORIZED }
+    } else if (kind === INSTANCE_RESTRICTED) {
+      state = { kind, stateInstance: BLOCKED }
+    } else {
+      state = { kind }
+    }
+
     expect(await resolveHome(credentials, async () => state)).toEqual({
       kind: END_SESSION,
     })

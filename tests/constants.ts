@@ -21,6 +21,7 @@ export const ROUTES = {
   HOME: '/',
   LOGIN: '/login',
   LOGIN_API: '/api/auth/login',
+  LOGOUT_API: '/api/auth/logout',
   HEALTH: '/api/health',
 } as const
 
@@ -65,6 +66,7 @@ export const TEST_UI = {
   ROLE_BUTTON: 'button',
   ROLE_HEADING: 'heading',
   ROLE_LINK: 'link',
+  ROLE_STATUS: 'status',
   INPUT_SELECTOR: 'input',
   OUTPUT_SELECTOR: 'pre',
   FORM_SELECTOR: 'form',
@@ -177,6 +179,17 @@ export const SESSION_CONTRACT = {
   PATH: '/',
   MAX_AGE: 86_400,
   EXPIRED_COOKIE_PATTERN: /Max-Age=0|Expires=Thu, 01 Jan 1970/i,
+} as const
+
+export const LOGOUT_CONTRACT = {
+  REDIRECT_STATUS: HOME_CONTRACT.REDIRECT_STATUS,
+  METHOD_NOT_ALLOWED_STATUS: 405,
+  REDIRECT_URL: ROUTES.LOGIN,
+  COOKIE_VALUE: 'test-cookie-placeholder',
+  LOCATION_HEADER: HOME_CONTRACT.LOCATION_HEADER,
+  SET_COOKIE_HEADER: HOME_CONTRACT.SET_COOKIE_HEADER,
+  CACHE_CONTROL_HEADER: LOGIN_API_CONTRACT.CACHE_CONTROL_HEADER,
+  CACHE_CONTROL_VALUE: LOGIN_API_CONTRACT.CACHE_CONTROL_VALUE,
 } as const
 
 export const TEST_PROVIDER_FIXTURES = {

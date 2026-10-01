@@ -1,0 +1,25 @@
+@use '../../styles/tokens' as tokens;
+@use '../../styles/mixins' as mixins;
+
+.logoutButton {
+  margin-top: tokens.$space-sm;
+
+  &__control {
+    @include mixins.focus-ring;
+
+    min-height: tokens.$control-min-height;
+    padding: tokens.$space-xs tokens.$space-sm;
+    border: tokens.$border-width solid tokens.$color-interactive;
+    border-radius: tokens.$radius-control;
+    background: tokens.$color-transparent;
+    color: tokens.$color-interactive;
+    font: inherit;
+    cursor: pointer;
+
+    &:hover {
+      border-color: tokens.$color-interactive-hover;
+      background: tokens.$color-border;
+      color: tokens.$color-interactive-hover;
+    }
+  }
+}

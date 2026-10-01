@@ -106,18 +106,21 @@ export function LoginForm() {
   const serverError =
     LOGIN_ERROR_COPY[serverErrorCode as keyof typeof LOGIN_ERROR_COPY] ??
     EMPTY_STRING
-  const idError =
-    hasSubmitted && isIdMissing
-      ? ID_REQUIRED
-      : serverErrorCode === INVALID_INSTANCE
-        ? serverError
-        : EMPTY_STRING
-  const tokenError =
-    hasSubmitted && isTokenMissing
-      ? TOKEN_REQUIRED
-      : serverErrorCode === INVALID_TOKEN
-        ? serverError
-        : EMPTY_STRING
+  let idError = EMPTY_STRING
+  let tokenError = EMPTY_STRING
+
+  if (hasSubmitted && isIdMissing) {
+    idError = ID_REQUIRED
+  } else if (serverErrorCode === INVALID_INSTANCE) {
+    idError = serverError
+  }
+
+  if (hasSubmitted && isTokenMissing) {
+    tokenError = TOKEN_REQUIRED
+  } else if (serverErrorCode === INVALID_TOKEN) {
+    tokenError = serverError
+  }
+
   const generalError =
     serverErrorCode &&
     serverErrorCode !== INVALID_TOKEN &&

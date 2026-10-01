@@ -24,6 +24,7 @@ export const FETCH_REDIRECT = {
 export const HTTP_HEADERS = {
   CONTENT_TYPE: 'Content-Type',
   CACHE_CONTROL: 'Cache-Control',
+  LOCATION: 'Location',
 } as const
 
 export const CACHE_CONTROL = {

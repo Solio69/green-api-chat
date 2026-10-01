@@ -15,6 +15,7 @@ export default defineConfig([
     rules: {
       'arrow-body-style': ['error', 'as-needed'],
       'prefer-template': 'error',
+      'no-nested-ternary': 'error',
       'no-unneeded-ternary': 'error',
       'import/first': 'error',
       'import/no-duplicates': 'error',
