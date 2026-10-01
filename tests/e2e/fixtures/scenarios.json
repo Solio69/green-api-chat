@@ -1,0 +1,11 @@
+{
+  "foundPhone": "12345678901",
+  "missingPhone": "12345678902",
+  "foundUsername": "lookup_user",
+  "missingUsername": "missing_user",
+  "rateLimitedUsername": "rate_limited_user",
+  "unauthorizedUsername": "unauthorized_user",
+  "unavailableUsername": "unavailable_user",
+  "delayedUsername": "delayed_user",
+  "chatId": "10000001"
+}

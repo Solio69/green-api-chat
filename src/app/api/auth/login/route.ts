@@ -7,8 +7,8 @@ import type { InstanceCredentials } from '@/lib/green-api/get-state'
 
 const { SESSION_UNAVAILABLE } = AUTH_ERROR_MESSAGE
 
-export async function POST(request: Request): Promise<Response> {
-  return handleLoginRequest(
+export const POST = async (request: Request): Promise<Response> =>
+  handleLoginRequest(
     request,
     getStateInstance,
     async (credentials: InstanceCredentials) => {
@@ -21,4 +21,3 @@ export async function POST(request: Request): Promise<Response> {
       await saveCredentials(session, credentials)
     },
   )
-}

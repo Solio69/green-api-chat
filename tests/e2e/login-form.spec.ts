@@ -226,13 +226,13 @@ test('Enter validates two empty fields and whitespace without normalizing values
 test('preserves complete values and the page on rejected server submissions', async ({
   page,
 }) => {
-  await page.route(ROUTE_PATTERNS.LOGIN_API, async (route) => {
-    await route.fulfill({
+  await page.route(ROUTE_PATTERNS.LOGIN_API, async (route) =>
+    route.fulfill({
       status: UNAVAILABLE_STATUS,
       contentType: LOGIN_API_CONTRACT.JSON_CONTENT_TYPE,
       body: JSON.stringify({ status: RESPONSE_ERROR, code: RETRY_LATER }),
-    })
-  })
+    }),
+  )
   const id = page.getByLabel(ID_LABEL, { exact: true })
   const token = page.getByLabel(TOKEN_LABEL, { exact: true })
   await id.fill(ID)

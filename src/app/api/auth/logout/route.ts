@@ -10,7 +10,7 @@ const { NO_STORE } = CACHE_CONTROL
 const { SEE_OTHER: HTTP_SEE_OTHER } = HTTP_STATUS
 const { LOGIN } = ROUTES
 
-export function POST(): NextResponse {
+export const POST = (): NextResponse => {
   const response = new NextResponse(null, {
     status: HTTP_SEE_OTHER,
     headers: {

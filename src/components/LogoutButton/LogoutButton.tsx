@@ -11,12 +11,10 @@ type LogoutButtonProps = {
   label: string
 }
 
-export function LogoutButton({ label }: LogoutButtonProps) {
-  return (
-    <form className={styles.logoutButton} action={LOGOUT_API} method={POST}>
-      <button className={styles.logoutButton__control} type={SUBMIT}>
-        {label}
-      </button>
-    </form>
-  )
-}
+export const LogoutButton = ({ label }: LogoutButtonProps) => (
+  <form className={styles.logoutButton} action={LOGOUT_API} method={POST}>
+    <button className={styles.logoutButton__control} type={SUBMIT}>
+      {label}
+    </button>
+  </form>
+)

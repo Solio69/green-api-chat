@@ -8,7 +8,7 @@ const { REASON, ACCESS_LOST } = AUTH_QUERY
 const { SEE_OTHER: HTTP_SEE_OTHER } = HTTP_STATUS
 const { LOGIN } = ROUTES
 
-export function GET(request: Request): NextResponse {
+export const GET = (request: Request): NextResponse => {
   const url = new URL(LOGIN, request.url)
   url.searchParams.set(REASON, ACCESS_LOST)
   const response = NextResponse.redirect(url, HTTP_SEE_OTHER)

@@ -47,7 +47,7 @@ test('home-flow: missing session never calls GREEN-API', async () => {
   expect(calls).toBe(0)
 })
 
-test('home-flow: authorized rechecks and renders only documented JSON', async () => {
+test('home-flow: authorized rechecks and returns state for home', async () => {
   let calls = 0
   const getState = async () => {
     calls += 1
@@ -96,20 +96,18 @@ for (const kind of [
   SERVICE_UNAVAILABLE,
   INVALID_UPSTREAM_RESPONSE,
 ] as const) {
-  test(`home-flow: ${kind} preserves the session for retry`, async () => {
+  test(`home-flow: ${kind} preserves the session for retry`, async () =>
     expect(await resolveHome(credentials, async () => ({ kind }))).toEqual({
       kind: RETRY,
-    })
-  })
+    }))
 }
 
-test('home-flow: thrown provider error preserves the session', async () => {
+test('home-flow: thrown provider error preserves the session', async () =>
   expect(
     await resolveHome(credentials, async () => {
       throw new Error(TOKEN)
     }),
-  ).toEqual({ kind: RETRY })
-})
+  ).toEqual({ kind: RETRY }))
 
 test('home-flow: end-session deletes only the app cookie and fixes redirect', async () => {
   const response = endSession(new Request(END_SESSION_UNTRUSTED_URL))
@@ -121,8 +119,7 @@ test('home-flow: end-session deletes only the app cookie and fixes redirect', as
   expect(cookie).not.toContain(TOKEN)
 })
 
-test('home-flow: rate limit preserves the existing session for manual retry', async () => {
+test('home-flow: rate limit preserves the existing session for manual retry', async () =>
   expect(
     await resolveHome(credentials, async () => ({ kind: RATE_LIMITED })),
-  ).toEqual({ kind: RETRY })
-})
+  ).toEqual({ kind: RETRY }))

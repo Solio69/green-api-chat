@@ -22,10 +22,10 @@ export type HomeResult =
   | { kind: typeof RETRY }
   | { kind: typeof AUTHORIZED; body: { stateInstance: typeof AUTHORIZED } }
 
-export async function resolveHome(
+export const resolveHome = async (
   credentials: InstanceCredentials | null,
   getState: (credentials: InstanceCredentials) => Promise<StateResult>,
-): Promise<HomeResult> {
+): Promise<HomeResult> => {
   if (!credentials) return { kind: LOGIN }
   try {
     const state = await getState(credentials)

@@ -28,7 +28,7 @@ type CredentialFieldProps = {
   reveal?: RevealControl
 }
 
-export function CredentialField({
+export const CredentialField = ({
   id,
   label,
   value,
@@ -37,15 +37,14 @@ export function CredentialField({
   errorId,
   error,
   reveal,
-}: CredentialFieldProps) {
+}: CredentialFieldProps) => {
   const inputType = reveal && !reveal.isVisible ? INPUT_PASSWORD : INPUT_TEXT
   const inputClassName = reveal
     ? `${styles.credentialField__input} ${styles['credentialField__input--withToggle']}`
     : styles.credentialField__input
 
-  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) =>
     onValueChange(event.currentTarget.value)
-  }
 
   return (
     <div className={styles.credentialField}>

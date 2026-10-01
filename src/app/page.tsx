@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { LogoutButton } from '@/components/LogoutButton'
+import { RecipientSearchForm } from '@/components/RecipientSearchForm'
 import { HOME_RESULT_KIND, IS_PRODUCTION } from '@/lib/auth/constants'
 import { resolveHome } from '@/lib/auth/resolve-home'
 import { openSession, readCredentials } from '@/lib/auth/session'
@@ -16,13 +17,13 @@ const {
 } = HOME_RESULT_KIND
 const { RETRY, RETRY_LINK, LOGOUT } = HOME_COPY
 
-export default async function HomePage() {
+const HomePage = async () => {
   const session = await openSession(
     await cookies(),
     process.env.SESSION_PASSWORD,
     IS_PRODUCTION,
   )
-  const credentials = session ? readCredentials(session) : null
+  const credentials = session && readCredentials(session)
   const result = await resolveHome(credentials, getStateInstance)
 
   if (result.kind === REQUIRE_LOGIN) redirect(LOGIN)
@@ -35,7 +36,7 @@ export default async function HomePage() {
         <a href={HOME}>{RETRY_LINK}</a>
       </>
     ) : (
-      <pre>{JSON.stringify(result.body)}</pre>
+      <RecipientSearchForm />
     )
 
   return (
@@ -45,3 +46,5 @@ export default async function HomePage() {
     </main>
   )
 }
+
+export default HomePage

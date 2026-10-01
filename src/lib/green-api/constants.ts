@@ -2,6 +2,7 @@ export const GREEN_API_CONFIG = {
   HOST: 'https://4100.api.green-api.com',
   INSTANCE_PATH_PREFIX: 'waInstance',
   METHOD: 'getStateInstance',
+  CHECK_ACCOUNT_METHOD: 'checkAccount',
   TIMEOUT_MS: 10_000,
   RATE_LIMIT_RETRY_DELAY_MS: 1_100,
 } as const

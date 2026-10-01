@@ -49,13 +49,12 @@ const TEST_ERROR_MESSAGE = {
 } as const
 const { SESSION_MUST_NOT_BE_SAVED } = TEST_ERROR_MESSAGE
 
-function request(body: string, contentType: string = JSON_CONTENT_TYPE) {
-  return new Request(URL, {
+const request = (body: string, contentType: string = JSON_CONTENT_TYPE) =>
+  new Request(URL, {
     method: HTTP_POST,
     headers: { [CONTENT_TYPE]: contentType },
     body,
   })
-}
 
 test('login-route: authorized responds with no-store and no credentials', async () => {
   const calls: InstanceCredentials[] = []
@@ -66,9 +65,7 @@ test('login-route: authorized responds with no-store and no credentials', async 
       calls.push(credentials)
       return { kind: AUTHORIZED, body: { stateInstance: AUTHORIZED } }
     },
-    async (credentials) => {
-      saves.push(credentials)
-    },
+    async (credentials) => void saves.push(credentials),
   )
   expect(response.status).toBe(OK_STATUS)
   expect(response.headers.get(CACHE_CONTROL_HEADER)).toBe(CACHE_CONTROL_VALUE)

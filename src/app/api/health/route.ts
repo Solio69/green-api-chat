@@ -9,7 +9,7 @@ const { NO_STORE } = CACHE_CONTROL
 
 export const runtime = 'nodejs'
 
-export async function GET() {
+export const GET = async () => {
   await connection()
 
   return Response.json(

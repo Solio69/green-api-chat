@@ -73,7 +73,7 @@ export type StateResult =
         | typeof INVALID_UPSTREAM_RESPONSE
     }
 
-function classifyBadRequest(responseText: string): StateResult {
+const classifyBadRequest = (responseText: string): StateResult => {
   const normalized = responseText.toLowerCase()
   if (normalized.includes(ERROR_STARTING) || normalized.includes(AMBIGUOUS))
     return { kind: RETRY_LATER }
@@ -82,7 +82,7 @@ function classifyBadRequest(responseText: string): StateResult {
   return { kind: INVALID_UPSTREAM_RESPONSE }
 }
 
-function classifyState(value: unknown): StateResult {
+const classifyState = (value: unknown): StateResult => {
   if (!value || typeof value !== 'object' || Array.isArray(value))
     return { kind: INVALID_UPSTREAM_RESPONSE }
   const stateInstance = (value as Record<string, unknown>).stateInstance
@@ -102,16 +102,14 @@ function classifyState(value: unknown): StateResult {
   }
 }
 
-export async function getStateInstance(
+export const getStateInstance = async (
   credentials: InstanceCredentials,
   fetcher: typeof fetch = fetch,
   waitForRetry: (delay: number, signal: AbortSignal) => Promise<void> = async (
     delay,
     signal,
-  ) => {
-    await wait(delay, undefined, { signal })
-  },
-): Promise<StateResult> {
+  ) => wait(delay, undefined, { signal }),
+): Promise<StateResult> => {
   const id = encodeURIComponent(credentials.idInstance)
   const token = encodeURIComponent(credentials.apiTokenInstance)
   const url = `${HOST}/${INSTANCE_PATH_PREFIX}${id}/${METHOD}/${token}`

@@ -1,0 +1,94 @@
+@use '../../styles/tokens' as tokens;
+@use '../../styles/mixins' as mixins;
+
+.recipientSearchForm {
+  @include mixins.typography(
+    tokens.$font-size-body,
+    tokens.$line-height-control
+  );
+
+  max-width: tokens.$content-max-width;
+
+  &__heading {
+    @include mixins.typography(
+      tokens.$font-size-heading,
+      tokens.$line-height-heading,
+      tokens.$font-weight-bold
+    );
+
+    margin: 0 0 tokens.$space-md;
+  }
+
+  &__fields {
+    display: grid;
+    gap: tokens.$space-sm;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  &__modes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: tokens.$space-xs;
+  }
+
+  &__mode {
+    @include mixins.focus-ring;
+
+    min-height: tokens.$control-min-height;
+    padding: tokens.$space-xs tokens.$space-sm;
+    border: tokens.$border-width solid tokens.$color-control-border;
+    border-radius: tokens.$radius-control;
+    background: tokens.$color-surface;
+    color: tokens.$color-text-primary;
+    font: inherit;
+    cursor: pointer;
+
+    &[aria-pressed='true'] {
+      border-color: tokens.$color-interactive;
+      background: tokens.$color-card-stripe;
+    }
+
+    &:enabled:hover {
+      border-color: tokens.$color-interactive;
+    }
+
+    &:disabled {
+      cursor: default;
+    }
+  }
+
+  &__hint {
+    margin: 0;
+    color: tokens.$color-text-secondary;
+    font-size: tokens.$font-size-caption;
+  }
+
+  &__error {
+    @include mixins.error-message;
+  }
+
+  &__result {
+    margin-top: tokens.$space-md;
+    overflow-wrap: anywhere;
+
+    p {
+      margin: 0 0 tokens.$space-xs;
+    }
+  }
+
+  &__switch {
+    @include mixins.focus-ring;
+
+    min-height: tokens.$control-min-height;
+    padding: 0;
+    border: 0;
+    background: tokens.$color-transparent;
+    color: tokens.$color-interactive;
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

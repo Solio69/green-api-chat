@@ -57,7 +57,7 @@ const {
   KEY_ENTER,
 } = TEST_UI
 
-function observeCredentials(context: BrowserContext) {
+const observeCredentials = (context: BrowserContext) => {
   const records: Promise<{
     url: string
     method: string
@@ -65,16 +65,18 @@ function observeCredentials(context: BrowserContext) {
     body: string | null
   }>[] = []
   const logs: string[] = []
-  context.on(EVENT_REQUEST, (request) => {
-    records.push(
-      request.allHeaders().then((headers) => ({
-        url: request.url(),
-        method: request.method(),
-        headers,
-        body: request.postData(),
-      })),
-    )
-  })
+  context.on(
+    EVENT_REQUEST,
+    (request) =>
+      void records.push(
+        request.allHeaders().then((headers) => ({
+          url: request.url(),
+          method: request.method(),
+          headers,
+          body: request.postData(),
+        })),
+      ),
+  )
   context.on(EVENT_CONSOLE, (message) => logs.push(message.text()))
 
   return async () => {
@@ -117,13 +119,13 @@ test('keeps credentials out of requests, logs and storage and resets on reload',
   context,
 }) => {
   const verifyNoLeaks = observeCredentials(context)
-  await page.route(ROUTE_PATTERNS.LOGIN_API, async (route) => {
-    await route.fulfill({
+  await page.route(ROUTE_PATTERNS.LOGIN_API, async (route) =>
+    route.fulfill({
       status: UNAUTHORIZED_STATUS,
       contentType: JSON_CONTENT_TYPE,
       body: JSON.stringify({ status: RESPONSE_ERROR, code: INVALID_TOKEN }),
-    })
-  })
+    }),
+  )
   await page.goto(LOGIN)
   const id = page.getByLabel(ID_LABEL, { exact: true })
   const token = page.getByLabel(TOKEN_LABEL, { exact: true })
@@ -193,12 +195,14 @@ for (const mode of [DISABLED, BLOCKED] as const) {
 
       // Even a forced native submission cannot serialize the credential inputs.
       // evaluate is test instrumentation; the application's scripts stay unavailable.
-      await id.evaluate((element, value) => {
-        ;(element as HTMLInputElement).value = value
-      }, ID)
-      await token.evaluate((element, value) => {
-        ;(element as HTMLInputElement).value = value
-      }, TOKEN)
+      await id.evaluate(
+        (element, value) => void ((element as HTMLInputElement).value = value),
+        ID,
+      )
+      await token.evaluate(
+        (element, value) => void ((element as HTMLInputElement).value = value),
+        TOKEN,
+      )
       const navigation = page.waitForEvent(
         EVENT_FRAME_NAVIGATED,
         (frame) => frame === page.mainFrame(),

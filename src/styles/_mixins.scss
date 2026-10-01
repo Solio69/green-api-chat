@@ -11,6 +11,8 @@
   font-size: $font-size;
   line-height: $line-height;
 
+  // An omitted weight differs from other false-like values.
+  // stylelint-disable-next-line scss/at-if-no-null
   @if $font-weight != null {
     font-weight: $font-weight;
   }

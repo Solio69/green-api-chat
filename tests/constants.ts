@@ -1,3 +1,5 @@
+import recipientScenarios from './e2e/fixtures/scenarios.json'
+
 export const TEST_SERVER = {
   HOST: '127.0.0.1',
   PORT: 3101,
@@ -6,6 +8,45 @@ export const TEST_SERVER = {
 const { HOST, PORT } = TEST_SERVER
 
 export const BASE_URL = `http://${HOST}:${PORT}`
+
+export const RECIPIENT_SCENARIOS = recipientScenarios
+
+export const RECIPIENT_CONTRACT = {
+  LOGOUT: 'Выйти',
+  SEARCH_HEADING: 'Поиск получателя',
+  PHONE_MODE: 'Телефон',
+  USERNAME_MODE: '@username',
+  PHONE_LABEL: 'Номер телефона',
+  USERNAME_LABEL: 'Telegram username',
+  SUBMIT: 'Найти',
+  PENDING: 'Поиск...',
+  FOUND: 'Пользователь найден',
+  PHONE_NOT_FOUND:
+    'Не удалось найти пользователя по номеру. Проверьте номер или попробуйте поиск по @username',
+  USERNAME_NOT_FOUND:
+    'Пользователь не найден. Проверьте @username и попробуйте ещё раз',
+  SWITCH_TO_USERNAME: 'Найти по @username',
+  PHONE_REQUIRED: 'Введите номер телефона',
+  PHONE_INVALID: 'Укажите номер с кодом страны, только цифры',
+  USERNAME_REQUIRED: 'Введите @username',
+  USERNAME_INVALID: 'Введите корректный @username',
+  RATE_LIMITED:
+    'Слишком много проверок. Повторите поиск через несколько секунд.',
+  SERVICE_UNAVAILABLE: 'GREEN-API временно недоступен. Попробуйте ещё раз.',
+} as const
+
+export const RECIPIENT_API_CONTRACT = {
+  MODE_PHONE: 'phone',
+  MODE_USERNAME: 'username',
+  RESULT_FOUND: 'found',
+  RESULT_NOT_FOUND: 'not_found',
+  SESSION_REQUIRED: 'session_required',
+  RATE_LIMIT_REASON: 'rate_limit_exceeded',
+  PROVIDER_RATE_LIMIT_STATUS: 469,
+  MAX_LENGTH_USERNAME: 'a'.repeat(32),
+  TOO_LONG_USERNAME: 'a'.repeat(33),
+  SHORT_USERNAME: 'a',
+} as const
 
 export const TEST_TIMEOUTS = {
   SERVER_START: 120_000,
@@ -22,11 +63,13 @@ export const ROUTES = {
   LOGIN: '/login',
   LOGIN_API: '/api/auth/login',
   LOGOUT_API: '/api/auth/logout',
+  RECIPIENT_SEARCH_API: '/api/recipients/search',
   HEALTH: '/api/health',
 } as const
 
 export const ROUTE_PATTERNS = {
   LOGIN_API: `**${ROUTES.LOGIN_API}`,
+  RECIPIENT_SEARCH_API: `**${ROUTES.RECIPIENT_SEARCH_API}`,
 } as const
 
 // Expected public behavior is independent of the constants used by the app.
@@ -82,6 +125,7 @@ export const TEST_UI = {
   ATTR_ARIA_INVALID: 'aria-invalid',
   ATTR_ARIA_DESCRIBEDBY: 'aria-describedby',
   ATTR_ARIA_LIVE: 'aria-live',
+  ATTR_ARIA_PRESSED: 'aria-pressed',
   ATTR_HREF: 'href',
   ATTR_TARGET: 'target',
   ATTR_REL: 'rel',
@@ -147,6 +191,8 @@ export const GREEN_API_CONTRACT = {
   HOST: 'https://4100.api.green-api.com',
   INSTANCE_PREFIX: 'waInstance',
   STATE_METHOD: 'getStateInstance',
+  SEARCH_METHOD: 'checkAccount',
+  SEND_METHOD: 'sendMessage',
   AUTHORIZED: 'authorized',
   NOT_AUTHORIZED: 'notAuthorized',
   PENDING_PASSWORD: 'pendingPassword',
@@ -225,6 +271,9 @@ export const TEST_REQUEST_FIXTURES = {
   OVERSIZE_BODY_LENGTH: 8_193,
   EXTRA_BODY_LENGTH: 8_192,
   NON_STRING_ID: 42,
+  INVALID_PHONE: '123abc',
+  TOO_LONG_PHONE: '1'.repeat(16),
+  INVALID_USERNAME: 'invalid-name',
 } as const
 
 export const TEST_SESSION_FIXTURES = {

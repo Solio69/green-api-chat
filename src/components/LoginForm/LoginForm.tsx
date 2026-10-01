@@ -64,7 +64,7 @@ const subscribe = () => () => undefined
 const getClientSnapshot = () => true
 const getServerSnapshot = () => false
 
-function readErrorCode(value: unknown): string | null {
+const readErrorCode = (value: unknown): string | null => {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return null
 
   const { status, code } = value as Record<string, unknown>
@@ -78,7 +78,7 @@ function readErrorCode(value: unknown): string | null {
   return code
 }
 
-export function LoginForm() {
+export const LoginForm = () => {
   const formId = useId()
   const idInputId = `${formId}${INSTANCE}`
   const tokenInputId = `${formId}${TOKEN}`
@@ -129,21 +129,20 @@ export function LoginForm() {
       : EMPTY_STRING
   const tokenToggleLabel = isTokenVisible ? HIDE_TOKEN : SHOW_TOKEN
 
-  function handleIdInstanceChange(value: string) {
+  const handleIdInstanceChange = (value: string) => {
     setValues((current) => ({ ...current, idInstance: value }))
     setServerErrorCode(EMPTY_STRING)
   }
 
-  function handleApiTokenInstanceChange(value: string) {
+  const handleApiTokenInstanceChange = (value: string) => {
     setValues((current) => ({ ...current, apiTokenInstance: value }))
     setServerErrorCode(EMPTY_STRING)
   }
 
-  function handleTokenVisibilityToggle() {
+  const handleTokenVisibilityToggle = () =>
     setIsTokenVisible((visible) => !visible)
-  }
 
-  async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
+  const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (requestPending.current) return
     setHasSubmitted(true)

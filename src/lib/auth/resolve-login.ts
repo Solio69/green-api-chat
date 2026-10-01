@@ -4,8 +4,7 @@ import type {
   InstanceCredentials,
   StateResult,
 } from '@/lib/green-api/get-state'
-import { HTTP_STATUS } from '@/lib/http/constants'
-import { AUTH_CONFIG } from './constants'
+import { HTTP_BODY_LIMIT, HTTP_STATUS } from '@/lib/http/constants'
 
 const {
   INVALID_REQUEST,
@@ -30,7 +29,7 @@ const {
   BAD_GATEWAY: HTTP_BAD_GATEWAY,
   SERVICE_UNAVAILABLE: HTTP_SERVICE_UNAVAILABLE,
 } = HTTP_STATUS
-const { MAX_REQUEST_BYTES } = AUTH_CONFIG
+const { MAX_REQUEST_BYTES } = HTTP_BODY_LIMIT
 const { AUTHORIZED } = GREEN_API_STATES
 
 const ERROR_HTTP_STATUS = {
@@ -54,7 +53,7 @@ export type LoginResult = {
   }
 }
 
-function parseCredentials(rawBody: string): InstanceCredentials | null {
+const parseCredentials = (rawBody: string): InstanceCredentials | null => {
   if (
     new TextEncoder().encode(rawBody).byteLength > MAX_REQUEST_BYTES ||
     rawBody.length === 0
@@ -77,11 +76,11 @@ function parseCredentials(rawBody: string): InstanceCredentials | null {
   }
 }
 
-export async function resolveLogin(
+export const resolveLogin = async (
   rawBody: string,
   getState: (credentials: InstanceCredentials) => Promise<StateResult>,
   saveSession: (credentials: InstanceCredentials) => Promise<void>,
-): Promise<LoginResult> {
+): Promise<LoginResult> => {
   const credentials = parseCredentials(rawBody)
   if (!credentials) {
     return {

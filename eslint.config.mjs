@@ -14,6 +14,22 @@ export default defineConfig([
     },
     rules: {
       'arrow-body-style': ['error', 'as-needed'],
+      'func-style': ['error', 'expression'],
+      'prefer-arrow-callback': 'error',
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector:
+            "FunctionExpression:not(MethodDefinition > FunctionExpression):not(Property[method=true] > FunctionExpression):not(Property[kind='get'] > FunctionExpression):not(Property[kind='set'] > FunctionExpression)",
+          message:
+            'Use an arrow function unless method semantics are required.',
+        },
+        {
+          selector:
+            "VariableDeclarator[id.name=/^handle/] > ArrowFunctionExpression[async=false][body.type='BlockStatement'][body.body.length=1] > BlockStatement > ExpressionStatement[expression.type='CallExpression']",
+          message: 'Use a concise body for a single-call handler.',
+        },
+      ],
       'prefer-template': 'error',
       'no-nested-ternary': 'error',
       'no-unneeded-ternary': 'error',

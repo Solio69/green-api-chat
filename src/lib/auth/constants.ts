@@ -1,5 +1,4 @@
 export const AUTH_CONFIG = {
-  MAX_REQUEST_BYTES: 8_192,
   SESSION_DURATION_SECONDS: 86_400,
   COOKIE_NAME: 'green-api-chat-session',
   COOKIE_SAME_SITE: 'lax',

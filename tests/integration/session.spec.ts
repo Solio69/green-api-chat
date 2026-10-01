@@ -51,7 +51,7 @@ class MemoryStore implements CookieStore {
   }
 }
 
-async function requireSession(store: MemoryStore, production = false) {
+const requireSession = async (store: MemoryStore, production = false) => {
   const session = await openSession(store, TEST_PASSWORD, production)
   if (!session) throw new Error(MISSING_SESSION)
   return session

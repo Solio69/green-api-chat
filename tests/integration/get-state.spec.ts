@@ -212,9 +212,7 @@ test('get-state: a second HTTP 429 stops after one retry', async () => {
       calls += 1
       return new Response(PROVIDER_DETAIL, { status: RATE_LIMIT_STATUS })
     },
-    async () => {
-      waits += 1
-    },
+    async () => void (waits += 1),
   )
   expect(calls).toBe(2)
   expect(waits).toBe(1)

@@ -1,9 +1,22 @@
+import { resolve } from 'node:path'
+import { pathToFileURL } from 'node:url'
 import { defineConfig, devices } from '@playwright/test'
-import { BASE_URL, ROUTES, TEST_SERVER, TEST_TIMEOUTS } from './tests/constants'
+import {
+  BASE_URL,
+  ROUTES,
+  TEST_SERVER,
+  TEST_SESSION_FIXTURES,
+  TEST_TIMEOUTS,
+} from './tests/constants'
 
 const { HOME } = ROUTES
 const { HOST, PORT } = TEST_SERVER
+const { PASSWORD: TEST_SESSION_PASSWORD } = TEST_SESSION_FIXTURES
 const { ACTION, EXPECT, NAVIGATION, RUN, SERVER_START, TEST } = TEST_TIMEOUTS
+const fixtureUrl = pathToFileURL(
+  resolve('tests/e2e/fixtures/fake-green-api.ts'),
+).href
+const nodeOptions = `${process.env.NODE_OPTIONS ?? ''} --import=${fixtureUrl}`
 
 export default defineConfig({
   testDir: './tests/e2e',
@@ -46,6 +59,8 @@ export default defineConfig({
     stderr: 'pipe',
     env: {
       NEXT_TELEMETRY_DISABLED: '1',
+      SESSION_PASSWORD: TEST_SESSION_PASSWORD,
+      NODE_OPTIONS: nodeOptions,
     },
   },
 })

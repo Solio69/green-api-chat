@@ -40,6 +40,7 @@ node -e "process.stdout.write(require('node:crypto').randomBytes(32).toString('b
 ```powershell
 npm run typecheck
 npm run lint
+npm run lint:styles
 npm run format:check
 npm run test:integration
 npm run test:e2e
@@ -47,14 +48,14 @@ npm run test:e2e
 
 `typecheck` проверяет типы приложения и тестов, `lint` — правила кода, `format:check` — форматирование без правки файлов. Для автоисправлений нажмите ▶ у `lint:fix`, затем у `format`: первая команда применяет готовые исправления ESLint, вторая форматирует код. Эти команды изменяют файлы; результат следует просмотреть в diff. `test:integration` проверяет серверную логику, состояния GREEN-API и cookie с фиктивными данными. `test:e2e` собирает production-приложение, запускает собственный сервер на `http://127.0.0.1:3101` и проверяет маршруты и форму в Chromium. Перед E2E остановите dev-сервер в этой рабочей папке. Для тестов реальный `SESSION_PASSWORD` не требуется: используется фиктивное значение.
 
-Автоматические правила определены в [eslint.config.mjs](eslint.config.mjs) и [prettier.config.mjs](prettier.config.mjs). Существующие соглашения Next.js дополнены порядком импортов, явными type-импортами и упрощениями выражений; Prettier форматирует JS/TS без необязательных точек с запятой. Границы проверок и запуск описаны в [задаче ESLint/Prettier](specs/007-eslint-prettier/quickstart.md).
+Автоматические правила определены в [eslint.config.mjs](eslint.config.mjs), [prettier.config.mjs](prettier.config.mjs) и [stylelint.config.mjs](stylelint.config.mjs). `lint:styles` проверяет все исходные SCSS-файлы без исправления, а Prettier форматирует JS/TS без необязательных точек с запятой. Смысловые соглашения для компонентов и тестов находятся в [правилах написания кода](docs/CODING_RULES.md); [карта правил](docs/CODE_STYLE.md) ведёт к конфигурациям и командам.
 
-Текущий набор содержит 66 интеграционных и 26 браузерных/HTTP-сценариев. Ожидаемый результат — завершение команд с кодом 0 и без пропущенных тестов. Последний HTML-отчёт браузерного прогона можно открыть через `test:report`. Результаты проверки выхода находятся в [verification.md](specs/008-logout/verification.md).
+Ожидаемый результат проверок — завершение команд с кодом 0 и без пропущенных тестов. Последний HTML-отчёт браузерного прогона можно открыть через `test:report`. Результаты проверки выхода находятся в [verification.md](specs/008-logout/verification.md).
 
 Для локальной production-проверки при остановленном dev-сервере выполните `npm run build`, затем `npm run start`. Это не публикует приложение. Служебный [health endpoint](http://localhost:3000/api/health) должен вернуть HTTP 200, `Cache-Control: no-store` и JSON `{"status":"ok"}`; он не проверяет GREEN-API.
 
 ## Структура и соглашения
 
-Next.js App Router и TypeScript разделяют серверную проверку доступа и клиентскую форму. SCSS Modules используют БЭМ; цвета и повторяемые размеры находятся в `src/styles/_tokens.scss`, общие группы стилей — в `src/styles/_mixins.scss`. Правила разработки: [кодстайл](docs/CODE_STYLE.md), [процесс Spec Kit](docs/spec-kit-workflow.md), [политика Git](GIT_POLICY.md).
+Next.js App Router и TypeScript разделяют серверную проверку доступа и клиентскую форму. SCSS Modules используют БЭМ; цвета и повторяемые размеры находятся в `src/styles/_tokens.scss`, общие группы стилей — в `src/styles/_mixins.scss`. Правила разработки: [смысловые правила для агента](docs/CODING_RULES.md), [карта автоматических проверок](docs/CODE_STYLE.md), [процесс Spec Kit](docs/spec-kit-workflow.md), [политика Git](GIT_POLICY.md).
 
 При разработке используется ИИ-агент для подготовки кода, документации и проверок. Автор проекта участвует в обсуждении и согласовании требований и технических решений.

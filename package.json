@@ -17,6 +17,7 @@
     "test:install-browser": "playwright install chromium",
     "typecheck": "next typegen && tsc --noEmit",
     "lint": "eslint . --max-warnings=0",
+    "lint:styles": "stylelint \"src/**/*.scss\"",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
     "lint:fix": "eslint . --fix --max-warnings=0"
@@ -38,6 +39,8 @@
     "eslint-plugin-import": "2.32.0",
     "prettier": "3.9.9",
     "sass": "1.105.0",
+    "stylelint": "17.14.1",
+    "stylelint-config-standard-scss": "17.0.0",
     "typescript": "5.9.3"
   }
 }

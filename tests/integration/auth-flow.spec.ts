@@ -48,7 +48,7 @@ const {
   NON_STRING_ID,
 } = TEST_REQUEST_FIXTURES
 
-function fixture(state: StateResult) {
+const fixture = (state: StateResult) => {
   const calls: InstanceCredentials[] = []
   const saves: InstanceCredentials[] = []
   return {
@@ -58,9 +58,7 @@ function fixture(state: StateResult) {
       calls.push(value)
       return state
     },
-    saveSession: async (value: InstanceCredentials) => {
-      saves.push(value)
-    },
+    saveSession: async (value: InstanceCredentials) => void saves.push(value),
   }
 }
 

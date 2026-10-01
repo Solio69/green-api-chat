@@ -5,6 +5,7 @@ export const API_RESPONSE_STATUS = {
 
 export const API_ERROR_CODE = {
   INVALID_REQUEST: 'invalid_request',
+  SESSION_REQUIRED: 'session_required',
   INVALID_TOKEN: 'invalid_token',
   INVALID_INSTANCE: 'invalid_instance',
   NEEDS_AUTHORIZATION: 'needs_authorization',

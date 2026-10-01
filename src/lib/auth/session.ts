@@ -18,27 +18,33 @@ const SESSION_DURATION_MS = SESSION_DURATION_SECONDS * 1_000
 
 export type SessionPayload = InstanceCredentials & { expiresAt: number }
 
-function sessionOptions(password: string, production: boolean): SessionOptions {
-  return {
-    password,
-    cookieName: COOKIE_NAME,
-    ttl: SESSION_DURATION_SECONDS,
-    cookieOptions: {
-      httpOnly: true,
-      secure: production,
-      sameSite: COOKIE_SAME_SITE,
-      path: COOKIE_PATH,
-      maxAge: SESSION_DURATION_SECONDS,
-    },
-  }
-}
+export const hasSessionPassword = (
+  password: string | undefined,
+): password is string =>
+  typeof password === 'string' && password.length >= PASSWORD_MIN_LENGTH
 
-export async function openSession(
+const sessionOptions = (
+  password: string,
+  production: boolean,
+): SessionOptions => ({
+  password,
+  cookieName: COOKIE_NAME,
+  ttl: SESSION_DURATION_SECONDS,
+  cookieOptions: {
+    httpOnly: true,
+    secure: production,
+    sameSite: COOKIE_SAME_SITE,
+    path: COOKIE_PATH,
+    maxAge: SESSION_DURATION_SECONDS,
+  },
+})
+
+export const openSession = async (
   store: CookieStore,
   password: string | undefined,
   production: boolean,
-): Promise<IronSession<SessionPayload> | null> {
-  if (!password || password.length < PASSWORD_MIN_LENGTH) return null
+): Promise<IronSession<SessionPayload> | null> => {
+  if (!hasSessionPassword(password)) return null
   try {
     return await getIronSession<SessionPayload>(
       store,
@@ -49,21 +55,21 @@ export async function openSession(
   }
 }
 
-export async function saveCredentials(
+export const saveCredentials = async (
   session: IronSession<SessionPayload>,
   credentials: InstanceCredentials,
   now = Date.now(),
-): Promise<void> {
+): Promise<void> => {
   session.idInstance = credentials.idInstance
   session.apiTokenInstance = credentials.apiTokenInstance
   session.expiresAt = now + SESSION_DURATION_MS
   await session.save()
 }
 
-export function readCredentials(
+export const readCredentials = (
   session: IronSession<SessionPayload>,
   now = Date.now(),
-): InstanceCredentials | null {
+): InstanceCredentials | null => {
   const { idInstance, apiTokenInstance, expiresAt } = session
   if (
     typeof idInstance !== 'string' ||

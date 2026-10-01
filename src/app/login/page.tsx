@@ -12,7 +12,7 @@ type LoginPageProps = {
   searchParams: Promise<{ reason?: string }>
 }
 
-export default async function LoginPage({ searchParams }: LoginPageProps) {
+const LoginPage = async ({ searchParams }: LoginPageProps) => {
   const { reason } = await searchParams
 
   return (
@@ -25,3 +25,5 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     </div>
   )
 }
+
+export default LoginPage

@@ -7,10 +7,8 @@ type SubmitButtonProps = {
   label: string
 }
 
-export function SubmitButton({ label }: SubmitButtonProps) {
-  return (
-    <button className={styles.submitButton} type={SUBMIT}>
-      {label}
-    </button>
-  )
-}
+export const SubmitButton = ({ label }: SubmitButtonProps) => (
+  <button className={styles.submitButton} type={SUBMIT}>
+    {label}
+  </button>
+)

@@ -14,10 +14,10 @@ type RootLayoutProps = Readonly<{
   children: ReactNode
 }>
 
-export default function RootLayout({ children }: RootLayoutProps) {
-  return (
-    <html lang={LANGUAGE_RU}>
-      <body>{children}</body>
-    </html>
-  )
-}
+const RootLayout = ({ children }: RootLayoutProps) => (
+  <html lang={LANGUAGE_RU}>
+    <body>{children}</body>
+  </html>
+)
+
+export default RootLayout

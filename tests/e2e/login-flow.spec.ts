@@ -1,14 +1,12 @@
 import { expect, test } from '@playwright/test'
 import type { Page } from '@playwright/test'
 import {
-  BASE_URL,
   CREDENTIALS,
-  GREEN_API_CONTRACT,
   LOGIN_API_CONTRACT,
   LOGIN_CONTRACT,
+  RECIPIENT_CONTRACT,
   ROUTE_PATTERNS,
   ROUTES,
-  TEST_BROWSER_FIXTURES,
   TEST_FETCH_CONTRACT,
   TEST_UI,
 } from '../constants'
@@ -17,13 +15,11 @@ const { HOME, LOGIN } = ROUTES
 const { LOGIN_API: LOGIN_API_ROUTE_PATTERN } = ROUTE_PATTERNS
 const { ID, TOKEN } = CREDENTIALS
 const { ID_LABEL, TOKEN_LABEL, SUBMIT } = LOGIN_CONTRACT
-const { AUTHORIZED } = GREEN_API_CONTRACT
+const { SEARCH_HEADING } = RECIPIENT_CONTRACT
 const {
-  OK_STATUS,
   UNAUTHORIZED_STATUS,
   RATE_LIMIT_STATUS,
   UNAVAILABLE_STATUS,
-  RESPONSE_OK,
   RESPONSE_ERROR,
   INVALID_TOKEN,
   INVALID_INSTANCE,
@@ -32,14 +28,16 @@ const {
   RATE_LIMITED,
   JSON_CONTENT_TYPE,
 } = LOGIN_API_CONTRACT
-const { HTML_CONTENT_TYPE } = TEST_BROWSER_FIXTURES
 const { METHOD_POST } = TEST_FETCH_CONTRACT
-const { ROLE_BUTTON, OUTPUT_SELECTOR, ATTR_ARIA_INVALID, BOOLEAN_TRUE } =
-  TEST_UI
-const AUTHORIZED_JSON = JSON.stringify({ stateInstance: AUTHORIZED })
-const HOME_HTML = `<main><pre>${AUTHORIZED_JSON}</pre></main>`
+const {
+  ROLE_BUTTON,
+  ROLE_HEADING,
+  OUTPUT_SELECTOR,
+  ATTR_ARIA_INVALID,
+  BOOLEAN_TRUE,
+} = TEST_UI
 
-async function fillCredentials(page: Page) {
+const fillCredentials = async (page: Page) => {
   await page.getByLabel(ID_LABEL, { exact: true }).fill(ID)
   await page.getByLabel(TOKEN_LABEL, { exact: true }).fill(TOKEN)
 }
@@ -63,37 +61,29 @@ test('login flow: authorized response opens home after one POST', async ({
       idInstance: ID,
       apiTokenInstance: TOKEN,
     })
-    await route.fulfill({
-      status: OK_STATUS,
-      contentType: JSON_CONTENT_TYPE,
-      body: JSON.stringify({ status: RESPONSE_OK }),
-    })
-  })
-  await page.route(`${BASE_URL}${HOME}`, async (route) => {
-    await route.fulfill({
-      status: OK_STATUS,
-      contentType: HTML_CONTENT_TYPE,
-      body: HOME_HTML,
-    })
+    await route.continue()
   })
   await page.goto(LOGIN)
   await fillCredentials(page)
   await page.getByRole(ROLE_BUTTON, { name: SUBMIT, exact: true }).click()
   await expect(page).toHaveURL(HOME)
-  await expect(page.locator(OUTPUT_SELECTOR)).toHaveText(AUTHORIZED_JSON)
+  await expect(
+    page.getByRole(ROLE_HEADING, { name: SEARCH_HEADING }),
+  ).toBeVisible()
+  await expect(page.locator(OUTPUT_SELECTOR)).toHaveCount(0)
   expect(posts).toBe(1)
 })
 
 test('login flow: invalid token is shown at token field and input remains', async ({
   page,
 }) => {
-  await page.route(LOGIN_API_ROUTE_PATTERN, async (route) => {
-    await route.fulfill({
+  await page.route(LOGIN_API_ROUTE_PATTERN, async (route) =>
+    route.fulfill({
       status: UNAUTHORIZED_STATUS,
       contentType: JSON_CONTENT_TYPE,
       body: JSON.stringify({ status: RESPONSE_ERROR, code: INVALID_TOKEN }),
-    })
-  })
+    }),
+  )
   await page.goto(LOGIN)
   await fillCredentials(page)
   await page.getByRole(ROLE_BUTTON, { name: SUBMIT, exact: true }).click()
@@ -151,9 +141,7 @@ test('login flow: pending POST blocks duplicate submissions', async ({
   let release: (() => void) | undefined
   await page.route(LOGIN_API_ROUTE_PATTERN, async (route) => {
     posts += 1
-    await new Promise<void>((resolve) => {
-      release = resolve
-    })
+    await new Promise<void>((resolve) => void (release = resolve))
     await route.fulfill({
       status: UNAVAILABLE_STATUS,
       contentType: JSON_CONTENT_TYPE,
@@ -177,13 +165,13 @@ test('login flow: pending POST blocks duplicate submissions', async ({
 test('login flow: exhausted rate limit explains when to try again', async ({
   page,
 }) => {
-  await page.route(LOGIN_API_ROUTE_PATTERN, async (route) => {
-    await route.fulfill({
+  await page.route(LOGIN_API_ROUTE_PATTERN, async (route) =>
+    route.fulfill({
       status: RATE_LIMIT_STATUS,
       contentType: JSON_CONTENT_TYPE,
       body: JSON.stringify({ status: RESPONSE_ERROR, code: RATE_LIMITED }),
-    })
-  })
+    }),
+  )
   await page.goto(LOGIN)
   await fillCredentials(page)
   await page.getByRole(ROLE_BUTTON, { name: SUBMIT, exact: true }).click()

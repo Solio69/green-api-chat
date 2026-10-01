@@ -7,6 +7,7 @@ export const HTTP_STATUS = {
   METHOD_NOT_ALLOWED: 405,
   CONFLICT: 409,
   TOO_MANY_REQUESTS: 429,
+  PROVIDER_RATE_LIMITED: 469,
   BAD_GATEWAY: 502,
   SERVICE_UNAVAILABLE: 503,
   SERVER_ERROR_START: 500,
@@ -40,4 +41,8 @@ export const HTTP_SYNTAX = {
 
 export const TEXT_ENCODING = {
   UTF_8: 'utf-8',
+} as const
+
+export const HTTP_BODY_LIMIT = {
+  MAX_REQUEST_BYTES: 8_192,
 } as const
