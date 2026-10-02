@@ -51,16 +51,26 @@ class MemoryStore implements CookieStore {
   }
 }
 
-const requireSession = async (store: MemoryStore, production = false) => {
-  const session = await openSession(store, TEST_PASSWORD, production)
+const requireSession = async ({
+  store,
+  production = false,
+}: {
+  store: MemoryStore
+  production?: boolean
+}) => {
+  const session = await openSession({
+    store,
+    password: TEST_PASSWORD,
+    production,
+  })
   if (!session) throw new Error(MISSING_SESSION)
   return session
 }
 
 test('session: cookie is encrypted, HttpOnly and scoped for production', async () => {
   const store = new MemoryStore()
-  const session = await requireSession(store, true)
-  await saveCredentials(session, credentials, START)
+  const session = await requireSession({ store, production: true })
+  await saveCredentials({ session, credentials, now: START })
   expect(store.writes).toHaveLength(1)
   const [{ value, options }] = store.writes
   expect(value).not.toContain(idInstance)
@@ -70,45 +80,49 @@ test('session: cookie is encrypted, HttpOnly and scoped for production', async (
   expect(options.sameSite).toBe(SAME_SITE)
   expect(options.path).toBe(PATH)
   expect(options.maxAge).toBe(MAX_AGE)
-  const restored = await requireSession(store, true)
-  expect(readCredentials(restored, START + 1)).toEqual(credentials)
+  const restored = await requireSession({ store, production: true })
+  expect(readCredentials({ session: restored, now: START + 1 })).toEqual(
+    credentials,
+  )
   expect(store.writes).toHaveLength(1)
 })
 
 test('session: local HTTP cookie is not Secure while retaining other protection', async () => {
   const store = new MemoryStore()
-  const session = await requireSession(store)
-  await saveCredentials(session, credentials, START)
+  const session = await requireSession({ store })
+  await saveCredentials({ session, credentials, now: START })
   expect(store.writes[0].options.secure).toBe(false)
   expect(store.writes[0].options.httpOnly).toBe(true)
 })
 
 test('session: absolute 24-hour expiry is not extended by reading', async () => {
   const store = new MemoryStore()
-  const session = await requireSession(store)
-  await saveCredentials(session, credentials, START)
-  expect(readCredentials(session, START + DAY_MS - 1)).toEqual(credentials)
-  expect(readCredentials(session, START + DAY_MS)).toBeNull()
+  const session = await requireSession({ store })
+  await saveCredentials({ session, credentials, now: START })
+  expect(readCredentials({ session, now: START + DAY_MS - 1 })).toEqual(
+    credentials,
+  )
+  expect(readCredentials({ session, now: START + DAY_MS })).toBeNull()
   expect(store.writes).toHaveLength(1)
 })
 
 test('session: missing and malformed payload do not grant access', async () => {
   const store = new MemoryStore()
-  const session = await requireSession(store)
-  expect(readCredentials(session, START)).toBeNull()
+  const session = await requireSession({ store })
+  expect(readCredentials({ session, now: START })).toBeNull()
   session.idInstance = BLANK_ID
   session.apiTokenInstance = apiTokenInstance
   session.expiresAt = START + DAY_MS
-  expect(readCredentials(session, START)).toBeNull()
+  expect(readCredentials({ session, now: START })).toBeNull()
   session.idInstance = idInstance
   session.expiresAt = Number.POSITIVE_INFINITY
-  expect(readCredentials(session, START)).toBeNull()
+  expect(readCredentials({ session, now: START })).toBeNull()
 })
 
 test('session: modified cookie cannot be read', async () => {
   const store = new MemoryStore()
-  const session = await requireSession(store)
-  await saveCredentials(session, credentials, START)
+  const session = await requireSession({ store })
+  await saveCredentials({ session, credentials, now: START })
   const [cookie] = store.writes
   const index = Math.floor(cookie.value.length / 2)
   const replacement =
@@ -119,13 +133,17 @@ test('session: modified cookie cannot be read', async () => {
     cookie.name,
     `${cookie.value.slice(0, index)}${replacement}${cookie.value.slice(index + 1)}`,
   )
-  const restored = await requireSession(store)
-  expect(readCredentials(restored, START)).toBeNull()
+  const restored = await requireSession({ store })
+  expect(readCredentials({ session: restored, now: START })).toBeNull()
 })
 
 test('session: missing or short secret is unavailable', async () => {
   const store = new MemoryStore()
-  expect(await openSession(store, undefined, false)).toBeNull()
-  expect(await openSession(store, SHORT_PASSWORD, false)).toBeNull()
+  expect(
+    await openSession({ store, password: undefined, production: false }),
+  ).toBeNull()
+  expect(
+    await openSession({ store, password: SHORT_PASSWORD, production: false }),
+  ).toBeNull()
   expect(store.writes).toHaveLength(0)
 })

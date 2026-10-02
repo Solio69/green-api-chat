@@ -23,10 +23,13 @@ export const hasSessionPassword = (
 ): password is string =>
   typeof password === 'string' && password.length >= PASSWORD_MIN_LENGTH
 
-const sessionOptions = (
-  password: string,
-  production: boolean,
-): SessionOptions => ({
+const sessionOptions = ({
+  password,
+  production,
+}: {
+  password: string
+  production: boolean
+}): SessionOptions => ({
   password,
   cookieName: COOKIE_NAME,
   ttl: SESSION_DURATION_SECONDS,
@@ -39,39 +42,50 @@ const sessionOptions = (
   },
 })
 
-export const openSession = async (
-  store: CookieStore,
-  password: string | undefined,
-  production: boolean,
-): Promise<IronSession<SessionPayload> | null> => {
+export const openSession = async ({
+  store,
+  password,
+  production,
+}: {
+  store: CookieStore
+  password: string | undefined
+  production: boolean
+}): Promise<IronSession<SessionPayload> | null> => {
   if (!hasSessionPassword(password)) return null
   try {
     return await getIronSession<SessionPayload>(
       store,
-      sessionOptions(password, production),
+      sessionOptions({ password, production }),
     )
   } catch {
     return null
   }
 }
 
-export const saveCredentials = async (
-  session: IronSession<SessionPayload>,
-  credentials: InstanceCredentials,
+export const saveCredentials = async ({
+  session,
+  credentials,
   now = Date.now(),
-): Promise<void> => {
+}: {
+  session: IronSession<SessionPayload>
+  credentials: InstanceCredentials
+  now?: number
+}): Promise<void> => {
   session.idInstance = credentials.idInstance
   session.apiTokenInstance = credentials.apiTokenInstance
   session.expiresAt = now + SESSION_DURATION_MS
   await session.save()
 }
 
-export const readCredentials = (
-  session: IronSession<SessionPayload>,
+export const readCredentials = ({
+  session,
   now = Date.now(),
-): InstanceCredentials | null => {
+}: {
+  session: IronSession<SessionPayload>
+  now?: number
+}): InstanceCredentials | null => {
   const { idInstance, apiTokenInstance, expiresAt } = session
-  if (
+  const isInvalidCredentials =
     typeof idInstance !== 'string' ||
     typeof apiTokenInstance !== 'string' ||
     idInstance.trim().length === 0 ||
@@ -79,7 +93,6 @@ export const readCredentials = (
     typeof expiresAt !== 'number' ||
     !Number.isFinite(expiresAt) ||
     expiresAt <= now
-  )
-    return null
+  if (isInvalidCredentials) return null
   return { idInstance, apiTokenInstance }
 }

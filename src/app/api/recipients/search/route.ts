@@ -15,14 +15,14 @@ export const POST = async (request: Request): Promise<Response> => {
   const password = process.env.SESSION_PASSWORD
   const configured = hasSessionPassword(password)
   const session = configured
-    ? await openSession(store, password, IS_PRODUCTION)
+    ? await openSession({ store, password, production: IS_PRODUCTION })
     : null
-  const credentials = session && readCredentials(session)
+  const credentials = session && readCredentials({ session })
 
-  return handleSearchRequest(
+  return handleSearchRequest({
     request,
-    { configured, credentials },
-    checkAccount,
-    async () => void store.delete(COOKIE_NAME),
-  )
+    context: { configured, credentials },
+    lookup: checkAccount,
+    clearSession: async () => void store.delete(COOKIE_NAME),
+  })
 }

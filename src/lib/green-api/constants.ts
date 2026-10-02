@@ -4,6 +4,7 @@ export const GREEN_API_CONFIG = {
   METHOD: 'getStateInstance',
   ACCOUNT_SETTINGS_METHOD: 'getAccountSettings',
   CHATS_METHOD: 'getChats',
+  CHAT_HISTORY_METHOD: 'getChatHistory',
   CHECK_ACCOUNT_METHOD: 'checkAccount',
   TIMEOUT_MS: 10_000,
   RATE_LIMIT_RETRY_DELAY_MS: 1_100,

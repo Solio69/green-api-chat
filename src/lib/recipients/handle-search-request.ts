@@ -31,19 +31,30 @@ export type SearchContext = {
   credentials: InstanceCredentials | null
 }
 
-export const handleSearchRequest = async (
-  request: Request,
-  context: SearchContext,
-  lookup: (
-    credentials: InstanceCredentials,
-    query: RecipientQuery,
-  ) => Promise<CheckAccountResult>,
-  clearSession: () => Promise<void>,
-): Promise<Response> => {
+export const handleSearchRequest = async ({
+  request,
+  context,
+  lookup,
+  clearSession,
+}: {
+  request: Request
+  context: SearchContext
+  lookup: (options: {
+    credentials: InstanceCredentials
+    query: RecipientQuery
+  }) => Promise<CheckAccountResult>
+  clearSession: () => Promise<void>
+}): Promise<Response> => {
   if (!context.configured)
-    return searchErrorResponse(SERVER_UNAVAILABLE, HTTP_SERVICE_UNAVAILABLE)
+    return searchErrorResponse({
+      code: SERVER_UNAVAILABLE,
+      status: HTTP_SERVICE_UNAVAILABLE,
+    })
   if (!context.credentials)
-    return searchErrorResponse(SESSION_REQUIRED, HTTP_UNAUTHORIZED)
+    return searchErrorResponse({
+      code: SESSION_REQUIRED,
+      status: HTTP_UNAUTHORIZED,
+    })
 
   const mediaType = request.headers
     .get(CONTENT_TYPE)
@@ -51,21 +62,34 @@ export const handleSearchRequest = async (
     .trim()
     .toLowerCase()
   if (mediaType !== JSON_CONTENT_TYPE)
-    return searchErrorResponse(INVALID_REQUEST, HTTP_BAD_REQUEST)
+    return searchErrorResponse({
+      code: INVALID_REQUEST,
+      status: HTTP_BAD_REQUEST,
+    })
 
   let parsed: unknown
   try {
     parsed = await request.json()
   } catch {
-    return searchErrorResponse(INVALID_REQUEST, HTTP_BAD_REQUEST)
+    return searchErrorResponse({
+      code: INVALID_REQUEST,
+      status: HTTP_BAD_REQUEST,
+    })
   }
   const query = parseSearchRequest(parsed)
-  if (!query) return searchErrorResponse(INVALID_REQUEST, HTTP_BAD_REQUEST)
+  if (!query)
+    return searchErrorResponse({
+      code: INVALID_REQUEST,
+      status: HTTP_BAD_REQUEST,
+    })
 
   try {
-    const result = await lookup(context.credentials, query)
-    return await resolveSearchResult(result, clearSession)
+    const result = await lookup({ credentials: context.credentials, query })
+    return await resolveSearchResult({ result, clearSession })
   } catch {
-    return searchErrorResponse(SERVICE_UNAVAILABLE, HTTP_SERVICE_UNAVAILABLE)
+    return searchErrorResponse({
+      code: SERVICE_UNAVAILABLE,
+      status: HTTP_SERVICE_UNAVAILABLE,
+    })
   }
 }

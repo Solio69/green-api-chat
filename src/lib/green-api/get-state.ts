@@ -106,14 +106,19 @@ export const classifyState = (value: unknown): StateResult => {
   }
 }
 
-export const getStateInstance = async (
-  credentials: InstanceCredentials,
-  fetcher: typeof fetch = fetch,
-  waitForRetry: (delay: number, signal: AbortSignal) => Promise<void> = async (
-    delay,
-    signal,
-  ) => wait(delay, undefined, { signal }),
-): Promise<StateResult> => {
+export const getStateInstance = async ({
+  credentials,
+  fetcher = fetch,
+  waitForRetry = async ({ delay, signal }) =>
+    wait(delay, undefined, { signal }),
+}: {
+  credentials: InstanceCredentials
+  fetcher?: typeof fetch
+  waitForRetry?: (options: {
+    delay: number
+    signal: AbortSignal
+  }) => Promise<void>
+}): Promise<StateResult> => {
   const id = encodeURIComponent(credentials.idInstance)
   const token = encodeURIComponent(credentials.apiTokenInstance)
   const url = `${HOST}/${INSTANCE_PATH_PREFIX}${id}/${METHOD}/${token}`
@@ -128,7 +133,7 @@ export const getStateInstance = async (
       })
     let response = await requestState()
     if (response.status === HTTP_TOO_MANY_REQUESTS) {
-      await waitForRetry(RATE_LIMIT_RETRY_DELAY_MS, signal)
+      await waitForRetry({ delay: RATE_LIMIT_RETRY_DELAY_MS, signal })
       response = await requestState()
       if (response.status === HTTP_TOO_MANY_REQUESTS)
         return { kind: RATE_LIMITED }

@@ -24,6 +24,8 @@ export const FETCH_REDIRECT = {
 
 export const HTTP_HEADERS = {
   CONNECTION_SCOPE: 'X-Connection-Scope',
+  ORIGIN: 'Origin',
+  HOST: 'Host',
   CONTENT_TYPE: 'Content-Type',
   CACHE_CONTROL: 'Cache-Control',
   LOCATION: 'Location',
@@ -47,3 +49,6 @@ export const TEXT_ENCODING = {
 export const HTTP_BODY_LIMIT = {
   MAX_REQUEST_BYTES: 8_192,
 } as const
+
+export const FETCH_CREDENTIALS = { SAME_ORIGIN: 'same-origin' } as const
+export const HTTP_URL_PROTOCOL = { HTTP: 'http:', HTTPS: 'https:' } as const

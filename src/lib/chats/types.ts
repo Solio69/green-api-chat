@@ -1,5 +1,6 @@
 import type { InstanceCredentials } from '@/lib/green-api/get-state'
-import type { API_ERROR_CODE } from '@/lib/api/constants'
+import { SessionQueryError } from '@/lib/query/session-query-error'
+import type { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
 import { CHAT_QUERY_CONFIG } from './constants'
 
 const { QUERY_ERROR_NAME } = CHAT_QUERY_CONFIG
@@ -13,7 +14,8 @@ export type PersonalChat = {
 export type ChatsErrorCode =
   (typeof API_ERROR_CODE)[keyof typeof API_ERROR_CODE]
 export type GetChatsResult =
-  { kind: 'ok'; chats: PersonalChat[] } | { kind: ChatsErrorCode }
+  | { kind: typeof API_RESPONSE_STATUS.OK; chats: PersonalChat[] }
+  | { kind: ChatsErrorCode }
 export type GetChatsOptions = {
   credentials: InstanceCredentials
   signal?: AbortSignal
@@ -23,9 +25,8 @@ export type GetChatsOptions = {
     signal: AbortSignal
   }) => Promise<void>
 }
-export class ChatsQueryError extends Error {
-  public readonly code: ChatsErrorCode
-  public readonly status: number | null
+export class ChatsQueryError extends SessionQueryError {
+  declare public readonly code: ChatsErrorCode
   constructor({
     code,
     status,
@@ -33,9 +34,7 @@ export class ChatsQueryError extends Error {
     code: ChatsErrorCode
     status: number | null
   }) {
-    super(code)
-    this.code = code
-    this.status = status
+    super({ code, status })
     this.name = QUERY_ERROR_NAME
   }
 }

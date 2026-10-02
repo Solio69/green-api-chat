@@ -1,6 +1,6 @@
 # Contract: передача слоя данных задаче UI
 
-Статус: 014 реализована и проверена; публичные экспорты готовы. Каркас/поиск сохранены, видимый список подключает 015. FR-008, FR-013–FR-016.
+Статус: 014 реализована и проверена; публичные экспорты готовы. Каркас/поиск сохранены, видимый список подключён в 015. FR-008, FR-013–FR-016.
 
 014 предоставляет QueryProvider, PersonalChat, ChatsQueryError и useChats согласно [query-layer.md](query-layer.md). Потребитель — Client Component внутри authorized provider. Серверная шапка продолжает получать профиль из GetAccountSettings. UI не импортирует серверный адаптер, session или get-query-scope.
 
@@ -28,4 +28,4 @@ import type { PersonalChat } from '@/lib/chats/types'
 
 ## Проверенная точка после редизайна
 
-2026-10-02: соседний чат завершил текущую реализацию 015/016. Главная содержит ChatWorkspace с server slots account/search/chatList; chatList сейчас только заголовок. В 014 provider/key/scope оборачивает этот актуальный ChatWorkspace, не заменяет его разметку и не создаёт ChatListPanel/ChatList. Подключение списка и представление остаются у 015 после готовности useChats. LogoutButton сохраняет текущие SVG/тексты/форму; добавляется только lifecycle после HTTP ok. Исполняемые useChats/QueryProvider готовы и проверены на реальном React стенде, Query 5.104.0 установлена пользователем. Интеграция ChatListPanel/ChatList остаётся в 015.
+2026-10-02: соседний чат завершил текущую реализацию 015/016. Главная содержит ChatWorkspace с server slots account/search/chatList; chatList содержит ChatListPanel/ChatList из 015. В 014 provider/key/scope оборачивает этот актуальный ChatWorkspace, не заменяет его разметку и не создаёт ChatListPanel/ChatList. Представление списка принадлежит 015 и использует готовый useChats. LogoutButton сохраняет текущие SVG/тексты/форму; добавляется только lifecycle после HTTP ok. Исполняемые useChats/QueryProvider готовы и проверены на реальном React стенде, Query 5.104.0 установлена пользователем. Интеграция ChatListPanel/ChatList выполнена в 015; результаты — [015 verification](../../015-chat-workspace-ui/verification.md).

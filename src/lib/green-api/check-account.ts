@@ -81,11 +81,15 @@ const classifyBody = (value: unknown): CheckAccountResult => {
   return { kind: INVALID_UPSTREAM_RESPONSE }
 }
 
-export const checkAccount = async (
-  credentials: InstanceCredentials,
-  query: RecipientQuery,
-  fetcher: typeof fetch = fetch,
-): Promise<CheckAccountResult> => {
+export const checkAccount = async ({
+  credentials,
+  query,
+  fetcher = fetch,
+}: {
+  credentials: InstanceCredentials
+  query: RecipientQuery
+  fetcher?: typeof fetch
+}): Promise<CheckAccountResult> => {
   const id = encodeURIComponent(credentials.idInstance)
   const token = encodeURIComponent(credentials.apiTokenInstance)
   const url = `${HOST}/${INSTANCE_PATH_PREFIX}${id}/${CHECK_ACCOUNT_METHOD}/${token}`

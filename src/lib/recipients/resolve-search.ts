@@ -32,37 +32,67 @@ type SearchErrorCode =
   | typeof INVALID_UPSTREAM_RESPONSE
   | typeof API_ERROR_CODE.SERVER_UNAVAILABLE
 
-const jsonResponse = (body: object, status: number): Response =>
+const jsonResponse = ({
+  body,
+  status,
+}: {
+  body: object
+  status: number
+}): Response =>
   Response.json(body, {
     status,
     headers: { [CACHE_CONTROL_HEADER]: NO_STORE },
   })
 
-export const searchErrorResponse = (
-  code: SearchErrorCode,
-  status: number,
-): Response => jsonResponse({ status: RESPONSE_ERROR, code }, status)
+export const searchErrorResponse = ({
+  code,
+  status,
+}: {
+  code: SearchErrorCode
+  status: number
+}): Response => jsonResponse({ body: { status: RESPONSE_ERROR, code }, status })
 
-export const resolveSearchResult = async (
-  result: CheckAccountResult,
-  clearSession: () => Promise<void>,
-): Promise<Response> => {
+export const resolveSearchResult = async ({
+  result,
+  clearSession,
+}: {
+  result: CheckAccountResult
+  clearSession: () => Promise<void>
+}): Promise<Response> => {
   if (result.kind === FOUND)
-    return jsonResponse(
-      { status: RESPONSE_OK, result: FOUND, chatId: result.chatId },
-      HTTP_OK,
-    )
+    return jsonResponse({
+      body: { status: RESPONSE_OK, result: FOUND, chatId: result.chatId },
+      status: HTTP_OK,
+    })
   if (result.kind === NOT_FOUND)
-    return jsonResponse({ status: RESPONSE_OK, result: NOT_FOUND }, HTTP_OK)
+    return jsonResponse({
+      body: { status: RESPONSE_OK, result: NOT_FOUND },
+      status: HTTP_OK,
+    })
   if (result.kind === INVALID_TOKEN) {
     await clearSession()
-    return searchErrorResponse(SESSION_REQUIRED, HTTP_UNAUTHORIZED)
+    return searchErrorResponse({
+      code: SESSION_REQUIRED,
+      status: HTTP_UNAUTHORIZED,
+    })
   }
   if (result.kind === RATE_LIMITED)
-    return searchErrorResponse(RATE_LIMITED, HTTP_TOO_MANY_REQUESTS)
+    return searchErrorResponse({
+      code: RATE_LIMITED,
+      status: HTTP_TOO_MANY_REQUESTS,
+    })
   if (result.kind === INVALID_UPSTREAM_RESPONSE)
-    return searchErrorResponse(INVALID_UPSTREAM_RESPONSE, HTTP_BAD_GATEWAY)
+    return searchErrorResponse({
+      code: INVALID_UPSTREAM_RESPONSE,
+      status: HTTP_BAD_GATEWAY,
+    })
   if (result.kind === RETRY_LATER)
-    return searchErrorResponse(RETRY_LATER, HTTP_SERVICE_UNAVAILABLE)
-  return searchErrorResponse(SERVICE_UNAVAILABLE, HTTP_SERVICE_UNAVAILABLE)
+    return searchErrorResponse({
+      code: RETRY_LATER,
+      status: HTTP_SERVICE_UNAVAILABLE,
+    })
+  return searchErrorResponse({
+    code: SERVICE_UNAVAILABLE,
+    status: HTTP_SERVICE_UNAVAILABLE,
+  })
 }

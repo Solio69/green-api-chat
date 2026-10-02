@@ -72,10 +72,13 @@ const {
   USERNAME_WITH_DASH,
 } = INVALID_SEARCH_VALUES
 
-const request = (
-  body: string,
-  contentType: string = JSON_CONTENT_TYPE,
-): Request =>
+const request = ({
+  body,
+  contentType = JSON_CONTENT_TYPE,
+}: {
+  body: string
+  contentType?: string
+}): Request =>
   new Request(URL, {
     method: HTTP_POST,
     headers: { [CONTENT_TYPE]: contentType },
@@ -123,23 +126,23 @@ test('recipient-search: configuration and session fail before body is read', asy
     return { kind: RESULT_NOT_FOUND } as const
   }
   const clearSession = async () => undefined
-  const missingConfig = await handleSearchRequest(
-    request(BROKEN_JSON),
-    { configured: false, credentials: null },
+  const missingConfig = await handleSearchRequest({
+    request: request({ body: BROKEN_JSON }),
+    context: { configured: false, credentials: null },
     lookup,
     clearSession,
-  )
+  })
   expect(missingConfig.status).toBe(UNAVAILABLE_STATUS)
   expect(await missingConfig.json()).toEqual({
     status: RESPONSE_ERROR,
     code: SERVER_UNAVAILABLE,
   })
-  const missingSession = await handleSearchRequest(
-    request(BROKEN_JSON),
-    { configured: true, credentials: null },
+  const missingSession = await handleSearchRequest({
+    request: request({ body: BROKEN_JSON }),
+    context: { configured: true, credentials: null },
     lookup,
     clearSession,
-  )
+  })
   expect(missingSession.status).toBe(UNAUTHORIZED_STATUS)
   expect(await missingSession.json()).toEqual({
     status: RESPONSE_ERROR,
@@ -156,18 +159,23 @@ test('recipient-search: invalid JSON, media type, size and value skip provider',
   }
   const clearSession = async () => undefined
   for (const currentRequest of [
-    request(BROKEN_JSON),
-    request(JSON.stringify(validPhone), PLAIN_CONTENT_TYPE),
-    request(JSON.stringify({ ...validPhone, extra: true })),
-    request(JSON.stringify({ mode: MODE_USERNAME, value: TOO_LONG_USERNAME })),
-    request(OVERSIZE_FILL.repeat(OVERSIZE_BODY_LENGTH)),
+    request({ body: BROKEN_JSON }),
+    request({
+      body: JSON.stringify(validPhone),
+      contentType: PLAIN_CONTENT_TYPE,
+    }),
+    request({ body: JSON.stringify({ ...validPhone, extra: true }) }),
+    request({
+      body: JSON.stringify({ mode: MODE_USERNAME, value: TOO_LONG_USERNAME }),
+    }),
+    request({ body: OVERSIZE_FILL.repeat(OVERSIZE_BODY_LENGTH) }),
   ]) {
-    const response = await handleSearchRequest(
-      currentRequest,
-      { configured: true, credentials },
+    const response = await handleSearchRequest({
+      request: currentRequest,
+      context: { configured: true, credentials },
       lookup,
       clearSession,
-    )
+    })
     expect(response.status).toBe(INVALID_REQUEST_STATUS)
     expect(await response.json()).toEqual({
       status: RESPONSE_ERROR,
@@ -179,15 +187,15 @@ test('recipient-search: invalid JSON, media type, size and value skip provider',
 
 test('recipient-search: found and absent results expose only safe fields', async () => {
   const calls: unknown[] = []
-  const found = await handleSearchRequest(
-    request(JSON.stringify(validPhone)),
-    { configured: true, credentials },
-    async (actualCredentials, query) => {
+  const found = await handleSearchRequest({
+    request: request({ body: JSON.stringify(validPhone) }),
+    context: { configured: true, credentials },
+    lookup: async ({ credentials: actualCredentials, query }) => {
       calls.push({ actualCredentials, query })
       return { kind: RESULT_FOUND, chatId }
     },
-    async () => undefined,
-  )
+    clearSession: async () => undefined,
+  })
   expect(found.status).toBe(OK_STATUS)
   const foundBody = await found.json()
   expect(foundBody).toEqual({
@@ -204,12 +212,12 @@ test('recipient-search: found and absent results expose only safe fields', async
     },
   ])
 
-  const missing = await handleSearchRequest(
-    request(JSON.stringify(validUsername)),
-    { configured: true, credentials },
-    async () => ({ kind: RESULT_NOT_FOUND }),
-    async () => undefined,
-  )
+  const missing = await handleSearchRequest({
+    request: request({ body: JSON.stringify(validUsername) }),
+    context: { configured: true, credentials },
+    lookup: async () => ({ kind: RESULT_NOT_FOUND }),
+    clearSession: async () => undefined,
+  })
   expect(await missing.json()).toEqual({
     status: RESPONSE_OK,
     result: RESULT_NOT_FOUND,
@@ -219,12 +227,12 @@ test('recipient-search: found and absent results expose only safe fields', async
 test('recipient-search: only confirmed invalid token clears current session', async () => {
   let cleared = 0
   const clearSession = async () => void (cleared += 1)
-  const unauthorized = await handleSearchRequest(
-    request(JSON.stringify(validUsername)),
-    { configured: true, credentials },
-    async () => ({ kind: INVALID_TOKEN }),
+  const unauthorized = await handleSearchRequest({
+    request: request({ body: JSON.stringify(validUsername) }),
+    context: { configured: true, credentials },
+    lookup: async () => ({ kind: INVALID_TOKEN }),
     clearSession,
-  )
+  })
   expect(unauthorized.status).toBe(UNAUTHORIZED_STATUS)
   expect(await unauthorized.json()).toEqual({
     status: RESPONSE_ERROR,
@@ -232,12 +240,12 @@ test('recipient-search: only confirmed invalid token clears current session', as
   })
   expect(cleared).toBe(1)
 
-  const limited = await handleSearchRequest(
-    request(JSON.stringify(validUsername)),
-    { configured: true, credentials },
-    async () => ({ kind: RATE_LIMITED }),
+  const limited = await handleSearchRequest({
+    request: request({ body: JSON.stringify(validUsername) }),
+    context: { configured: true, credentials },
+    lookup: async () => ({ kind: RATE_LIMITED }),
     clearSession,
-  )
+  })
   expect(limited.status).toBe(RATE_LIMIT_STATUS)
   expect(await limited.json()).toEqual({
     status: RESPONSE_ERROR,
@@ -247,14 +255,14 @@ test('recipient-search: only confirmed invalid token clears current session', as
 })
 
 test('recipient-search: thrown lookup becomes safe retryable error', async () => {
-  const response = await handleSearchRequest(
-    request(JSON.stringify(validPhone)),
-    { configured: true, credentials },
-    async () => {
+  const response = await handleSearchRequest({
+    request: request({ body: JSON.stringify(validPhone) }),
+    context: { configured: true, credentials },
+    lookup: async () => {
       throw new Error(PROVIDER_DETAIL)
     },
-    async () => undefined,
-  )
+    clearSession: async () => undefined,
+  })
   expect(response.status).toBe(UNAVAILABLE_STATUS)
   expect(await response.json()).toEqual({
     status: RESPONSE_ERROR,

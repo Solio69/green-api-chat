@@ -1,14 +1,62 @@
 import { expect, test } from '@playwright/test'
 import type { Page, Route } from '@playwright/test'
+import { BROWSER_EVENTS, EMPTY_STRING } from '@/lib/ui/constants'
 import { CHAT_FIXTURES } from '../chats/constants'
+import {
+  CONVERSATION_CONTRACT,
+  LOGIN_API_CONTRACT,
+  QUERY_PROBE_CONTRACT,
+  QUERY_PROBE_COPY,
+  QUERY_PROBE_IDS,
+  RECIPIENT_API_CONTRACT,
+  TEST_UI,
+} from '../constants'
 import { CHAT_LIST_UI } from '../e2e/chat-list-ui.constants'
 
 const { scopeA, chat } = CHAT_FIXTURES
-const { LIST, ERROR } = CHAT_LIST_UI
+const { LIST, ERROR, API, SCOPE_HEADER } = CHAT_LIST_UI
+const { FIRST, SECOND } = QUERY_PROBE_IDS
+const { CONSUMERS, SWITCH_ACCOUNT, LOGOUT, STRICT_MODE, RENDER } =
+  QUERY_PROBE_COPY
+const {
+  HOME,
+  LOGOUT_ROUTE,
+  LOGOUT_ERROR,
+  LOGIN_PATTERN,
+  HOME_PATTERN,
+  OLD_ACCOUNT_LABEL,
+  CONNECTION_CHANGED,
+  RSC_HEADER,
+  RSC_HEADER_VALUE,
+  STALE_DELAY_MS,
+  GC_DELAY_MS,
+} = QUERY_PROBE_CONTRACT
+const {
+  OK_STATUS,
+  UNAVAILABLE_STATUS,
+  UNAUTHORIZED_STATUS,
+  CONFLICT_STATUS,
+  RESPONSE_OK,
+  RESPONSE_ERROR,
+  SERVICE_UNAVAILABLE,
+} = LOGIN_API_CONTRACT
+const { BACK: CHATS_HEADING } = CONVERSATION_CONTRACT
+const {
+  ROLE_BUTTON,
+  ROLE_REGION,
+  ROLE_LIST,
+  ROLE_LIST_ITEM,
+  ROLE_ALERT,
+  QUERY_OUTPUT_SELECTOR,
+  EVENT_REQUEST,
+} = TEST_UI
+const { FOCUS } = BROWSER_EVENTS
+const { SESSION_REQUIRED } = RECIPIENT_API_CONTRACT
+
 const fulfill = ({
   route,
   chats = [chat],
-  status = 200,
+  status = OK_STATUS,
   code,
 }: {
   route: Route
@@ -19,169 +67,195 @@ const fulfill = ({
   route.fulfill({
     status,
     json: code
-      ? { status: 'error', code }
+      ? { status: RESPONSE_ERROR, code }
       : {
-          status: 'ok',
-          connectionScope: route.request().headers()['x-connection-scope'],
+          status: RESPONSE_OK,
+          connectionScope: route.request().headers()[SCOPE_HEADER],
           chats,
         },
   })
-const first = (page: Page) => page.getByTestId('first').locator('output')
-const second = (page: Page) => page.getByTestId('second').locator('output')
+const first = (page: Page) =>
+  page.getByTestId(FIRST).locator(QUERY_OUTPUT_SELECTOR)
+const second = (page: Page) =>
+  page.getByTestId(SECOND).locator(QUERY_OUTPUT_SELECTOR)
+const expectState = ({
+  page,
+  expected,
+}: {
+  page: Page
+  expected: Record<string, unknown>
+}) =>
+  expect
+    .poll(async () => JSON.parse(await first(page).innerText()))
+    .toMatchObject(expected)
 
 test('React query: two consumers, fresh remount and API recovery on reload', async ({
   page,
 }) => {
   let calls = 0
   let pending: Route | undefined
-  await page.route('**/api/chats', async (route) => {
+  await page.route(API, async (route) => {
     calls += 1
     pending = route
   })
-  await page.goto('/')
-  await expect(first(page)).toContainText('"isPending":true')
+  await page.goto(HOME)
+  await expectState({ page, expected: { isPending: true } })
   await expect.poll(() => calls).toBe(1)
   await fulfill({ route: pending! })
-  await expect(first(page)).toContainText('chat-1')
-  await expect(second(page)).toContainText('chat-1')
-  await page.getByRole('button', { name: 'Потребители' }).click()
-  await page.getByRole('button', { name: 'Потребители' }).click()
-  await expect(first(page)).toContainText('chat-1')
+  await expect(first(page)).toContainText(chat.chatId)
+  await expect(second(page)).toContainText(chat.chatId)
+  await page.getByRole(ROLE_BUTTON, { name: CONSUMERS }).click()
+  await page.getByRole(ROLE_BUTTON, { name: CONSUMERS }).click()
+  await expect(first(page)).toContainText(chat.chatId)
   expect(calls).toBe(1)
   await page.reload()
   await expect.poll(() => calls).toBe(2)
-  await expect(first(page)).toContainText('"isPending":true')
+  await expectState({ page, expected: { isPending: true } })
   await fulfill({ route: pending! })
-  await expect(first(page)).toContainText('chat-1')
+  await expect(first(page)).toContainText(chat.chatId)
 })
+
 test('React query: empty success differs from loading', async ({ page }) => {
-  await page.route('**/api/chats', (route) => fulfill({ route, chats: [] }))
-  await page.goto('/')
-  await expect(first(page)).toContainText('"data":[]')
-  await expect(first(page)).toContainText('"isPending":false')
+  await page.route(API, (route) => fulfill({ route, chats: [] }))
+  await page.goto(HOME)
+  await expectState({ page, expected: { data: [], isPending: false } })
 })
+
 test('React query: background refresh/error retain cache while UI shows recovery', async ({
   page,
 }) => {
   let calls = 0
   let pending: Route | undefined
-  await page.route('**/api/chats', (route) => {
+  await page.route(API, (route) => {
     calls += 1
     if (calls === 1) return fulfill({ route })
     pending = route
   })
-  await page.goto('/')
-  const area = page.getByRole('region', { name: 'Чаты', exact: true })
-  const list = area.getByRole('list', { name: LIST })
-  await expect(first(page)).toContainText('chat-1')
-  await expect(list.getByRole('listitem')).toHaveCount(1)
-  await expect(area.getByRole('button')).toHaveCount(0)
-  await page.getByTestId('first').getByRole('button').click()
-  await expect(first(page)).toContainText('"isFetching":true')
-  await expect(list.getByRole('listitem')).toHaveCount(1)
-  await fulfill({ route: pending!, status: 503, code: 'service_unavailable' })
-  await expect(first(page)).toContainText('service_unavailable')
-  await expect(first(page)).toContainText('chat-1')
-  await expect(area.getByRole('alert')).toContainText(ERROR)
+  await page.goto(HOME)
+  const area = page.getByRole(ROLE_REGION, { name: CHATS_HEADING, exact: true })
+  const list = area.getByRole(ROLE_LIST, { name: LIST })
+  await expect(first(page)).toContainText(chat.chatId)
+  await expect(list.getByRole(ROLE_LIST_ITEM)).toHaveCount(1)
+  await expect(area.getByRole(ROLE_BUTTON)).toHaveCount(1)
+  await page.getByTestId(FIRST).getByRole(ROLE_BUTTON).click()
+  await expectState({ page, expected: { isFetching: true } })
+  await expect(list.getByRole(ROLE_LIST_ITEM)).toHaveCount(1)
+  await fulfill({
+    route: pending!,
+    status: UNAVAILABLE_STATUS,
+    code: SERVICE_UNAVAILABLE,
+  })
+  await expectState({ page, expected: { error: SERVICE_UNAVAILABLE } })
+  await expect(first(page)).toContainText(chat.chatId)
+  await expect(area.getByRole(ROLE_ALERT)).toContainText(ERROR)
   await expect(list).toHaveCount(0)
-  const retry = area.getByRole('button')
+  const retry = area.getByRole(ROLE_BUTTON)
   await retry.click()
   await expect.poll(() => calls).toBe(3)
-  await expect(first(page)).toContainText('"isFetching":true')
-  await expect(first(page)).toContainText('chat-1')
-  await expect(area.getByRole('alert')).toContainText(ERROR)
+  await expectState({ page, expected: { isFetching: true } })
+  await expect(first(page)).toContainText(chat.chatId)
+  await expect(area.getByRole(ROLE_ALERT)).toContainText(ERROR)
   await expect(retry).toBeDisabled()
   await expect(list).toHaveCount(0)
   await fulfill({ route: pending! })
-  await expect(first(page)).toContainText('"error":null')
-  await expect(list.getByRole('listitem')).toHaveCount(1)
-  await expect(area.getByRole('alert')).toHaveCount(0)
-  await expect(area.getByRole('button')).toHaveCount(0)
+  await expectState({ page, expected: { error: null } })
+  await expect(list.getByRole(ROLE_LIST_ITEM)).toHaveCount(1)
+  await expect(area.getByRole(ROLE_ALERT)).toHaveCount(0)
+  await expect(area.getByRole(ROLE_BUTTON)).toHaveCount(1)
 })
+
 test('React query: switching account rejects late data of old scope', async ({
   page,
 }) => {
   let old: Route | undefined
-  await page.route('**/api/chats', (route) => {
-    if (route.request().headers()['x-connection-scope'] === scopeA) {
+  await page.route(API, (route) => {
+    if (route.request().headers()[SCOPE_HEADER] === scopeA) {
       old = route
       return
     }
-    return fulfill({ route, chats: [{ ...chat, name: 'Аккаунт Б' }] })
+    return fulfill({ route, chats: [{ ...chat, name: SWITCH_ACCOUNT }] })
   })
-  await page.goto('/')
+  await page.goto(HOME)
   await expect.poll(() => !!old).toBe(true)
-  await page.getByRole('button', { name: 'Аккаунт Б' }).click()
-  await expect(first(page)).toContainText('Аккаунт Б')
+  await page.getByRole(ROLE_BUTTON, { name: SWITCH_ACCOUNT }).click()
+  await expect(first(page)).toContainText(SWITCH_ACCOUNT)
   await fulfill({
     route: old!,
-    chats: [{ ...chat, name: 'OLD ACCOUNT' }],
+    chats: [{ ...chat, name: OLD_ACCOUNT_LABEL }],
   }).catch(() => undefined)
-  await expect(first(page)).not.toContainText('OLD ACCOUNT')
+  await expect(first(page)).not.toContainText(OLD_ACCOUNT_LABEL)
 })
+
 test('React query: failed logout preserves cache, successful logout navigates', async ({
   page,
 }) => {
-  await page.route('**/api/chats', (route) => fulfill({ route }))
+  await page.route(API, (route) => fulfill({ route }))
   let fails = true
-  await page.route('**/api/auth/logout', (route) =>
-    route.fulfill({ status: fails ? 503 : 200, body: '' }),
+  await page.route(LOGOUT_ROUTE, (route) =>
+    route.fulfill({
+      status: fails ? UNAVAILABLE_STATUS : OK_STATUS,
+      body: EMPTY_STRING,
+    }),
   )
-  await page.goto('/')
-  await expect(first(page)).toContainText('chat-1')
-  await page.getByRole('button', { name: 'Выйти' }).click()
-  await expect(
-    page.getByText('Не удалось выйти. Попробуйте ещё раз.'),
-  ).toBeVisible()
-  await expect(first(page)).toContainText('chat-1')
+  await page.goto(HOME)
+  await expect(first(page)).toContainText(chat.chatId)
+  await page.getByRole(ROLE_BUTTON, { name: LOGOUT }).click()
+  await expect(page.getByText(LOGOUT_ERROR)).toBeVisible()
+  await expect(first(page)).toContainText(chat.chatId)
   fails = false
-  await page.getByRole('button', { name: 'Выйти' }).click()
-  await expect(page).toHaveURL(/\/login$/)
+  await page.getByRole(ROLE_BUTTON, { name: LOGOUT }).click()
+  await expect(page).toHaveURL(LOGIN_PATTERN)
 })
+
 test('React query: expiry closes and navigates', async ({ page }) => {
-  await page.route('**/api/chats', (route) =>
-    fulfill({ route, status: 401, code: 'session_required' }),
+  await page.route(API, (route) =>
+    fulfill({ route, status: UNAUTHORIZED_STATUS, code: SESSION_REQUIRED }),
   )
-  await page.goto('/')
-  await expect(page).toHaveURL(/\/login$/)
+  await page.goto(HOME)
+  await expect(page).toHaveURL(LOGIN_PATTERN)
 })
+
 test('React query: StrictMode replay and rerender preserve one client', async ({
   page,
 }) => {
   let calls = 0
-  await page.route('**/api/chats', (route) => {
+  await page.route(API, (route) => {
     calls += 1
     return fulfill({ route })
   })
-  await page.goto('/')
-  await expect(first(page)).toContainText('chat-1')
-  await page.getByRole('button', { name: 'Strict Mode' }).click()
-  await expect(first(page)).toContainText('chat-1')
-  await page.getByRole('button', { name: /Render/ }).click()
-  await expect(first(page)).toContainText('chat-1')
+  await page.goto(HOME)
+  await expect(first(page)).toContainText(chat.chatId)
+  await page.getByRole(ROLE_BUTTON, { name: STRICT_MODE }).click()
+  await expect(first(page)).toContainText(chat.chatId)
+  await page.getByRole(ROLE_BUTTON, { name: RENDER, exact: false }).click()
+  await expect(first(page)).toContainText(chat.chatId)
   expect(calls).toBeLessThanOrEqual(2)
 })
+
 test('React query: stale remount and inactive GC use clock, no polling/focus requests', async ({
   page,
 }) => {
   await page.clock.install()
   let calls = 0
-  await page.route('**/api/chats', (route) => {
+  await page.route(API, (route) => {
     calls += 1
     return fulfill({ route })
   })
-  await page.goto('/')
-  await expect(first(page)).toContainText('chat-1')
-  await page.clock.runFor(60_001)
+  await page.goto(HOME)
+  await expect(first(page)).toContainText(chat.chatId)
+  await page.clock.runFor(STALE_DELAY_MS)
   expect(calls).toBe(1)
-  await page.evaluate(() => window.dispatchEvent(new Event('focus')))
+  await page.evaluate(
+    (eventName) => window.dispatchEvent(new Event(eventName)),
+    FOCUS,
+  )
   expect(calls).toBe(1)
-  await page.getByRole('button', { name: 'Потребители' }).click()
-  await page.getByRole('button', { name: 'Потребители' }).click()
+  await page.getByRole(ROLE_BUTTON, { name: CONSUMERS }).click()
+  await page.getByRole(ROLE_BUTTON, { name: CONSUMERS }).click()
   await expect.poll(() => calls).toBe(2)
-  await page.getByRole('button', { name: 'Потребители' }).click()
-  await page.clock.runFor(300_001)
-  await page.getByRole('button', { name: 'Потребители' }).click()
+  await page.getByRole(ROLE_BUTTON, { name: CONSUMERS }).click()
+  await page.clock.runFor(GC_DELAY_MS)
+  await page.getByRole(ROLE_BUTTON, { name: CONSUMERS }).click()
   await expect.poll(() => calls).toBe(3)
 })
 
@@ -190,19 +264,21 @@ test('React query: 409 closes both consumers and refreshes once without login', 
 }) => {
   let refreshes = 0
   let calls = 0
-  page.on('request', (request) => {
-    if (request.headers().rsc === '1') refreshes += 1
+  page.on(EVENT_REQUEST, (request) => {
+    if (request.headers()[RSC_HEADER] === RSC_HEADER_VALUE) refreshes += 1
   })
-  await page.route('**/api/chats', (route) => {
+  await page.route(API, (route) => {
     calls += 1
-    return fulfill({ route, status: 409, code: 'connection_changed' })
+    return fulfill({ route, status: CONFLICT_STATUS, code: CONNECTION_CHANGED })
   })
-  await page.goto('/')
+  await page.goto(HOME)
   await expect.poll(() => refreshes).toBe(1)
-  await expect(first(page)).toContainText('"isPending":false')
-  await expect(second(page)).toContainText('"isFetching":false')
-  await expect(first(page)).not.toContainText('chat-1')
-  await page.getByTestId('first').getByRole('button').click()
+  await expectState({ page, expected: { isPending: false } })
+  await expect
+    .poll(async () => JSON.parse(await second(page).innerText()))
+    .toMatchObject({ isFetching: false })
+  await expect(first(page)).not.toContainText(chat.chatId)
+  await page.getByTestId(FIRST).getByRole(ROLE_BUTTON).click()
   expect(calls).toBe(1)
-  await expect(page).toHaveURL(/\/$/)
+  await expect(page).toHaveURL(HOME_PATTERN)
 })

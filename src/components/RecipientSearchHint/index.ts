@@ -1,0 +1,1 @@
+export { RecipientSearchHint } from './RecipientSearchHint'

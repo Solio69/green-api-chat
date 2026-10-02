@@ -31,3 +31,25 @@
   font-size: tokens.$font-size-caption;
   overflow-wrap: anywhere;
 }
+
+@mixin conversation-header-button {
+  @include focus-ring;
+
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  min-width: tokens.$control-icon-button-size;
+  min-height: tokens.$control-icon-button-size;
+  padding: 0;
+  border: 0;
+  border-radius: tokens.$radius-control;
+  background: tokens.$color-transparent;
+  font: inherit;
+  cursor: pointer;
+
+  svg {
+    width: tokens.$control-icon-size;
+    height: tokens.$control-icon-size;
+  }
+}

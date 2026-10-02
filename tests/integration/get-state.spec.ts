@@ -79,7 +79,7 @@ test('get-state: authorized requires the documented body and fixed server URL', 
     expect(init?.signal).toBeDefined()
     return Response.json({ stateInstance: AUTHORIZED, extra: IGNORED_EXTRA })
   }
-  const result = await getStateInstance(credentials, fetcher)
+  const result = await getStateInstance({ credentials, fetcher })
   expect(observedUrl).toBe(
     `${HOST}/${INSTANCE_PREFIX}${encodeURIComponent(idInstance)}/${STATE_METHOD}/${encodeURIComponent(apiTokenInstance)}`,
   )
@@ -98,9 +98,10 @@ for (const [stateInstance, kind] of [
   [STARTING, RETRY_LATER],
 ] as const) {
   test(`get-state: ${stateInstance} is ${kind}`, async () => {
-    const result = await getStateInstance(credentials, async () =>
-      Response.json({ stateInstance }),
-    )
+    const result = await getStateInstance({
+      credentials,
+      fetcher: async () => Response.json({ stateInstance }),
+    })
     expect(result.kind).toBe(kind)
     expect(result.kind).not.toBe(AUTHORIZED)
   })
@@ -112,10 +113,10 @@ for (const [status, kind] of [
   [BAD_GATEWAY_STATUS, SERVICE_UNAVAILABLE],
 ] as const) {
   test(`get-state: HTTP ${status} is ${kind}`, async () => {
-    const result = await getStateInstance(
+    const result = await getStateInstance({
       credentials,
-      async () => new Response(PROVIDER_DETAIL, { status }),
-    )
+      fetcher: async () => new Response(PROVIDER_DETAIL, { status }),
+    })
     expect(result.kind).toBe(kind)
     expect(JSON.stringify(result)).not.toContain(PROVIDER_DETAIL)
   })
@@ -128,28 +129,31 @@ for (const [message, kind] of [
   [UNKNOWN_ERROR, INVALID_UPSTREAM_RESPONSE],
 ] as const) {
   test(`get-state: HTTP 400 ${kind} (${message})`, async () => {
-    const result = await getStateInstance(
+    const result = await getStateInstance({
       credentials,
-      async () =>
+      fetcher: async () =>
         new Response(message, { status: PROVIDER_BAD_REQUEST_STATUS }),
-    )
+    })
     expect(result.kind).toBe(kind)
   })
 }
 
 for (const body of [BAD_JSON, EMPTY_JSON, NON_STRING_STATE, UNKNOWN_STATE]) {
   test(`get-state: invalid body ${body} never authorizes`, async () => {
-    const result = await getStateInstance(
+    const result = await getStateInstance({
       credentials,
-      async () => new Response(body, { status: OK_STATUS }),
-    )
+      fetcher: async () => new Response(body, { status: OK_STATUS }),
+    })
     expect(result.kind).toBe(INVALID_UPSTREAM_RESPONSE)
   })
 }
 
 test('get-state: network failure is retryable and contains no raw error', async () => {
-  const result = await getStateInstance(credentials, async () => {
-    throw new Error(apiTokenInstance)
+  const result = await getStateInstance({
+    credentials,
+    fetcher: async () => {
+      throw new Error(apiTokenInstance)
+    },
   })
   expect(result.kind).toBe(SERVICE_UNAVAILABLE)
   expect(JSON.stringify(result)).not.toContain(apiTokenInstance)
@@ -162,11 +166,14 @@ test('get-state: times out after ten seconds with a retryable result', async () 
     return AbortSignal.abort()
   }
   try {
-    const result = await getStateInstance(credentials, async (_input, init) => {
-      if (init?.signal?.aborted) {
-        throw new DOMException(TIMED_OUT, TIMEOUT_NAME)
-      }
-      throw new Error(ABORT_SIGNAL_EXPECTED)
+    const result = await getStateInstance({
+      credentials,
+      fetcher: async (_input, init) => {
+        if (init?.signal?.aborted) {
+          throw new DOMException(TIMED_OUT, TIMEOUT_NAME)
+        }
+        throw new Error(ABORT_SIGNAL_EXPECTED)
+      },
     })
     expect(requestedMs).toBe(TIMEOUT_MS)
     expect(result).toEqual({ kind: SERVICE_UNAVAILABLE })
@@ -179,20 +186,20 @@ test('get-state: retries HTTP 429 once before accepting authorized state', async
   let calls = 0
   const signals: (AbortSignal | null | undefined)[] = []
   const waits: number[] = []
-  const result = await getStateInstance(
+  const result = await getStateInstance({
     credentials,
-    async (_input, init) => {
+    fetcher: async (_input, init) => {
       calls += 1
       signals.push(init?.signal)
       return calls === 1
         ? new Response(RATE_LIMIT_DETAIL, { status: RATE_LIMIT_STATUS })
         : Response.json({ stateInstance: AUTHORIZED })
     },
-    async (delay, signal) => {
+    waitForRetry: async ({ delay, signal }) => {
       waits.push(delay)
       expect(signal).toBe(signals[0])
     },
-  )
+  })
   expect(calls).toBe(2)
   expect(waits).toEqual([RATE_LIMIT_DELAY_MS])
   expect(signals[1]).toBe(signals[0])
@@ -206,14 +213,14 @@ test('get-state: retries HTTP 429 once before accepting authorized state', async
 test('get-state: a second HTTP 429 stops after one retry', async () => {
   let calls = 0
   let waits = 0
-  const result = await getStateInstance(
+  const result = await getStateInstance({
     credentials,
-    async () => {
+    fetcher: async () => {
       calls += 1
       return new Response(PROVIDER_DETAIL, { status: RATE_LIMIT_STATUS })
     },
-    async () => void (waits += 1),
-  )
+    waitForRetry: async () => void (waits += 1),
+  })
   expect(calls).toBe(2)
   expect(waits).toBe(1)
   expect(result).toEqual({ kind: RATE_LIMITED })
@@ -222,16 +229,16 @@ test('get-state: a second HTTP 429 stops after one retry', async () => {
 
 test('get-state: other failures do not trigger a delayed retry', async () => {
   let calls = 0
-  const result = await getStateInstance(
+  const result = await getStateInstance({
     credentials,
-    async () => {
+    fetcher: async () => {
       calls += 1
       return new Response(PROVIDER_DETAIL, { status: UNAVAILABLE_STATUS })
     },
-    async () => {
+    waitForRetry: async () => {
       throw new Error(UNEXPECTED_RETRY)
     },
-  )
+  })
   expect(calls).toBe(1)
   expect(result).toEqual({ kind: SERVICE_UNAVAILABLE })
 })

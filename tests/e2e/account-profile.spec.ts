@@ -5,6 +5,7 @@ import { EMPTY_STRING } from '@/lib/ui/constants'
 import {
   ACCOUNT_CONTRACT,
   ACCOUNT_SCENARIOS,
+  CONVERSATION_CONTRACT,
   CREDENTIALS,
   GREEN_API_CONTRACT,
   LOGIN_API_CONTRACT,
@@ -30,11 +31,13 @@ const {
   SUBMIT: SEARCH_SUBMIT,
 } = RECIPIENT_CONTRACT
 const { COOKIE_NAME } = SESSION_CONTRACT
+const { SIDEBAR_LABEL } = CONVERSATION_CONTRACT
 const {
   ROLE_BUTTON,
   ROLE_HEADING,
   ROLE_LINK,
   ROLE_REGION,
+  ROLE_COMPLEMENTARY,
   ATTR_SRC,
   ATTR_ALT,
   STYLE_NONE,
@@ -308,7 +311,7 @@ for (const { viewport, scenario } of [
       expect(
         (
           await readStyles(
-            page.getByRole('complementary', { name: 'Аккаунт, поиск и чаты' }),
+            page.getByRole(ROLE_COMPLEMENTARY, { name: SIDEBAR_LABEL }),
           )
         ).background,
       ).toBe(expected.SURFACE)

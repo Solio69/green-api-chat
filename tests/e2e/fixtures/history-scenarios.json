@@ -1,0 +1,31 @@
+{
+  "99001801": {
+    "body": [
+      {
+        "chatId": "history-chat-a",
+        "chatType": "user",
+        "idMessage": "history-message-a",
+        "type": "incoming",
+        "typeMessage": "textMessage",
+        "textMessage": "  Фиктивное сообщение\n",
+        "timestamp": 100,
+        "senderPhoneNumber": "fictional-phone",
+        "downloadUrl": "https://example.test/private"
+      },
+      {
+        "chatId": "history-chat-a",
+        "chatType": "user",
+        "idMessage": "history-media",
+        "type": "outgoing",
+        "typeMessage": "imageMessage",
+        "timestamp": 200,
+        "statusMessage": "read",
+        "jpegThumbnail": "fictional-thumbnail"
+      }
+    ]
+  },
+  "99001802": { "body": [] },
+  "99001803": { "body": {}, "status": 401 },
+  "99001804": { "body": {}, "status": 503 },
+  "99001805": { "body": [{ "chatId": "foreign-chat" }] }
+}

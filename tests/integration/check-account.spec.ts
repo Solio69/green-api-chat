@@ -44,7 +44,13 @@ const { BAD_JSON } = TEST_PROVIDER_FIXTURES
 
 type FetchCall = { url: string; init: RequestInit }
 
-const createFetcher = (body: unknown, status: number = OK_STATUS) => {
+const createFetcher = ({
+  body,
+  status = OK_STATUS,
+}: {
+  body: unknown
+  status?: number
+}) => {
   const calls: FetchCall[] = []
   const fetcher = (async (url: URL | RequestInfo, init: RequestInit = {}) => {
     calls.push({ url: String(url), init })
@@ -54,12 +60,12 @@ const createFetcher = (body: unknown, status: number = OK_STATUS) => {
 }
 
 test('check-account: phone lookup uses one fixed-host POST and exposes only chatId', async () => {
-  const { fetcher, calls } = createFetcher({ exist: true, chatId })
-  const result = await checkAccount(
+  const { fetcher, calls } = createFetcher({ body: { exist: true, chatId } })
+  const result = await checkAccount({
     credentials,
-    { phoneNumber: Number(foundPhone) },
+    query: { phoneNumber: Number(foundPhone) },
     fetcher,
-  )
+  })
 
   expect(result).toEqual({ kind: RESULT_FOUND, chatId })
   expect(calls).toHaveLength(1)
@@ -77,12 +83,12 @@ test('check-account: phone lookup uses one fixed-host POST and exposes only chat
 })
 
 test('check-account: username lookup sends @ and distinguishes not found', async () => {
-  const { fetcher, calls } = createFetcher({ exist: false })
-  const result = await checkAccount(
+  const { fetcher, calls } = createFetcher({ body: { exist: false } })
+  const result = await checkAccount({
     credentials,
-    { username: `@${foundUsername}` },
+    query: { username: `@${foundUsername}` },
     fetcher,
-  )
+  })
   expect(result).toEqual({ kind: RESULT_NOT_FOUND })
   expect(calls).toHaveLength(1)
   expect(JSON.parse(String(calls[0].init.body))).toEqual({
@@ -96,34 +102,34 @@ test('check-account: limit in HTTP 200 and HTTP 429/469 is not absence', async (
     [{}, RATE_LIMIT_STATUS],
     [{}, PROVIDER_RATE_LIMIT_STATUS],
   ] as const) {
-    const { fetcher } = createFetcher(body, status)
+    const { fetcher } = createFetcher({ body, status })
     expect(
-      await checkAccount(
+      await checkAccount({
         credentials,
-        { username: `@${foundUsername}` },
+        query: { username: `@${foundUsername}` },
         fetcher,
-      ),
+      }),
     ).toEqual({ kind: RATE_LIMITED })
   }
 })
 
 test('check-account: only HTTP 401 proves invalid token', async () => {
-  const unauthorized = createFetcher({}, UNAUTHORIZED_STATUS)
+  const unauthorized = createFetcher({ body: {}, status: UNAUTHORIZED_STATUS })
   expect(
-    await checkAccount(
+    await checkAccount({
       credentials,
-      { username: `@${foundUsername}` },
-      unauthorized.fetcher,
-    ),
+      query: { username: `@${foundUsername}` },
+      fetcher: unauthorized.fetcher,
+    }),
   ).toEqual({ kind: INVALID_TOKEN })
 
-  const forbidden = createFetcher({}, FORBIDDEN_STATUS)
+  const forbidden = createFetcher({ body: {}, status: FORBIDDEN_STATUS })
   expect(
-    await checkAccount(
+    await checkAccount({
       credentials,
-      { username: `@${foundUsername}` },
-      forbidden.fetcher,
-    ),
+      query: { username: `@${foundUsername}` },
+      fetcher: forbidden.fetcher,
+    }),
   ).toEqual({ kind: INVALID_UPSTREAM_RESPONSE })
 })
 
@@ -133,22 +139,22 @@ test('check-account: documented startup is retryable, other HTTP 400 is not', as
       status: INVALID_REQUEST_STATUS,
     })) as typeof fetch
   expect(
-    await checkAccount(
+    await checkAccount({
       credentials,
-      { phoneNumber: Number(foundPhone) },
-      startup,
-    ),
+      query: { phoneNumber: Number(foundPhone) },
+      fetcher: startup,
+    }),
   ).toEqual({ kind: RETRY_LATER })
   const unknown = (async () =>
     new Response(TEST_PROVIDER_FIXTURES.UNKNOWN_ERROR, {
       status: INVALID_REQUEST_STATUS,
     })) as typeof fetch
   expect(
-    await checkAccount(
+    await checkAccount({
       credentials,
-      { phoneNumber: Number(foundPhone) },
-      unknown,
-    ),
+      query: { phoneNumber: Number(foundPhone) },
+      fetcher: unknown,
+    }),
   ).toEqual({ kind: INVALID_UPSTREAM_RESPONSE })
 })
 
@@ -161,43 +167,43 @@ test('check-account: incomplete or unknown body never confirms a recipient', asy
     { status: false, data: { reason: TEST_PROVIDER_FIXTURES.UNKNOWN_ERROR } },
     {},
   ]) {
-    const { fetcher } = createFetcher(body)
+    const { fetcher } = createFetcher({ body })
     expect(
-      await checkAccount(
+      await checkAccount({
         credentials,
-        { phoneNumber: Number(foundPhone) },
+        query: { phoneNumber: Number(foundPhone) },
         fetcher,
-      ),
+      }),
     ).toEqual({ kind: INVALID_UPSTREAM_RESPONSE })
   }
   const malformed = (async () =>
     new Response(BAD_JSON, { status: OK_STATUS })) as typeof fetch
   expect(
-    await checkAccount(
+    await checkAccount({
       credentials,
-      { phoneNumber: Number(foundPhone) },
-      malformed,
-    ),
+      query: { phoneNumber: Number(foundPhone) },
+      fetcher: malformed,
+    }),
   ).toEqual({ kind: INVALID_UPSTREAM_RESPONSE })
 })
 
 test('check-account: provider outage and transport failure are retryable', async () => {
-  const unavailable = createFetcher({}, UNAVAILABLE_STATUS)
+  const unavailable = createFetcher({ body: {}, status: UNAVAILABLE_STATUS })
   expect(
-    await checkAccount(
+    await checkAccount({
       credentials,
-      { phoneNumber: Number(foundPhone) },
-      unavailable.fetcher,
-    ),
+      query: { phoneNumber: Number(foundPhone) },
+      fetcher: unavailable.fetcher,
+    }),
   ).toEqual({ kind: SERVICE_UNAVAILABLE })
   const networkFailure = (async () => {
     throw new Error(TEST_PROVIDER_FIXTURES.DETAIL)
   }) as typeof fetch
   expect(
-    await checkAccount(
+    await checkAccount({
       credentials,
-      { phoneNumber: Number(foundPhone) },
-      networkFailure,
-    ),
+      query: { phoneNumber: Number(foundPhone) },
+      fetcher: networkFailure,
+    }),
   ).toEqual({ kind: SERVICE_UNAVAILABLE })
 })

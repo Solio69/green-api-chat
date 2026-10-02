@@ -49,7 +49,13 @@ const TEST_ERROR_MESSAGE = {
 } as const
 const { SESSION_MUST_NOT_BE_SAVED } = TEST_ERROR_MESSAGE
 
-const request = (body: string, contentType: string = JSON_CONTENT_TYPE) =>
+const request = ({
+  body,
+  contentType = JSON_CONTENT_TYPE,
+}: {
+  body: string
+  contentType?: string
+}) =>
   new Request(URL, {
     method: HTTP_POST,
     headers: { [CONTENT_TYPE]: contentType },
@@ -59,14 +65,14 @@ const request = (body: string, contentType: string = JSON_CONTENT_TYPE) =>
 test('login-route: authorized responds with no-store and no credentials', async () => {
   const calls: InstanceCredentials[] = []
   const saves: InstanceCredentials[] = []
-  const response = await handleLoginRequest(
-    request(validBody),
-    async (credentials) => {
+  const response = await handleLoginRequest({
+    request: request({ body: validBody }),
+    getState: async (credentials) => {
       calls.push(credentials)
       return { kind: AUTHORIZED, body: { stateInstance: AUTHORIZED } }
     },
-    async (credentials) => void saves.push(credentials),
-  )
+    saveSession: async (credentials) => void saves.push(credentials),
+  })
   expect(response.status).toBe(OK_STATUS)
   expect(response.headers.get(CACHE_CONTROL_HEADER)).toBe(CACHE_CONTROL_VALUE)
   expect(response.headers.get(CONTENT_TYPE_HEADER)).toContain(
@@ -86,16 +92,16 @@ for (const [index, [body, contentType]] of (
 ).entries()) {
   test(`login-route: malformed request case ${index} is rejected before provider`, async () => {
     let calls = 0
-    const response = await handleLoginRequest(
-      request(body, contentType),
-      async (): Promise<StateResult> => {
+    const response = await handleLoginRequest({
+      request: request({ body, contentType }),
+      getState: async (): Promise<StateResult> => {
         calls += 1
         return { kind: AUTHORIZED, body: { stateInstance: AUTHORIZED } }
       },
-      async () => {
+      saveSession: async () => {
         throw new Error(SESSION_MUST_NOT_BE_SAVED)
       },
-    )
+    })
     expect(response.status).toBe(INVALID_REQUEST_STATUS)
     expect(response.headers.get(CACHE_CONTROL_HEADER)).toBe(CACHE_CONTROL_VALUE)
     expect(await response.json()).toEqual({
@@ -107,13 +113,13 @@ for (const [index, [body, contentType]] of (
 }
 
 test('login-route: provider rejection uses normalized status and body', async () => {
-  const response = await handleLoginRequest(
-    request(validBody),
-    async () => ({ kind: INVALID_TOKEN }),
-    async () => {
+  const response = await handleLoginRequest({
+    request: request({ body: validBody }),
+    getState: async () => ({ kind: INVALID_TOKEN }),
+    saveSession: async () => {
       throw new Error(SESSION_MUST_NOT_BE_SAVED)
     },
-  )
+  })
   expect(response.status).toBe(UNAUTHORIZED_STATUS)
   expect(response.headers.get(CACHE_CONTROL_HEADER)).toBe(CACHE_CONTROL_VALUE)
   const body = await response.text()

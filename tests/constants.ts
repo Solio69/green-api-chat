@@ -57,6 +57,7 @@ export const THEME_CONTRACT = {
 export const THEME_BROWSER = {
   COLOR_SCHEME_LIGHT: 'light',
   COLOR_SCHEME_DARK: 'dark',
+  REDUCED_MOTION: 'reduce',
   ACTION_PROPERTY: '--ui-action-color',
   RGB_COMPONENTS: /[\d.]+/g,
   SRGB_MAX_CHANNEL: 255,
@@ -88,8 +89,11 @@ export const RECIPIENT_CONTRACT = {
   PHONE_MODE: 'Телефон',
   USERNAME_MODE: '@username',
   PHONE_LABEL: 'Номер телефона',
+  PHONE_HINT: 'Введите номер с кодом страны, только цифры.',
+  USERNAME_HINT: 'Можно вводить с @ или без него',
   USERNAME_LABEL: 'Telegram username',
   SUBMIT: 'Найти',
+  WRITE: 'Написать',
   PENDING: 'Поиск...',
   FOUND: 'Пользователь найден',
   PHONE_NOT_FOUND:
@@ -182,12 +186,20 @@ export const TEST_UI = {
   ROLE_HEADING: 'heading',
   ROLE_LINK: 'link',
   ROLE_STATUS: 'status',
+  ROLE_LIST: 'list',
+  ROLE_LIST_ITEM: 'listitem',
+  ROLE_ALERT: 'alert',
+  ROLE_COMPLEMENTARY: 'complementary',
+  QUERY_OUTPUT_SELECTOR: 'output',
   INPUT_SELECTOR: 'input',
   OUTPUT_SELECTOR: 'pre',
   FORM_SELECTOR: 'form',
   SVG_SELECTOR: 'svg',
   MAIN_SELECTOR: 'main',
+  SECTION_SELECTOR: 'section',
   H1_SELECTOR: 'h1',
+  PARAGRAPH_SELECTOR: 'p',
+  PARENT_SELECTOR: '..',
   CONTROL_SELECTOR: 'input, button, a',
   ATTR_TYPE: 'type',
   ATTR_SRC: 'src',
@@ -383,3 +395,124 @@ export const VIEWPORTS = [
 
 export const JSON_CONTENT_TYPE =
   /^application\/json(?:\s*;\s*charset\s*=\s*(?:utf-8|"utf-8"))?\s*$/i
+
+export const CONVERSATION_FIXTURES = {
+  targetA: { chatId: 'chat-a', label: 'Демо А' },
+  targetB: { chatId: 'chat-b', label: 'Демо Б' },
+  scopeA: 'a'.repeat(43),
+  scopeB: 'b'.repeat(43),
+  newChatId: 'new-chat',
+  phone: '12025550123',
+  recipientChatId: '10000001',
+  longChatId: 'long-target',
+  longLabel: `@${RECIPIENT_API_CONTRACT.MAX_LENGTH_USERNAME}`,
+  draftA: 'Черновик А',
+  draftB: 'Черновик Б',
+  messagesKey: ['messages', 'fixture'],
+  knownMessage: 'known-message',
+  lateResultDelay: 100,
+  mobileViewport: { width: 390, height: 800 },
+  desktopViewport: { width: 1280, height: 800 },
+  viewportHeight: 800,
+  longLabelViewportHeight: 1000,
+  enlargedTextStyle: 'html { font-size: 200% }',
+  longLabelWidths: [320, 680, 681, 1280],
+  searchWidths: [320, 390, 1280],
+  searchLayoutWidths: [320, 390, 1280, 1440, 1920, 2560],
+  searchLayoutViewportHeight: 900,
+  wideViewport: { width: 1920, height: 900 },
+  summaryWidths: [320, 1280],
+  enlargedWorkspaceWidths: [320, 768, 1280],
+  textScales: [100, 200],
+  mobileBreakpoint: 680,
+  searchDelayMs: 300,
+  widths: [320, 360, 390, 680, 681, 768, 1280],
+} as const
+
+// Selection expectations remain independent of the production state constants.
+export const CONVERSATION_CONTRACT = {
+  PANEL_LIST: 'list',
+  PANEL_CONVERSATION: 'conversation',
+  ACTION_OPEN: 'open',
+  ACTION_SHOW_LIST: 'showList',
+  ACTION_CLOSE: 'close',
+  BACK: 'Чаты',
+  CLOSE: 'Закрыть чат',
+  EMPTY_HEADING: 'Выберите чат',
+  PANE_LABEL: 'Переписка',
+  SIDEBAR_LABEL: 'Аккаунт, поиск и чаты',
+  PREMATURE_EMPTY_HISTORY: 'Переписка ещё не начата',
+  SELECTION_API_PATTERN: /\/api\/(?:messages|chats\/history|notifications)/,
+  UNIMPLEMENTED_API_PATTERN: /\/api\/(?:messages|notifications)/,
+} as const
+
+export const QUERY_PROBE_IDS = { FIRST: 'first', SECOND: 'second' } as const
+
+export const QUERY_PROBE_COPY = {
+  REFRESH: 'Обновить',
+  SWITCH_ACCOUNT: 'Аккаунт Б',
+  CONSUMERS: 'Потребители',
+  STRICT_MODE: 'Strict Mode',
+  RENDER: 'Render',
+  LOGOUT: RECIPIENT_CONTRACT.LOGOUT,
+} as const
+
+export const QUERY_PROBE_CONTRACT = {
+  HOME: '/',
+  SELECTION_URL: '/?selection=1',
+  LOGOUT_ROUTE: '**/api/auth/logout',
+  LOGOUT_ERROR: 'Не удалось выйти. Попробуйте ещё раз.',
+  LOGIN_PATTERN: /\/login$/,
+  HOME_PATTERN: /\/$/,
+  OLD_ACCOUNT_LABEL: 'OLD ACCOUNT',
+  CONNECTION_CHANGED: 'connection_changed',
+  RSC_HEADER: 'rsc',
+  RSC_HEADER_VALUE: '1',
+  STALE_DELAY_MS: 60_001,
+  GC_DELAY_MS: 300_001,
+} as const
+
+export const SELECTION_PROBE_IDS = {
+  FIRST: 'selection-one',
+  SECOND: 'selection-two',
+  CACHE: 'cache',
+  HISTORY_TARGET: 'history-target',
+} as const
+
+export const SELECTION_PROBE_COPY = {
+  OPEN: 'Открыть А',
+  BACK: 'Вернуть список',
+  CLOSE: 'Снять выбор',
+  END_SESSION: 'Завершить область',
+  SEED_MESSAGES: 'Запомнить сообщения',
+  INSPECT_MESSAGES: 'Проверить сообщения',
+  SWITCH_SCOPE: 'Другая область',
+  HISTORY_PENDING: 'Ожидание истории',
+  HISTORY_EMPTY: 'История пуста',
+  HISTORY_ERROR: 'Ошибка истории',
+  HISTORY_KNOWN: 'Известное сообщение',
+  HISTORY_LATE: 'Поздний результат',
+  EDITOR: 'Контракт ввода',
+  EMPTY_REPLY: 'Пустой ответ',
+  ERROR_REPLY: 'Ошибка ответа',
+  KNOWN_REPLY: 'Известный ответ',
+  LATE_REPLY: 'Поздний ответ',
+} as const
+
+export const CHAT_HTTP_CONTRACT = {
+  API: '/api/chats',
+  SCOPE_HEADER: 'X-Connection-Scope',
+  CACHE_HEADER: 'cache-control',
+  SESSION_REQUIRED: 'session_required',
+  OPTIONS_METHOD: 'OPTIONS',
+  OPTIONS_STATUS: 204,
+  METHOD_NOT_ALLOWED: 405,
+  ALLOW: 'GET, HEAD, OPTIONS',
+  UNAUTHORIZED_INSTANCE: '99001403',
+  UNAVAILABLE_INSTANCE: '99001404',
+} as const
+
+export const WORKSPACE_FOCUS_FIXTURES = {
+  OUTSIDE_CONTROL_ID: 'outside-workspace-control',
+  OUTSIDE_CONTROL_LABEL: 'Внешнее действие',
+} as const

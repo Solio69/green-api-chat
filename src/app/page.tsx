@@ -12,6 +12,7 @@ import { HOME_RESULT_KIND, IS_PRODUCTION } from '@/lib/auth/constants'
 import { ROUTES } from '@/lib/routes/constants'
 import { HOME_COPY } from './constants'
 import { AccountHeader } from '@/components/AccountHeader'
+import { ChatHistoryController } from '@/components/ChatHistoryController'
 import { ChatListPanel } from '@/components/ChatListPanel'
 import { ChatWorkspace } from '@/components/ChatWorkspace'
 import { LogoutButton } from '@/components/LogoutButton'
@@ -28,8 +29,12 @@ const {
 const { RETRY, RETRY_LINK, LOGOUT } = HOME_COPY
 const HomePage = async () => {
   const password = process.env.SESSION_PASSWORD
-  const session = await openSession(await cookies(), password, IS_PRODUCTION)
-  const credentials = session && readCredentials(session)
+  const session = await openSession({
+    store: await cookies(),
+    password,
+    production: IS_PRODUCTION,
+  })
+  const credentials = session && readCredentials({ session })
   const result = await resolveHome({ credentials, getAccountSettings })
   if (result.kind === REQUIRE_LOGIN) redirect(LOGIN)
   if (result.kind === END_CURRENT_SESSION) redirect(END_SESSION)
@@ -57,6 +62,7 @@ const HomePage = async () => {
           }
           search={<RecipientSearchForm />}
           chatList={<ChatListPanel />}
+          conversation={<ChatHistoryController />}
         />
       </QueryProvider>
     </main>

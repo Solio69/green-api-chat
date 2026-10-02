@@ -24,7 +24,9 @@ import {
   RECIPIENT_ERROR_COPY,
   RECIPIENT_FIELD_ID_SUFFIX,
 } from './constants'
+import { useConversationSelection } from '@/components/ConversationSelectionProvider'
 import { RecipientSearchField } from '@/components/RecipientSearchField'
+import { RecipientSearchHint } from '@/components/RecipientSearchHint'
 import { RecipientSearchModeSwitch } from '@/components/RecipientSearchModeSwitch'
 import { RecipientSearchResult } from '@/components/RecipientSearchResult'
 import type { RecipientSearchDisplayResult } from '@/components/RecipientSearchResult'
@@ -95,6 +97,7 @@ const readErrorCode = (value: unknown): SearchErrorCode | null => {
 }
 
 export const RecipientSearchForm = () => {
+  const { openConversation } = useConversationSelection()
   const formId = useId()
   const inputId = `${formId}${FIELD}`
   const hintId = `${formId}${HINT}`
@@ -205,7 +208,8 @@ export const RecipientSearchForm = () => {
   }
 
   const handleWrite = () => {
-    // D06: connect opening the selected conversation here.
+    if (result?.kind !== FOUND) return
+    openConversation({ chatId: result.chatId, label: result.label })
   }
 
   return (
@@ -242,18 +246,8 @@ export const RecipientSearchForm = () => {
             </div>
           </div>
           <div className={styles.recipientSearchForm__hints} id={hintId}>
-            <p
-              className={styles.recipientSearchForm__hint}
-              aria-hidden={!isPhone}
-            >
-              {PHONE_HINT}
-            </p>
-            <p
-              className={styles.recipientSearchForm__hint}
-              aria-hidden={isPhone}
-            >
-              {USERNAME_HINT}
-            </p>
+            <RecipientSearchHint text={PHONE_HINT} isHidden={!isPhone} />
+            <RecipientSearchHint text={USERNAME_HINT} isHidden={isPhone} />
           </div>
         </fieldset>
         <p className={styles.recipientSearchForm__pending} role={ROLE_STATUS}>

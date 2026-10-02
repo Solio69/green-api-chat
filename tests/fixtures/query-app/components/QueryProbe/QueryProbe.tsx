@@ -3,8 +3,16 @@
 import { StrictMode, useState } from 'react'
 import { useChats } from '@/lib/chats/use-chats'
 import { ChatListPanel } from '@/components/ChatListPanel'
+import { ConversationSelectionProvider } from '@/components/ConversationSelectionProvider'
 import { LogoutButton } from '@/components/LogoutButton'
 import { QueryProvider } from '@/components/QueryProvider'
+import { CHAT_FIXTURES } from '../../../../chats/constants'
+import { QUERY_PROBE_COPY, QUERY_PROBE_IDS } from '../../../../constants'
+
+const { scopeA, scopeB } = CHAT_FIXTURES
+const { FIRST, SECOND } = QUERY_PROBE_IDS
+const { REFRESH, SWITCH_ACCOUNT, CONSUMERS, STRICT_MODE, RENDER, LOGOUT } =
+  QUERY_PROBE_COPY
 
 const Consumer = ({ id }: { id: string }) => {
   const { data, isPending, isFetching, error, refetch } = useChats()
@@ -19,37 +27,41 @@ const Consumer = ({ id }: { id: string }) => {
           error: error?.code ?? null,
         })}
       </output>
-      <button onClick={handleRefetch}>Обновить</button>
+      <button onClick={handleRefetch}>{REFRESH}</button>
     </section>
   )
 }
 export const QueryProbe = () => {
-  const [scope, setScope] = useState('a'.repeat(43))
+  const [scope, setScope] = useState<string>(scopeA)
   const [mounted, setMounted] = useState(true)
   const [strict, setStrict] = useState(false)
   const [revision, setRevision] = useState(0)
-  const handleSwitch = () => setScope('b'.repeat(43))
+  const handleSwitch = () => setScope(scopeB)
   const handleToggle = () => setMounted((value) => !value)
   const handleStrict = () => setStrict(true)
   const handleRender = () => setRevision((value) => value + 1)
   const content = (
     <QueryProvider key={scope} connectionScope={scope}>
-      {mounted && (
-        <>
-          <Consumer id="first" />
-          <Consumer id="second" />
-          <ChatListPanel />
-        </>
-      )}
-      <LogoutButton label="Выйти" />
+      <ConversationSelectionProvider>
+        {mounted && (
+          <>
+            <Consumer id={FIRST} />
+            <Consumer id={SECOND} />
+            <ChatListPanel />
+          </>
+        )}
+        <LogoutButton label={LOGOUT} />
+      </ConversationSelectionProvider>
     </QueryProvider>
   )
   return (
     <>
-      <button onClick={handleSwitch}>Аккаунт Б</button>
-      <button onClick={handleToggle}>Потребители</button>
-      <button onClick={handleStrict}>Strict Mode</button>
-      <button onClick={handleRender}>Render {revision}</button>
+      <button onClick={handleSwitch}>{SWITCH_ACCOUNT}</button>
+      <button onClick={handleToggle}>{CONSUMERS}</button>
+      <button onClick={handleStrict}>{STRICT_MODE}</button>
+      <button onClick={handleRender}>
+        {RENDER} {revision}
+      </button>
       {strict ? <StrictMode>{content}</StrictMode> : content}
     </>
   )

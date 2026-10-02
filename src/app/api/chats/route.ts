@@ -14,8 +14,12 @@ export const GET = async (request: Request): Promise<Response> => {
   const store = await cookies()
   const password = process.env.SESSION_PASSWORD
   const configured = hasSessionPassword(password)
-  const session = await openSession(store, password, IS_PRODUCTION)
-  const credentials = session && readCredentials(session)
+  const session = await openSession({
+    store,
+    password,
+    production: IS_PRODUCTION,
+  })
+  const credentials = session && readCredentials({ session })
   const canBind = configured && session !== null && credentials !== null
   const connectionScope = canBind ? getQueryScope({ session, password }) : null
   return handleChatsRequest({

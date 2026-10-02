@@ -1,6 +1,6 @@
 # Acceptance checklist: список чатов и Query
 
-Дата: 2026-10-02. Kind: Acceptance. Автоматическая приёмка Passed; результаты — verification.md. Видимый список подключает 015, ручной реальный GetChats — NotRun. Ссылка: [spec.md](../spec.md).
+Дата: 2026-10-02. Kind: Acceptance. Автоматическая приёмка Passed; результаты — verification.md. Видимый список подключён в 015; реальный GetChats подтверждён пользователем, полная ручная приёмка NotRun. Ссылка: [spec.md](../spec.md).
 
 - [x] CHK001 [SC-001; FR-001–FR-005] GetChats через server session, mixed только user, empty/pending/error различимы, safe DTO без секретов/вымышленных полей.
 - [x] CHK002 [SC-002; FR-002, FR-006] Нет сессии/неверный scope → ноль provider calls; подтверждённый отказ очищает cookie, временный сохраняет, 429 максимум одна server retry.

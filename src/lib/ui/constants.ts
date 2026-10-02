@@ -1,5 +1,9 @@
 export const EMPTY_STRING = ''
 
+export const BROWSER_EVENTS = {
+  FOCUS: 'focus',
+} as const
+
 export const HTML_VALUES = {
   LANGUAGE_RU: 'ru',
   INPUT_TEXT: 'text',

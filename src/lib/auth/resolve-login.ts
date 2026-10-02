@@ -1,3 +1,4 @@
+import { isRecord } from '@/lib/api/is-record'
 import type {
   InstanceCredentials,
   StateResult,
@@ -54,33 +55,35 @@ export type LoginResult = {
 }
 
 const parseCredentials = (rawBody: string): InstanceCredentials | null => {
-  if (
+  const isInvalidBody =
     new TextEncoder().encode(rawBody).byteLength > MAX_REQUEST_BYTES ||
     rawBody.length === 0
-  )
-    return null
+  if (isInvalidBody) return null
   try {
     const value: unknown = JSON.parse(rawBody)
-    if (!value || typeof value !== 'object' || Array.isArray(value)) return null
-    const { idInstance, apiTokenInstance } = value as Record<string, unknown>
-    if (
+    if (!isRecord(value)) return null
+    const { idInstance, apiTokenInstance } = value
+    const isInvalidCredentials =
       typeof idInstance !== 'string' ||
       typeof apiTokenInstance !== 'string' ||
       idInstance.trim().length === 0 ||
       apiTokenInstance.trim().length === 0
-    )
-      return null
+    if (isInvalidCredentials) return null
     return { idInstance, apiTokenInstance }
   } catch {
     return null
   }
 }
 
-export const resolveLogin = async (
-  rawBody: string,
-  getState: (credentials: InstanceCredentials) => Promise<StateResult>,
-  saveSession: (credentials: InstanceCredentials) => Promise<void>,
-): Promise<LoginResult> => {
+export const resolveLogin = async ({
+  rawBody,
+  getState,
+  saveSession,
+}: {
+  rawBody: string
+  getState: (credentials: InstanceCredentials) => Promise<StateResult>
+  saveSession: (credentials: InstanceCredentials) => Promise<void>
+}): Promise<LoginResult> => {
   const credentials = parseCredentials(rawBody)
   if (!credentials) {
     return {

@@ -8,16 +8,16 @@ import { AUTH_ERROR_MESSAGE, IS_PRODUCTION } from '@/lib/auth/constants'
 const { SESSION_UNAVAILABLE } = AUTH_ERROR_MESSAGE
 
 export const POST = async (request: Request): Promise<Response> =>
-  handleLoginRequest(
+  handleLoginRequest({
     request,
-    getStateInstance,
-    async (credentials: InstanceCredentials) => {
-      const session = await openSession(
-        await cookies(),
-        process.env.SESSION_PASSWORD,
-        IS_PRODUCTION,
-      )
+    getState: (credentials) => getStateInstance({ credentials }),
+    saveSession: async (credentials: InstanceCredentials) => {
+      const session = await openSession({
+        store: await cookies(),
+        password: process.env.SESSION_PASSWORD,
+        production: IS_PRODUCTION,
+      })
       if (!session) throw new Error(SESSION_UNAVAILABLE)
-      await saveCredentials(session, credentials)
+      await saveCredentials({ session, credentials })
     },
-  )
+  })

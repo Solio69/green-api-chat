@@ -5,5 +5,6 @@ export const ROUTES = {
   LOGOUT_API: '/api/auth/logout',
   END_SESSION: '/api/auth/end-session',
   CHATS_API: '/api/chats',
+  CHAT_HISTORY_API: '/api/chats/history',
   RECIPIENT_SEARCH_API: '/api/recipients/search',
 } as const

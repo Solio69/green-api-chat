@@ -67,7 +67,11 @@ test('auth-flow: authorized saves exact credentials and returns only ok', async 
     kind: AUTHORIZED,
     body: { stateInstance: AUTHORIZED },
   })
-  const result = await resolveLogin(validBody, getState, saveSession)
+  const result = await resolveLogin({
+    rawBody: validBody,
+    getState,
+    saveSession,
+  })
   expect(calls).toEqual([credentials])
   expect(saves).toEqual([credentials])
   expect(result).toEqual({ status: OK_STATUS, body: { status: RESPONSE_OK } })
@@ -94,7 +98,7 @@ for (const [index, rawBody] of [
       kind: AUTHORIZED,
       body: { stateInstance: AUTHORIZED },
     })
-    const result = await resolveLogin(rawBody, getState, saveSession)
+    const result = await resolveLogin({ rawBody, getState, saveSession })
     expect(result).toEqual({
       status: INVALID_REQUEST_STATUS,
       body: { status: RESPONSE_ERROR, code: INVALID_REQUEST },
@@ -128,7 +132,11 @@ for (const [state, status, code] of [
 ] as const) {
   test(`auth-flow: ${code} never saves a session`, async () => {
     const { saves, getState, saveSession } = fixture(state)
-    const result = await resolveLogin(validBody, getState, saveSession)
+    const result = await resolveLogin({
+      rawBody: validBody,
+      getState,
+      saveSession,
+    })
     expect(result.status).toBe(status)
     expect(result.body.status).toBe(RESPONSE_ERROR)
     expect(result.body.code).toBe(code)
@@ -142,8 +150,12 @@ test('auth-flow: session storage failure has a safe response', async () => {
     kind: AUTHORIZED,
     body: { stateInstance: AUTHORIZED },
   })
-  const result = await resolveLogin(validBody, getState, async () => {
-    throw new Error(TOKEN)
+  const result = await resolveLogin({
+    rawBody: validBody,
+    getState,
+    saveSession: async () => {
+      throw new Error(TOKEN)
+    },
   })
   expect(result).toEqual({
     status: UNAVAILABLE_STATUS,
@@ -154,7 +166,11 @@ test('auth-flow: session storage failure has a safe response', async () => {
 
 test('auth-flow: exhausted rate limit returns 429 and never saves a session', async () => {
   const { saves, getState, saveSession } = fixture({ kind: RATE_LIMITED })
-  const result = await resolveLogin(validBody, getState, saveSession)
+  const result = await resolveLogin({
+    rawBody: validBody,
+    getState,
+    saveSession,
+  })
   expect(result).toEqual({
     status: RATE_LIMIT_STATUS,
     body: { status: RESPONSE_ERROR, code: RATE_LIMITED },

@@ -5,6 +5,7 @@ import { isRecord } from '@/lib/api/is-record'
 import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
 import {
   CACHE_CONTROL,
+  FETCH_CREDENTIALS,
   HTTP_HEADERS,
   HTTP_METHOD,
   HTTP_STATUS,
@@ -35,6 +36,7 @@ const {
 const { CHATS_API } = ROUTES
 const { GET } = HTTP_METHOD
 const { NO_STORE } = CACHE_CONTROL
+const { SAME_ORIGIN } = FETCH_CREDENTIALS
 const { CONNECTION_SCOPE } = HTTP_HEADERS
 const { SCOPE_PATTERN } = CHAT_QUERY_CONFIG
 const errorStatuses: Partial<Record<ChatsErrorCode, number>> = {
@@ -84,7 +86,7 @@ export const fetchChats = async ({
     response = await fetcher(CHATS_API, {
       method: GET,
       cache: NO_STORE,
-      credentials: 'same-origin',
+      credentials: SAME_ORIGIN,
       headers: { [CONNECTION_SCOPE]: connectionScope },
       signal,
     })

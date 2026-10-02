@@ -1,5 +1,6 @@
 import accountScenarios from './account-scenarios.json' with { type: 'json' }
 import chatsScenarios from './chats-scenarios.json' with { type: 'json' }
+import historyScenarios from './history-scenarios.json' with { type: 'json' }
 import scenarios from './scenarios.json' with { type: 'json' }
 
 const HOST = 'https://4100.api.green-api.com'
@@ -7,6 +8,12 @@ const INSTANCE_PATH = /^\/waInstance([^/]+)\/([^/]+)\/[^/]+$/
 const STATE_METHOD = 'getStateInstance'
 const ACCOUNT_METHOD = 'getAccountSettings'
 const SEARCH_METHOD = 'checkAccount'
+const HISTORY_METHOD = 'getChatHistory'
+const CHATS_METHOD = 'getChats'
+const HISTORY_CHAT_ID = 'history-chat-a'
+const HISTORY_CHAT_LABEL = 'История А'
+const HISTORY_COUNT = 10
+const POST_METHOD = 'POST'
 const AUTHORIZED = 'authorized'
 const RATE_LIMIT_REASON = 'rate_limit_exceeded'
 const DELAY_MS = 750
@@ -96,7 +103,40 @@ const fakeGreenApiFetch = async (
       return response({ body: {}, status: UNEXPECTED_METHOD })
     return response({ body: { stateInstance: AUTHORIZED } })
   }
-  if (method === 'getChats') {
+  if (method === HISTORY_METHOD) {
+    let payload: unknown
+    try {
+      payload = JSON.parse(
+        typeof init?.body === 'string' ? init.body : EMPTY_BODY,
+      )
+    } catch {
+      return response({ body: {}, status: BAD_REQUEST })
+    }
+    const valid =
+      init?.method === POST_METHOD &&
+      payload !== null &&
+      typeof payload === 'object' &&
+      'chatId' in payload &&
+      payload.chatId === HISTORY_CHAT_ID &&
+      'count' in payload &&
+      payload.count === HISTORY_COUNT
+    if (!valid) return response({ body: {}, status: BAD_REQUEST })
+    const scenario = Object.entries(historyScenarios).find(
+      ([key]) => key === id,
+    )?.[1]
+    if (!scenario) return response({ body: [] })
+    return response({
+      body: scenario.body,
+      status: 'status' in scenario ? scenario.status : OK,
+    })
+  }
+  if (method === CHATS_METHOD) {
+    if (Object.hasOwn(historyScenarios, id))
+      return response({
+        body: [
+          { chatId: HISTORY_CHAT_ID, type: 'user', name: HISTORY_CHAT_LABEL },
+        ],
+      })
     const scenario = Object.entries(chatsScenarios).find(
       ([key]) => key === id,
     )?.[1]

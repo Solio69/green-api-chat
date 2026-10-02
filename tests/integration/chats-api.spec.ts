@@ -5,6 +5,7 @@ import { handleChatsRequest } from '@/lib/chats/handle-chats-request'
 import { normalizeChats } from '@/lib/chats/normalize-chats'
 import type { GetChatsResult, ChatsErrorCode } from '@/lib/chats/types'
 import { getChats } from '@/lib/green-api/get-chats'
+import { EMPTY_STRING } from '@/lib/ui/constants'
 import { CHAT_FIXTURES } from '../chats/constants'
 
 const { credentials, scopeA, scopeB, chat, provider } = CHAT_FIXTURES
@@ -230,7 +231,7 @@ test('chats: aborted signal prevents initial call and retry', async () => {
 for (const [override, scope, status, code] of [
   [{ configured: false }, scopeA, 503, 'server_unavailable'],
   [{ credentials: null }, scopeA, 401, 'session_required'],
-  [{}, '', 400, 'invalid_request'],
+  [{}, EMPTY_STRING, 400, 'invalid_request'],
   [{}, scopeB, 409, 'connection_changed'],
 ] as const) {
   test(`chats: rejects before provider ${code}`, async () => {

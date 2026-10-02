@@ -29,11 +29,15 @@ const invalidRequest = (): Response =>
     },
   )
 
-export const handleLoginRequest = async (
-  request: Request,
-  getState: (credentials: InstanceCredentials) => Promise<StateResult>,
-  saveSession: (credentials: InstanceCredentials) => Promise<void>,
-): Promise<Response> => {
+export const handleLoginRequest = async ({
+  request,
+  getState,
+  saveSession,
+}: {
+  request: Request
+  getState: (credentials: InstanceCredentials) => Promise<StateResult>
+  saveSession: (credentials: InstanceCredentials) => Promise<void>
+}): Promise<Response> => {
   const mediaType = request.headers
     .get(CONTENT_TYPE)
     ?.split(CONTENT_TYPE_PARAMETER_SEPARATOR)[0]
@@ -47,7 +51,7 @@ export const handleLoginRequest = async (
     return invalidRequest()
   }
 
-  const result = await resolveLogin(rawBody, getState, saveSession)
+  const result = await resolveLogin({ rawBody, getState, saveSession })
   return Response.json(result.body, {
     status: result.status,
     headers: { [CACHE_CONTROL_HEADER]: NO_STORE },

@@ -10,6 +10,30 @@ export const CHAT_LIST_UI = {
   RETRY_PENDING: 'Обновляем…',
   REFRESH: 'Обновить',
   MAX_RETRY_LABEL_LINES: 2,
+  INITIALS_SELECTOR: '[aria-hidden][data-initial]',
+  INITIAL_SELECTOR: '[data-initial]',
+  INITIAL_ATTRIBUTE: 'data-initial',
+  UNSUPPORTED_DECORATION_SELECTOR: 'img, time, b',
+} as const
+
+export const CHAT_LIST_EXPECTATIONS = {
+  LABELS: [
+    'Анна Демо',
+    '@recipient_demo',
+    '12025550103',
+    'chat-4',
+    'Анна Демо',
+    '<b>Получатель</b>',
+  ],
+  USERNAME_INITIAL: 'R',
+  OMITTED_USERNAME: '@anna_demo',
+} as const
+
+export const CHAT_LIST_LONG_FIXTURE = {
+  COUNT: 50,
+  ID_PREFIX: 'long-chat-',
+  LABEL_PREFIX: 'Получатель',
+  LABEL_SUFFIX: 'д'.repeat(100),
 } as const
 
 export const CHAT_LIST_FIXTURES = [

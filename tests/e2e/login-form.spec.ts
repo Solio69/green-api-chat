@@ -121,7 +121,8 @@ test('places an accessible eye inside the token field without overlapping text',
     await page.setViewportSize(viewport)
     const inputBox = await token.boundingBox()
     const buttonBox = await toggle.boundingBox()
-    if (!inputBox || !buttonBox) throw new Error(MISSING_TOKEN_CONTROL_GEOMETRY)
+    const hasControlGeometry = inputBox !== null && buttonBox !== null
+    if (!hasControlGeometry) throw new Error(MISSING_TOKEN_CONTROL_GEOMETRY)
     expect(buttonBox.width).toBeGreaterThanOrEqual(MIN_TOUCH_TARGET_SIZE)
     expect(buttonBox.height).toBeGreaterThanOrEqual(MIN_TOUCH_TARGET_SIZE)
     expect(buttonBox.x).toBeGreaterThan(inputBox.x + inputBox.width / 2)

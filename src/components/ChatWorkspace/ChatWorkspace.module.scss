@@ -10,8 +10,19 @@
   background: var(--ui-surface-color);
   box-shadow: var(--ui-panel-shadow);
 
+  &__sidebar,
+  &__conversation {
+    display: grid;
+    min-width: 0;
+  }
+
   @media (max-width: tokens.$chat-mobile-breakpoint) {
     grid-template-columns: minmax(0, 1fr);
     min-height: 0;
+
+    &[data-mobile-panel='conversation'] &__sidebar,
+    &[data-mobile-panel='list'] &__conversation {
+      display: none;
+    }
   }
 }
