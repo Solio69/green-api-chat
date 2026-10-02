@@ -2,6 +2,7 @@
 
 import type { ReactNode } from 'react'
 import { useWorkspaceFocus } from './use-workspace-focus'
+import { useConversationReadState } from '@/lib/unread/use-conversation-read-state'
 import { ChatSidebar } from '@/components/ChatSidebar'
 import { ConversationEmptyState } from '@/components/ConversationEmptyState'
 import { ConversationPane } from '@/components/ConversationPane'
@@ -36,6 +37,7 @@ const WorkspaceContent = ({
     handleFocusCapture,
     handleBlurCapture,
   } = useWorkspaceFocus({ target, accessId, mobilePanel })
+  useConversationReadState({ paneRef, target, accessId, mobilePanel })
   return (
     <div
       className={styles.chatWorkspace}

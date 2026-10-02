@@ -4,6 +4,7 @@ import { useId, useState } from 'react'
 import type { ChatsErrorCode } from '@/lib/chats/types'
 import { useChats } from '@/lib/chats/use-chats'
 import { useSessionChatLabels } from '@/lib/chats/use-session-chat-labels'
+import { useUnreadCounts } from '@/lib/unread/use-unread-counts'
 import { WORKSPACE_COPY } from '@/components/ChatWorkspace/constants'
 import { API_ERROR_CODE } from '@/lib/api/constants'
 import { EMPTY_STRING, HTML_VALUES } from '@/lib/ui/constants'
@@ -27,6 +28,7 @@ export const ChatListPanel = () => {
   const headingId = useId()
   const { data, isPending, isFetching, error, refetch } = useChats()
   const labelsByChatId = useSessionChatLabels()
+  const { countsByChatId } = useUnreadCounts()
   const hasKnownItems = data !== undefined && data.length > 0
   const [retryErrorCode, setRetryErrorCode] = useState<ChatsErrorCode | null>(
     null,
@@ -72,6 +74,7 @@ export const ChatListPanel = () => {
         <ChatList
           chats={data}
           labelsByChatId={labelsByChatId}
+          unreadCountsByChatId={countsByChatId}
           isPending={isPending}
           selectedChatId={target?.chatId}
           onSelect={openConversation}

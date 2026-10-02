@@ -5,6 +5,7 @@
   @include mixins.conversation-header-button;
 
   display: none;
+  gap: tokens.$small-icon-gap;
   color: var(--ui-action-color);
   font-size: tokens.$font-size-caption;
 

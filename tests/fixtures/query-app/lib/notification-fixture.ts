@@ -125,7 +125,7 @@ const createFixture = () => {
     else
       enqueue({
         typeWebhook: INCOMING,
-        idMessage: `${INCOMING_ID_PREFIX}${state.receipt + 1}`,
+        idMessage: idMessage ?? `${INCOMING_ID_PREFIX}${state.receipt + 1}`,
         senderData: {
           chatId,
           chatType: USER,

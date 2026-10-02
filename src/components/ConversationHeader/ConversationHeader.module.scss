@@ -48,6 +48,11 @@
   }
 
   @media (max-width: tokens.$chat-mobile-breakpoint) {
+    gap: tokens.$space-xs;
     padding-inline: tokens.$space-sm;
+
+    &__heading {
+      @include mixins.truncate-line;
+    }
   }
 }

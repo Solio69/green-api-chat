@@ -1,6 +1,7 @@
 'use client'
 
 import type { Ref } from 'react'
+import { useUnreadCounts } from '@/lib/unread/use-unread-counts'
 import { RECIPIENT_VALIDATION } from '@/lib/recipients/constants'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import { CONVERSATION_COPY } from './constants'
@@ -18,6 +19,7 @@ export const ConversationHeader = ({
   headingRef: Ref<HTMLHeadingElement>
 }) => {
   const { target, showChatList, closeConversation } = useConversationSelection()
+  const { total } = useUnreadCounts()
   if (!target) return null
   const { label } = target
   const initial = label
@@ -26,7 +28,7 @@ export const ConversationHeader = ({
     .toLocaleUpperCase()
   return (
     <header className={styles.conversationHeader}>
-      <ConversationBackButton onClick={showChatList} />
+      <ConversationBackButton onClick={showChatList} unreadCount={total} />
       <span className={styles.conversationHeader__avatar} aria-hidden>
         {initial}
       </span>

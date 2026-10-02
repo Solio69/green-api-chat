@@ -1,7 +1,11 @@
+'use client'
+
+import { useId } from 'react'
 import type { PersonalChat } from '@/lib/chats/types'
 import type { ConversationTarget } from '@/lib/conversations/types'
 import { RECIPIENT_VALIDATION } from '@/lib/recipients/constants'
 import { HTML_VALUES } from '@/lib/ui/constants'
+import { ChatUnreadBadge } from '@/components/ChatUnreadBadge'
 import styles from './ChatListItem.module.scss'
 
 const { USERNAME_PREFIX } = RECIPIENT_VALIDATION
@@ -12,6 +16,7 @@ type ChatListItemProps = {
   isSelected: boolean
   onSelect: (target: ConversationTarget) => void
   fallbackLabel?: string
+  unreadCount?: number
 }
 
 export const ChatListItem = ({
@@ -19,7 +24,9 @@ export const ChatListItem = ({
   isSelected,
   onSelect,
   fallbackLabel,
+  unreadCount = 0,
 }: ChatListItemProps) => {
+  const badgeId = useId()
   const { chatId, name, username, phone } = chat
   const label = name || username || phone || fallbackLabel || chatId
   const initialSource = label.trim()
@@ -34,6 +41,8 @@ export const ChatListItem = ({
         className={styles.chatListItem}
         type={BUTTON}
         aria-pressed={isSelected}
+        aria-label={label}
+        aria-describedby={unreadCount > 0 ? badgeId : undefined}
         onClick={handleSelect}
       >
         <span
@@ -42,6 +51,7 @@ export const ChatListItem = ({
           data-initial={initial.toLocaleUpperCase()}
         />
         <span className={styles.chatListItem__label}>{label}</span>
+        <ChatUnreadBadge id={badgeId} count={unreadCount} />
       </button>
     </li>
   )

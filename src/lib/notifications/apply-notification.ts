@@ -3,7 +3,9 @@ import { isNotificationDelivery } from './validate-delivery'
 import { rememberPersonalChat } from '@/lib/chats/session-chat-facts'
 import { applyMessageFacts } from '@/lib/messages/message-cache'
 import { publishMessageIssues } from '@/lib/messages/message-status-issues'
+import type { ChatIssueFact } from '@/lib/messages/types'
 import type { QuerySession } from '@/lib/query/create-query-session'
+import { recordIncomingUnread } from '@/lib/unread/unread-cache'
 import { SESSION_CHAT_SOURCE } from '@/lib/chats/constants'
 import { MESSAGE_SOURCE } from '@/lib/messages/constants'
 import { NOTIFICATION_KIND } from './constants'
@@ -44,6 +46,11 @@ export const applyNotification = ({
       label: event.displayLabel,
       source: SESSION_CHAT_SOURCE_INCOMING,
     })
+    recordIncomingUnread({
+      session,
+      chatId: event.chatId,
+      idMessage: event.message.idMessage,
+    })
     refreshChats?.()
   } else if (event.kind === STATUS) {
     const { fact } = event
@@ -64,7 +71,7 @@ export const applyNotification = ({
           {
             chatId: fact.chatId,
             idMessage: null,
-            code: fact.status as 'failed' | 'noAccount',
+            code: fact.status as ChatIssueFact['code'],
           },
         ],
       })

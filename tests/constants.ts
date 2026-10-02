@@ -183,6 +183,7 @@ export const HTML_CONTRACT = {
 export const TEST_UI = {
   ROLE_REGION: 'region',
   ROLE_BUTTON: 'button',
+  ROLE_TEXTBOX: 'textbox',
   ROLE_HEADING: 'heading',
   ROLE_LINK: 'link',
   ROLE_STATUS: 'status',

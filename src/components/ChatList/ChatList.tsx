@@ -13,6 +13,7 @@ type ChatListProps = {
   isPending: boolean
   selectedChatId?: string
   labelsByChatId?: Readonly<Record<string, string>>
+  unreadCountsByChatId?: Readonly<Record<string, number>>
   onSelect: (target: ConversationTarget) => void
 }
 
@@ -21,6 +22,7 @@ export const ChatList = ({
   isPending,
   selectedChatId,
   labelsByChatId,
+  unreadCountsByChatId,
   onSelect,
 }: ChatListProps) => {
   const hasData = chats !== undefined
@@ -31,6 +33,13 @@ export const ChatList = ({
     const hasLabel =
       labelsByChatId !== undefined && Object.hasOwn(labelsByChatId, chatId)
     return hasLabel ? labelsByChatId[chatId] : undefined
+  }
+
+  const readUnreadCount = (chatId: string) => {
+    const hasCount =
+      unreadCountsByChatId !== undefined &&
+      Object.hasOwn(unreadCountsByChatId, chatId)
+    return hasCount ? unreadCountsByChatId[chatId] : 0
   }
 
   return (
@@ -48,6 +57,7 @@ export const ChatList = ({
               chat={chat}
               fallbackLabel={readFallbackLabel(chat.chatId)}
               isSelected={selectedChatId === chat.chatId}
+              unreadCount={readUnreadCount(chat.chatId)}
               onSelect={onSelect}
             />
           ))}

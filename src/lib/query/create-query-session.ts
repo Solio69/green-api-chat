@@ -6,11 +6,13 @@ import { API_ERROR_CODE } from '@/lib/api/constants'
 import { SESSION_CHAT_CONFIG, CHAT_QUERY_CONFIG } from '@/lib/chats/constants'
 import { HTTP_STATUS } from '@/lib/http/constants'
 import { MESSAGE_CACHE_CONFIG } from '@/lib/messages/constants'
+import { UNREAD_CONFIG } from '@/lib/unread/constants'
 
 const { KEY, STALE_TIME_MS, GC_TIME_MS } = CHAT_QUERY_CONFIG
 const { KEY: MESSAGE_KEY, GC_TIME: MESSAGE_GC_TIME } = MESSAGE_CACHE_CONFIG
 const { STATUS_FACTS_KEY, ISSUES_KEY } = MESSAGE_CACHE_CONFIG
 const { KEY: SESSION_CHAT_KEY } = SESSION_CHAT_CONFIG
+const { KEY: UNREAD_KEY } = UNREAD_CONFIG
 const { SESSION_REQUIRED, CONNECTION_CHANGED } = API_ERROR_CODE
 const { UNAUTHORIZED, CONFLICT } = HTTP_STATUS
 const invokeCleanup = (callback: () => void) => {
@@ -81,6 +83,7 @@ export const createQuerySession = ({
     STATUS_FACTS_KEY,
     ISSUES_KEY,
     SESSION_CHAT_KEY,
+    UNREAD_KEY,
   ])
     client.setQueryDefaults([key], memoryDefaults)
   const subscribe = (listener: () => void) => {

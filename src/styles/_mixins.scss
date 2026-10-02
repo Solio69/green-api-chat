@@ -1,5 +1,11 @@
 @use 'tokens';
 
+@mixin truncate-line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 @mixin focus-ring($color: var(--ui-focus-color, #{tokens.$color-focus})) {
   &:focus-visible {
     outline: tokens.$focus-width solid $color;

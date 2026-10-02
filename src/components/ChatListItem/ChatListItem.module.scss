@@ -42,6 +42,9 @@
   }
 
   &__label {
+    @include mixins.truncate-line;
+
+    flex: 1;
     min-width: 0;
     font-weight: tokens.$max-heading-weight;
   }
