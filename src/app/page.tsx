@@ -8,11 +8,11 @@ import {
   readCredentials,
 } from '@/lib/auth/session'
 import { getAccountSettings } from '@/lib/green-api/get-account-settings'
-import { WORKSPACE_COPY } from '@/components/ChatWorkspace/constants'
 import { HOME_RESULT_KIND, IS_PRODUCTION } from '@/lib/auth/constants'
 import { ROUTES } from '@/lib/routes/constants'
 import { HOME_COPY } from './constants'
 import { AccountHeader } from '@/components/AccountHeader'
+import { ChatListPanel } from '@/components/ChatListPanel'
 import { ChatWorkspace } from '@/components/ChatWorkspace'
 import { LogoutButton } from '@/components/LogoutButton'
 import { QueryProvider } from '@/components/QueryProvider'
@@ -26,7 +26,6 @@ const {
   RETRY: RETRY_CHECK,
 } = HOME_RESULT_KIND
 const { RETRY, RETRY_LINK, LOGOUT } = HOME_COPY
-const { CHATS } = WORKSPACE_COPY
 const HomePage = async () => {
   const password = process.env.SESSION_PASSWORD
   const session = await openSession(await cookies(), password, IS_PRODUCTION)
@@ -57,7 +56,7 @@ const HomePage = async () => {
             <AccountHeader account={result.body.profile} logoutLabel={LOGOUT} />
           }
           search={<RecipientSearchForm />}
-          chatList={<h2 className={styles.homePage__listHeading}>{CHATS}</h2>}
+          chatList={<ChatListPanel />}
         />
       </QueryProvider>
     </main>

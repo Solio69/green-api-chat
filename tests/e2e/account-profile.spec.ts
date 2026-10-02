@@ -316,11 +316,13 @@ for (const { viewport, scenario } of [
       expect((await readStyles(connection)).color).toBe(expected.MUTED)
       expect((await readStyles(logout)).color).toBe(expected.MUTED)
       expect((await readStyles(placeholder)).color).toBe(expected.ACTION)
-      expect((await readStyles(field)).background).toBe(expected.CANVAS)
+      expect((await readStyles(field)).background).toBe(expected.INPUT)
       expect((await readStyles(field)).color).toBe(expected.TEXT)
       expect((await readStyles(search)).background).toBe(expected.ACTION)
       await field.focus()
-      expect((await readStyles(field)).outline).toBe(expected.ACTION)
+      expect((await readStyles(field)).border).toBe(expected.ACTION)
+      expect((await readStyles(field)).shadow).not.toBe(STYLE_NONE)
+      expect((await readStyles(field)).outlineWidth).toBe(0)
       for (const control of [label, connection, logout, mode]) {
         expect(
           textContrast({
@@ -355,7 +357,8 @@ for (const { viewport, scenario } of [
     await expect(field).toHaveAttribute(ATTR_ARIA_INVALID, BOOLEAN_TRUE)
     await field.focus()
     expect((await readStyles(field)).border).toBe(DARK.ERROR)
-    expect((await readStyles(field)).outline).toBe(DARK.ERROR)
+    expect((await readStyles(field)).shadow).not.toBe(STYLE_NONE)
+    expect((await readStyles(field)).outlineWidth).toBe(0)
     expect(await page.locator(INPUT_SELECTOR).count()).toBe(1)
   })
 }

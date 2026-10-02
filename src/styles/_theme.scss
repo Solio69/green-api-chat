@@ -10,6 +10,9 @@
   --ui-muted-color: #{tokens.$color-max-muted};
   --ui-focus-shadow: #{tokens.$shadow-max-focus};
   --ui-canvas-color: #{tokens.$color-max-canvas};
+  --ui-input-color: #{tokens.$color-max-input};
+  --ui-search-focus-shadow: #{tokens.$shadow-search-focus};
+  --ui-search-error-shadow: #{tokens.$shadow-search-error};
   --ui-surface-color: #{tokens.$color-surface};
   --ui-on-action-color: #{tokens.$color-on-interactive};
   --ui-error-color: #{tokens.$color-error};
@@ -31,6 +34,9 @@
     --ui-muted-color: #{tokens.$color-max-muted-dark};
     --ui-focus-shadow: #{tokens.$shadow-max-focus-dark};
     --ui-canvas-color: #{tokens.$color-max-canvas-dark};
+    --ui-input-color: #{tokens.$color-max-input-dark};
+    --ui-search-focus-shadow: #{tokens.$shadow-search-focus-dark};
+    --ui-search-error-shadow: #{tokens.$shadow-search-error-dark};
     --ui-surface-color: #{tokens.$color-max-surface-dark};
     --ui-on-action-color: #{tokens.$color-max-canvas-dark};
     --ui-error-color: #{tokens.$color-max-error-dark};

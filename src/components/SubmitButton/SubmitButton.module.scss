@@ -5,15 +5,15 @@
   @include mixins.focus-ring(var(--ui-focus-color, #{tokens.$color-focus}));
 
   width: 100%;
-  min-height: tokens.$control-min-height;
-  padding: tokens.$space-xs tokens.$space-sm;
+  min-height: var(--submit-min-height, #{tokens.$control-min-height});
+  padding: var(--submit-padding, #{tokens.$space-xs} #{tokens.$space-sm});
   border: tokens.$border-width solid
     var(--ui-action-color, #{tokens.$color-interactive});
-  border-radius: tokens.$radius-control;
+  border-radius: var(--submit-radius, #{tokens.$radius-control});
   background: var(--ui-action-color, #{tokens.$color-interactive});
   color: var(--ui-on-action-color, #{tokens.$color-on-interactive});
   font: inherit;
-  font-weight: tokens.$font-weight-medium;
+  font-weight: var(--submit-font-weight, #{tokens.$font-weight-medium});
   overflow-wrap: anywhere;
   cursor: pointer;
 

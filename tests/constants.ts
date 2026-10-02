@@ -35,6 +35,7 @@ export const ACCOUNT_CONTRACT = {
 export const THEME_CONTRACT = {
   LIGHT: {
     CANVAS: 'rgb(239, 245, 251)',
+    INPUT: 'rgb(243, 244, 247)',
     SURFACE: 'rgb(255, 255, 255)',
     ACTION: 'rgb(82, 102, 246)',
     TEXT: 'rgb(23, 25, 29)',
@@ -43,6 +44,7 @@ export const THEME_CONTRACT = {
   },
   DARK: {
     CANVAS: 'rgb(17, 20, 25)',
+    INPUT: 'rgb(44, 46, 53)',
     SURFACE: 'rgb(32, 33, 38)',
     ACTION: 'rgb(100, 117, 255)',
     TEXT: 'rgb(241, 243, 246)',

@@ -138,3 +138,43 @@ $search-control-gap: 0.1875rem;
 $search-submit-width: 5.25rem;
 
 $account-details-min-width: 6rem;
+
+$color-max-input: #f3f4f7;
+$color-max-input-dark: #2c2e35;
+$chat-line-height: 1.45;
+$chat-list-heading-size: 1.0625rem;
+$chat-list-item-padding-block: 0.75rem;
+$chat-list-item-padding-inline: 0.625rem;
+$chat-initial-size: 1.25rem;
+$chat-search-padding-top: 1.3125rem;
+$chat-search-heading-gap: 0.8125rem;
+$search-label-gap: 0.375rem;
+$search-row-gap: 0.4375rem;
+$search-control-radius: 0.5625rem;
+$search-mode-radius: 0.4375rem;
+$search-mode-font-size: 0.8125rem;
+$search-mode-height: 2.25rem;
+$search-input-padding-inline: 0.6875rem;
+$search-input-padding-block: 0.625rem;
+$search-button-padding-inline: 0.75rem;
+$shadow-search-focus: 0 0 0 3px $color-max-focus-shadow;
+$shadow-search-focus-dark: 0 0 0 3px $color-max-focus-shadow-dark;
+$shadow-search-error: 0 0 0 3px $color-control-error-shadow;
+$shadow-search-error-dark: 0 0 0 3px $color-max-error-shadow-dark;
+
+$search-submit-offset: $font-size-small * $chat-line-height + $search-label-gap;
+
+$chat-recovery-gap: 12px;
+$chat-recovery-copy-gap: 9px;
+$chat-recovery-button-gap: 7px;
+$chat-recovery-hint-gap: 5px;
+$chat-recovery-icon-size: 18px;
+$chat-recovery-icon-offset: 2px;
+$chat-recovery-radius: 12px;
+$chat-recovery-button-radius: 9px;
+$chat-recovery-tint: 7%;
+$chat-recovery-action-tint: 80%;
+$chat-recovery-padding: 16px;
+$chat-recovery-margin-inline: 18px;
+$chat-recovery-margin-mobile: 16px;
+$chat-recovery-margin-bottom: 18px;

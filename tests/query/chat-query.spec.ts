@@ -1,8 +1,10 @@
 import { expect, test } from '@playwright/test'
 import type { Page, Route } from '@playwright/test'
 import { CHAT_FIXTURES } from '../chats/constants'
+import { CHAT_LIST_UI } from '../e2e/chat-list-ui.constants'
 
 const { scopeA, chat } = CHAT_FIXTURES
+const { LIST, ERROR } = CHAT_LIST_UI
 const fulfill = ({
   route,
   chats = [chat],
@@ -58,30 +60,43 @@ test('React query: empty success differs from loading', async ({ page }) => {
   await expect(first(page)).toContainText('"data":[]')
   await expect(first(page)).toContainText('"isPending":false')
 })
-test('React query: background refresh/error retain data and manual retry', async ({
+test('React query: background refresh/error retain cache while UI shows recovery', async ({
   page,
 }) => {
   let calls = 0
   let pending: Route | undefined
   await page.route('**/api/chats', (route) => {
     calls += 1
-    if (calls === 2) {
-      pending = route
-      return
-    }
-    return fulfill({ route })
+    if (calls === 1) return fulfill({ route })
+    pending = route
   })
   await page.goto('/')
+  const area = page.getByRole('region', { name: 'Чаты', exact: true })
+  const list = area.getByRole('list', { name: LIST })
   await expect(first(page)).toContainText('chat-1')
+  await expect(list.getByRole('listitem')).toHaveCount(1)
+  await expect(area.getByRole('button')).toHaveCount(0)
   await page.getByTestId('first').getByRole('button').click()
   await expect(first(page)).toContainText('"isFetching":true')
-  await expect(first(page)).toContainText('chat-1')
+  await expect(list.getByRole('listitem')).toHaveCount(1)
   await fulfill({ route: pending!, status: 503, code: 'service_unavailable' })
   await expect(first(page)).toContainText('service_unavailable')
   await expect(first(page)).toContainText('chat-1')
-  await page.getByTestId('first').getByRole('button').click()
+  await expect(area.getByRole('alert')).toContainText(ERROR)
+  await expect(list).toHaveCount(0)
+  const retry = area.getByRole('button')
+  await retry.click()
+  await expect.poll(() => calls).toBe(3)
+  await expect(first(page)).toContainText('"isFetching":true')
+  await expect(first(page)).toContainText('chat-1')
+  await expect(area.getByRole('alert')).toContainText(ERROR)
+  await expect(retry).toBeDisabled()
+  await expect(list).toHaveCount(0)
+  await fulfill({ route: pending! })
   await expect(first(page)).toContainText('"error":null')
-  expect(calls).toBe(3)
+  await expect(list.getByRole('listitem')).toHaveCount(1)
+  await expect(area.getByRole('alert')).toHaveCount(0)
+  await expect(area.getByRole('button')).toHaveCount(0)
 })
 test('React query: switching account rejects late data of old scope', async ({
   page,

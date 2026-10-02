@@ -6,27 +6,30 @@
   flex-wrap: wrap;
   gap: tokens.$search-control-gap;
   padding: tokens.$search-control-gap;
-  border-radius: tokens.$radius-control;
-  background: var(--ui-canvas-color);
+  border-radius: tokens.$search-control-radius;
+  background: var(--ui-input-color);
 
   &__button {
     @include mixins.focus-ring;
 
     flex: 1;
-    min-height: tokens.$control-icon-button-size;
+    min-height: tokens.$search-mode-height;
     padding: tokens.$space-xs;
     border: 0;
-    border-radius: tokens.$radius-control;
+    border-radius: tokens.$search-mode-radius;
     background: tokens.$color-transparent;
     color: var(--ui-muted-color);
     font: inherit;
-    font-size: tokens.$font-size-caption;
+    font-size: tokens.$search-mode-font-size;
     cursor: pointer;
 
     &[aria-pressed='true'] {
       background: var(--ui-surface-color);
-      box-shadow: tokens.$shadow-control;
-      color: var(--ui-text-color);
+      color: var(--ui-link-color);
+    }
+
+    @media (max-width: tokens.$chat-mobile-breakpoint) {
+      min-height: tokens.$control-icon-button-size;
     }
 
     &:enabled:hover {

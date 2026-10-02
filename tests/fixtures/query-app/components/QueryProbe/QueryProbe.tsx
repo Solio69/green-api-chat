@@ -2,6 +2,7 @@
 
 import { StrictMode, useState } from 'react'
 import { useChats } from '@/lib/chats/use-chats'
+import { ChatListPanel } from '@/components/ChatListPanel'
 import { LogoutButton } from '@/components/LogoutButton'
 import { QueryProvider } from '@/components/QueryProvider'
 
@@ -37,6 +38,7 @@ export const QueryProbe = () => {
         <>
           <Consumer id="first" />
           <Consumer id="second" />
+          <ChatListPanel />
         </>
       )}
       <LogoutButton label="Выйти" />

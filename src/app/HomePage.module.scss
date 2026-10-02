@@ -16,12 +16,6 @@
     box-shadow: var(--ui-panel-shadow);
   }
 
-  &__listHeading {
-    margin: 0;
-    font-size: tokens.$font-size-caption;
-    font-weight: tokens.$max-heading-weight;
-  }
-
   &__retryLink {
     @include mixins.focus-ring;
 

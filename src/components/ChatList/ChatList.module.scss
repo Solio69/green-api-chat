@@ -1,0 +1,62 @@
+@use '../../styles/tokens' as tokens;
+
+.chatList {
+  min-width: 0;
+  color: var(--ui-text-color);
+  font-size: tokens.$font-size-caption;
+  line-height: tokens.$chat-line-height;
+  overflow-wrap: anywhere;
+
+  &__status {
+    margin: 0;
+    color: var(--ui-muted-color);
+
+    &:not(:empty) {
+      padding: tokens.$space-xs tokens.$account-header-padding-inline;
+    }
+  }
+
+  &__items {
+    margin: 0;
+    padding: 0 tokens.$space-xs;
+    list-style: none;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: tokens.$account-header-gap;
+    min-width: 0;
+    padding: tokens.$chat-list-item-padding-block
+      tokens.$chat-list-item-padding-inline;
+    border-radius: tokens.$radius-control;
+  }
+
+  &__avatar {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: tokens.$account-avatar-size;
+    height: tokens.$account-avatar-size;
+    border-radius: tokens.$radius-circle;
+    background: var(--ui-selected-color);
+    color: var(--ui-link-color);
+    font-size: tokens.$chat-initial-size;
+    font-weight: tokens.$max-heading-weight;
+
+    &::before {
+      content: attr(data-initial);
+    }
+  }
+
+  &__label {
+    min-width: 0;
+    font-weight: tokens.$max-heading-weight;
+  }
+
+  &__empty {
+    margin: 0;
+    padding: tokens.$space-xs tokens.$account-header-padding-inline;
+    color: var(--ui-muted-color);
+  }
+}

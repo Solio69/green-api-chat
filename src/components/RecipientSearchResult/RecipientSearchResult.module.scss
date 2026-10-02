@@ -8,15 +8,15 @@
   &__status {
     margin: 0 0 tokens.$space-xs;
     color: var(--ui-muted-color);
-    font-size: tokens.$font-size-caption;
+    font-size: tokens.$font-size-small;
   }
 
   &__card {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: tokens.$space-xs;
-    padding: tokens.$space-xs;
+    gap: tokens.$chat-list-item-padding-inline;
+    padding: tokens.$chat-list-item-padding-block;
     border-radius: tokens.$radius-control;
     background: var(--ui-selected-color);
   }
@@ -56,7 +56,7 @@
       var(--ui-surface-color)
     );
     color: var(--ui-error-color);
-    font-size: tokens.$font-size-caption;
+    font-size: tokens.$font-size-small;
     overflow-wrap: anywhere;
   }
 

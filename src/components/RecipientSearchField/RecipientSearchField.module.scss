@@ -3,7 +3,7 @@
 
 .recipientSearchField {
   display: grid;
-  gap: tokens.$space-xs;
+  gap: tokens.$search-label-gap;
   min-width: 0;
 
   &__labels {
@@ -13,7 +13,7 @@
   &__label {
     grid-area: 1 / 1;
     color: var(--ui-muted-color);
-    font-weight: tokens.$max-heading-weight;
+    font-size: tokens.$font-size-small;
 
     &[aria-hidden='true'] {
       visibility: hidden;
@@ -23,15 +23,19 @@
   &__input {
     width: 100%;
     min-width: 0;
-    min-height: tokens.$control-min-height;
-    padding: tokens.$space-xs tokens.$space-sm;
-    border: tokens.$border-width solid var(--ui-field-border-color);
-    border-radius: tokens.$radius-control;
-    background: var(--ui-canvas-color);
-    box-shadow: tokens.$shadow-control;
+    min-height: tokens.$control-icon-button-size;
+    padding: tokens.$search-input-padding-block
+      tokens.$search-input-padding-inline;
+    border: tokens.$border-width solid var(--ui-panel-border-color);
+    border-radius: tokens.$search-control-radius;
+    background: var(--ui-input-color);
     color: var(--ui-text-color);
     font: inherit;
-    font-size: tokens.$font-size-body;
+    font-size: tokens.$font-size-caption;
+
+    @media (max-width: tokens.$chat-mobile-breakpoint) {
+      font-size: tokens.$font-size-body;
+    }
 
     &:enabled:hover:not([aria-invalid='true']) {
       border-color: var(--ui-action-color);
@@ -39,23 +43,21 @@
 
     &:focus-visible {
       border-color: var(--ui-focus-color);
-      outline: tokens.$control-focus-width solid var(--ui-focus-color);
-      outline-offset: 0;
-      box-shadow: var(--ui-focus-shadow);
+      outline: 0;
+      box-shadow: var(--ui-search-focus-shadow);
     }
 
     &[aria-invalid='true'] {
       border-color: var(--ui-error-color);
 
       &:focus-visible {
-        outline-color: var(--ui-error-color);
-        box-shadow: var(--ui-error-shadow);
+        box-shadow: var(--ui-search-error-shadow);
       }
     }
 
     @media (forced-colors: active) {
       &:focus-visible {
-        outline-color: tokens.$color-system-focus;
+        outline: tokens.$control-focus-width solid tokens.$color-system-focus;
       }
     }
   }

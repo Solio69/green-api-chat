@@ -8,20 +8,21 @@
   border-inline-end: tokens.$border-width solid var(--ui-panel-border-color);
 
   &__search {
-    padding: tokens.$space-sm tokens.$account-header-padding-inline;
+    padding: tokens.$chat-search-padding-top
+      tokens.$account-header-padding-inline
+      tokens.$account-header-padding-inline;
     border-bottom: tokens.$border-width solid var(--ui-panel-border-color);
   }
 
   &__list {
-    padding: tokens.$space-sm tokens.$account-header-padding-inline;
+    min-width: 0;
   }
 
   @media (max-width: tokens.$chat-mobile-breakpoint) {
     border-inline-end: 0;
     border-radius: tokens.$max-home-radius;
 
-    &__search,
-    &__list {
+    &__search {
       padding-inline: tokens.$space-sm;
     }
   }
