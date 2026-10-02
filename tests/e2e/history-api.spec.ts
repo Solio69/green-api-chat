@@ -4,7 +4,7 @@ import { HTTP_HEADERS } from '@/lib/http/constants'
 import { ROUTES } from '@/lib/routes/constants'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import { TEST_UI } from '../constants'
-import { HISTORY_TEST } from '../history/constants'
+import { HISTORY_TEST, HISTORY_CONSOLE_TEST } from '../history/constants'
 
 const {
   API,
@@ -31,6 +31,7 @@ const {
   MESSAGE,
 } = HISTORY_TEST
 const { ROLE_BUTTON } = TEST_UI
+const { MISSING_QUERY_FN } = HISTORY_CONSOLE_TEST
 const { ORIGIN: ORIGIN_HEADER, CONNECTION_SCOPE: REQUEST_SCOPE_HEADER } =
   HTTP_HEADERS
 const {
@@ -179,27 +180,32 @@ test('history HTTP: successful empty response is explicit', async ({
   })
   expect(EMPTY_STRING).toBe(await (await context.request.head(API)).text())
 })
-test('history console: production page wires selection to fresh history without message UI', async ({
+test('history UI: fresh requests render messages without history debug logs', async ({
   page,
   context,
   baseURL,
 }) => {
   await addChatSession({ context, baseURL: baseURL!, credentials })
-  const logs: unknown[] = []
-  page.on('console', async (event) => {
-    const args = event.args()
-    if ((await args[0]?.jsonValue()) !== SNAPSHOT) return
-    logs.push(await args[1].jsonValue())
+  const logs: string[] = []
+  page.on('console', (event) => {
+    const text = event.text()
+    const relevant =
+      text.startsWith(SNAPSHOT) || text.includes(MISSING_QUERY_FN)
+    if (relevant) logs.push(text)
   })
   await page.goto(ROUTES.HOME)
+  const firstResponse = page.waitForResponse(API)
   await page
     .getByRole(ROLE_BUTTON, { name: TARGET_A.label, exact: true })
     .click()
-  await expect.poll(() => logs.length).toBe(1)
-  expect(logs[0]).toMatchObject({ chatId: chatA, count: COUNT })
-  await expect(page.getByText(message.text, { exact: true })).toHaveCount(0)
+  await firstResponse
+  await expect(page.getByText(message.text, { exact: true })).toBeVisible()
+  expect(logs).toEqual([])
+  const nextResponse = page.waitForResponse(API)
   await page
     .getByRole(ROLE_BUTTON, { name: TARGET_A.label, exact: true })
     .click()
-  await expect.poll(() => logs.length).toBe(2)
+  await nextResponse
+  await expect(page.getByText(message.text, { exact: true })).toBeVisible()
+  expect(logs).toEqual([])
 })

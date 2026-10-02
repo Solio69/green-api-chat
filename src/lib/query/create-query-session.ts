@@ -1,13 +1,16 @@
-import { QueryCache, QueryClient } from '@tanstack/react-query'
+import { QueryCache, QueryClient, skipToken } from '@tanstack/react-query'
 import { SessionQueryError } from './session-query-error'
 import { fetchChats } from '@/lib/chats/fetch-chats'
+import { reconcileSessionChats } from '@/lib/chats/session-chat-facts'
 import { API_ERROR_CODE } from '@/lib/api/constants'
-import { CHAT_QUERY_CONFIG } from '@/lib/chats/constants'
+import { SESSION_CHAT_CONFIG, CHAT_QUERY_CONFIG } from '@/lib/chats/constants'
 import { HTTP_STATUS } from '@/lib/http/constants'
 import { MESSAGE_CACHE_CONFIG } from '@/lib/messages/constants'
 
 const { KEY, STALE_TIME_MS, GC_TIME_MS } = CHAT_QUERY_CONFIG
 const { KEY: MESSAGE_KEY, GC_TIME: MESSAGE_GC_TIME } = MESSAGE_CACHE_CONFIG
+const { STATUS_FACTS_KEY, ISSUES_KEY } = MESSAGE_CACHE_CONFIG
+const { KEY: SESSION_CHAT_KEY } = SESSION_CHAT_CONFIG
 const { SESSION_REQUIRED, CONNECTION_CHANGED } = API_ERROR_CODE
 const { UNAUTHORIZED, CONFLICT } = HTTP_STATUS
 const invokeCleanup = (callback: () => void) => {
@@ -62,7 +65,9 @@ export const createQuerySession = ({
       },
     }),
   })
-  client.setQueryDefaults([MESSAGE_KEY], {
+  const memoryDefaults = {
+    queryFn: skipToken,
+    structuralSharing: false,
     gcTime: MESSAGE_GC_TIME,
     enabled: false,
     retry: false,
@@ -70,7 +75,14 @@ export const createQuerySession = ({
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     refetchInterval: false,
-  })
+  } as const
+  for (const key of [
+    MESSAGE_KEY,
+    STATUS_FACTS_KEY,
+    ISSUES_KEY,
+    SESSION_CHAT_KEY,
+  ])
+    client.setQueryDefaults([key], memoryDefaults)
   const subscribe = (listener: () => void) => {
     listeners.add(listener)
     return () => {
@@ -109,10 +121,18 @@ export const createQuerySession = ({
     refetchOnReconnect: true as const,
     refetchInterval: false as const,
     enabled: active,
-    queryFn: ({ signal }: { signal: AbortSignal }) =>
-      fetchChats({ connectionScope, signal, isActive, fetcher }),
+    queryFn: async ({ signal }: { signal: AbortSignal }) => {
+      const chats = await fetchChats({
+        connectionScope,
+        signal,
+        isActive,
+        fetcher,
+      })
+      reconcileSessionChats({ session, providerChats: chats })
+      return chats
+    },
   })
-  return {
+  const session = {
     client,
     connectionScope,
     isActive,
@@ -123,5 +143,6 @@ export const createQuerySession = ({
     registerCleanup,
     handleSessionError,
   } as const
+  return session
 }
 export type QuerySession = ReturnType<typeof createQuerySession>

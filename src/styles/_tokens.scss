@@ -181,3 +181,34 @@ $chat-recovery-margin-bottom: 18px;
 $conversation-header-min-height: 5.125rem;
 $conversation-header-padding-block: 0.9375rem;
 $conversation-header-padding-inline: 1.5625rem;
+
+$history-content-height: calc(
+  $chat-workspace-min-height - $conversation-header-min-height
+);
+
+$message-max-width: 82%;
+$message-max-width-mobile: 88%;
+$message-radius: 17px;
+$message-tail-radius: 5px;
+$message-padding-top: 11px;
+$message-padding-inline: 13px;
+$message-padding-bottom: 7px;
+$message-list-gap: 12px;
+$message-list-padding-top: 23px;
+$message-list-padding-inline: 28px;
+$message-list-padding-bottom: 30px;
+$message-list-padding-mobile: 20px;
+$message-metadata-gap: 5px;
+$message-time-size: 11px;
+$history-empty-padding: 30px;
+$color-message-incoming: #fff;
+$color-message-incoming-dark: #30333d;
+$color-message-outgoing: #dfe8ff;
+$color-message-outgoing-dark: #344d85;
+$color-message-text: #19243a;
+$color-message-text-dark: #f3f6ff;
+$color-message-muted: #737d8c;
+$color-message-shadow: rgb(25 36 58 / 5%);
+$color-message-shadow-dark: rgb(0 0 0 / 10%);
+$shadow-message: 0 1px 2px $color-message-shadow;
+$shadow-message-dark: 0 1px 2px $color-message-shadow-dark;

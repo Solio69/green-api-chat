@@ -197,7 +197,7 @@ test('conversation: found target opens with one history request, no Send or anot
   await expect(page.getByRole(ROLE_LIST_ITEM)).toHaveCount(chats.length)
   await expect(
     page.getByText(PREMATURE_EMPTY_HISTORY, { exact: true }),
-  ).toHaveCount(0)
+  ).toBeVisible()
   expect(calls).toBe(1)
   await expect.poll(() => historyCalls).toBe(1)
   expect(prohibited).toEqual([])

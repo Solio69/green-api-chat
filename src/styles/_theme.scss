@@ -21,6 +21,11 @@
   --ui-panel-shadow: #{tokens.$shadow-max-panel};
   --ui-selected-color: #{tokens.$color-max-selected};
   --ui-success-color: #{tokens.$color-brand};
+  --ui-message-incoming: #{tokens.$color-message-incoming};
+  --ui-message-outgoing: #{tokens.$color-message-outgoing};
+  --ui-message-text: #{tokens.$color-message-text};
+  --ui-message-muted: #{tokens.$color-message-muted};
+  --ui-message-shadow: #{tokens.$shadow-message};
 
   color-scheme: light dark;
 
@@ -45,5 +50,10 @@
     --ui-panel-shadow: #{tokens.$shadow-max-panel-dark};
     --ui-selected-color: #{tokens.$color-max-selected-dark};
     --ui-success-color: #{tokens.$color-border};
+    --ui-message-incoming: #{tokens.$color-message-incoming-dark};
+    --ui-message-outgoing: #{tokens.$color-message-outgoing-dark};
+    --ui-message-text: #{tokens.$color-message-text-dark};
+    --ui-message-muted: #{tokens.$color-max-muted-dark};
+    --ui-message-shadow: #{tokens.$shadow-message-dark};
   }
 }

@@ -130,3 +130,49 @@ export const HISTORY_TEST = {
     SERVER: 'server_unavailable',
   },
 } as const
+
+export const MESSAGE_CACHE_TEST = {
+  MESSAGE_KEY: 'messages',
+  SESSION_CHAT_KEY: 'session-chats',
+  ISSUES_KEY: 'message-status-issues',
+  ISSUES_OUTPUT: 'history-issues',
+  FAILURE_BUTTON: 'Добавить фиктивный отказ',
+  STATUS_FACTS_KEY: 'message-status-facts',
+  EARLY_FACT_TTL_MS: 300_000,
+  EARLY_FACT_LIMIT: 1_000,
+  EARLY_ID_PREFIX: 'early-',
+  DIFFERENT_MESSAGE_ID: 'different-id',
+  ACCEPTED_TEXT: 'accepted text',
+  LIVE_TEXT: 'live text',
+  OLD_HISTORY_TEXT: 'old history',
+  ACCEPTED_AT: 42,
+  ACCEPTED_STATUS: 'accepted',
+  SOURCE: { HISTORY: 'history', LIVE: 'live', ACCEPTED: 'accepted' },
+} as const
+
+export const HISTORY_CONSOLE_TEST = {
+  MISSING_QUERY_FN: 'No queryFn was passed',
+} as const
+
+export const HISTORY_WINDOW_TEST = {
+  SCROLL_POSITION: 100,
+  SCROLL_ROUNDS: 4,
+  SCREENSHOT_NAME: 'history-mockup.png',
+  LIST_LABEL: 'Сообщения',
+  LOADING: 'Загрузка истории…',
+  EMPTY_TITLE: 'Переписка ещё не начата',
+  EMPTY_HINT: 'Отправьте первое сообщение',
+  ERROR_TITLE: 'Не удалось загрузить историю',
+  RETRY: 'Повторить',
+  UNSUPPORTED: 'Неподдерживаемое сообщение',
+  HTML_TEXT: '<img src=x onerror="alert(1)">\nТекст с переносом',
+  OUTGOING_TEXT: 'Исходящее сообщение',
+  OUTGOING_ID: 'window-outgoing',
+  OLD_ID_PREFIX: 'window-old-',
+  LONG_TEXT: 'ОченьДлинноеСлово'.repeat(100),
+  VIEWPORT_HEIGHT: 800,
+  WIDTHS: [320, 360, 390, 768, 1280],
+  IMAGE_SELECTOR: 'img',
+  TIME_SELECTOR: 'time',
+  HISTORY_ITEMS: 10,
+} as const

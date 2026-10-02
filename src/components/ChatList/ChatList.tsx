@@ -12,6 +12,7 @@ type ChatListProps = {
   chats: PersonalChat[] | undefined
   isPending: boolean
   selectedChatId?: string
+  labelsByChatId?: Readonly<Record<string, string>>
   onSelect: (target: ConversationTarget) => void
 }
 
@@ -19,12 +20,18 @@ export const ChatList = ({
   chats,
   isPending,
   selectedChatId,
+  labelsByChatId,
   onSelect,
 }: ChatListProps) => {
   const hasData = chats !== undefined
   const isEmpty = hasData && chats.length === 0
   const hasItems = hasData && !isEmpty
   const isInitialLoading = !hasData && isPending
+  const readFallbackLabel = (chatId: string) => {
+    const hasLabel =
+      labelsByChatId !== undefined && Object.hasOwn(labelsByChatId, chatId)
+    return hasLabel ? labelsByChatId[chatId] : undefined
+  }
 
   return (
     <div className={styles.chatList}>
@@ -39,6 +46,7 @@ export const ChatList = ({
             <ChatListItem
               key={chat.chatId}
               chat={chat}
+              fallbackLabel={readFallbackLabel(chat.chatId)}
               isSelected={selectedChatId === chat.chatId}
               onSelect={onSelect}
             />

@@ -2,6 +2,8 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { useSyncExternalStore } from 'react'
+import { deriveSessionChats, sessionChatKey } from './session-chat-facts'
+import type { SessionChatCache } from './session-chat-facts'
 import { ChatsQueryError } from './types'
 import { CHAT_QUERY_CONFIG } from './constants'
 import { useOptionalQuerySession } from '@/components/QueryProvider'
@@ -16,12 +18,20 @@ export const useChats = () => {
     session.isActive,
   )
   const result = useQuery({ ...session.options(), enabled: active })
+  const overlay = useQuery<SessionChatCache>({
+    queryKey: sessionChatKey(session.connectionScope),
+    enabled: false,
+  })
+  const data = deriveSessionChats({
+    providerChats: result.data,
+    overlay: overlay.data,
+  })
   const refetch = async (): Promise<void> => {
     const canRefetch = session.isActive() && !result.isFetching
     if (canRefetch) await result.refetch({ cancelRefetch: false })
   }
   return {
-    data: active ? result.data : undefined,
+    data: active ? data : undefined,
     isPending: active && result.isPending,
     isFetching: active && result.isFetching,
     error:

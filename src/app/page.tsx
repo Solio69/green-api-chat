@@ -12,7 +12,7 @@ import { HOME_RESULT_KIND, IS_PRODUCTION } from '@/lib/auth/constants'
 import { ROUTES } from '@/lib/routes/constants'
 import { HOME_COPY } from './constants'
 import { AccountHeader } from '@/components/AccountHeader'
-import { ChatHistoryController } from '@/components/ChatHistoryController'
+import { ChatHistoryPanel } from '@/components/ChatHistoryPanel'
 import { ChatListPanel } from '@/components/ChatListPanel'
 import { ChatWorkspace } from '@/components/ChatWorkspace'
 import { LogoutButton } from '@/components/LogoutButton'
@@ -62,7 +62,7 @@ const HomePage = async () => {
           }
           search={<RecipientSearchForm />}
           chatList={<ChatListPanel />}
-          conversation={<ChatHistoryController />}
+          conversation={<ChatHistoryPanel />}
         />
       </QueryProvider>
     </main>

@@ -3,6 +3,7 @@
 import { useId, useState } from 'react'
 import type { ChatsErrorCode } from '@/lib/chats/types'
 import { useChats } from '@/lib/chats/use-chats'
+import { useSessionChatLabels } from '@/lib/chats/use-session-chat-labels'
 import { WORKSPACE_COPY } from '@/components/ChatWorkspace/constants'
 import { API_ERROR_CODE } from '@/lib/api/constants'
 import { EMPTY_STRING, HTML_VALUES } from '@/lib/ui/constants'
@@ -25,11 +26,14 @@ export const ChatListPanel = () => {
   const { target, openConversation } = useConversationSelection()
   const headingId = useId()
   const { data, isPending, isFetching, error, refetch } = useChats()
+  const labelsByChatId = useSessionChatLabels()
+  const hasKnownItems = data !== undefined && data.length > 0
   const [retryErrorCode, setRetryErrorCode] = useState<ChatsErrorCode | null>(
     null,
   )
   const errorCode = error?.code ?? retryErrorCode
   const errorCopy = errorCode && readErrorCopy(errorCode)
+  const showList = !errorCopy || hasKnownItems
   const isBusy = isPending || isFetching || retryErrorCode !== null
   const retryLabel = isBusy ? RETRY_PENDING : RETRY
   const reservedLabel = isBusy ? RETRY : RETRY_PENDING
@@ -54,7 +58,7 @@ export const ChatListPanel = () => {
       <span className={styles.chatListPanel__status} role={ROLE_STATUS}>
         {pendingText}
       </span>
-      {errorCopy ? (
+      {errorCopy && (
         <ChatListRecovery
           title={errorCopy.TITLE}
           description={errorCopy.DESCRIPTION}
@@ -63,9 +67,11 @@ export const ChatListPanel = () => {
           reservedLabel={reservedLabel}
           onRetry={handleChatListRetry}
         />
-      ) : (
+      )}
+      {showList && (
         <ChatList
           chats={data}
+          labelsByChatId={labelsByChatId}
           isPending={isPending}
           selectedChatId={target?.chatId}
           onSelect={openConversation}

@@ -1,0 +1,80 @@
+# Implementation Plan: Серверный получатель уведомлений
+
+**Spec**: [spec.md](spec.md). **Дата**: 2026-10-02.
+**Согласование spec.md**: Approved 2026-10-02, пользователь поручил техническую подготовку всех 018–025.
+**Разрешение на реализацию**: CodeNotAuthorized. Сейчас только документы.
+
+## Summary
+
+Один процессный reader/owner на idInstance, HTTP API Receive5 сек → одна validated delivery → HTTP ACK браузера → Delete. Capability/epoch/scope ограничивают право и Send020; пауза/expiry/disconnect прекращают новые операции. Нормализация не передаёт raw provider body.
+
+## Considered Options
+
+Сравнение вариантов/рисков и причины выбора: [research.md](research.md). Product choices заданы согласованной spec; plan не меняет ACK, one-tab, память или объём истории.
+
+## Technical Context
+
+TypeScript 5.9.3, Node 24.x/npm11.x, Next 16.3.7/React 19.3.0, Query 5.104.0, iron-session 9.0.1. Existing Playwright 1.63 integration/query configs; новых зависимостей/DB нет. Сервер — один постоянный Node process; credentials существующая encryptedHttpOnly cookie. Git/staging не изменяются. Runtime tests NotRun, текущие provider settings не проверены.
+
+## Constitution Check
+
+| Принцип | До / после проектирования | Основание                                                                                    |
+| ------- | ------------------------- | -------------------------------------------------------------------------------------------- |
+| C1      | PASS / PASS               | Product choices согласованы; технические параметры отделены от гарантий API                  |
+| C2      | PASS / PASS               | Самостоятельная feature и последовательный TDD; общие зависимости остаются отдельными шагами |
+| C3      | PASS / PASS               | Spec Approved 2026-10-02; CodeNotAuthorized, документы не разрешают эффекты                  |
+| C4      | PASS / PASS               | Git mutations не выполняются; пользовательский staging сохраняется                           |
+| C5      | PASS / PASS               | Установок/изменений provider settings нет; операторские действия описаны                     |
+| C6      | PASS / PASS               | Явный FeatureDirectory, только вымышленные fixtures, scope/owner изоляция                    |
+| C7      | PASS / PASS               | Planned Red→Green→Refactor; acceptance NotRun, frozen analyze отдельный этап                 |
+| C8      | PASS / PASS               | Без DB/Redis/broker/new deps/редизайна; bounded memory и existing tools                      |
+
+## Research and Design
+
+[Research](research.md), [data-model](data-model.md), [receiver-runtime.md](contracts/receiver-runtime.md), [notification-normalization.md](contracts/notification-normalization.md), [quickstart](quickstart.md), [acceptance](checklists/acceptance.md). Все артефакты применимы; миграции/DBschema неприменимы, permanentstorage не согласован. Анализ будет отдельным read-only frozen проходом после согласования общих contracts; текущий plan не заменяет analysis.md.
+
+## Project Structure
+
+| Будущий путь                                      | Действие/причина                                                                                  |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| src/lib/notifications/receiver-registry.ts        | Новый registry, lifecycle/guards/Send semaphore                                                   |
+| src/lib/notifications/receiver-loop.ts            | Последовательная очередь, ACK/Delete/recovery/backoff                                             |
+| src/lib/notifications/types.ts                    | Общие safe runtime/delivery types; дополнит 023                                                   |
+| src/lib/notifications/constants.ts                | Receiver timeouts/grace/backoff/limits/codes; дополнит 023                                        |
+| src/lib/notifications/normalize-notification.ts   | Envelope/incoming/ignored validation                                                              |
+| src/lib/notifications/normalize-message-status.ts | Server status DTO по spec024, shared types019                                                     |
+| src/lib/green-api/get-notification-settings.ts    | Read-only GetSettings preflight один раз на epoch                                                 |
+| src/lib/green-api/receive-notification.ts         | Server-only provider fetch5/8 сек                                                                 |
+| src/lib/green-api/delete-notification.ts          | Server-only checked receipt DELETE/result                                                         |
+| src/lib/http/constants.ts                         | Добавить DELETE method, без изменения старых статусов/timeout                                     |
+| src/lib/green-api/constants.ts                    | Добавить method names, не заменить GetChats constants                                             |
+| src/app/api/auth/logout/route.ts                  | Async cookie+scope+capability revoke до удаления cookie; inactive без cap не отзывает чужой owner |
+
+| tests/integration/notification-owner.spec.ts | Guard/lifecycle/inflight/expiry tests |
+| tests/integration/notification-receiver.spec.ts | Fake FIFO/ACK/false/timeout/paused tests |
+| tests/integration/notification-normalization.spec.ts | Incoming/text/unsupported/ignored/malformed tests |
+| specs/022-notification-receiver/verification.md | Создать после кода, фактические команды/Red/Green/review |
+
+Все пути относительны корню проекта и относятся к будущей реализации. Код приложения и тестов сейчас не создаётся и не меняется; пользовательские изменения сохраняются. Shared paths 019/022/023/024 внедряются последовательно после соответствующего разрешения; повторный source файл в manifests означает интеграцию к существующему API, не перезапись чужой feature.
+
+## Tasks and Dependencies
+
+018 QuerySession/public auth errors и existing cookie; Normalized cache019 и status enum024 — согласованные DTO; server status normalizer реализует 022.022 pure runtime допустимо проверить с typed fake sink до 023; browser end-to-end acceptance блока 022 остаётся NotRun до 023.020/021 consumes tryAcquireSend, не создаёт owner альтернативно.023 routes интегрируют этот runtime после своего разрешения;025 selection не влияет на reader.
+
+[Tasks](tasks.md) задаёт последовательные Test/Red→Green→Refactor группы. Missing module/type/environment failure не считается Red: после минимального typechecked contract seam тест обязан падать по причине отсутствующего целевого поведения. Production business logic до этого не внедряется. Каждый шаг Green зависит от подтверждённого behavioral Red, результаты сохраняются в будущий verification.md. Existing test coverage перед pure refactor подтверждается baseline.
+
+## Verification
+
+Integration: `npm run test:integration -- tests/integration/notification-owner.spec.ts tests/integration/notification-receiver.spec.ts tests/integration/notification-normalization.spec.ts`. Browser, если указан в tasks: `npm run test:query -- tests/query/notification-sse.spec.ts`. После группы source changes: `npm run typecheck`, `npm run lint`, `npm run format:check`; production `npm run build` для route/runtime bundling. Stylelint только если при согласованной интеграции затронут SCSS, текущая задача styles не планирует.
+
+BehavioralRed/Green и финальные проверки сейчас **NotRun**; их нельзя отмечать Passed за review документов. Acceptance cases перечислены в checklists/acceptance. Failed при нарушении ACK/isolation/identity/no-downgrade; Blocked при отсутствующей обязательной реализованной dependency/окружении, не обходить permission/разрешение кода. Реальный provider не используется в автотестах. Ручные операторские настройки не требуют API write от агента.
+
+## Post-design Constitution Check
+
+C1–C8 повторно PASS по таблице выше. Разногласий продуктового поведения нет; technical contracts синхронизированы по feature ownership. Отдельное implementation authorization остаётся необходимым, никакие отметки выполнения tasks не проставлены.
+
+## Complexity Tracking
+
+Сложность ограничена необходимыми ACK/owner guards, bounded in-memory state и race защитой. Отдельный websocket server, persistence, горизонтальное масштабирование и новый UI style исключены. Причины timeout/lease/merge и их практические границы изложены в research/contract.
+
+Общий порядок реализации, без циклических импортов:025→018→019→022→023→020→021→024.022 реализует server status normalizer по spec024;019/018 shared cache/reducer/issues доступны 023/021 до UI status шага 024. Dependency на spec024 не означает runtime import из ещё не реализованной feature.

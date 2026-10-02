@@ -5,6 +5,7 @@ import { useLayoutEffect, useSyncExternalStore } from 'react'
 import { fetchHistory } from './fetch-history'
 import { HistoryQueryError } from './types'
 import { messageKey, applyHistoryMessages } from '@/lib/messages/message-cache'
+import { publishMessageIssues } from '@/lib/messages/message-status-issues'
 import type { MessageCache, MessageDTO } from '@/lib/messages/types'
 import { HISTORY_CONFIG, HISTORY_QUERY_STATE } from './constants'
 import { useConversationSelection } from '@/components/ConversationSelectionProvider'
@@ -84,11 +85,12 @@ export const useChatHistory = (chatId: string | null) => {
         state.dataUpdateCount > appliedCount
       if (!completed) return
       appliedCount = state.dataUpdateCount
-      applyHistoryMessages({
+      const applied = applyHistoryMessages({
         session,
         chatId: currentChat,
         messages: data,
       })
+      publishMessageIssues({ session, issues: applied.issues })
     }
     const unsubscribe = session.client.getQueryCache().subscribe((event) => {
       if (event.query.queryHash !== requestHash) return

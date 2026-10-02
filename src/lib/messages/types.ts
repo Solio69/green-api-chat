@@ -2,6 +2,7 @@ import type {
   MESSAGE_DIRECTION,
   MESSAGE_KIND,
   MESSAGE_STATUS,
+  MESSAGE_SOURCE,
 } from './constants'
 
 export type ProviderMessageStatus = Exclude<
@@ -24,4 +25,21 @@ export type ChatIssueFact = {
   code: typeof MESSAGE_STATUS.FAILED | typeof MESSAGE_STATUS.NO_ACCOUNT
 }
 export type MessageApplyResult = { issues: ChatIssueFact[] }
-export type MessageCache = { messages: MessageDTO[] }
+export type MessageCache = {
+  messages: MessageDTO[]
+  contentSources?: Readonly<Record<string, MessageSource>>
+}
+export type MessageSource = (typeof MESSAGE_SOURCE)[keyof typeof MESSAGE_SOURCE]
+export type MessageStatusFact = {
+  chatId: string
+  idMessage: string
+  status: ProviderMessageStatus
+}
+export type EarlyStatusFact = {
+  fact: MessageStatusFact
+  observedAt: number
+  sequence: number
+  issues: ChatIssueFact[]
+}
+export type EarlyStatusCache = { facts: EarlyStatusFact[]; sequence: number }
+export type MessageIssue = ChatIssueFact

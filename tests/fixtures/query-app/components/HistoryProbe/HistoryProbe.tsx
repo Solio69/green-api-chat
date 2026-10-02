@@ -1,9 +1,10 @@
 'use client'
 
 import { StrictMode, useState } from 'react'
+import { HistoryFactsProbe } from '../HistoryFactsProbe'
 import { useChatHistory } from '@/lib/history/use-chat-history'
 import { HTML_VALUES } from '@/lib/ui/constants'
-import { ChatHistoryController } from '@/components/ChatHistoryController'
+import { ChatHistoryPanel } from '@/components/ChatHistoryPanel'
 import {
   ConversationSelectionProvider,
   useConversationSelection,
@@ -77,6 +78,8 @@ const HistoryControls = () => {
       </button>
       <HistoryConsumer id={FIRST} />
       <HistoryConsumer id={SECOND} />
+      <HistoryFactsProbe />
+      <ChatHistoryPanel />
     </>
   )
 }
@@ -91,8 +94,6 @@ export const HistoryProbe = () => {
       <StrictMode>
         <QueryProvider key={scope} connectionScope={scope}>
           <ConversationSelectionProvider>
-            <ChatHistoryController />
-            <ChatHistoryController />
             <HistoryControls />
           </ConversationSelectionProvider>
         </QueryProvider>

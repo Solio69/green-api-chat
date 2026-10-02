@@ -9,3 +9,11 @@ export const CHAT_QUERY_CONFIG = {
   PROVIDER_REQUIRED: 'useChats requires QueryProvider',
   QUERY_ERROR_NAME: 'ChatsQueryError',
 } as const
+export const SESSION_CHAT_CONFIG = {
+  KEY: 'session-chats',
+  INVALID_FACTS: 'Invalid session chat facts',
+} as const
+export const SESSION_CHAT_SOURCE = {
+  ACCEPTED: 'accepted',
+  INCOMING: 'incoming',
+} as const

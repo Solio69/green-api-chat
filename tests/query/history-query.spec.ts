@@ -3,7 +3,7 @@ import type { Page, Route } from '@playwright/test'
 import type { MessageDTO } from '@/lib/messages/types'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import { TEST_UI } from '../constants'
-import { HISTORY_TEST } from '../history/constants'
+import { HISTORY_TEST, HISTORY_CONSOLE_TEST } from '../history/constants'
 
 const {
   API,
@@ -19,7 +19,6 @@ const {
   BUTTON_SCOPE,
   scopeA,
   scopeB,
-  chatA,
   SUCCESS,
   ERROR,
   message,
@@ -32,20 +31,16 @@ const {
   NEW_MESSAGE_ID,
 } = HISTORY_TEST
 const { ROLE_BUTTON } = TEST_UI
-type CapturedResult = {
-  chatId: string
-  count: number
-  messages?: MessageDTO[]
-  code?: string
-}
+const { MISSING_QUERY_FN } = HISTORY_CONSOLE_TEST
 const captureLogs = (page: Page) => {
-  const logs: { label: string; value: CapturedResult }[] = []
-  page.on('console', async (event) => {
-    const args = event.args()
-    const label = await args[0]?.jsonValue()
-    const relevant = label === SNAPSHOT || label === FAILURE
-    if (!relevant) return
-    logs.push({ label, value: (await args[1].jsonValue()) as CapturedResult })
+  const logs: string[] = []
+  page.on('console', (event) => {
+    const text = event.text()
+    const relevant =
+      text.startsWith(SNAPSHOT) ||
+      text.startsWith(FAILURE) ||
+      text.includes(MISSING_QUERY_FN)
+    if (relevant) logs.push(text)
   })
   return logs
 }
@@ -70,7 +65,7 @@ const state = async ({ page, id = FIRST }: { page: Page; id?: string }) =>
     fetching: boolean
     error: string | null
   }
-test('history React: one request per access, fresh console snapshot and retained merged cache', async ({
+test('history React: one request per access and retained merged cache without debug output', async ({
   page,
 }) => {
   let calls = 0
@@ -91,20 +86,22 @@ test('history React: one request per access, fresh console snapshot and retained
     .getByRole(ROLE_BUTTON, { name: BUTTON_OPEN_A, exact: true })
     .click()
   await expect.poll(() => calls).toBe(1)
-  await expect.poll(() => logs.length).toBe(1)
+  await expect.poll(async () => (await state({ page })).fetching).toBe(false)
   expect((await state({ page })).data).toEqual([message])
   expect(await state({ page, id: SECOND })).toEqual(await state({ page }))
   await page
     .getByRole(ROLE_BUTTON, { name: BUTTON_OPEN_A, exact: true })
     .click()
-  await expect.poll(() => logs.length).toBe(2)
-  expect(logs[1].value.messages).toEqual([latest])
+  await expect.poll(() => calls).toBe(2)
+  await expect
+    .poll(async () => (await state({ page })).data)
+    .toEqual([message, latest])
   expect((await state({ page })).data).toEqual([message, latest])
   await page
     .getByRole(ROLE_BUTTON, { name: BUTTON_OPEN_A, exact: true })
     .click()
-  await expect.poll(() => logs.length).toBe(3)
-  expect(logs[2].value.messages).toEqual([])
+  await expect.poll(() => calls).toBe(3)
+  await expect.poll(async () => (await state({ page })).fetching).toBe(false)
   expect((await state({ page })).data).toEqual([message, latest])
   await page.getByRole(ROLE_BUTTON, { name: BUTTON_BACK, exact: true }).click()
   expect(calls).toBe(3)
@@ -119,8 +116,9 @@ test('history React: one request per access, fresh console snapshot and retained
   await page
     .getByRole(ROLE_BUTTON, { name: BUTTON_OPEN_A, exact: true })
     .click()
-  await expect.poll(() => logs.length).toBe(4)
+  await expect.poll(() => calls).toBe(4)
   expect(calls).toBe(4)
+  expect(logs).toEqual([])
 })
 test('history React: A to B to A discards the earlier completion', async ({
   page,
@@ -149,14 +147,14 @@ test('history React: A to B to A discards the earlier completion', async ({
     timestamp: 300,
   }
   await fulfill({ route: routes[2], messages: [current] })
-  await expect.poll(() => logs.length).toBe(1)
+  await expect.poll(async () => (await state({ page })).fetching).toBe(false)
   await fulfill({ route: routes[0] })
   await fulfill({ route: routes[1], messages: [] })
-  expect(logs[0].value.messages).toEqual([current])
+  await expect.poll(async () => (await state({ page })).data).toEqual([current])
   expect((await state({ page })).data).toEqual([current])
-  expect(logs).toHaveLength(1)
+  expect(logs).toEqual([])
 })
-test('history React: error retains known messages, manual retry logs identical successful JSON again', async ({
+test('history React: error retains known messages and manual retry recovers without debug output', async ({
   page,
 }) => {
   await page.clock.setFixedTime(new Date(0))
@@ -177,27 +175,27 @@ test('history React: error retains known messages, manual retry logs identical s
   await page
     .getByRole(ROLE_BUTTON, { name: BUTTON_OPEN_A, exact: true })
     .click()
-  await expect.poll(() => logs.length).toBe(1)
+  await expect.poll(async () => (await state({ page })).fetching).toBe(false)
   await page
     .getByRole(ROLE_BUTTON, { name: BUTTON_REFRESH, exact: true })
     .click()
-  await expect.poll(() => logs.length).toBe(2)
-  expect(logs[1]).toMatchObject({
-    label: FAILURE,
-    value: { chatId: chatA, code: CODE.UNAVAILABLE },
-  })
+  await expect.poll(() => calls).toBe(2)
+  await expect
+    .poll(async () => (await state({ page })).error)
+    .toBe(CODE.UNAVAILABLE)
   expect((await state({ page })).data).toEqual([message])
   await page
     .getByRole(ROLE_BUTTON, { name: BUTTON_REFRESH, exact: true })
     .click()
-  await expect.poll(() => logs.length).toBe(3)
-  expect(logs[2].value.messages).toEqual([message])
+  await expect.poll(() => calls).toBe(3)
+  await expect.poll(async () => (await state({ page })).error).toBeNull()
   await page
     .getByRole(ROLE_BUTTON, { name: BUTTON_REFRESH, exact: true })
     .click()
-  await expect.poll(() => logs.length).toBe(4)
+  await expect.poll(() => calls).toBe(4)
   expect(calls).toBe(4)
-  expect((await state({ page })).error).toBeNull()
+  await expect.poll(async () => (await state({ page })).error).toBeNull()
+  expect(logs).toEqual([])
 })
 test('history React: pending refresh is deduplicated, close suppresses its late result', async ({
   page,
@@ -250,6 +248,7 @@ test('history React: closed session rejects late data and new connection has ind
   await expect.poll(() => routes.length).toBe(2)
   expect(routes[1].request().headers()[HTTP.SCOPE_LOWERCASE]).toBe(scopeB)
   await fulfill({ route: routes[1], scope: scopeB, messages: [] })
-  await expect.poll(() => logs.length).toBe(1)
-  expect((await state({ page })).data).toEqual([])
+  await expect.poll(async () => (await state({ page })).fetching).toBe(false)
+  await expect.poll(async () => (await state({ page })).data).toEqual([])
+  expect(logs).toEqual([])
 })

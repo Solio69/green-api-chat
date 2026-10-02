@@ -14,7 +14,14 @@ import {
 import { CHAT_LIST_UI } from '../e2e/chat-list-ui.constants'
 
 const { scopeA, chat } = CHAT_FIXTURES
-const { LIST, ERROR, API, SCOPE_HEADER } = CHAT_LIST_UI
+const {
+  LIST,
+  ERROR,
+  API,
+  SCOPE_HEADER,
+  REFRESH: RETRY,
+  RETRY_PENDING,
+} = CHAT_LIST_UI
 const { FIRST, SECOND } = QUERY_PROBE_IDS
 const { CONSUMERS, SWITCH_ACCOUNT, LOGOUT, STRICT_MODE, RENDER } =
   QUERY_PROBE_COPY
@@ -148,15 +155,17 @@ test('React query: background refresh/error retain cache while UI shows recovery
   await expectState({ page, expected: { error: SERVICE_UNAVAILABLE } })
   await expect(first(page)).toContainText(chat.chatId)
   await expect(area.getByRole(ROLE_ALERT)).toContainText(ERROR)
-  await expect(list).toHaveCount(0)
-  const retry = area.getByRole(ROLE_BUTTON)
+  await expect(list.getByRole(ROLE_LIST_ITEM)).toHaveCount(1)
+  const retry = area.getByRole(ROLE_BUTTON, { name: RETRY, exact: true })
   await retry.click()
   await expect.poll(() => calls).toBe(3)
   await expectState({ page, expected: { isFetching: true } })
   await expect(first(page)).toContainText(chat.chatId)
   await expect(area.getByRole(ROLE_ALERT)).toContainText(ERROR)
-  await expect(retry).toBeDisabled()
-  await expect(list).toHaveCount(0)
+  await expect(
+    area.getByRole(ROLE_BUTTON, { name: RETRY_PENDING, exact: true }),
+  ).toBeDisabled()
+  await expect(list.getByRole(ROLE_LIST_ITEM)).toHaveCount(1)
   await fulfill({ route: pending! })
   await expectState({ page, expected: { error: null } })
   await expect(list.getByRole(ROLE_LIST_ITEM)).toHaveCount(1)
