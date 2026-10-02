@@ -1,0 +1,90 @@
+@use '../../styles/tokens' as tokens;
+
+.messageComposer {
+  position: relative;
+  flex: none;
+  padding: tokens.$composer-padding-block tokens.$composer-padding-inline;
+  border-top: tokens.$border-width solid var(--ui-panel-border-color);
+  background: var(--ui-surface-color);
+
+  &__form {
+    display: flex;
+    align-items: center;
+    gap: tokens.$composer-gap;
+    margin: 0;
+  }
+
+  &__label {
+    position: absolute;
+    width: tokens.$visually-hidden-size;
+    height: tokens.$visually-hidden-size;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  &__input {
+    flex: 1;
+    min-width: 0;
+    height: tokens.$composer-control-size;
+    padding: tokens.$composer-input-padding-block
+      tokens.$composer-input-padding-inline;
+    overflow-y: auto;
+    resize: none;
+    scrollbar-width: thin;
+    scrollbar-color: var(--ui-muted-color) tokens.$color-transparent;
+    border: tokens.$border-width solid tokens.$color-transparent;
+    border-radius: tokens.$composer-input-radius;
+    background: var(--ui-input-color);
+    color: var(--ui-text-color);
+    font: inherit;
+    font-size: tokens.$font-size-body;
+    line-height: tokens.$line-height-control;
+
+    &:focus-visible {
+      outline: none;
+      border-color: var(--ui-action-color);
+      box-shadow: var(--ui-search-focus-shadow);
+    }
+  }
+
+  &__input[aria-invalid='true'] {
+    border-color: var(--ui-error-color);
+
+    &:focus-visible {
+      box-shadow: var(--ui-search-error-shadow);
+    }
+  }
+
+  &__hint {
+    position: absolute;
+    width: tokens.$visually-hidden-size;
+    height: tokens.$visually-hidden-size;
+    margin: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  &:focus-within &__hint {
+    top: 0;
+    inset-inline-start: tokens.$composer-padding-inline;
+    width: auto;
+    height: auto;
+    padding: tokens.$space-xs;
+    transform: translateY(-100%);
+    background: var(--ui-surface-color);
+    color: var(--ui-muted-color);
+    font-size: tokens.$font-size-small;
+    clip-path: none;
+  }
+
+  @media (max-width: tokens.$chat-mobile-breakpoint) {
+    padding-bottom: calc(
+      tokens.$composer-padding-block + env(safe-area-inset-bottom)
+    );
+
+    &__input {
+      font-size: tokens.$font-size-body;
+    }
+  }
+}

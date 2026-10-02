@@ -6,6 +6,7 @@ export const HTTP_STATUS = {
   FORBIDDEN: 403,
   METHOD_NOT_ALLOWED: 405,
   CONFLICT: 409,
+  PAYLOAD_TOO_LARGE: 413,
   TOO_MANY_REQUESTS: 429,
   PROVIDER_RATE_LIMITED: 469,
   BAD_GATEWAY: 502,
@@ -16,6 +17,7 @@ export const HTTP_STATUS = {
 export const HTTP_METHOD = {
   GET: 'GET',
   POST: 'POST',
+  DELETE: 'DELETE',
 } as const
 
 export const FETCH_REDIRECT = {
@@ -27,8 +29,10 @@ export const HTTP_HEADERS = {
   ORIGIN: 'Origin',
   HOST: 'Host',
   CONTENT_TYPE: 'Content-Type',
+  CONTENT_LENGTH: 'Content-Length',
   CACHE_CONTROL: 'Cache-Control',
   LOCATION: 'Location',
+  RETRY_AFTER: 'Retry-After',
 } as const
 
 export const CACHE_CONTROL = {

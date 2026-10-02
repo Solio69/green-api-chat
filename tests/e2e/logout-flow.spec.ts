@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test'
+import { expect, test } from './owner-fixture'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import {
   BASE_URL,

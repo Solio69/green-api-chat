@@ -4,17 +4,40 @@ import { fetchChats } from '@/lib/chats/fetch-chats'
 import { ChatsQueryError } from '@/lib/chats/types'
 import { createQuerySession } from '@/lib/query/create-query-session'
 import { CHAT_FIXTURES } from '../chats/constants'
+import {
+  TEST_API_RESPONSE,
+  TEST_HTTP_PROTOCOL,
+  TEST_API_CODE,
+  TEST_API_ROUTES,
+} from '../protocol.constants'
+
+const { CHATS: TEST_API_ROUTES_CHATS } = TEST_API_ROUTES
+
+const { OK: TEST_API_RESPONSE_OK, ERROR: TEST_API_RESPONSE_ERROR } =
+  TEST_API_RESPONSE
+const { NO_STORE: TEST_HTTP_PROTOCOL_NO_STORE } = TEST_HTTP_PROTOCOL
+const {
+  CONNECTION_CHANGED: TEST_API_CODE_CONNECTION_CHANGED,
+  INVALID_UPSTREAM_RESPONSE: TEST_API_CODE_INVALID_UPSTREAM_RESPONSE,
+  RATE_LIMITED: TEST_API_CODE_RATE_LIMITED,
+  SERVICE_UNAVAILABLE: TEST_API_CODE_SERVICE_UNAVAILABLE,
+  SESSION_REQUIRED: TEST_API_CODE_SESSION_REQUIRED,
+} = TEST_API_CODE
 
 const { scopeA, scopeB, chat } = CHAT_FIXTURES
 const response = (scope = scopeA) =>
-  Response.json({ status: 'ok', connectionScope: scope, chats: [chat] })
+  Response.json({
+    status: TEST_API_RESPONSE_OK,
+    connectionScope: scope,
+    chats: [chat],
+  })
 const active = () => true
 test('query: client binds scope/header/signal and returns safe DTO', async () => {
   const controller = new AbortController()
   const fetcher: typeof fetch = async (input, init) => {
-    expect(input).toBe('/api/chats')
+    expect(input).toBe(TEST_API_ROUTES_CHATS)
     expect(init).toMatchObject({
-      cache: 'no-store',
+      cache: TEST_HTTP_PROTOCOL_NO_STORE,
       signal: controller.signal,
       headers: { 'X-Connection-Scope': scopeA },
     })
@@ -37,21 +60,31 @@ test('query: rejects foreign scope and invalid public payload', async () => {
   }
   await expect(
     fetchChats({ ...options, fetcher: async () => response(scopeB) }),
-  ).rejects.toMatchObject({ code: 'connection_changed', status: 409 })
+  ).rejects.toMatchObject({
+    code: TEST_API_CODE_CONNECTION_CHANGED,
+    status: 409,
+  })
   await expect(
     fetchChats({
       ...options,
       fetcher: async () =>
-        Response.json({ status: 'ok', connectionScope: scopeA, chats: [{}] }),
+        Response.json({
+          status: TEST_API_RESPONSE_OK,
+          connectionScope: scopeA,
+          chats: [{}],
+        }),
     }),
-  ).rejects.toMatchObject({ code: 'invalid_upstream_response' })
+  ).rejects.toMatchObject({ code: TEST_API_CODE_INVALID_UPSTREAM_RESPONSE })
   await expect(
     fetchChats({
       ...options,
       fetcher: async () =>
-        Response.json({ status: 'error', code: 'raw-secret' }, { status: 503 }),
+        Response.json(
+          { status: TEST_API_RESPONSE_ERROR, code: 'raw-secret' },
+          { status: 503 },
+        ),
     }),
-  ).rejects.toMatchObject({ code: 'invalid_upstream_response' })
+  ).rejects.toMatchObject({ code: TEST_API_CODE_INVALID_UPSTREAM_RESPONSE })
 })
 test('query: normalized error and network failure', async () => {
   const options = {
@@ -64,11 +97,11 @@ test('query: normalized error and network failure', async () => {
       ...options,
       fetcher: async () =>
         Response.json(
-          { status: 'error', code: 'rate_limited' },
+          { status: TEST_API_RESPONSE_ERROR, code: TEST_API_CODE_RATE_LIMITED },
           { status: 429 },
         ),
     }),
-  ).rejects.toMatchObject({ code: 'rate_limited', status: 429 })
+  ).rejects.toMatchObject({ code: TEST_API_CODE_RATE_LIMITED, status: 429 })
   await expect(
     fetchChats({
       ...options,
@@ -76,7 +109,10 @@ test('query: normalized error and network failure', async () => {
         throw new Error('network-secret')
       },
     }),
-  ).rejects.toMatchObject({ code: 'service_unavailable', status: null })
+  ).rejects.toMatchObject({
+    code: TEST_API_CODE_SERVICE_UNAVAILABLE,
+    status: null,
+  })
 })
 test('query: two observers share a request, fresh remount reuses data', async () => {
   const pending = Promise.withResolvers<Response>()
@@ -112,7 +148,10 @@ test('query: refresh failure retains confirmed data and manual retry recovers', 
     fetcher: async () =>
       fails
         ? Response.json(
-            { status: 'error', code: 'service_unavailable' },
+            {
+              status: TEST_API_RESPONSE_ERROR,
+              code: TEST_API_CODE_SERVICE_UNAVAILABLE,
+            },
             { status: 503 },
           )
         : response(),
@@ -190,7 +229,10 @@ test('query: two access errors retire context and notify exactly once', async ()
     connectionScope: scopeA,
     fetcher: async () =>
       Response.json(
-        { status: 'error', code: 'session_required' },
+        {
+          status: TEST_API_RESPONSE_ERROR,
+          code: TEST_API_CODE_SESSION_REQUIRED,
+        },
         { status: 401 },
       ),
     onSessionError: () => {
@@ -222,6 +264,10 @@ test('query: abort during JSON parsing rejects a late body', async () => {
   }).catch((error: unknown) => error)
   await expect.poll(() => reading).toBe(true)
   controller.abort()
-  body.resolve({ status: 'ok', connectionScope: scopeA, chats: [chat] })
+  body.resolve({
+    status: TEST_API_RESPONSE_OK,
+    connectionScope: scopeA,
+    chats: [chat],
+  })
   expect(await pending).toBeInstanceOf(CancelledError)
 })

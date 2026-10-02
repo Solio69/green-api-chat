@@ -6,6 +6,7 @@ import {
   HISTORY_TEST,
   MESSAGE_CACHE_TEST,
   HISTORY_WINDOW_TEST,
+  HISTORY_SCROLL_TEST,
 } from '../history/constants'
 
 const {
@@ -18,6 +19,7 @@ const {
   SUCCESS,
   MESSAGE,
 } = HISTORY_TEST
+const { BOTTOM_TOLERANCE } = HISTORY_SCROLL_TEST
 const { OUTGOING, READ, FAILED } = MESSAGE
 const { ISSUES_OUTPUT, FAILURE_BUTTON } = MESSAGE_CACHE_TEST
 const { ROLE_BUTTON } = TEST_UI
@@ -228,7 +230,7 @@ test('history window: opening ends at bottom and refreshing while reading retain
           element.scrollHeight - element.scrollTop - element.clientHeight,
       ),
     )
-    .toBeLessThanOrEqual(2)
+    .toBeLessThanOrEqual(BOTTOM_TOLERANCE)
   await list.evaluate((element, position) => {
     element.scrollTop = position
   }, SCROLL_POSITION)

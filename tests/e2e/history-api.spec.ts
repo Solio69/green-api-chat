@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test'
+import { expect, test } from './owner-fixture'
 import { addChatSession } from '../chats/helpers'
 import { HTTP_HEADERS } from '@/lib/http/constants'
 import { ROUTES } from '@/lib/routes/constants'

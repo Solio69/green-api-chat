@@ -2,10 +2,10 @@
 
 **Feature Directory**: specs/024-message-statuses
 **Created**: 2026-10-02
-**Status**: Согласована; техническая подготовка, реализация не начата
+**Status**: Approved — согласована; реализация разрешена
 **User Approval**: Approved 2026-10-02 — пользователь согласовал все 018–025
 **Workflow Mode**: Standard
-**Implementation Authorization**: CodeNotAuthorized; разрешены только документы
+**Implementation Authorization**: CodeAuthorized
 **Input**: Различать принятие SendMessage и фактическую доставку/прочтение/ошибку по уведомлениям через согласованную цепочку 022/023.
 
 ## User Scenarios & Testing
@@ -48,7 +48,7 @@ Telegram может прислать уведомление об ошибке б
 
 ### Verification Approach
 
-После авторизации кода: TDD для сопоставления, переходов, ошибок без idMessage, перестановок с историей/SendMessage и очистки scope. Компонентная проверка наблюдаемого статуса в существующей переписке без редизайна; E2E с поддельным SSE. Показатели выполненных проверок — **NotRun**. Настройки провайдера пользователь меняет самостоятельно; агент не выполняет SetSettings.
+После авторизации кода: TDD для сопоставления, переходов, ошибок без idMessage, перестановок с историей/SendMessage и очистки scope. Компонентная проверка наблюдаемого статуса в существующей переписке без редизайна; E2E с поддельным SSE. Показатели автоматических проверок — **PassedSynthetic**; настоящий инстанс NotRun. Настройки провайдера пользователь меняет самостоятельно; агент не выполняет SetSettings.
 
 ## Requirements
 
@@ -111,3 +111,15 @@ Q-STATUS-02/03 относятся к техническим правилам с�
 ## Проверенные источники
 
 Проверены 2026-10-02: [OutgoingMessageStatus Telegram](https://green-api.com/telegram/docs/api/receiving/notifications-format/statuses/OutgoingMessageStatus/) документирует delivered/read/failed/noAccount, настройки и примеры ошибок без idMessage; [GetSettings](https://green-api.com/telegram/docs/api/account/GetSettings/) объясняет переключатели. Название настройки с Webhook относится также к видам уведомлений HTTP API и не означает выбор webhook Endpoint. [HTTP API](https://green-api.com/telegram/docs/api/receiving/technology-http-api/) требует пустой webhookUrl. [022](../022-notification-receiver/spec.md) и [023](../023-notification-sse/spec.md) содержат открытые решения общей доставки.
+
+## Результат реализации 2026-10-02
+
+**Implementation Authorization**: CodeAuthorized. Прямое поручение пользователя:
+«делай все эти задачи до 24 включительно. Интерфейс должен быть выполнен в
+соответствии с макетом. Перед написанием кода прочитай правила написания кода
+и код-стайл». Правила прочитаны до кода; согласованные продуктовые решения сохранены.
+**Verification**: PassedSynthetic — автоматические серверные, React и production
+проверки с фиктивным GREEN-API. Реальная операторская проверка: NotRun.
+Полные доказательства, фактический TDD и ограничения: [verification](verification.md).
+Итоговая согласованность: [analysis](analysis.md). Разрешение не включает удалённые
+настройки, настоящие сообщения, установку пакетов или Git mutations.

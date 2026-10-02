@@ -1,6 +1,6 @@
 # Нормализация provider notification
 
-**Проверки**: NotRun. Provider adapter принимает unknown; не доверяет TypeScript cast.
+**Проверки**: PassedSynthetic; Operator NotRun. Provider adapter принимает unknown; не доверяет TypeScript cast.
 Общая клиентская модель: [019 message-cache](../../019-chat-history-window/contracts/message-cache.md). Транспорт: [023 SSE](../../023-notification-sse/contracts/sse-stream.md). Статусы: [024](../../024-message-statuses/contracts/message-statuses.md).
 
 Envelope сначала проверяет положительный безопасный целочисленный receiptId и body object, непустой typeWebhook, instanceData.idInstance совпадает с server credentials, typeInstance=telegram. Номер provider instance не преобразуется через небезопасный number; допустимый numeric provider id должен быть safe integer, сравнивается строкой. Неизвестный/непроверяемый envelope — malformed, pause/noACK/noDelete. Успешный HTTP ответ с пустым body после long poll и JSON `null` нормализуются как пустая очередь; иной JSON без валидного envelope не пустая очередь.

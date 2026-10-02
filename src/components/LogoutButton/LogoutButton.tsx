@@ -6,6 +6,7 @@ import { CACHE_CONTROL, HTTP_METHOD } from '@/lib/http/constants'
 import { ROUTES } from '@/lib/routes/constants'
 import { HTML_VALUES } from '@/lib/ui/constants'
 import { LOGOUT_COPY } from './constants'
+import { useOptionalNotificationOwner } from '@/components/NotificationProvider'
 import { useOptionalQuerySession } from '@/components/QueryProvider'
 import styles from './LogoutButton.module.scss'
 
@@ -21,6 +22,7 @@ type LogoutButtonProps = {
 
 export const LogoutButton = ({ label }: LogoutButtonProps) => {
   const router = useRouter()
+  const owner = useOptionalNotificationOwner()
   const querySession = useOptionalQuerySession()
   const requestPending = useRef(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -35,6 +37,7 @@ export const LogoutButton = ({ label }: LogoutButtonProps) => {
     try {
       const response = await fetch(LOGOUT_API, {
         method: POST,
+        headers: owner?.getOwnedHeaders() ?? undefined,
         cache: NO_STORE,
       })
       if (!response.ok) {

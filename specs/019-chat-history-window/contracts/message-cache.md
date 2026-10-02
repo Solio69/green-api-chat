@@ -182,7 +182,7 @@ chatId либо chatId:null для ошибки подключения. Hook/out
 accepted; history после live; отсутствие сообщения в свежие десять сообщений; read→delivered;
 противоречащий отказ; media placeholder; другой chat/scope; active=false;
 отсутствие id; TTL/overflow c внедрённым временем и без реального ожидания;
-GC удержание до close, очистка после close. Изолированные проверки Passed; подробности в [verification](../verification.md). Реальные producers и совместный SC-005 — NotRunExternal.
+GC удержание до close, очистка после close. Изолированные проверки Passed; подробности в [verification](../verification.md). Совместный SC-005 после интеграции020–024 — PassedSynthetic. Реальный GREEN-API — NotRun.
 
 ## Подтверждённые детали реализации
 

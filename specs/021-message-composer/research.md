@@ -1,6 +1,6 @@
 # Research: форма и отправка
 
-**Дата**: 2026-10-02. Spec согласована; код/тесты не разрешены.
+**Дата**: 2026-10-02. Spec согласована; код/тесты разрешены в составе 020–024.
 
 ## Факты и существующие средства
 
@@ -18,9 +18,7 @@ online способен приостановить операцию до воз�
 Фактическая QueryProvider создаёт отдельный QueryClient на scope и close()
 закрывает кэш; cancelQueries не является отменой внешней мутации. useChats даёт
 политику 014; новые принятые чаты объединяет 019, а не второй список в форме.
-ChatWorkspace пока имеет server slots и ConversationEmptyState; ручка
-RecipientSearchForm.handleWrite пока не выбирает переписку. Это будущая задача
-025, не скрытая правка sending этапа.
+ChatWorkspace сохраняет server slots; ConversationSelectionProvider 025 задаёт target/accessId/selectionEpoch. RecipientSearchForm.handleWrite открывает найденную переписку через этот общий контракт. Composer подключён отдельным нижним слотом.
 
 ## Варианты и выбранное решение
 

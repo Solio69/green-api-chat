@@ -6,6 +6,7 @@ import type { MessageDTO } from '@/lib/messages/types'
 import { HTML_VALUES } from '@/lib/ui/constants'
 import { MESSAGE_LIST_COPY } from './constants'
 import { MessageBubble } from '@/components/MessageBubble'
+import { MessageStatusIndicator } from '@/components/MessageStatusIndicator'
 import styles from './MessageList.module.scss'
 
 const { LABEL } = MESSAGE_LIST_COPY
@@ -31,7 +32,13 @@ export const MessageList = ({
         <MessageBubble
           key={message.idMessage}
           message={message}
-          status={renderStatus?.(message)}
+          status={
+            renderStatus ? (
+              renderStatus(message)
+            ) : (
+              <MessageStatusIndicator message={message} />
+            )
+          }
         />
       ))}
     </ul>

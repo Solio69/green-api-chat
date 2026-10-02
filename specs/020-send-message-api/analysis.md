@@ -1,122 +1,147 @@
 # Analysis: 020-send-message-api
 
-**Дата**: 2026-10-02. **Этап**: согласованная спецификация, техническая подготовка до реализации.
-**Implementation Authorization**: CodeNotAuthorized. **Implementation Verification**: NotRun.
-**Метод**: локальный speckit-analyze; финальный повторный проход полностью read-only.
-**Результат анализа**: Passed; открытых findings нет. Документы готовы к предъявлению
-перед отдельным разрешением реализации. Passed относится к документальному анализу, не к коду.
-Отчёт сохранён отдельным действием после подтверждения root финального snapshot470файлов;
-полный before/after inventory идентичен. Запись отчёта не входит в проверенный read-only интервал.
+**Дата**: 2026-10-02. **Этап**: итоговый анализ реализации, самостоятельного ревью и превью после Green.
+**Implementation**: CodeAuthorized / Completed. **Acceptance**: PassedSynthetic.
+**Итог**: функциональных разногласий spec/plan/tasks/contracts/source не осталось.
+Реальный GREEN-API/ручное ревью/публикация: NotRun.
 
-## Границы и prerequisites
+## Границы и read-only метод
 
-Прочитаны spec.md, plan.md, tasks.md, research.md, data-model.md, contracts, quickstart и checklists выбранной feature.
-Сверены C1–C8, общий docs/messaging-specs.md, owner runtime022/HTTP/client023,
-shared message-cache/chat-overlay019, lifecycle018 и selection025. Проверены existing package.json,
-Playwright configs и CODING_RULES. Будущие исходники не трактуются как отсутствующие обязательные артефакты.
+Exact prerequisites -RequireTasks -IncludeTasks Passed; FEATURE_DIR точно
+соответствует выбранной feature. Прочитаны spec, plan, tasks, research,
+data-model, contracts, quickstart, readiness/acceptance и verification,
+AGENTS/constitution/CODING_RULES/CODE_STYLE/GIT_POLICY, общий комплект и
+актуальный source/test diff. Первоначальная авторизация020 core сохранена;
+прямое поручение2026-10-02 разрешило все оставшиеся задачи до024 по макету.
+Повторный approval gate не требовался.
 
-check-prerequisites.ps1 выполнен с -Json -RequireTasks -IncludeTasks и явными
-SPECIFY_FEATURE_DIRECTORY/-ExpectedFeatureDirectory. Exit0; FEATURE_DIR точно совпал:
-D:\Pet-projects\green-api-chat\specs\020-send-message-api.
+Итоговый frozen inventory **667 файлов** до/после совпал по полному
+списку и SHA-256 каждого файла. Digest: **FA80943C893DA5166DEBD8C27D9D62EFC7A8CB603B68E051BA047E4288DCA2E4**.
+Исключены .git,node_modules,.next,playwright-report,test-results,coverage,out,
+build,tsconfig.tsbuildinfo. Исходники, config, docs/specs, правила и scripts включены;
+содержимое секретов не выводилось. Во время прохода проект не изменялся;
+этот полный отчёт сохранён отдельным действием после сверки.
 
-Полный inventory проекта (без .git, dependencies/generated outputs) удержан в памяти:
-470 файла; SHA-256 36B394D9A26A47E7AE2F783E485801B96DC7A8A03806A17C012FB14264BFB405. До/после совпали полный список, каждый SHA и digest.
-Исключения: .git, node_modules, .next, playwright-report, test-results, coverage, out, build, tsconfig.tsbuildinfo. Файлы/код/статусы задач не изменялись в проходе.
+Самостоятельное ревью включает локальный composer hook/feedback, отсутствие цикла
+Provider→Notice→Provider, semantic constants, error attributes/outline и стили
+восстановления. Runtime graph61 reachable modules имеет0 cycles. Exact paths,
+относительные ссылки и карты FR/SC→T-ID проверены. Для020–024:62 FR,29 SC и62/62
+выполненные задачи; требований без покрытия, отсутствующих ссылок/путей —0.
+Общая карта018–025 сохраняет прежние139 требований/критериев и100 задач.
 
-## Findings
+## Findings и исправления
 
-Открытых findings нет: CRITICAL/HIGH/MEDIUM/LOW = 0.
-Проверены исправления предыдущего прохода:
-V020-01 закрыт: quickstart.md:29 содержит npm run format:check для source/tests/shared/fixtures,
-а строка30 отдельно проверяет feature docs с --ignore-path NUL.
-Новых продуктовых или технических противоречий, непроверяемых основных критериев,
-базового отсутствия покрытия или нарушений C1–C8 в текущих документах не обнаружено.
-Исходники будущих feature отсутствуют согласно CodeNotAuthorized, а не вследствие ошибки подготовки.
+| ID            | Категория / важность | Место                                                                   | Суть и результат                                                                                                                                                                                          |
+| ------------- | -------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| H022-R01      | runtime / HIGH       | src/lib/notifications/receiver-registry.ts; notification-health.spec.ts | retrying запрещал reader продолжать backoff recovery. Исправлено: reader active отделён от Send health; новые actual registry+loop Receive/Delete Red2/Green5 и регрессия342 подтверждают восстановление. |
+| D-MANIFEST-01 | consistency / MEDIUM | 020/022 plans/contracts; общий комплект                                 | Status normalizer022 фактически использует чистый safe-identifier из уже готового core020. Manifest/DAG уточнён: core020 до022, HTTP020 после022/023; обратной зависимости helper от Send route нет.      |
+| D-STATUS-01   | consistency / LOW    | spec/plan/tasks/acceptance020–024, корневые docs                        | Устаревшие CodeNotAuthorized/Blocked/NotRun для кода заменены текущей авторизацией и фактическими результатами. Operator NotRun сохранён отдельно.                                                        |
+| P-TDD-01      | process / наблюдение | verification020/021, tasks Phase3                                       | Отдельный production E2E Red до wiring не фиксировался. Документы отражают фактический Red на ядре/React и production regression; исторический порядок не выдаётся за первоначальный план.                |
 
-## Содержательное покрытие
+| R-CONST-01 | code style / LOW | src/lib/sending/constants.ts; create-send-controller.ts | Результаты попытки используют SEND_RESULT_KIND; accepted DTO и исход привязаны к прежнему snapshot. Серверные342 и React30 проверки Passed. |
 
-| Требование или критерий | Задачи                     |
-| ----------------------- | -------------------------- |
-| FR-001                  | T002–T005, T006–T009       |
-| FR-002                  | T002–T005, T006–T009       |
-| FR-003                  | T002–T005, T006–T009       |
-| FR-004                  | T002–T005, T006–T009       |
-| FR-005                  | T002–T005, T006–T012       |
-| FR-006                  | T002–T005, T006–T010       |
-| FR-007                  | T002–T005, T006–T012       |
-| FR-008                  | T002–T005, T006–T009       |
-| FR-009                  | T001, T008–T012            |
-| FR-010                  | T002–T005, T006–T009       |
-| SC-001                  | T003–T005, T007–T009, T011 |
-| SC-002                  | T003–T005, T007–T009, T011 |
-| SC-003                  | T003–T005, T007–T011       |
-| SC-004                  | T003–T005, T007–T011       |
-| SC-005                  | T003–T005, T007–T011       |
+Все функциональные/документные findings исправлены и проверены. Открытые
+CRITICAL/HIGH/MEDIUM/LOW разногласия: **0/0/0/0**. P-TDD-01 — явно сохранённое
+процессное отклонение, не задним числом восстановленный E2E Red. Требования
+пользователя не менялись ради исправлений.
 
-Coverage проверено по содержимому сценариев/тестовых задач, а не только наличию ID.
-T002–T005 проверяют single dispatch, validation/original text/codepoint boundaries, accepted string ID,
-safe IDs, no retry, ошибки/outcome и cleanup;T006–T009 проверяют cookie/scope/proof/Origin,
-methods/body/no-store/owner/singlelock на HTTP. SC004 не обещает доставку; sender сохраняет
-identity scope/chat/idMessage, дальнейшие merge/UI проверки принадлежат021/019/024.
-Origin missing/null/invalid/foreign403/not_sent предшествует body/lease/provider.
-Known accepted не теряется из-за cleanup exception; timeout/lost/malformed/5xx afterdispatch=unknown.
-Pre-dispatch failures и подтверждённый provider отказ=not_sent;401/connection_changed409 отдельно
-от ownership409,429 безretry. Повтор attemptUUID не выдаётся за remote idempotency.
+## Содержательное соответствие
 
-Integration T002 → T003 behavioral Red → T004 implementation → T005 Green.
-HTTP T006 → T007 Red → T008 route → T009 Green → T010 Refactor → T011 checks → T012 review.
-Missing module/environment не Red. Server semaphore держится до локального settlement/deadline,
-не до browser disconnect; timeout не доказывает remote cancel.
+FR-001/002/003/004/010: handleSendRequest проверяет Origin до body/lease/provider, cookie/scope/proof, строгий chatId/UUID/body64KiB и Unicode4096; один dispatch фиксированного SendMessage, no-store/redirect:error/deadline10s. tryAcquireSend общего022 runtime исключает nonowner, retrying/paused/detached и concurrent Send; lock удерживается до settlement. Принятый безопасный idMessage не означает доставку и не теряется из-за release exception.
 
-Технический DAG исполнения: 025 → 018 → 019 → 022 → 023 → 020 → 021 → 024.
-019 core issues store и merge доступны до021/023;024 только наблюдаемые status/error outlets.
-safe-identifier020 не prerequisite019/022: ранние шаги используют прежний privacy pattern014.
-Второго Message/overlay/QueryClient/ownership store нет.
+FR-005/006/007/008/009: DTO содержит только whitelist и исходную correlation, нет token/upstreamURL/raw body/вымышленного provider timestamp. Auth errors закрывают matching scope; transient/unknown не имитируют not_sent и не повторяются. UI/cache принадлежат021/019; early read коррелируется по точному id после HTTP acceptance. SC-001–005 подтверждаются send-message67 assertions, owner/safety tests, React races и production cookie/route цепочкой. Не все HTTP cases находятся в E2E: строгие zero/one effects проверяются независимо на handler, реальные route bundles — production E2E.
 
-## C1–C8
+Основные постоянные проверки: [send-message](../../tests/integration/send-message.spec.ts), [notification-owner](../../tests/integration/notification-owner.spec.ts), [notification-safety](../../tests/integration/notification-safety.spec.ts), [message-send-controller](../../tests/integration/message-send-controller.spec.ts);
+[React messaging](../../tests/query/message-composer.spec.ts),
+[production messaging](../../tests/e2e/message-composer.spec.ts).
+Каркас/шапка/поиск/список/история сохранены; отдельные presenter/button/notice
+имеют самостоятельные роли, source constants и SCSS tokens соответствуют правилам.
 
-| Принцип | Результат документального анализа                                                                                                        |
-| ------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| C1      | Согласованные product choices сохранены; неподтверждённая Unicode единица не выдана за факт                                              |
-| C2      | Отдельные API/форма/история/ownership/selection задачи и последующее разрешение каждого шага                                             |
-| C3      | Spec Approved2026-10-02; технические docs разрешены, реализация CodeNotAuthorized                                                        |
-| C4      | Проход read-only; Git/index не менялись, рабочие изменения сохраняются                                                                   |
-| C5      | Нет установок, миграций, БД или real provider sends; настройки/ручные sends только пользователю                                          |
-| C6      | Cookie+scope+owner proof, safe DTO, фиктивные тестовые значения; поздние данные не пересекают область                                    |
-| C7      | Поведенческий Red до реализации, тот же набор Green, Refactor и постоянные tests; full future format/check команды согласованы           |
-| C8      | Один процесс/provider/adapter и shared helpers; нет новых packages/store/persistence; future format:check включает все source/test файлы |
+## Покрытие FR/SC → задачи
 
-Задачи без основания в FR/SC отсутствуют. Preflight, Refactor, acceptance и review/verification
-являются обязательными C6/C7/C8, а не несогласованным расширением продукта.
+| Требование / критерий | Задачи                     | Фактический результат |
+| --------------------- | -------------------------- | --------------------- |
+| FR-001                | T002–T005, T006–T009       | PassedSynthetic       |
+| FR-002                | T002–T005, T006–T009       | PassedSynthetic       |
+| FR-003                | T002–T005, T006–T009       | PassedSynthetic       |
+| FR-004                | T002–T005, T006–T009       | PassedSynthetic       |
+| FR-005                | T002–T005, T006–T012       | PassedSynthetic       |
+| FR-006                | T002–T005, T006–T010       | PassedSynthetic       |
+| FR-007                | T002–T005, T006–T012       | PassedSynthetic       |
+| FR-008                | T002–T005, T006–T009       | PassedSynthetic       |
+| FR-009                | T001, T008–T012            | PassedSynthetic       |
+| FR-010                | T002–T005, T006–T009       | PassedSynthetic       |
+| SC-001                | T003–T005, T007–T009, T011 | PassedSynthetic       |
+| SC-002                | T003–T005, T007–T009, T011 | PassedSynthetic       |
+| SC-003                | T003–T005, T007–T011       | PassedSynthetic       |
+| SC-004                | T003–T005, T007–T011       | PassedSynthetic       |
+| SC-005                | T003–T005, T007–T011       | PassedSynthetic       |
+
+Покрытие означает сопоставление требований и проверенного поведения, не процент
+покрытия строк. Завершающие verification/review задачи не подменяют бизнес assertions.
+Процессные задачи preflight/acceptance/review обоснованы C3/C4/C6/C7/C8;
+необоснованных задач без requirement/principle нет.
 
 ## Метрики
 
-| Метрика                      | Значение          |
-| ---------------------------- | ----------------- |
-| FR                           | 10                |
-| SC                           | 5                 |
-| Требований/критериев всего   | 15                |
-| Содержательно покрыто        | 15/15,100%        |
-| Tasks                        | 12, IDs unique 12 |
-| Uncovered FR/SC              | 0                 |
-| Необоснованные tasks         | 0                 |
-| Продуктовых неоднозначностей | 0                 |
-| Дублированных req/task IDs   | 0                 |
-| CRITICAL/HIGH                | 0/0               |
-| MEDIUM                       | 0                 |
-| LOW                          | 0                 |
+- FR: 10/10; SC: 5/5; карта coverage:100%.
+- Tasks: 12/12 completed; повторяющихся определений T-ID:0.
+- Неохваченных FR/SC:0; необоснованных tasks:0; открытых существенных неоднозначностей:0.
+- Противоречивых shared DTO/policies:0 после исправления manifest/status/recovery.
+- Повторные ссылочные owner/identity guards в contracts намеренные, не альтернативная политика.
 
-## Проверки и ограничения
+## TDD, этапы и зависимости
 
-Passed: exact scoped prerequisites; ручная смысловая сверка spec/plan/tasks/contracts/C1–C8,
-FR/SC→T; task ID uniqueness; local links (broken0); scoped Prettier21docs;
-полный before/after inventory/SHA identity.
-NotRun: implementation integration/React/HTTP/E2E, TypeScript/lint/stylelint/build,
-visual/a11y screenshots, real provider send/runtime recovery. Текстовый анализ не доказывает работу кода,
-upstream Unicode алгоритм или remote exactly-once. Непроверенная provider Unicode единица и невозможность доказать remote cancel явно
-отделены от приложения и не считаются новыми открытыми продуктовыми вопросами.
+Фактический Red/Green, причины падений и refactor подробно сохранены в
+[verification](verification.md). Новая business logic получила поведенческие
+Red, existing core019/024 — исходный Green перед refactor. Missing imports,
+Sass/config/fixture ошибки не объявлялись Red. Production wiring020/021
+проверено как регрессия уже Red-tested поведения; отдельный E2E Red не записывался.
 
-Отчёт актуализирован отдельным действием после подтверждения root полного финального
-inventory/hash; сама запись не входит в проверенный read-only интервал. Следующий шаг:
-предъявить полный комплект и получить отдельное разрешение реализации, если его ещё нет.
-До этого код/исполняемые тесты остаются CodeNotAuthorized/NotRun.
+Порядок фактических стадий:025→018→019 foundation→020 core→022→023→020 HTTP→021→024→019
+совместная приёмка. Feature number не равен границе runtime import: чистые
+safe-identifier/constants core020 повторно используются022/023 без Send route
+dependency. MessageDTO/reducer/early facts/issues/overlay принадлежат019,
+право владельца и очередь022, delivery/ACK/client023, Send API020, editor021,
+presentation024. Source менялся последовательно, не параллельными агентами.
+
+## C1–C8 и предкоммитное ревью
+
+| Принцип | Результат / доказательство                                                                                                                               |
+| ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| C1      | PASS: согласованные ACK/one-tab/unknown/history10/оригинальный текст/макет сохранены.                                                                    |
+| C2      | PASS: самостоятельные features и роли; shared core используется, конкурирующих stores/readers нет.                                                       |
+| C3      | PASS: explicit feature prerequisites, spec approval и прямое CodeAuthorized до реализации.                                                               |
+| C4      | PASS: Git только чтение; staging/user diff сохранён, commit/push/reset отсутствуют.                                                                      |
+| C5      | PASS: существующие Node/npm/packages; без installs/DB/SetSettings/ClearQueue/real Send/Delete.                                                           |
+| C6      | PASS: cookie credentials server-only, capability RAM/private headers, scope/epoch/Origin guards; fictitious fixtures.                                    |
+| C7      | PASS поведения: подтверждённый server/React Red→Green, baseline before refactor, полная регрессия; отдельный E2E Red не фиксировался и отмечен P-TDD-01. |
+| C8      | PASS: один Node registry/Query session, bounded partial facts/parser/pending delivery, без broker/persistence/горизонтальной инфраструктуры.             |
+
+Дифф проверен по поведению/identity/секретам/поздним эффектам/макету, paths
+существуют; относительные ссылки выбранного комплекта пройдены. Линтеры,
+типы, formatter и git diff --check прошли. Никакие изменённые user files не откатывались.
+
+## Проверки, ограничения и следующий шаг
+
+Итоговая регрессия:342 integration,30 Query,99 production E2E
+(включая Next production build/type validation) — Passed, exit0.
+typecheck/lint/styles/source format и отдельный Markdown Prettier override NUL — Passed.
+Production E2E включает проверку error outline обеих тем и снятия aria-invalid
+при320/360/1280. Новая accessibility проверка получила настоящий Red1, затем Green;
+pure refactor опирается на ранее успешный342/30/99 baseline. Неудачный color assertion
+на fixture без глобальной темы и unused fixture не выдаются за поведенческий Red.
+Итоговые браузерные наборы завершены последовательно.
+Сценарии используют fictitious GREEN-API; физический screen reader/IME телефона,
+реальные settings/messages и hosting proxy не проверялись. SSE требует одного
+постоянного Node процесса; multiprocess/serverless/multi-instance не поддержаны.
+History10+RAM/queueTTL не гарантируют полный replay; early facts1000/5min;
+ACK не durable commit, unknown Send может дать дубль при ручном повторе.
+
+Реализация завершена в разрешённом объёме. Следующее действие — ревью пользователя
+и ручной реальный сценарий по README/quickstart; публикация отдельно E06.
+English commit title: **feat: add text messaging with SSE notifications and delivery statuses**.
+Результаты synthetic browser preview и найденные исправления:
+[verification021](../021-message-composer/verification.md#ревью-компонентов-и-превью).
+Визуальная форма/отправка43px сохранены по макету; recovery actions44px.
+Git mutations агент не выполняет.

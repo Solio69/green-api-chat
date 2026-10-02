@@ -1,6 +1,6 @@
 # Контракт единственного получателя инстанса
 
-**Статус**: техническое решение 2026-10-02; CodeNotAuthorized; проверки NotRun.
+**Статус**: техническое решение 2026-10-02; CodeAuthorized; проверки NotRun.
 HTTP и транспорт: [023 notification-http](../../023-notification-sse/contracts/notification-http.md).
 
 ## Право работы
@@ -26,7 +26,7 @@ tryAcquireSend({ credentials, connectionScope, ownerCapability, attemptId, now? 
 // | {kind:'receiver_not_active'}
 ```
 
-`ok` требует matching capability/scope, неистёкшую captured session, attached stream и отсутствие pause; один локальный Send lock на инстанс. release idempotent, вызывается handler finally после локального settle upstream. attemptId — correlation, не provider idempotency и не основание автоматически повторять Send. Disconnect/timeout браузера не освобождает lock начатого серверного Send. Сначала проверяется owner, затем busy/active; никакой ошибки не раскрывает другой owner.
+`ok` требует matching capability/scope, неистёкшую captured session, attached stream и отсутствие pause/retrying; один локальный Send lock на инстанс. release idempotent, вызывается handler finally после локального settle upstream. attemptId — correlation, не provider idempotency и не основание автоматически повторять Send. Disconnect/timeout браузера не освобождает lock начатого серверного Send. Сначала проверяется owner, затем busy/active; никакой ошибки не раскрывает другой owner.
 
 ## Queue и ACK
 
@@ -49,3 +49,12 @@ Invalid token/instance/authorization завершает только текущ�
 Непустой URL/отключённые incoming — `notifications_not_configured`; невыполненный preflight отзывает непубликованную резервацию после локального drain, Receive/Delete не выполняются. Сетевая ошибка/429/5xx preflight даёт безопасный retry_later/rate_limited/service_unavailable; пользовательский claim retry явный, нового tight loop нет. Missing/invalid known fields — invalid_upstream_response, не «настройка точно правильная». Missing outgoing toggles не блокируют входящие/Send: сохраняется только безопасный диагностический flag для 024, пользователь включает их вручную. Provider settings/URL/token/raw body клиенту не возвращаются. Claim без опубликованного owner не допускает stream/send/ACK.
 
 Settings проверены один раз в начале, а не постоянно: remote изменение webhookUrl позже может дать Receive400, который приостанавливает runtime. Не вызывать SetSettings/ClearQueue. Настройки проверяются по официальному [GetSettings](https://green-api.com/telegram/docs/api/account/GetSettings/), это не getAccountSettings profile из 013.
+
+## Recovery guard
+
+Active reader требует живой attached owner, неизменённый epoch, отсутствие revoke
+и pause. Состояние retrying не останавливает сам reader: после backoff он продолжает
+Receive либо проверку ambiguous Delete head и возвращает receiving после успеха.
+Новая отправка отдельно блокируется tryAcquireSend при pause/retrying/detached.
+Проверка реальной связки registry+loop: notification-health.spec.ts, два сценария
+Receive/Delete, Red2/Green5 вместе с прежними health assertions.

@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test'
 import type { Page } from '@playwright/test'
+import { expect, test } from './owner-fixture'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import {
   CREDENTIALS,

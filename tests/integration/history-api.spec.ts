@@ -9,6 +9,8 @@ import { HTTP_HEADERS } from '@/lib/http/constants'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import { HISTORY_TEST } from '../history/constants'
 
+const UNSUPPORTED_ATTACHMENT_URL = 'https://example.test/private'
+
 const {
   API,
   ORIGIN,
@@ -162,7 +164,7 @@ test('history normalizes text, unsupported messages, timestamps and status witho
   const value = [
     {
       ...raw,
-      downloadUrl: 'https://example.test/private',
+      downloadUrl: UNSUPPORTED_ATTACHMENT_URL,
       senderPhoneNumber: 'fictional-phone',
     },
     {

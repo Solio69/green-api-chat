@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test'
+import { expect, test } from './owner-fixture'
 import {
   CONVERSATION_CONTRACT,
   CONVERSATION_FIXTURES,

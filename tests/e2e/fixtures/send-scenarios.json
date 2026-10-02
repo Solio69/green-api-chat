@@ -1,0 +1,5 @@
+{
+  "success": { "id": "99002101", "token": "fictional-sending-success-token" },
+  "unknown": { "id": "99002102", "token": "fictional-sending-unknown-token" },
+  "rejected": { "id": "99002103", "token": "fictional-sending-rejected-token" }
+}

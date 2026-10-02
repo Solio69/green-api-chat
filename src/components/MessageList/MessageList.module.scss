@@ -14,6 +14,9 @@
   padding: tokens.$message-list-padding-top tokens.$message-list-padding-inline
     tokens.$message-list-padding-bottom;
   overflow: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ui-muted-color) tokens.$color-transparent;
   list-style: none;
   font-size: tokens.$font-size-caption;
   line-height: tokens.$chat-line-height;

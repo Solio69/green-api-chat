@@ -2,11 +2,65 @@ import accountScenarios from './account-scenarios.json' with { type: 'json' }
 import chatsScenarios from './chats-scenarios.json' with { type: 'json' }
 import historyScenarios from './history-scenarios.json' with { type: 'json' }
 import scenarios from './scenarios.json' with { type: 'json' }
+import sendScenarios from './send-scenarios.json' with { type: 'json' }
+
+const NOTIFICATION_FIXTURE = {
+  ENABLED: 'yes',
+  TELEGRAM: 'telegram',
+  USER: 'user',
+  STATUS: 'outgoingMessageStatus',
+  INCOMING: 'incomingMessageReceived',
+  TEXT_MESSAGE: 'textMessage',
+  DELIVERED: 'delivered',
+  READ: 'read',
+  TIMESTAMP: 1_800_000_000,
+  SENDER_LABEL: 'Тестовый собеседник',
+  REPLY: 'Ответ тестового собеседника',
+} as const
+const {
+  ENABLED,
+  TELEGRAM,
+  USER,
+  STATUS,
+  INCOMING,
+  TEXT_MESSAGE,
+  DELIVERED,
+  READ,
+  TIMESTAMP,
+  SENDER_LABEL,
+  REPLY,
+} = NOTIFICATION_FIXTURE
 
 const HOST = 'https://4100.api.green-api.com'
-const INSTANCE_PATH = /^\/waInstance([^/]+)\/([^/]+)\/[^/]+$/
+const INSTANCE_PATH = /^\/waInstance([^/]+)\/([^/]+)\/[^/]+(?:\/(\d+))?$/
 const STATE_METHOD = 'getStateInstance'
 const ACCOUNT_METHOD = 'getAccountSettings'
+const NOTIFICATION_SETTINGS_METHOD = 'getSettings'
+const RECEIVE_METHOD = 'receiveNotification'
+const DELETE_METHOD = 'deleteNotification'
+const SEND_METHOD = 'sendMessage'
+const RECEIVE_DELAY_MS = 50
+const DELIVERY_DELAY_MS = 500
+const READ_DELAY_MS = 1_000
+const notificationHeads = new Map<
+  string,
+  { receiptId: number; body: object }[]
+>()
+const sendCounts = new Map<string, number>()
+let notificationReceipt = 0
+const enqueueNotification = ({ id, body }: { id: string; body: object }) => {
+  notificationReceipt += 1
+  const queue = notificationHeads.get(id) ?? []
+  queue.push({
+    receiptId: notificationReceipt,
+    body: {
+      instanceData: { idInstance: id, typeInstance: TELEGRAM },
+      timestamp: TIMESTAMP,
+      ...body,
+    },
+  })
+  notificationHeads.set(id, queue)
+}
 const SEARCH_METHOD = 'checkAccount'
 const HISTORY_METHOD = 'getChatHistory'
 const CHATS_METHOD = 'getChats'
@@ -93,6 +147,88 @@ const fakeGreenApiFetch = async (
   const id = path?.[1]
   const method = path?.[2]
   if (!id) return response({ body: {}, status: UNEXPECTED_METHOD })
+  if (method === NOTIFICATION_SETTINGS_METHOD)
+    return response({
+      body: {
+        typeInstance: TELEGRAM,
+        webhookUrl: '',
+        incomingWebhook: ENABLED,
+        outgoingMessageWebhook: ENABLED,
+        outgoingAPIMessageWebhook: ENABLED,
+        outgoingWebhook: ENABLED,
+      },
+    })
+  if (method === RECEIVE_METHOD) {
+    await new Promise((resolve) => setTimeout(resolve, RECEIVE_DELAY_MS))
+    init?.signal?.throwIfAborted()
+    return response({ body: notificationHeads.get(id)?.[0] ?? null })
+  }
+  if (method === DELETE_METHOD) {
+    const queue = notificationHeads.get(id)
+    const matching = queue?.[0]?.receiptId === Number(path?.[3])
+    if (matching) queue?.shift()
+    return response({ body: { result: matching, reason: '' } })
+  }
+  if (method === SEND_METHOD) {
+    if (id === sendScenarios.unknown.id)
+      throw new Error('Fictional send network failure')
+    if (id === sendScenarios.rejected.id)
+      return response({
+        body: { message: 'validation failed' },
+        status: BAD_REQUEST,
+      })
+    const payload = JSON.parse(
+      typeof init?.body === 'string' ? init.body : EMPTY_BODY,
+    )
+    const count = (sendCounts.get(id) ?? 0) + 1
+    sendCounts.set(id, count)
+    const idMessage = `e2e-send-${count}`
+    setTimeout(
+      () =>
+        enqueueNotification({
+          id,
+          body: {
+            typeWebhook: STATUS,
+            chatId: payload.chatId,
+            idMessage,
+            status: DELIVERED,
+          },
+        }),
+      DELIVERY_DELAY_MS,
+    )
+    setTimeout(() => {
+      enqueueNotification({
+        id,
+        body: {
+          typeWebhook: STATUS,
+          chatId: payload.chatId,
+          idMessage,
+          status: READ,
+        },
+      })
+      enqueueNotification({
+        id,
+        body: {
+          typeWebhook: INCOMING,
+          idMessage: `e2e-reply-${count}`,
+          senderData: {
+            chatId: payload.chatId,
+            chatType: USER,
+            senderName: SENDER_LABEL,
+          },
+          messageData: {
+            typeMessage: TEXT_MESSAGE,
+            textMessageData: { textMessage: REPLY },
+          },
+        },
+      })
+    }, READ_DELAY_MS)
+    return response({ body: { idMessage } })
+  }
+  const sendingFixture = Object.values(sendScenarios).some(
+    (scenario) => scenario.id === id,
+  )
+  if (sendingFixture && method === HISTORY_METHOD) return response({ body: [] })
   if (method === STATE_METHOD) {
     const calls = (stateCalls.get(id) ?? 0) + 1
     stateCalls.set(id, calls)
@@ -134,7 +270,7 @@ const fakeGreenApiFetch = async (
     if (Object.hasOwn(historyScenarios, id))
       return response({
         body: [
-          { chatId: HISTORY_CHAT_ID, type: 'user', name: HISTORY_CHAT_LABEL },
+          { chatId: HISTORY_CHAT_ID, type: USER, name: HISTORY_CHAT_LABEL },
         ],
       })
     const scenario = Object.entries(chatsScenarios).find(

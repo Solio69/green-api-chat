@@ -1,0 +1,10 @@
+@use '../../styles/tokens' as tokens;
+
+.messageStatusIssue {
+  position: relative;
+  margin: 0;
+  padding: tokens.$space-xs tokens.$space-sm;
+  background: var(--ui-surface-color);
+  color: var(--ui-error-color);
+  font-size: tokens.$font-size-small;
+}

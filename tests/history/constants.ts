@@ -176,3 +176,12 @@ export const HISTORY_WINDOW_TEST = {
   TIME_SELECTOR: 'time',
   HISTORY_ITEMS: 10,
 } as const
+
+export const HISTORY_SCROLL_TEST = {
+  COMPACT_VIEWPORT_HEIGHT: 480,
+  PANE_LABEL: 'Переписка',
+  ID_PREFIX: 'history-overflow-',
+  TEXT: 'Сообщение с переносами строк\n'.repeat(12),
+  BOTTOM_TOLERANCE: 2,
+  SCREENSHOT_PREFIX: 'history-overflow',
+} as const

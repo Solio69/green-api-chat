@@ -15,6 +15,7 @@ export const HTML_VALUES = {
   AUTOCAPITALIZE_NONE: 'none',
   ARIA_LIVE_POLITE: 'polite',
   ROLE_ALERT: 'alert',
+  ROLE_IMG: 'img',
   ROLE_STATUS: 'status',
   ROLE_GROUP: 'group',
   LINK_TARGET_NEW_TAB: '_blank',

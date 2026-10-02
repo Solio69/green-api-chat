@@ -1,7 +1,7 @@
 # Tasks: история выбранного чата и кеш
 
 **User Approval**: 2026-10-02. **Code Authorization**: разрешено пользователем 2026-10-02; отображение строго по макету.
-**Результат реализации**: изолированная реализация Passed; готова к ревью. T011 — NotRunExternal до 023/021/024. Доказательства: [verification.md](verification.md). Задачи идут
+**Результат реализации**: реализация PassedSynthetic; совместная T011 завершена после 023/021/024. Доказательства: [verification.md](verification.md). Задачи идут
 последовательно, никакого параллельного кода.
 
 ## Dependencies
@@ -33,7 +33,7 @@ helpers создаются 019 ДО 023/021/024; реальные producers/HTTP
 
 ## Integrated Acceptance and Finish
 
-- [ ] T011 [US2] После отдельной реализации 023/021/024 выполнить совместный SC-005: реальное входящее сообщение и ACK до позднего ответа истории, accepted HTTP после early read, повтор факта очереди без дубля, history delivered после read, contradictory/no-id issue без вымышленного bubble. Использовать целевые query/E2E фикстуры соответствующих задач и дополнить history-window tests только общей приёмкой. До prerequisites статус NotRunExternal, isolated T002 не заменяет integrated acceptance. FR-007–FR-008,FR-010; SC-005. Зависимости: T010 и внешние features.
+- [x] T011 [US2] После отдельной реализации 023/021/024 выполнить совместный SC-005: реальное входящее сообщение и ACK до позднего ответа истории, accepted HTTP после early read, повтор факта очереди без дубля, history delivered после read, contradictory/no-id issue без вымышленного bubble. Использовать целевые query/E2E фикстуры соответствующих задач и дополнить history-window tests только общей приёмкой. До prerequisites статус NotRunExternal, isolated T002 не заменяет integrated acceptance. FR-007–FR-008,FR-010; SC-005. Зависимости: T010 и внешние features.
 - [x] T012 Выполнить итоговый подходящий набор quickstart: integration/query/E2E, typecheck/lint/styles, npm run format:check для исходников и тестов и отдельный Prettier check документации с --ignore-path NUL. Записать фактические результаты acceptance.md. T011 при внешней неготовности остаётся NotRunExternal, без ложного полного PASS 019. Зависимость: T010 (и T011 при готовой интеграции).
 - [x] T013 Сверить все FR/SC и diff read-only предкоммитное ревью: no pagination/count: 20/DB/SSE/send/redesign/status indicators до 024. Проверить C1–C8, ownership и сохранённый staging. Зависимость: T012.
 - [x] T014 Создать verification.md фактических Red/Green/итоговых команд, отмечать задачи только доказательствами; перечислить NotRunExternal и последующие dependencies. Предложить английский commit title `feat: render retained chat history with shared message cache`; Git не выполнять. Зависимость: T013.
@@ -64,3 +64,17 @@ helpers создаются 019 ДО 023/021/024; реальные producers/HTTP
 T001 и T013–T014 — обязательный процесс актуальности/завершения C7. Tasks/plan
 не являются Code Authorization. Итоговый полный analyze выполняется координатором после
 заморозки документов; фактические Red/Green и итоговые проверки записаны в verification.md. T011 остаётся внешней совместной приёмкой.
+
+## Совместная приёмка 2026-10-02
+
+T011 / SC-005: PassedSynthetic. Реальные React/SSE/ACK сценарии в
+[тесте формы](../../tests/query/message-composer.spec.ts): входящее применяется
+и подтверждается до поздней истории; early read до HTTP acceptance не создаёт
+пустой пузырь и прикрепляется к точному id. Полная регрессия: 342 integration,
+30 Query; production E2E в комплекте 020–024. Старые упоминания NotRunExternal
+в инструкциях описывают условие выполнения этапа до готовности dependencies;
+текущее состояние определяет этот раздел и [verification](verification.md).
+
+## Приёмка ограниченной высоты
+
+- [x] T015 По прямой просьбе пользователя 2026-10-03 исправить рост переписки от сообщений: сначала tests/e2e/history-scroll.spec.ts показывает увеличение высоты 648 → 3142; затем ограничить каркас и grid/flex цепочку, сохранить шапку и форму, обеспечить внутренний scroll и initial/follow bottom. Проверить пять ширин и высоты 800/480, ручную прокрутку, сохранение anchor через Query, макет, линтеры, типы; обновить verification и выполнить отдельный read-only analyze. FR-004, FR-006, FR-012 / SC-002, SC-006 / UI-016. Зависимость: T010/T011/T012.

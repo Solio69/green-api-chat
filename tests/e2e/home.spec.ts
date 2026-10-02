@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test'
+import { expect, test } from './owner-fixture'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import { LOGIN_CONTRACT, ROUTES, TEST_UI } from '../constants'
 

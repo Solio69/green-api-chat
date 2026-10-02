@@ -1,6 +1,6 @@
 # Исследование delivery статусов
 
-**Дата**: 2026-10-02; фактические настройки аккаунта не проверены, тесты NotRun.
+**Дата**: 2026-10-02; фактические настройки аккаунта не проверены; тесты PassedSynthetic.
 
 [OutgoingMessageStatus Telegram](https://green-api.com/telegram/docs/api/receiving/notifications-format/statuses/OutgoingMessageStatus/) определяет delivered/read/failed/noAccount и приводит failures без idMessage. Уведомления failed/noAccount нельзя отключить; noAccount также связан с приватностью. Поэтому нет enum sent, отсутствие id не повод удалить известный отказ как повреждённый или изменить «последнюю» bubble. Документация требует outgoingMessageWebhook/outgoingAPIMessageWebhook/outgoingWebhook для success statuses. [GetSettings](https://green-api.com/telegram/docs/api/account/GetSettings/) описывает toggles, но автоматический SetSettings не входит. Пользователь вручную включит нужные уведомления.
 

@@ -17,4 +17,6 @@ export const API_ERROR_CODE = {
   SERVICE_UNAVAILABLE: 'service_unavailable',
   INVALID_UPSTREAM_RESPONSE: 'invalid_upstream_response',
   SERVER_UNAVAILABLE: 'server_unavailable',
+  UPSTREAM_REJECTED: 'upstream_rejected',
+  OUTCOME_UNKNOWN: 'outcome_unknown',
 } as const

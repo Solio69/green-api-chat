@@ -3,6 +3,9 @@ import { normalizeAccountProfile } from '@/lib/account/normalize-profile'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import { ACCOUNT_CONTRACT, ACCOUNT_SCENARIOS, CREDENTIALS } from '../constants'
 
+const INVALID_AVATAR_URL = 'http://avatars.example.test/a.png'
+const INVALID_AVATAR_URL_2 = 'https://user:password@avatars.example.test/a.png'
+
 const { ID, TOKEN } = CREDENTIALS
 const { PROFILE } = ACCOUNT_CONTRACT
 const PHONE = ACCOUNT_SCENARIOS.phone.phone
@@ -63,10 +66,10 @@ test('account-profile: rejects unsafe, relative and malformed avatar URLs', () =
   for (const avatar of [
     '/account.png',
     'not a URL',
-    'http://avatars.example.test/a.png',
+    INVALID_AVATAR_URL,
     'javascript:alert(1)',
     'data:image/png;base64,AA==',
-    'https://user:password@avatars.example.test/a.png',
+    INVALID_AVATAR_URL_2,
   ]) {
     expect(
       normalizeAccountProfile({ value: { avatar }, credentials }).avatarUrl,

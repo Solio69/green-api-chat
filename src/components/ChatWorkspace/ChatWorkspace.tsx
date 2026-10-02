@@ -9,6 +9,8 @@ import {
   ConversationSelectionProvider,
   useConversationSelection,
 } from '@/components/ConversationSelectionProvider'
+import { MessageSendProvider } from '@/components/MessageSendProvider'
+import { useOptionalNotificationOwner } from '@/components/NotificationProvider'
 import styles from './ChatWorkspace.module.scss'
 
 type ChatWorkspaceProps = {
@@ -16,6 +18,7 @@ type ChatWorkspaceProps = {
   search: ReactNode
   chatList: ReactNode
   conversation?: ReactNode
+  composer?: ReactNode
 }
 
 const WorkspaceContent = ({
@@ -23,6 +26,7 @@ const WorkspaceContent = ({
   search,
   chatList,
   conversation,
+  composer,
 }: ChatWorkspaceProps) => {
   const { target, accessId, mobilePanel } = useConversationSelection()
   const {
@@ -48,7 +52,7 @@ const WorkspaceContent = ({
       </div>
       <div className={styles.chatWorkspace__conversation} ref={paneRef}>
         {target ? (
-          <ConversationPane headingRef={headingRef}>
+          <ConversationPane headingRef={headingRef} composer={composer}>
             {conversation}
           </ConversationPane>
         ) : (
@@ -59,8 +63,12 @@ const WorkspaceContent = ({
   )
 }
 
-export const ChatWorkspace = (props: ChatWorkspaceProps) => (
-  <ConversationSelectionProvider>
-    <WorkspaceContent {...props} />
-  </ConversationSelectionProvider>
-)
+export const ChatWorkspace = (props: ChatWorkspaceProps) => {
+  const owner = useOptionalNotificationOwner()
+  const content = <WorkspaceContent {...props} />
+  return (
+    <ConversationSelectionProvider>
+      {owner ? <MessageSendProvider>{content}</MessageSendProvider> : content}
+    </ConversationSelectionProvider>
+  )
+}

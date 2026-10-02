@@ -1,13 +1,13 @@
 # HTTP право работы и SSE
 
-**Статус**: выбранный технический контракт; CodeNotAuthorized, проверки NotRun.
+**Статус**: выбранный технический контракт; CodeAuthorized, автоматические проверки PassedSynthetic.
 Registry/guards: [022](../../022-notification-receiver/contracts/receiver-runtime.md).
 
 Same-origin requests используют существующую HttpOnly cookie и `X-Connection-Scope`. Owner operations дополнительно требуют `X-Chat-Owner: <opaque capability>`; клиент хранит его лишь в памяти текущего подключения. Native EventSource не используется, потому что ему нельзя задать необходимые headers. Используется fetch ReadableStream, credentials='same-origin', cache='no-store'. Capability/GREEN token не помещаются в query parameters. Не включать CORS.
 
 | Route                           | Body/headers                              | Успех                                                                                            |
 | ------------------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| POST /api/notifications/claim   | JSON {}; scope; новый claim без owner     | 200 `{status:'ok',connectionScope,ownerCapability,ownerEpoch}`                                   |
+| POST /api/notifications/claim   | JSON {}; scope; новый claim без owner     | 200 `{status:'ok',connectionScope,ownerCapability,ownerEpoch,outgoingEnabled:boolean}`           |
 | GET /api/notifications/stream   | scope + owner                             | 200 UTF8 text/event-stream                                                                       |
 | POST /api/notifications/ack     | JSON `{deliveryId:string}`; scope + owner | 200 `{status:'ok',connectionScope,deliveryId}` — ACK принят, не подтверждение Delete             |
 | POST /api/notifications/release | JSON {}; scope + owner                    | 200 `{status:'ok',connectionScope}` — matching owner отозван; повтор своего release идемпотентен |
@@ -36,4 +36,4 @@ Release старого чужого scope не отнимает owner новог
 не опирается только на внутренний URL. Некорректный Host не допускает fallback
 для прохождения проверки; произвольные X-Forwarded-* заголовки не используются.
 Эта техническая граница соответствует проверенному guard истории018;
-feature остаётся CodeNotAuthorized, исполняемые проверки NotRun.
+feature остаётся CodeAuthorized, исполняемые проверки PassedSynthetic.

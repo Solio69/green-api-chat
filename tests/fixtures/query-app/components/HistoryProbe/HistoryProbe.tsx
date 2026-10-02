@@ -14,6 +14,7 @@ import {
   useOptionalQuerySession,
 } from '@/components/QueryProvider'
 import { HISTORY_TEST } from '../../../../history/constants'
+import styles from './HistoryProbe.module.scss'
 
 const {
   scopeA,
@@ -79,7 +80,9 @@ const HistoryControls = () => {
       <HistoryConsumer id={FIRST} />
       <HistoryConsumer id={SECOND} />
       <HistoryFactsProbe />
-      <ChatHistoryPanel />
+      <div className={styles.historyProbe__conversation}>
+        <ChatHistoryPanel />
+      </div>
     </>
   )
 }

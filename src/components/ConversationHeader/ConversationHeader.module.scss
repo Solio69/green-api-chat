@@ -4,6 +4,7 @@
 .conversationHeader {
   position: relative;
   display: flex;
+  flex: none;
   flex-wrap: wrap;
   align-items: center;
   gap: tokens.$account-header-gap;

@@ -127,7 +127,7 @@ Core: identity/races/monotonic/early fact/TTL/overflow/close; overlay: accepted,
 incoming, empty/error/confirmed provider и отсутствие fake name; UI: states,
 safe text, wrap, unsupported, counts>10/без сетевой подгрузки при прокрутке, desktop/mobile/back/close.
 Команды и результаты — [quickstart](quickstart.md) и [verification](verification.md).
-Изолированная реализация Passed: 211 integration, 23 Query, 28 целевых E2E; сборка, typecheck, lint/styles/format Passed. T011/SC-005 остаётся NotRunExternal. Реальные токены и переписка не использовались.
+Текущая реализация — PassedSynthetic, включая T011/SC-005 после интеграции020–024. Проверки исправления прокрутки: 27 целевых production E2E, 31 Query, сборки и проверки кодстайла Passed. Результаты прежнего ядра и текущего исправления различаются в verification; реальные токены и переписка не использовались.
 
 ## Post-design Constitution Check / Complexity
 
@@ -152,3 +152,26 @@ useQuery в development через SSR и отсутствие console errors д
 History Query/E2E проверяют состояние/запросы и отсутствие отладочного вывода.
 Будущий recovery023 подключается к существующему ChatHistoryPanel в SelectionProvider;
 его manifest/tasks/client contract актуализированы без реализации023.
+
+## Ограниченная высота переписки
+
+Исправление разрешено прямой просьбой пользователя 2026-10-03. Данные и хук
+use-message-scroll сохраняют прежний контракт: initial bottom, follow bottom,
+удержание позиции при ручном чтении выше. Ограничение задаёт каркас; история
+получает оставшееся пространство, а MessageList — внутреннюю прокрутку.
+Нет жёсткого вычитания высот header/composer; нет изменения макета, сети и Query.
+
+Дополнительные пути реализации и проверки T015:
+
+- src/components/ChatWorkspace/ChatWorkspace.module.scss — высота, grid-строка и overflow sidebar.
+- src/components/ConversationPane/ConversationPane.module.scss — min-height: 0 по цепочке flex.
+- src/components/ConversationHeader/ConversationHeader.module.scss — шапка не сжимается.
+- src/components/MessageBubble/MessageBubble.module.scss — пузыри не сжимаются.
+- src/styles/_tokens.scss — семантический chat-workspace-height; старые вычисления высоты удалены.
+- tests/e2e/history-scroll.spec.ts — production cookie, десять длинных сообщений, SSE и прокрутка.
+- tests/fixtures/query-app/components/HistoryProbe/HistoryProbe.module.scss — ограниченный родитель отдельной fixture.
+
+Затронутые существующие пути: ChatHistoryPanel/MessageList SCSS, HistoryProbe.tsx,
+tests/history/constants.ts и tests/query/history-window.spec.ts. Проверка оформления:
+сначала воспроизведение дефекта E2E, затем Green на пяти ширинах/двух высотах,
+ручная визуальная сверка сохранённых скриншотов и регрессия Query scroll anchor.

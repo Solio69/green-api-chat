@@ -443,7 +443,7 @@ export const CONVERSATION_CONTRACT = {
   SIDEBAR_LABEL: 'Аккаунт, поиск и чаты',
   PREMATURE_EMPTY_HISTORY: 'Переписка ещё не начата',
   SELECTION_API_PATTERN: /\/api\/(?:messages|chats\/history|notifications)/,
-  UNIMPLEMENTED_API_PATTERN: /\/api\/(?:messages|notifications)/,
+  SEND_API_PATTERN: /\/api\/messages(?:\?|$)/,
 } as const
 
 export const QUERY_PROBE_IDS = { FIRST: 'first', SECOND: 'second' } as const

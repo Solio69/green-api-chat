@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test'
+import { expect, test } from './owner-fixture'
 import {
   HEALTH_CONTRACT,
   JSON_CONTENT_TYPE,

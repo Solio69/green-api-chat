@@ -2,10 +2,10 @@
 
 **Feature Directory**: specs/022-notification-receiver
 **Created**: 2026-10-02
-**Status**: Согласована; техническая подготовка, реализация не начата
+**Status**: Approved — согласована; реализация разрешена
 **User Approval**: Approved 2026-10-02 — пользователь согласовал все 018–025
 **Workflow Mode**: Standard
-**Implementation Authorization**: CodeNotAuthorized; разрешены только документы
+**Implementation Authorization**: CodeAuthorized
 **Input**: Согласованная цепочка GREEN-API → ReceiveNotification на единственном Node-сервере Next.js → SSE → браузер; подтверждение через DeleteNotification.
 
 ## User Scenarios & Testing
@@ -50,7 +50,7 @@
 
 ### Verification Approach
 
-После отдельного разрешения на реализацию: TDD Red → Green → Refactor для последовательного цикла, контракта получения/подтверждения и изоляции. Интеграционные проверки используют поддельный provider и контролируемое разрывание потребителя; реальные уведомления не удаляются в тестах. Числа таймаутов и задержек определит plan по проверенным ограничениям. Код, тесты и настройки провайдера сейчас не изменяются; проверки реализации — **NotRun**.
+После отдельного разрешения на реализацию: TDD Red → Green → Refactor для последовательного цикла, контракта получения/подтверждения и изоляции. Интеграционные проверки используют поддельный provider и контролируемое разрывание потребителя; реальные уведомления не удаляются в тестах. Числа таймаутов и задержек определит plan по проверенным ограничениям. Код и тесты реализованы по прямому поручению пользователя; автоматические проверки — **PassedSynthetic**. Настройки реального провайдера агент не изменял.
 
 ## Requirements
 
@@ -118,3 +118,15 @@ Q-REC-05 согласован пользователем: ненужные ва�
 ## Проверенные источники
 
 Проверены 2026-10-02: [HTTP API](https://green-api.com/telegram/docs/api/receiving/technology-http-api/) описывает FIFO и ожидание в очереди до 24 часов; [ReceiveNotification](https://green-api.com/telegram/docs/api/receiving/technology-http-api/ReceiveNotification/) — одно уведомление, receiveTimeout 5–60 секунд и повтор до удаления; [DeleteNotification](https://green-api.com/telegram/docs/api/receiving/technology-http-api/DeleteNotification/) — receiptId и result/reason; [лимиты](https://green-api.com/telegram/docs/api/ratelimiter/) — ограничения на инстанс. Выбранная архитектура: [018 architecture-notes](../018-chat-history-console/architecture-notes.md). Рекомендации в открытых вопросах — проектные предложения, а не гарантии провайдера.
+
+## Результат реализации 2026-10-02
+
+**Implementation Authorization**: CodeAuthorized. Прямое поручение пользователя:
+«делай все эти задачи до 24 включительно. Интерфейс должен быть выполнен в
+соответствии с макетом. Перед написанием кода прочитай правила написания кода
+и код-стайл». Правила прочитаны до кода; согласованные продуктовые решения сохранены.
+**Verification**: PassedSynthetic — автоматические серверные, React и production
+проверки с фиктивным GREEN-API. Реальная операторская проверка: NotRun.
+Полные доказательства, фактический TDD и ограничения: [verification](verification.md).
+Итоговая согласованность: [analysis](analysis.md). Разрешение не включает удалённые
+настройки, настоящие сообщения, установку пакетов или Git mutations.

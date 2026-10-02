@@ -53,3 +53,29 @@
     height: tokens.$control-icon-size;
   }
 }
+
+@mixin recovery-button {
+  @include focus-ring;
+
+  min-height: tokens.$control-icon-button-size;
+  max-width: 100%;
+  padding: tokens.$space-xs tokens.$chat-recovery-gap;
+  border: 0;
+  border-radius: tokens.$chat-recovery-button-radius;
+  background: var(--ui-selected-color);
+  color: color-mix(
+    in srgb,
+    var(--ui-link-color) tokens.$chat-recovery-action-tint,
+    var(--ui-text-color)
+  );
+  font: inherit;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    box-shadow: var(--ui-search-focus-shadow);
+  }
+
+  &:disabled {
+    cursor: wait;
+  }
+}

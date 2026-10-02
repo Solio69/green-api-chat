@@ -1,6 +1,6 @@
 # Формат SSE доставки
 
-**Проверки**: NotRun. UTF8 events отделены пустой строкой; fetch parser соблюдает LF/CRLF, split codepoints и несколько data lines. Формат [MDN SSE](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events).
+**Проверки**: PassedSynthetic; Operator NotRun. UTF8 events отделены пустой строкой; fetch parser соблюдает LF/CRLF, split codepoints и несколько data lines. Формат [MDN SSE](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events).
 
 Каноническое событие `notification` содержит JSON:
 

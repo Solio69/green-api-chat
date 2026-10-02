@@ -2,7 +2,7 @@
 
 **Spec**: [spec.md](spec.md). **Дата**: 2026-10-02.
 **Согласование spec.md**: Approved 2026-10-02, пользователь поручил техническую подготовку всех 018–025.
-**Разрешение на реализацию**: CodeNotAuthorized. Сейчас только документы.
+**Разрешение на реализацию**: CodeAuthorized.
 
 ## Summary
 
@@ -14,20 +14,20 @@
 
 ## Technical Context
 
-TypeScript 5.9.3, Node 24.x/npm11.x, Next 16.3.7/React 19.3.0, Query 5.104.0, iron-session 9.0.1. Existing Playwright 1.63 integration/query configs; новых зависимостей/DB нет. Сервер — один постоянный Node process; credentials существующая encryptedHttpOnly cookie. Git/staging не изменяются. Runtime tests NotRun, текущие provider settings не проверены.
+TypeScript 5.9.3, Node 24.x/npm11.x, Next 16.3.7/React 19.3.0, Query 5.104.0, iron-session 9.0.1. Existing Playwright 1.63 integration/query configs; новых зависимостей/DB нет. Сервер — один постоянный Node process; credentials существующая encryptedHttpOnly cookie. Git/staging не изменяются. Runtime tests PassedSynthetic; реальные provider settings не проверены.
 
 ## Constitution Check
 
-| Принцип | До / после проектирования | Основание                                                                                    |
-| ------- | ------------------------- | -------------------------------------------------------------------------------------------- |
-| C1      | PASS / PASS               | Product choices согласованы; технические параметры отделены от гарантий API                  |
-| C2      | PASS / PASS               | Самостоятельная feature и последовательный TDD; общие зависимости остаются отдельными шагами |
-| C3      | PASS / PASS               | Spec Approved 2026-10-02; CodeNotAuthorized, документы не разрешают эффекты                  |
-| C4      | PASS / PASS               | Git mutations не выполняются; пользовательский staging сохраняется                           |
-| C5      | PASS / PASS               | Установок/изменений provider settings нет; операторские действия описаны                     |
-| C6      | PASS / PASS               | Явный FeatureDirectory, только вымышленные fixtures, scope/owner изоляция                    |
-| C7      | PASS / PASS               | Planned Red→Green→Refactor; acceptance NotRun, frozen analyze отдельный этап                 |
-| C8      | PASS / PASS               | Без DB/Redis/broker/new deps/редизайна; bounded memory и existing tools                      |
+| Принцип | До / после проектирования | Основание                                                                                       |
+| ------- | ------------------------- | ----------------------------------------------------------------------------------------------- |
+| C1      | PASS / PASS               | Product choices согласованы; технические параметры отделены от гарантий API                     |
+| C2      | PASS / PASS               | Самостоятельная feature и последовательный TDD; общие зависимости остаются отдельными шагами    |
+| C3      | PASS / PASS               | Spec Approved 2026-10-02; CodeAuthorized, реальные настройки и отправку агент не выполняет      |
+| C4      | PASS / PASS               | Git mutations не выполняются; пользовательский staging сохраняется                              |
+| C5      | PASS / PASS               | Установок/изменений provider settings нет; операторские действия описаны                        |
+| C6      | PASS / PASS               | Явный FeatureDirectory, только вымышленные fixtures, scope/owner изоляция                       |
+| C7      | PASS / PASS               | Фактический Red→Green→Refactor; acceptance PassedSynthetic; итоговый analyze отдельным проходом |
+| C8      | PASS / PASS               | Без DB/Redis/broker/new deps/редизайна; bounded memory и existing tools                         |
 
 ## Research and Design
 
@@ -35,7 +35,7 @@ TypeScript 5.9.3, Node 24.x/npm11.x, Next 16.3.7/React 19.3.0, Query 5.104.0, ir
 
 ## Project Structure
 
-| Будущий путь                                      | Действие/причина                                                                                  |
+| Путь                                              | Действие/причина                                                                                  |
 | ------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | src/lib/notifications/receiver-registry.ts        | Новый registry, lifecycle/guards/Send semaphore                                                   |
 | src/lib/notifications/receiver-loop.ts            | Последовательная очередь, ACK/Delete/recovery/backoff                                             |
@@ -55,26 +55,50 @@ TypeScript 5.9.3, Node 24.x/npm11.x, Next 16.3.7/React 19.3.0, Query 5.104.0, ir
 | tests/integration/notification-normalization.spec.ts | Incoming/text/unsupported/ignored/malformed tests |
 | specs/022-notification-receiver/verification.md | Создать после кода, фактические команды/Red/Green/review |
 
-Все пути относительны корню проекта и относятся к будущей реализации. Код приложения и тестов сейчас не создаётся и не меняется; пользовательские изменения сохраняются. Shared paths 019/022/023/024 внедряются последовательно после соответствующего разрешения; повторный source файл в manifests означает интеграцию к существующему API, не перезапись чужой feature.
+Все пути относительны корню проекта; ниже итоговый manifest реализации. Реализация выполняется в авторизованном объёме; пользовательские изменения сохраняются. Shared paths 019/022/023/024 внедряются последовательно после соответствующего разрешения; повторный source файл в manifests означает интеграцию к существующему API, не перезапись чужой feature.
 
 ## Tasks and Dependencies
 
-018 QuerySession/public auth errors и existing cookie; Normalized cache019 и status enum024 — согласованные DTO; server status normalizer реализует 022.022 pure runtime допустимо проверить с typed fake sink до 023; browser end-to-end acceptance блока 022 остаётся NotRun до 023.020/021 consumes tryAcquireSend, не создаёт owner альтернативно.023 routes интегрируют этот runtime после своего разрешения;025 selection не влияет на reader.
+018 QuerySession/public auth errors и existing cookie; Normalized cache019 и status enum024 — согласованные DTO; server status normalizer реализует 022.022 pure runtime допустимо проверить с typed fake sink до 023; browser end-to-end acceptance022 завершена после023: PassedSynthetic.020/021 consumes tryAcquireSend, не создаёт owner альтернативно.023 routes интегрируют этот runtime после своего разрешения;025 selection не влияет на reader.
 
 [Tasks](tasks.md) задаёт последовательные Test/Red→Green→Refactor группы. Missing module/type/environment failure не считается Red: после минимального typechecked contract seam тест обязан падать по причине отсутствующего целевого поведения. Production business logic до этого не внедряется. Каждый шаг Green зависит от подтверждённого behavioral Red, результаты сохраняются в будущий verification.md. Existing test coverage перед pure refactor подтверждается baseline.
 
 ## Verification
 
-Integration: `npm run test:integration -- tests/integration/notification-owner.spec.ts tests/integration/notification-receiver.spec.ts tests/integration/notification-normalization.spec.ts`. Browser, если указан в tasks: `npm run test:query -- tests/query/notification-sse.spec.ts`. После группы source changes: `npm run typecheck`, `npm run lint`, `npm run format:check`; production `npm run build` для route/runtime bundling. Stylelint только если при согласованной интеграции затронут SCSS, текущая задача styles не планирует.
+Integration: `npm run test:integration -- tests/integration/notification-owner.spec.ts tests/integration/notification-receiver.spec.ts tests/integration/notification-normalization.spec.ts`. Browser, если указан в tasks: `npm run test:query -- tests/query/message-composer.spec.ts`. После группы source changes: `npm run typecheck`, `npm run lint`, `npm run format:check`; production `npm run build` для route/runtime bundling. Stylelint только если при согласованной интеграции затронут SCSS, текущая задача styles не планирует.
 
-BehavioralRed/Green и финальные проверки сейчас **NotRun**; их нельзя отмечать Passed за review документов. Acceptance cases перечислены в checklists/acceptance. Failed при нарушении ACK/isolation/identity/no-downgrade; Blocked при отсутствующей обязательной реализованной dependency/окружении, не обходить permission/разрешение кода. Реальный provider не используется в автотестах. Ручные операторские настройки не требуют API write от агента.
+BehavioralRed/Green и финальные проверки **PassedSynthetic**; доказательства в verification.md, review документов не подменяет тесты. Acceptance cases перечислены в checklists/acceptance. Failed при нарушении ACK/isolation/identity/no-downgrade; Blocked при отсутствующей обязательной реализованной dependency/окружении, не обходить permission/разрешение кода. Реальный provider не используется в автотестах. Ручные операторские настройки не требуют API write от агента.
 
 ## Post-design Constitution Check
 
-C1–C8 повторно PASS по таблице выше. Разногласий продуктового поведения нет; technical contracts синхронизированы по feature ownership. Отдельное implementation authorization остаётся необходимым, никакие отметки выполнения tasks не проставлены.
+C1–C8 повторно PASS по таблице выше. Разногласий продуктового поведения нет; technical contracts синхронизированы по feature ownership. Implementation authorization получено2026-10-02; задачи завершены по фактическим проверкам, реальные операторские действия NotRun.
 
 ## Complexity Tracking
 
 Сложность ограничена необходимыми ACK/owner guards, bounded in-memory state и race защитой. Отдельный websocket server, persistence, горизонтальное масштабирование и новый UI style исключены. Причины timeout/lease/merge и их практические границы изложены в research/contract.
 
-Общий порядок реализации, без циклических импортов:025→018→019→022→023→020→021→024.022 реализует server status normalizer по spec024;019/018 shared cache/reducer/issues доступны 023/021 до UI status шага 024. Dependency на spec024 не означает runtime import из ещё не реализованной feature.
+Общий порядок реализации, без циклических импортов:025→018→019→020 core→022→023→020 HTTP→021→024.022 реализует server status normalizer по spec024;019/018 shared cache/reducer/issues доступны 023/021 до UI status шага 024. Dependency на spec024 не означает runtime import из ещё не реализованной feature.
+
+## Результат реализации 2026-10-02
+
+**Implementation Authorization**: CodeAuthorized. Прямое поручение пользователя:
+«делай все эти задачи до 24 включительно. Интерфейс должен быть выполнен в
+соответствии с макетом. Перед написанием кода прочитай правила написания кода
+и код-стайл». Правила прочитаны до кода; согласованные продуктовые решения сохранены.
+**Verification**: PassedSynthetic — автоматические серверные, React и production
+проверки с фиктивным GREEN-API. Реальная операторская проверка: NotRun.
+Полные доказательства, фактический TDD и ограничения: [verification](verification.md).
+Итоговая согласованность: [analysis](analysis.md). Разрешение не включает удалённые
+настройки, настоящие сообщения, установку пакетов или Git mutations.
+
+## Фактическое дополнение manifest
+
+- src/lib/notifications/server-registry.ts — versioned Symbol/global registry,
+  общий для production route bundles; HMR invalidation/drain перед заменой.
+- tests/integration/notification-provider.spec.ts, notification-delete-recovery.spec.ts,
+  notification-health.spec.ts, notification-errors.spec.ts, notification-hmr.spec.ts —
+  provider/privacy/settings, ambiguous Delete/Retry-After, retrying/receiving и drain.
+- tests/notifications/constants.ts — независимые ожидаемые значения и fictional data.
+
+Hot dispose проверен injected runtime тестом; поддержка hosting/HMR конкретной
+площадки не является обещанием multi-process. В production один Node process.

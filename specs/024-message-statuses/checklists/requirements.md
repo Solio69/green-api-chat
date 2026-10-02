@@ -4,7 +4,7 @@
 **Created**: 2026-10-02
 **Feature**: [spec.md](../spec.md)
 **Kind**: Readiness
-**Readiness**: Ready — spec Approved 2026-10-02; plan/tasks подготовлены, CodeNotAuthorized.
+**Readiness**: Ready — spec Approved 2026-10-02; plan/tasks подготовлены, CodeAuthorized.
 
 ## Content Quality
 
@@ -19,7 +19,7 @@
 
 ## Feature Readiness
 
-- [x] CHK006 User Approval получено 2026-10-02; CodeNotAuthorized, разрешены только документы.
+- [x] CHK006 User Approval получено 2026-10-02; CodeAuthorized, реализация разрешена.
 - [x] CHK007 Нет автоматического SetSettings/ReadChat/повтора отправки или нового постоянного хранилища; зависимости 019–023 обозначены.
 - [x] CHK008 Описан будущий TDD, проверки реализации NotRun; фактические настройки аккаунта не проверены.
 

@@ -4,7 +4,7 @@
 **Created**: 2026-10-02
 **Feature**: [spec.md](../spec.md)
 **Kind**: Readiness
-**Readiness**: Ready — spec Approved 2026-10-02; plan/tasks подготовлены, CodeNotAuthorized.
+**Readiness**: Ready — spec Approved 2026-10-02; plan/tasks подготовлены, CodeAuthorized.
 
 ## Content Quality
 
@@ -19,7 +19,7 @@
 
 ## Feature Readiness
 
-- [x] CHK006 User Approval получено 2026-10-02; Implementation Authorization не дано, разрешены только документы.
+- [x] CHK006 User Approval получено 2026-10-02; Implementation Authorization не дано, реализация разрешена.
 - [x] CHK007 Соблюдены один Node, отсутствие постоянного хранилища, запрет Git/установок/SetSettings; зависимости 023/024 и 014 указаны.
 - [x] CHK008 Verification Approach помечает будущие проверки реализации NotRun; TDD не заявлен проведённым.
 
@@ -27,6 +27,6 @@
 
 - 13 FR и 6 SC; 2 истории. Readiness проверяет текст, не работу приложения.
 - Q-REC-01–04 согласованы: HTTP ACK обработки, одна активная вкладка, остановка без неё и resume очереди со свежей десяткой без обещания полной истории/статусов. Пагинация отложена; lease, timeout, retry и детали смены токена остаются plan, а не новым пользовательским gate.
-- Plan/tasks подготовлены для отдельного frozen analyze. Spec Approved; readiness не разрешает код. Acceptance checks остаются NotRun.
+- Plan/tasks подготовлены для отдельного frozen analyze. Spec Approved; readiness не разрешает код. Acceptance checks PassedSynthetic; операторская проверка NotRun.
 - Контекст получен через check-prerequisites с PathsOnly; setup-spec создал выбранный spec; перед этим checklist RequireSpec подтвердил точный FEATURE_DIR.
 - Официальные источники проверены 2026-10-02; поведение живого инстанса и размещение Node не проверялись.

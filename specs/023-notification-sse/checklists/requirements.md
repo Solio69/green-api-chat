@@ -4,7 +4,7 @@
 **Created**: 2026-10-02
 **Feature**: [spec.md](../spec.md)
 **Kind**: Readiness
-**Readiness**: Ready — spec Approved 2026-10-02; plan/tasks подготовлены, CodeNotAuthorized.
+**Readiness**: Ready — spec Approved 2026-10-02; plan/tasks подготовлены, CodeAuthorized.
 
 ## Content Quality
 

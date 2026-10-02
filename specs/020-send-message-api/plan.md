@@ -2,7 +2,7 @@
 
 **Spec**: [spec.md](spec.md). **Дата**: 2026-10-02.
 **Согласование spec.md**: пользователь согласовал комплект 018–025 2026-10-02.
-**Разрешение на реализацию**: CodeNotAuthorized; разрешён только технический комплект.
+**Разрешение на реализацию**: CodeAuthorized; разрешена полная feature вместе с 021–024.
 
 ## Summary
 
@@ -31,16 +31,16 @@ iron-session 9.0.1, Playwright 1.63.0 уже установлены. Данны�
 
 ## Constitution Check
 
-| Принцип | Результат | Основание до проектирования                                          |
-| ------- | --------- | -------------------------------------------------------------------- |
-| C1      | PASS      | Поведение, unknown outcome, текст, owner и single send обсуждены     |
-| C2      | PASS      | 020 только сервер, 021 только соединение формы                       |
-| C3      | PASS      | Spec согласована; код ожидает полный analysis и отдельное разрешение |
-| C4      | PASS      | Git/index не меняются; только чтение и документация                  |
-| C5      | PASS      | Новых установок/БД нет; кабинет меняет пользователь                  |
-| C6      | PASS      | Cookie/scope/server-only credentials; фиктивные проверки             |
-| C7      | PASS      | Red/Green/Refactor и постоянные тесты определены, исполнение NotRun  |
-| C8      | PASS      | Используется существующий API/Playwright, без Redis/БД/новых пакетов |
+| Принцип | Результат | Основание до проектирования                                                                    |
+| ------- | --------- | ---------------------------------------------------------------------------------------------- |
+| C1      | PASS      | Поведение, unknown outcome, текст, owner и single send обсуждены                               |
+| C2      | PASS      | 020 только сервер, 021 только соединение формы                                                 |
+| C3      | PASS      | Spec согласована; код разрешён2026-10-02, итоговый analyze выполняется отдельно                |
+| C4      | PASS      | Git/index не меняются; только чтение и документация                                            |
+| C5      | PASS      | Новых установок/БД нет; кабинет меняет пользователь                                            |
+| C6      | PASS      | Cookie/scope/server-only credentials; фиктивные проверки                                       |
+| C7      | PASS      | Red/Green/Refactor и постоянные тесты определены, ядро и HTTP/owner интеграция PassedSynthetic |
+| C8      | PASS      | Используется существующий API/Playwright, без Redis/БД/новых пакетов                           |
 
 ## Research and Design
 
@@ -48,7 +48,7 @@ iron-session 9.0.1, Playwright 1.63.0 уже установлены. Данны�
 - [data-model.md](data-model.md): request/result/unknown и временный lock.
 - [contracts/send-api.md](contracts/send-api.md): каждый HTTP исход и guard.
 - [quickstart.md](quickstart.md): точные команды будущих проверок.
-- [checklists/acceptance.md](checklists/acceptance.md): все сценарии NotRun.
+- [checklists/acceptance.md](checklists/acceptance.md): полная автоматическая приёмка PassedSynthetic.
 - [Общий комплект](../../docs/messaging-specs.md): единственная рабочая вкладка,
   scope против instance identity; shared model 019 и owner runtime 022/023.
 
@@ -59,7 +59,7 @@ timestamp; время локального принятия создаёт 021 �
 
 ## Project Structure
 
-Будущие новые файлы:
+Новые файлы:
 
 - src/app/api/messages/route.ts — POST cookie/scope → handler → runtime/provider.
 - src/lib/sending/types.ts — SendRequest/AcceptedSend/SendFailure.
@@ -72,11 +72,11 @@ timestamp; время локального принятия создаёт 021 �
 - src/lib/green-api/safe-identifier.ts — чистая проверка ID без raw/encoded
   реквизитов; серверный caller передаёт secrets, client их не импортирует.
 - tests/integration/send-message.spec.ts — adapter/handler/validation/locks.
-- tests/e2e/send-message-api.spec.ts — реальные HTTP cookie/methods/owner/late cases.
+- tests/e2e/message-composer.spec.ts — реальные HTTP cookie/methods/owner/late cases.
 - tests/e2e/fixtures/send-scenarios.json — фиктивные результаты поставщика.
-- specs/020-send-message-api/verification.md — будущие фактические Red/Green/review.
+- specs/020-send-message-api/verification.md — фактические Red/Green/review.
 
-Будущие изменяемые файлы:
+Изменённые файлы:
 
 - src/lib/green-api/constants.ts — только SEND_MESSAGE_METHOD, существующий timeout.
 - src/lib/routes/constants.ts — только MESSAGES_API:'/api/messages'.
@@ -92,14 +92,15 @@ timestamp; время локального принятия создаёт 021 �
 personal-chat validator из 018. 020 не редактирует workspace/поиск/стили.
 Общий файл src/lib/chats/validate-chat-id.ts предоставляет isPersonalChatId;
 его поддерживает 018, sending повторно не определяет parser.
-Чистый safe-identifier создаётся только в 020; 019/022 не импортируют будущий 020
-и используют существующий privacy pattern 014. Общий DAG остаётся направленным
-от 019/022/023 к 020, без обратной зависимости ради этого helper.
+Чистый safe-identifier создаётся только в 020; 019 использует существующий privacy pattern014.022 normalizer статуса повторно
+использует чистый safe-identifier из уже реализованного core020; он не импортирует
+Send route/adapter/session и не создаёт runtime цикл. Core020 проверен до022,
+а HTTP020 подключён после022/023.
 
 ## Tasks and Dependencies
 
 Порядок [tasks.md](tasks.md): preflight → integration tests и подтверждённый Red
-→ adapter/validation/handler Green → HTTP tests Red → route/fixtures Green
+→ adapter/validation/handler Green → готовые owner tests → route/fixtures → production regression
 → Refactor и итоговая регрессия → acceptance/review/verification.
 Реализация guard-интеграции зависит от готового runtime 022; самостоятельные
 тесты adapter/handler используют injected guard. Missing import/setup не Red.
@@ -107,11 +108,11 @@ personal-chat validator из 018. 020 не редактирует workspace/по
 
 ## Verification
 
-Статус выполнения: NotRun. Integration —
+Статус: все задачи Completed / PassedSynthetic. Полные результаты — [verification.md](verification.md). Integration —
 `npm run test:integration -- tests/integration/send-message.spec.ts`;
-HTTP — `npm run test:e2e -- tests/e2e/send-message-api.spec.ts`.
-Red: согласованный success/unknown/zero effect ещё отсутствует, а тест доходит
-до assertion. Green: те же проверки проходят; Refactor: повтор затронутых тестов
+HTTP — `npm run test:e2e -- tests/e2e/message-composer.spec.ts`.
+Red:63 поведенческих Failed/4 Passed на каркасе; тест доходит
+до assertion. Green:67 Passed; Refactor: повтор затронутых тестов
 и итоговый набор quickstart. Проверяются zero/one provider calls, scope/cookie,
 owner handover/pending, body Unicode, original text, временные ошибки без
 cookie removal, user unknown outcome, no secret/raw response/false timestamp.
@@ -126,16 +127,16 @@ Stylelint не требуется: SCSS и UI этот шаг не меняет.
 | ------- | ------------------------------ | -------------------------------------------------------------------- |
 | C1      | PASS                           | Product choices сохранены, counter/lock обоснованы в research        |
 | C2      | PASS                           | Серверная отправка не включает форму/историю/очередь                 |
-| C3      | PASS                           | Spec Approved, реализация CodeNotAuthorized                          |
-| C4      | PASS                           | Только собственные docs; Git/index не менялись                       |
+| C3      | PASS                           | Spec Approved, реализация CodeAuthorized                             |
+| C4      | PASS                           | Серверное ядро и документы020; Git/index не менялись                 |
 | C5      | PASS                           | Новых установок и external account changes нет                       |
 | C6      | PASS                           | Scope+proof+cookie, safe DTO и фиктивные данные                      |
-| C7      | PASS                           | Exact TDD цепочки/coverage/NotRun без ложных code Passed             |
+| C7      | PASS                           | TDD63 Red/67 Green; HTTP/owner интеграция PassedSynthetic            |
 | C8      | PASS                           | Один adapter/handler/route, shared runtime без второй инфраструктуры |
 
 Технический guard, байтовый лимит и корреляция UUID нужны существующим требованиям
 и имеют обоснованные ограничения в research; новое продуктовое поведение не добавлено.
-Разрешение кода не получено. Analysis выполняется позже в отдельном read-only
+Разрешена полная реализация020–024. Финальный analysis выполняется в отдельном read-only
 интервале, полный отчёт сохраняется отдельным действием, не этим планом.
 
 ## Complexity Tracking
@@ -144,3 +145,19 @@ Stylelint не требуется: SCSS и UI этот шаг не меняет.
 БД, broker, remote idempotency, автоматические повторные попытки или второй owner.
 Новых продуктовых вопросов нет; несовпадение shared контрактов является
 технической ошибкой подготовки и исправляется до анализа.
+
+## Текущая авторизация
+
+CodeAuthorized — все оставшиеся задачи до 024 реализованы по поручению 2026-10-02; HTTP маршрут использует общий runtime 022/023, UI подключён в 021.
+
+## Результат реализации 2026-10-02
+
+**Implementation Authorization**: CodeAuthorized. Прямое поручение пользователя:
+«делай все эти задачи до 24 включительно. Интерфейс должен быть выполнен в
+соответствии с макетом. Перед написанием кода прочитай правила написания кода
+и код-стайл». Правила прочитаны до кода; согласованные продуктовые решения сохранены.
+**Verification**: PassedSynthetic — автоматические серверные, React и production
+проверки с фиктивным GREEN-API. Реальная операторская проверка: NotRun.
+Полные доказательства, фактический TDD и ограничения: [verification](verification.md).
+Итоговая согласованность: [analysis](analysis.md). Разрешение не включает удалённые
+настройки, настоящие сообщения, установку пакетов или Git mutations.

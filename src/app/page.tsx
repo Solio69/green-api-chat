@@ -16,6 +16,8 @@ import { ChatHistoryPanel } from '@/components/ChatHistoryPanel'
 import { ChatListPanel } from '@/components/ChatListPanel'
 import { ChatWorkspace } from '@/components/ChatWorkspace'
 import { LogoutButton } from '@/components/LogoutButton'
+import { MessageComposer } from '@/components/MessageComposer'
+import { NotificationProvider } from '@/components/NotificationProvider'
 import { QueryProvider } from '@/components/QueryProvider'
 import { RecipientSearchForm } from '@/components/RecipientSearchForm'
 import styles from './HomePage.module.scss'
@@ -56,14 +58,20 @@ const HomePage = async () => {
   return (
     <main className={styles.homePage}>
       <QueryProvider key={connectionScope} connectionScope={connectionScope}>
-        <ChatWorkspace
-          account={
-            <AccountHeader account={result.body.profile} logoutLabel={LOGOUT} />
-          }
-          search={<RecipientSearchForm />}
-          chatList={<ChatListPanel />}
-          conversation={<ChatHistoryPanel />}
-        />
+        <NotificationProvider>
+          <ChatWorkspace
+            account={
+              <AccountHeader
+                account={result.body.profile}
+                logoutLabel={LOGOUT}
+              />
+            }
+            search={<RecipientSearchForm />}
+            chatList={<ChatListPanel />}
+            conversation={<ChatHistoryPanel />}
+            composer={<MessageComposer />}
+          />
+        </NotificationProvider>
       </QueryProvider>
     </main>
   )

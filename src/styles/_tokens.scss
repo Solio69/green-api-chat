@@ -129,7 +129,7 @@ $logout-error-max-width: 8rem;
 
 $chat-sidebar-width: 310px;
 $chat-mobile-breakpoint: 680px;
-$chat-workspace-min-height: 40.625rem;
+$chat-workspace-height: 40.625rem;
 $chat-empty-icon-size: 4.5rem;
 $chat-empty-hint-width: 17rem;
 $chat-pattern-opacity: 0.16;
@@ -182,10 +182,6 @@ $conversation-header-min-height: 5.125rem;
 $conversation-header-padding-block: 0.9375rem;
 $conversation-header-padding-inline: 1.5625rem;
 
-$history-content-height: calc(
-  $chat-workspace-min-height - $conversation-header-min-height
-);
-
 $message-max-width: 82%;
 $message-max-width-mobile: 88%;
 $message-radius: 17px;
@@ -212,3 +208,15 @@ $color-message-shadow: rgb(25 36 58 / 5%);
 $color-message-shadow-dark: rgb(0 0 0 / 10%);
 $shadow-message: 0 1px 2px $color-message-shadow;
 $shadow-message-dark: 0 1px 2px $color-message-shadow-dark;
+
+$composer-control-size: 43px;
+$composer-padding-block: 15px;
+$composer-padding-inline: 22px;
+$composer-gap: 10px;
+$composer-input-padding-block: $space-xs;
+$composer-input-padding-inline: 13px;
+$composer-input-radius: 13px;
+
+$message-status-size: 15px;
+
+$composer-disabled-opacity: 0.6;

@@ -72,4 +72,4 @@ label/profile только из фактических разрешённых д
 Accepted/incoming одного chatId; отсутствие в GetChats; пустой/error refresh;
 появление provider без дубля; отдельный label без fake name; неизвестные поля
 профиля; чужой scope/close; безопасные строковые ключи; стабильный порядок;
-Query GC и неизменность политики 014. Изолированные проверки Passed; реальные producers021/023 — NotRunExternal. См. [verification](../verification.md).
+Query GC и неизменность политики 014. Изолированные проверки Passed; producers021/023 проверены совместно: PassedSynthetic; реальный GREEN-API — NotRun. См. [verification](../verification.md).

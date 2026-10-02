@@ -1,6 +1,7 @@
 @use '../../styles/tokens' as tokens;
 
 .messageBubble {
+  flex: none;
   align-self: flex-start;
   min-width: 0;
   max-width: tokens.$message-max-width;

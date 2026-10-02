@@ -5,7 +5,7 @@
 **Feature**: [spec.md](../spec.md)
 **Kind**: Readiness
 **Result**: Passed — качество текста; spec согласована 2026-10-02, код не разрешён
-**Implementation Acceptance**: NotRun
+**Implementation Acceptance**: PassedSynthetic; Operator NotRun
 
 ## Content Quality
 
@@ -25,7 +25,7 @@
 
 ## Feature Readiness
 
-- [x] CHK006 Spec согласована 2026-10-02; CodeNotAuthorized и NotRun указаны отдельно.
+- [x] CHK006 Spec согласована 2026-10-02; CodeAuthorized и NotRun указаны отдельно.
 - [x] CHK007 Отправка отделена от выбора 025, истории 019, серверного слоя 020
       и получения уведомлений; чужой UI и согласованное оформление сохраняются.
 - [x] CHK008 Будущие компонентные/E2E/TDD-проверки не объявлены выполненными.
@@ -36,4 +36,4 @@
 
 Текстовое ревью подтверждает качество согласованной spec. Checkmark не
 подтверждает исполнение кода или соблюдение макета работающим приложением.
-User Approval получено 2026-10-02; Implementation Acceptance — NotRun.
+User Approval получено 2026-10-02; Implementation Acceptance — PassedSynthetic; Operator NotRun.

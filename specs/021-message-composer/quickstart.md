@@ -1,6 +1,6 @@
 # Quickstart: отправка из формы
 
-**Статус**: будущие действия после отдельного разрешения кода; NotRun.
+**Статус**: Completed / CodeAuthorized. Автоматическая приёмка PassedSynthetic; реальный инстанс Operator NotRun. Доказательства: [verification](verification.md).
 
 До интеграции нужны готовые контракты/реализация: selection 025, scope/error
 lifecycle 018, message cache и session-chat facts 019, Send API 020, owner 022/023.
@@ -10,7 +10,7 @@ lifecycle 018, message cache и session-chat facts 019, Send API 020, owner 022/
 После разрешения кода — Red/Green для чистых guards/client parsing:
 
 ```powershell
-npm run test:integration -- tests/integration/message-send.spec.ts
+npm run test:integration -- tests/integration/message-send-controller.spec.ts
 ```
 
 Real React/provider/composer Red/Green:
@@ -28,7 +28,7 @@ npm run test:e2e -- tests/e2e/message-composer.spec.ts
 Итог после всех правок/рефакторинга:
 
 ```powershell
-npm run test:integration -- tests/integration/message-send.spec.ts tests/integration/chat-query.spec.ts
+npm run test:integration -- tests/integration/message-send-controller.spec.ts tests/integration/chat-query.spec.ts
 npm run test:query -- tests/query/message-composer.spec.ts tests/query/chat-query.spec.ts
 npm run test:e2e -- tests/e2e/message-composer.spec.ts tests/e2e/chat-list-ui.spec.ts tests/e2e/chat-workspace.spec.ts tests/e2e/recipient-search-ui.spec.ts
 npm run typecheck

@@ -1,0 +1,26 @@
+@use '../../styles/tokens' as tokens;
+@use '../../styles/mixins' as mixins;
+
+.messageComposerFeedback {
+  margin: tokens.$space-xs 0 0;
+  color: var(--ui-error-color);
+  font-size: tokens.$font-size-small;
+
+  &--pending {
+    position: absolute;
+    width: tokens.$visually-hidden-size;
+    height: tokens.$visually-hidden-size;
+    margin: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  p {
+    margin: tokens.$space-xs 0;
+  }
+
+  button {
+    @include mixins.recovery-button;
+  }
+}

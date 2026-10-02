@@ -1,4 +1,5 @@
 export const ROUTES = {
+  MESSAGES_API: '/api/messages',
   HOME: '/',
   LOGIN: '/login',
   LOGIN_API: '/api/auth/login',

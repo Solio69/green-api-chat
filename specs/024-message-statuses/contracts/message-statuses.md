@@ -1,6 +1,6 @@
 # Реальные статусы сообщения
 
-**Проверки**: NotRun. Source of truth общей модели/памяти: [019 message-cache](../../019-chat-history-window/contracts/message-cache.md). Транспорт: [023](../../023-notification-sse/contracts/sse-stream.md).
+**Проверки**: PassedSynthetic; Operator NotRun. Source of truth общей модели/памяти: [019 message-cache](../../019-chat-history-window/contracts/message-cache.md). Транспорт: [023](../../023-notification-sse/contracts/sse-stream.md).
 
 ```ts
 type ProviderStatusFact = {
@@ -38,6 +38,6 @@ failed/noAccount без idMessage хранится как latest safe general is
 
 019 предоставляет `src/lib/messages/message-status-issues.ts`: Один helper `publishMessageIssues({session,issues:ChatIssueFact[]})`; некоррелированный отказ передаёт `issues:[{chatId,idMessage:null,code}]`. `MessageApplyResult={issues:ChatIssueFact[]}` возвращается applyMessageFacts/addAcceptedMessage. `ChatIssueFact={chatId:string|null,idMessage:string|null,code:'failed'|'noAccount'}`. Merge возвращает полную identity, general failure допускает null.023 и 021 публикуют result, не теряют его молча и не создают bubble. Latest issue хранится по chat либо connection в памяти scope; repeated event не копит raw errors.024 читает эти данные для существующего status/error outlet.
 
-Реализационная зависимость:025→018→019→022→023→020→021→024. Сохранение обработанной ошибки в 019/023 доступно раньше 024; полноценное видимое отображение входит в 024, не заявляется готовым в предшествующем частичном шаге.
+Реализационная зависимость:025→018→019→020 core→022→023→020 HTTP→021→024. Сохранение обработанной ошибки в 019/023 доступно раньше 024; полноценное видимое отображение входит в 024, не заявляется готовым в предшествующем частичном шаге.
 
 019 read-only hook `useMessageIssues(chatId:string|null):{chat:MessageIssue|null,connection:MessageIssue|null}` из `src/lib/messages/use-message-issues.ts` даёт latest issue; Query key `['message-status-issues',connectionScope]`, gcTime:Infinity до close.024 добавляет MessageStatusIndicator в optional status slot MessageBubble и MessageStatusIssue в error outlet ChatHistoryPanel/workspace; MessageList передаёт status prop. Новый layout/style redesign не входит. Knowntext/profile не дополняется по guessed id.

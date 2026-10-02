@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test'
 import type { Page } from '@playwright/test'
+import { expect, test } from './owner-fixture'
 import {
   CONVERSATION_CONTRACT,
   CONVERSATION_FIXTURES,
@@ -40,7 +40,7 @@ const {
   CLOSE,
   EMPTY_HEADING,
   PREMATURE_EMPTY_HISTORY,
-  UNIMPLEMENTED_API_PATTERN,
+  SEND_API_PATTERN,
 } = CONVERSATION_CONTRACT
 const { PHONE_LABEL, USERNAME_MODE, USERNAME_LABEL, SUBMIT, WRITE } =
   RECIPIENT_CONTRACT
@@ -178,8 +178,7 @@ test('conversation: found target opens with one history request, no Send or anot
   const prohibited: string[] = []
   page.on(EVENT_REQUEST, (request) => {
     if (new URL(request.url()).pathname === HISTORY_API) historyCalls += 1
-    if (UNIMPLEMENTED_API_PATTERN.test(request.url()))
-      prohibited.push(request.url())
+    if (SEND_API_PATTERN.test(request.url())) prohibited.push(request.url())
   })
   await page.route(RECIPIENT_SEARCH_API, (route) => {
     calls += 1

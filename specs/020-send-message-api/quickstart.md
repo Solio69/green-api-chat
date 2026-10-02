@@ -1,6 +1,6 @@
 # Quickstart: проверка серверной отправки
 
-**Статус**: действия после отдельного разрешения кода; сейчас NotRun.
+**Статус**: Completed / CodeAuthorized. Автоматическая приёмка PassedSynthetic; реальный инстанс Operator NotRun. Доказательства: [verification](verification.md).
 Каталог проекта: D:\Pet-projects\green-api-chat. Новые пакеты не нужны.
 
 1. Проверить фактический diff и зависимости: сессия 014, shared SessionQueryError
@@ -16,14 +16,14 @@ npm run test:integration -- tests/integration/send-message.spec.ts
 3. HTTP контракт, cookie, single send и чужая вкладка:
 
 ```powershell
-npm run test:e2e -- tests/e2e/send-message-api.spec.ts
+npm run test:e2e -- tests/e2e/message-composer.spec.ts
 ```
 
 4. После рефакторинга один итоговый набор, с регрессией прежних server contracts:
 
 ```powershell
 npm run test:integration
-npm run test:e2e -- tests/e2e/send-message-api.spec.ts tests/e2e/chats-api.spec.ts tests/e2e/recipient-search.spec.ts
+npm run test:e2e -- tests/e2e/message-composer.spec.ts tests/e2e/chats-api.spec.ts tests/e2e/recipient-search.spec.ts
 npm run typecheck
 npm run lint
 npm run format:check
@@ -33,10 +33,10 @@ node node_modules/prettier/bin/prettier.cjs --check --ignore-path NUL specs/020-
 Общий format:check охватывает source, tests и изменяемые shared constants/fixtures;
 отдельная команда --ignore-path NUL включает исключённые по умолчанию feature docs.
 
-Команды будущих файлов не исполняются на этапе документов. Red должен падать
+Команда send integration уже исполнена; команды будущих HTTP файлов пока не исполняются. Red должен падать
 на согласованном поведении (например, accepted вместо ошибочного результата),
 не на импорте или отсутствующем браузере. Type-compatible каркас допускается
-только после разрешения кода; он не подменяет тест бизнес-поведения.
+после разрешения кода; production run не подменяет поведенческий Red.
 
 HTTP fixture расширяет существующий fake-green-api.ts только send-сценариями;
 реальных запросов/секретов нет. Fixture claim/stream использует контракт 022/023.

@@ -1,6 +1,6 @@
 # Проверка статусы доставлено/прочитано/отказ
 
-**Сейчас**: docs only, CodeNotAuthorized. Ниже команды будущей реализации; тесты NotRun.
+**Статус**: Completed / CodeAuthorized. Автоматическая приёмка PassedSynthetic; реальный инстанс Operator NotRun. Доказательства: [verification](verification.md).
 
 ## Предварительные условия
 
@@ -32,6 +32,6 @@ Browser commands/fixtures точно заданы в tasks; не использ�
 
 ## Завершение
 
-Сверить acceptance/coverage/tasks, посмотреть итоговый source diff без Git mutations, сохранить verification с фактами/review/рисками. Предложенное английское название коммита: `Apply confirmed message delivery statuses without identity guesses`; agent сам commit/stage не вызывает. Следующийэтап — frozen read-only analyze и полный отчёт перед отдельной code authorization.
+Сверить acceptance/coverage/tasks, посмотреть итоговый source diff без Git mutations, сохранить verification с фактами/review/рисками. Предложенное английское название коммита: `Apply confirmed message delivery statuses without identity guesses`; agent сам commit/stage не вызывает. Итоговый frozen read-only analyze и полный отчёт сохранены отдельно; следующий шаг — ручное ревью и операторская проверка. Повторная code authorization не требуется.
 
-Общий порядок небольших шагов:025→018→019→022→023→020→021→024. Проверки сквозного результата последующего шага остаются NotRun до его реализации; stubbed fake sink позволяет независимо проверить core022.
+Общий порядок небольших шагов:025→018→019→020 core→022→023→020 HTTP→021→024. Сквозные проверки020–024 выполнены с fake provider; независимые core тесты сохранены. Настоящий GREEN-API не использовался.

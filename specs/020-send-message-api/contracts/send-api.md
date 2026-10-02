@@ -37,7 +37,7 @@ body больше лимита — 413 invalid_request без вызова по�
 не опирается только на внутренний URL. Некорректный Host не допускает fallback
 для прохождения проверки; произвольные X-Forwarded-* заголовки не используются.
 Эта техническая граница соответствует проверенному guard истории018;
-feature остаётся CodeNotAuthorized, исполняемые проверки NotRun.
+adapter/handler и рабочий HTTP этап PassedSynthetic.
 
 ## Ответ
 
@@ -91,8 +91,9 @@ characters, без raw/encodeURIComponent вариантов серверных 
 adapter вычисляет запрещённые значения на сервере. Не вводится positive numeric
 regex idMessage. Небезопасный idMessage после dispatch даёт unknown, не DTO с
 секретом. Исходный user-authored message этим фильтром не изменяется.
-Helper создаётся в 020 и не является prerequisite для 019/022: более ранние
-шаги используют существующий privacy pattern 014, без импорта будущих файлов 020.
+Helper создан в независимом core020 до022.019 использует privacy pattern014;
+022 status normalizer использует этот чистый helper, без импортов Send route/adapter.
+Module graph ацикличен; общий stage порядок явно разделяет core020 и HTTP020.
 
 src/lib/green-api/send-message.ts экспортирует
 sendMessage({credentials,chatId,message,fetcher?,signal?}); таймер 10000 ms,
@@ -128,4 +129,12 @@ session.handleSessionError; ownership/busy 409 не закрывают Query/coo
 
 После разрешения кода: HTTP cookie/scope/proof/методы/body, original text/Unicode,
 late response и только один external call. Тайм-аут с сервером, принявшим текст,
-возвращает unknown; count вызовов = 1. Все значения фиктивные. Acceptance: NotRun.
+возвращает unknown; count вызовов = 1. Все значения фиктивные. Полная автоматическая приёмка PassedSynthetic; реальный инстанс NotRun.
+
+## Текущая независимая реализация
+
+SendRequestOptions.context содержит configured/credentials/connectionScope/ownerCapability.
+Route023/020 читает X-Chat-Owner; handler получает guard из единого registry через dependency injection.
+tryAcquireSend обязателен и имеет точную структурную сигнатуру022; fake находится только
+в tests/integration/send-message.spec.ts. Заголовки/proof/HTTP методы ещё не проверены
+рабочим маршрутом. User-abort проверяется до dispatch; начатый send использует server deadline.
