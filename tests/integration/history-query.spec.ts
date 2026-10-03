@@ -1,11 +1,11 @@
 import { expect, test } from '@playwright/test'
 import { CancelledError } from '@tanstack/react-query'
+import { createConnectionSession } from '@/lib/conversations/create-connection-session'
 import { fetchHistory } from '@/lib/history/fetch-history'
 import { HistoryQueryError } from '@/lib/history/types'
 import { mergeMessageFacts } from '@/lib/messages/merge-message-facts'
 import { applyHistoryMessages } from '@/lib/messages/message-cache'
 import type { MessageDTO } from '@/lib/messages/types'
-import { createQuerySession } from '@/lib/query/create-query-session'
 import { HISTORY_TEST } from '../history/constants'
 
 const {
@@ -199,7 +199,7 @@ test('history merge does not downgrade confirmed status or replace known text wi
   ])
 })
 test('history cache is retained independently of request observers and is cleared by session close', async () => {
-  const session = createQuerySession({ connectionScope: scopeA })
+  const session = createConnectionSession({ connectionScope: scopeA })
   applyHistoryMessages({ session, chatId: chatA, messages: [message] })
   const key = [MESSAGES_KEY, scopeA, chatA]
   expect(session.client.getQueryData(key)).toEqual({ messages: [message] })
@@ -225,7 +225,7 @@ test('history cache is retained independently of request observers and is cleare
   expect(session.client.getQueryCache().getAll()).toHaveLength(0)
 })
 test('history and chats share one normalized session transition and isolated cleanup errors', async () => {
-  const session = createQuerySession({ connectionScope: scopeA })
+  const session = createConnectionSession({ connectionScope: scopeA })
   const extension = session as typeof session & {
     connectionScope?: string
     registerCleanup?: (callback: () => void) => () => void
@@ -263,7 +263,7 @@ test('history and chats share one normalized session transition and isolated cle
 })
 test('history normalized 409 alone cannot retire a session without matching connection code and status', async () => {
   let transitions = 0
-  const session = createQuerySession({
+  const session = createConnectionSession({
     connectionScope: scopeA,
     onSessionError: () => {
       transitions += 1

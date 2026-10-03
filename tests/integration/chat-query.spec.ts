@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test'
 import { CancelledError, QueryObserver } from '@tanstack/react-query'
+import { chatsQueryOptions } from '@/lib/chats/chats-query-options'
 import { fetchChats } from '@/lib/chats/fetch-chats'
 import { ChatsQueryError } from '@/lib/chats/types'
 import { createQuerySession } from '@/lib/query/create-query-session'
@@ -124,8 +125,8 @@ test('query: two observers share a request, fresh remount reuses data', async ()
       return pending.promise
     },
   })
-  const first = new QueryObserver(session.client, session.options())
-  const second = new QueryObserver(session.client, session.options())
+  const first = new QueryObserver(session.client, chatsQueryOptions(session))
+  const second = new QueryObserver(session.client, chatsQueryOptions(session))
   const stopFirst = first.subscribe(() => undefined)
   const stopSecond = second.subscribe(() => undefined)
   expect(calls).toBe(1)
@@ -134,7 +135,7 @@ test('query: two observers share a request, fresh remount reuses data', async ()
   expect(second.getCurrentResult().data).toEqual([chat])
   stopFirst()
   stopSecond()
-  const remount = new QueryObserver(session.client, session.options())
+  const remount = new QueryObserver(session.client, chatsQueryOptions(session))
   const stop = remount.subscribe(() => undefined)
   expect(remount.getCurrentResult().data).toEqual([chat])
   expect(calls).toBe(1)
@@ -156,7 +157,7 @@ test('query: refresh failure retains confirmed data and manual retry recovers', 
           )
         : response(),
   })
-  const observer = new QueryObserver(session.client, session.options())
+  const observer = new QueryObserver(session.client, chatsQueryOptions(session))
   const stop = observer.subscribe(() => undefined)
   await expect.poll(() => observer.getCurrentResult().data).toEqual([chat])
   fails = true
@@ -180,7 +181,7 @@ test('query: close aborts and late promise cannot restore cache; new account ind
     },
   })
   const promise = session.client
-    .fetchQuery(session.options())
+    .fetchQuery(chatsQueryOptions(session))
     .catch((error: unknown) => error)
   await session.close()
   expect(session.isActive()).toBe(false)
@@ -193,12 +194,14 @@ test('query: close aborts and late promise cannot restore cache; new account ind
     fetcher: async () => response(scopeB),
   })
   expect(other.client).not.toBe(session.client)
-  expect(await other.client.fetchQuery(other.options())).toEqual([chat])
+  expect(await other.client.fetchQuery(chatsQueryOptions(other))).toEqual([
+    chat,
+  ])
   await other.close()
 })
 test('query: explicit timing/event policy and closed loader guard', async () => {
   const session = createQuerySession({ connectionScope: scopeA })
-  expect(session.options()).toMatchObject({
+  expect(chatsQueryOptions(session)).toMatchObject({
     queryKey: ['chats', scopeA],
     staleTime: 60000,
     gcTime: 300000,
@@ -239,7 +242,7 @@ test('query: two access errors retire context and notify exactly once', async ()
       transitions += 1
     },
   })
-  const observer = new QueryObserver(session.client, session.options())
+  const observer = new QueryObserver(session.client, chatsQueryOptions(session))
   const stop = observer.subscribe(() => undefined)
   await expect.poll(() => transitions).toBe(1)
   expect(session.isActive()).toBe(false)

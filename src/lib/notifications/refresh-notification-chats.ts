@@ -1,3 +1,4 @@
+import { chatsQueryOptions } from '@/lib/chats/chats-query-options'
 import type { QuerySession } from '@/lib/query/create-query-session'
 import { NOTIFICATION_CONFIG } from './constants'
 
@@ -23,7 +24,10 @@ export const createNotificationChatRefresh = ({
     running = true
     lastStarted = now()
     try {
-      await session.client.fetchQuery({ ...session.options(), staleTime: 0 })
+      await session.client.fetchQuery({
+        ...chatsQueryOptions(session),
+        staleTime: 0,
+      })
     } catch {
       /* Query owns the error; retained facts are untouched. */
     } finally {

@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { createConnectionSession } from '@/lib/conversations/create-connection-session'
 import {
   applyMessageFacts as apply,
   messageKey,
@@ -8,7 +9,6 @@ import type {
   MessageDTO,
   MessageStatusFact as Status,
 } from '@/lib/messages/types'
-import { createQuerySession } from '@/lib/query/create-query-session'
 import type { QuerySession } from '@/lib/query/create-query-session'
 import { HISTORY_TEST, MESSAGE_CACHE_TEST } from '../history/constants'
 
@@ -45,7 +45,7 @@ const status = (value: Status['status']): Status => ({
 const earlyId = (index: number) => `${EARLY_ID_PREFIX}${index}`
 
 test('facts: status before a message does not create a bubble and attaches to real history', async () => {
-  const session = createQuerySession({ connectionScope: scopeA })
+  const session = createConnectionSession({ connectionScope: scopeA })
   apply({
     session,
     chatId: chatA,
@@ -59,7 +59,7 @@ test('facts: status before a message does not create a bubble and attaches to re
 })
 for (const first of [FAILED, DELIVERED, READ] as const) {
   test(`facts: early ${first} and conflicting later status retain confirmation and publish issue`, async () => {
-    const session = createQuerySession({ connectionScope: scopeA })
+    const session = createConnectionSession({ connectionScope: scopeA })
     const second = first === FAILED ? READ : FAILED
     apply({ session, chatId: chatA, statuses: [status(first)], source: LIVE })
     apply({ session, chatId: chatA, statuses: [status(second)], source: LIVE })
@@ -81,7 +81,7 @@ for (const first of [FAILED, DELIVERED, READ] as const) {
   })
 }
 test('facts: duplicate does not extend TTL, stronger status renews it, expired facts never attach', async () => {
-  const session = createQuerySession({ connectionScope: scopeA })
+  const session = createConnectionSession({ connectionScope: scopeA })
   apply({
     session,
     chatId: chatA,
@@ -105,7 +105,7 @@ test('facts: duplicate does not extend TTL, stronger status renews it, expired f
   })
   expect(read(session)?.[0].status).toBeNull()
   await session.close()
-  const next = createQuerySession({ connectionScope: scopeA })
+  const next = createConnectionSession({ connectionScope: scopeA })
   apply({
     session: next,
     chatId: chatA,
@@ -131,7 +131,7 @@ test('facts: duplicate does not extend TTL, stronger status renews it, expired f
   await next.close()
 })
 test('facts: bounded early queue evicts oldest deterministically and retains GC until close', async () => {
-  const session = createQuerySession({ connectionScope: scopeA })
+  const session = createConnectionSession({ connectionScope: scopeA })
   const statuses = Array.from({ length: EARLY_FACT_LIMIT + 1 }, (_, index) => ({
     ...status(READ),
     idMessage: earlyId(index),
@@ -163,7 +163,7 @@ test('facts: bounded early queue evicts oldest deterministically and retains GC 
   expect(session.client.getQueryCache().getAll()).toHaveLength(0)
 })
 test('facts: provider fields replace accepted fields; late history preserves live content, identity and read', async () => {
-  const session = createQuerySession({ connectionScope: scopeA })
+  const session = createConnectionSession({ connectionScope: scopeA })
   const accepted: MessageDTO = {
     ...outgoing,
     text: ACCEPTED_TEXT,
@@ -199,7 +199,7 @@ test('facts: provider fields replace accepted fields; late history preserves liv
   await session.close()
 })
 test('facts: validation is atomic for wrong-chat messages and partial statuses', async () => {
-  const session = createQuerySession({ connectionScope: scopeA })
+  const session = createConnectionSession({ connectionScope: scopeA })
   expect(() =>
     apply({
       session,
@@ -214,7 +214,7 @@ test('facts: validation is atomic for wrong-chat messages and partial statuses',
 })
 
 test('facts: live provider content without timestamp survives later history after local acceptance', () => {
-  const session = createQuerySession({ connectionScope: scopeA })
+  const session = createConnectionSession({ connectionScope: scopeA })
   apply({
     session,
     chatId: chatA,
@@ -252,7 +252,7 @@ test('facts: live provider content without timestamp survives later history afte
 })
 
 test('facts: accepted-message API preserves exact text, timestamp semantics and prior read', async () => {
-  const session = createQuerySession({ connectionScope: scopeA })
+  const session = createConnectionSession({ connectionScope: scopeA })
   apply({ session, chatId: chatA, statuses: [status(READ)], source: LIVE })
   addAcceptedMessage({
     session,

@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test'
 import { SESSION_CHAT_TEST } from '../chats/session-constants'
+import { chatsQueryOptions } from '@/lib/chats/chats-query-options'
 import {
   rememberPersonalChat,
   deriveSessionChats,
@@ -7,7 +8,7 @@ import {
   reconcileSessionChats,
 } from '@/lib/chats/session-chat-facts'
 import type { SessionChatCache } from '@/lib/chats/session-chat-facts'
-import { createQuerySession } from '@/lib/query/create-query-session'
+import { createConnectionSession } from '@/lib/conversations/create-connection-session'
 import { HISTORY_TEST } from '../history/constants'
 
 const { scopeA, chatA, SUCCESS } = HISTORY_TEST
@@ -16,7 +17,7 @@ const { ACCEPTED, INCOMING } = SOURCE
 const profile = { chatId: chatA, name: null, username: null, phone: null }
 test('session chats: successful provider confirmation consumes pending fact while retaining independent label', async () => {
   const confirmed = { ...profile, name: PROVIDER_NAME }
-  const session = createQuerySession({
+  const session = createConnectionSession({
     connectionScope: scopeA,
     fetcher: async () =>
       Response.json({
@@ -30,7 +31,9 @@ test('session chats: successful provider confirmation consumes pending fact whil
     factsByChatId: { [chatA]: profile },
     labelsByChatId: { [chatA]: LABEL },
   })
-  await session.options().queryFn({ signal: new AbortController().signal })
+  await chatsQueryOptions(session).queryFn({
+    signal: new AbortController().signal,
+  })
   expect(session.client.getQueryData(key)).toEqual({
     factsByChatId: {},
     labelsByChatId: { [chatA]: LABEL },
@@ -42,7 +45,7 @@ test('session chats: successful provider confirmation consumes pending fact whil
   await session.close()
 })
 test('session chats: empty provider reply does not consume pending chat and close clears both caches', async () => {
-  const session = createQuerySession({
+  const session = createConnectionSession({
     connectionScope: scopeA,
     fetcher: async () =>
       Response.json({ status: SUCCESS, connectionScope: scopeA, chats: [] }),
@@ -53,14 +56,16 @@ test('session chats: empty provider reply does not consume pending chat and clos
     labelsByChatId: { [chatA]: LABEL },
   }
   session.client.setQueryData(key, overlay)
-  await session.options().queryFn({ signal: new AbortController().signal })
+  await chatsQueryOptions(session).queryFn({
+    signal: new AbortController().signal,
+  })
   expect(session.client.getQueryData(key)).toEqual(overlay)
   await session.close()
   expect(session.client.getQueryCache().getAll()).toHaveLength(0)
 })
 
 test('session chats: accepted/incoming share one fact, independent label and provider priority with safe keys', async () => {
-  const session = createQuerySession({ connectionScope: scopeA })
+  const session = createConnectionSession({ connectionScope: scopeA })
   const key = sessionChatKey(scopeA)
   rememberPersonalChat({
     session,

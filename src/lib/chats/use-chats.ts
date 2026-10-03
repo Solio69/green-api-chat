@@ -2,6 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { useSyncExternalStore } from 'react'
+import { chatsQueryOptions } from './chats-query-options'
 import { deriveSessionChats, sessionChatKey } from './session-chat-facts'
 import type { SessionChatCache } from './session-chat-facts'
 import { ChatsQueryError } from './types'
@@ -17,7 +18,7 @@ export const useChats = () => {
     session.isActive,
     session.isActive,
   )
-  const result = useQuery({ ...session.options(), enabled: active })
+  const result = useQuery({ ...chatsQueryOptions(session), enabled: active })
   const overlay = useQuery<SessionChatCache>({
     queryKey: sessionChatKey(session.connectionScope),
     enabled: false,

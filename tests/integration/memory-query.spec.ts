@@ -3,7 +3,7 @@ import { QueryClientProvider, useQuery } from '@tanstack/react-query'
 import type { QueryKey } from '@tanstack/react-query'
 import { createElement } from 'react'
 import { renderToString } from 'react-dom/server'
-import { createQuerySession } from '@/lib/query/create-query-session'
+import { createConnectionSession } from '@/lib/conversations/create-connection-session'
 import { HISTORY_TEST, MESSAGE_CACHE_TEST } from '../history/constants'
 
 const { scopeA, chatA, message } = HISTORY_TEST
@@ -21,7 +21,7 @@ for (const prefix of [
   ISSUES_KEY,
 ]) {
   test(`memory query: ${prefix} reads retained cache without development console errors`, async () => {
-    const session = createQuerySession({ connectionScope: scopeA })
+    const session = createConnectionSession({ connectionScope: scopeA })
     const queryKey = [prefix, scopeA, chatA]
     const errors: unknown[][] = []
     const originalError = console.error

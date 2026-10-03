@@ -1,9 +1,9 @@
 import { expect, test } from '@playwright/test'
+import { createConnectionSession } from '@/lib/conversations/create-connection-session'
 import { applyMessageFacts, messageKey } from '@/lib/messages/message-cache'
 import { applyNotification } from '@/lib/notifications/apply-notification'
 import { normalizeNotification } from '@/lib/notifications/normalize-notification'
 import type { NotificationDelivery } from '@/lib/notifications/types'
-import { createQuerySession } from '@/lib/query/create-query-session'
 import type { QuerySession } from '@/lib/query/create-query-session'
 import {
   deriveUnreadCounts,
@@ -75,7 +75,7 @@ const count = ({
 }) => deriveUnreadCounts(read(session)).countsByChatId[chatId] ?? 0
 
 test('unread: incoming notification records one unique unread message before ACK', async () => {
-  const session = createQuerySession({ connectionScope: SCOPE })
+  const session = createConnectionSession({ connectionScope: SCOPE })
   try {
     expect(apply({ session })).toBe(true)
     expect(session.client.getQueryData([KEY, SCOPE])).toMatchObject({
@@ -87,7 +87,7 @@ test('unread: incoming notification records one unique unread message before ACK
 })
 
 test('unread: unique IDs increment, replays before and after reading do not', async () => {
-  const session = createQuerySession({ connectionScope: SCOPE })
+  const session = createConnectionSession({ connectionScope: SCOPE })
   apply({ session })
   apply({ session })
   apply({ session, value: delivery({ idMessage: SECOND_MESSAGE }) })
@@ -102,7 +102,7 @@ test('unread: unique IDs increment, replays before and after reading do not', as
 })
 
 test('unread: chat identity isolates equal IDs and reading clears only one chat', async () => {
-  const session = createQuerySession({ connectionScope: SCOPE })
+  const session = createConnectionSession({ connectionScope: SCOPE })
   apply({ session })
   apply({ session, value: delivery({ chatId: OTHER_CHAT }) })
   expect(deriveUnreadCounts(read(session)).total).toBe(2)
@@ -113,7 +113,7 @@ test('unread: chat identity isolates equal IDs and reading clears only one chat'
 })
 
 test('unread: visible conversation consumes incoming, hidden conversation counts and return clears', async () => {
-  const session = createQuerySession({ connectionScope: SCOPE })
+  const session = createConnectionSession({ connectionScope: SCOPE })
   setReadableConversation({ session, chatId: CHAT })
   apply({ session })
   expect(count({ session })).toBe(0)
@@ -126,7 +126,7 @@ test('unread: visible conversation consumes incoming, hidden conversation counts
 })
 
 test('unread: history and outgoing facts do not count or erase incoming marks', async () => {
-  const session = createQuerySession({ connectionScope: SCOPE })
+  const session = createConnectionSession({ connectionScope: SCOPE })
   const value = delivery()
   if (value.event.kind !== INCOMING_KIND) throw new Error(FOREIGN_DELIVERY)
   applyMessageFacts({
@@ -160,7 +160,7 @@ test('unread: history and outgoing facts do not count or erase incoming marks', 
 })
 
 test('unread: unsupported incoming counts once, status and ignored events do not count', async () => {
-  const session = createQuerySession({ connectionScope: SCOPE })
+  const session = createConnectionSession({ connectionScope: SCOPE })
   const value = delivery()
   if (value.event.kind !== INCOMING_KIND) throw new Error(FOREIGN_DELIVERY)
   apply({
@@ -197,7 +197,7 @@ test('unread: unsupported incoming counts once, status and ignored events do not
 })
 
 test('unread: foreign owner, scope and invalid events cannot mutate marks', async () => {
-  const session = createQuerySession({ connectionScope: SCOPE })
+  const session = createConnectionSession({ connectionScope: SCOPE })
   const value = delivery()
   expect(
     apply({ session, value: { ...value, connectionScope: STALE_SCOPE } }),
@@ -223,7 +223,7 @@ test('unread: foreign owner, scope and invalid events cannot mutate marks', asyn
 })
 
 test('unread: memory defaults never refetch and close prevents resurrection or cross-scope reuse', async () => {
-  const session = createQuerySession({ connectionScope: SCOPE })
+  const session = createConnectionSession({ connectionScope: SCOPE })
   apply({ session })
   expect(session.client.getQueryDefaults([KEY])).toMatchObject({
     gcTime: Infinity,
@@ -235,7 +235,7 @@ test('unread: memory defaults never refetch and close prevents resurrection or c
   expect(apply({ session })).toBe(false)
   setReadableConversation({ session, chatId: CHAT })
   expect(session.client.getQueryCache().getAll()).toHaveLength(0)
-  const next = createQuerySession({ connectionScope: STALE_SCOPE })
+  const next = createConnectionSession({ connectionScope: STALE_SCOPE })
   expect(
     deriveUnreadCounts(next.client.getQueryData(unreadKey(STALE_SCOPE))).total,
   ).toBe(0)

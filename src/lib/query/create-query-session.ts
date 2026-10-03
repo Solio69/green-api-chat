@@ -1,20 +1,11 @@
-import { QueryCache, QueryClient, skipToken } from '@tanstack/react-query'
+import { QueryCache, QueryClient } from '@tanstack/react-query'
 import { SessionQueryError } from './session-query-error'
-import { fetchChats } from '@/lib/chats/fetch-chats'
-import { reconcileSessionChats } from '@/lib/chats/session-chat-facts'
 import { API_ERROR_CODE } from '@/lib/api/constants'
-import { SESSION_CHAT_CONFIG, CHAT_QUERY_CONFIG } from '@/lib/chats/constants'
 import { HTTP_STATUS } from '@/lib/http/constants'
-import { MESSAGE_CACHE_CONFIG } from '@/lib/messages/constants'
-import { UNREAD_CONFIG } from '@/lib/unread/constants'
 
-const { KEY, STALE_TIME_MS, GC_TIME_MS } = CHAT_QUERY_CONFIG
-const { KEY: MESSAGE_KEY, GC_TIME: MESSAGE_GC_TIME } = MESSAGE_CACHE_CONFIG
-const { STATUS_FACTS_KEY, ISSUES_KEY } = MESSAGE_CACHE_CONFIG
-const { KEY: SESSION_CHAT_KEY } = SESSION_CHAT_CONFIG
-const { KEY: UNREAD_KEY } = UNREAD_CONFIG
 const { SESSION_REQUIRED, CONNECTION_CHANGED } = API_ERROR_CODE
 const { UNAUTHORIZED, CONFLICT } = HTTP_STATUS
+
 const invokeCleanup = (callback: () => void) => {
   try {
     callback()
@@ -54,8 +45,7 @@ export const createQuerySession = ({
       error instanceof SessionQueryError &&
       ((error.code === SESSION_REQUIRED && error.status === UNAUTHORIZED) ||
         (error.code === CONNECTION_CHANGED && error.status === CONFLICT))
-    const shouldRetire = isSessionError && active
-    if (!shouldRetire) return
+    if (!isSessionError || !active) return
     await close()
     onSessionError?.(error)
   }
@@ -68,25 +58,6 @@ export const createQuerySession = ({
       },
     }),
   })
-  const memoryDefaults = {
-    queryFn: skipToken,
-    structuralSharing: false,
-    gcTime: MESSAGE_GC_TIME,
-    enabled: false,
-    retry: false,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-    refetchInterval: false,
-  } as const
-  for (const key of [
-    MESSAGE_KEY,
-    STATUS_FACTS_KEY,
-    ISSUES_KEY,
-    SESSION_CHAT_KEY,
-    UNREAD_KEY,
-  ])
-    client.setQueryDefaults([key], memoryDefaults)
   const subscribe = (listener: () => void) => {
     listeners.add(listener)
     return () => {
@@ -115,38 +86,16 @@ export const createQuerySession = ({
       }, 0)
     }
   }
-  const options = () => ({
-    queryKey: [KEY, connectionScope],
-    staleTime: STALE_TIME_MS,
-    gcTime: GC_TIME_MS,
-    retry: false as const,
-    refetchOnMount: true as const,
-    refetchOnWindowFocus: false as const,
-    refetchOnReconnect: true as const,
-    refetchInterval: false as const,
-    enabled: active,
-    queryFn: async ({ signal }: { signal: AbortSignal }) => {
-      const chats = await fetchChats({
-        connectionScope,
-        signal,
-        isActive,
-        fetcher,
-      })
-      reconcileSessionChats({ session, providerChats: chats })
-      return chats
-    },
-  })
-  const session = {
+  return {
     client,
     connectionScope,
+    fetcher,
     isActive,
     subscribe,
     close,
     retain,
-    options,
     registerCleanup,
     handleSessionError,
   } as const
-  return session
 }
 export type QuerySession = ReturnType<typeof createQuerySession>

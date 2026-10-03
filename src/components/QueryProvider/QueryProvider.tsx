@@ -4,7 +4,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { createContext, useContext, useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
-import { createQuerySession } from '@/lib/query/create-query-session'
+import { createConnectionSession } from '@/lib/conversations/create-connection-session'
 import type { QuerySession } from '@/lib/query/create-query-session'
 import { API_ERROR_CODE } from '@/lib/api/constants'
 import { ROUTES } from '@/lib/routes/constants'
@@ -19,7 +19,7 @@ export const QueryProvider = ({
 }: QueryProviderProps) => {
   const router = useRouter()
   const [session] = useState(() =>
-    createQuerySession({
+    createConnectionSession({
       connectionScope,
       onSessionError: (error) => {
         if (error.code === SESSION_REQUIRED) router.replace(LOGIN)
