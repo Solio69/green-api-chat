@@ -16,4 +16,4 @@
 
 ## Предкоммитное ревью и CI
 
-Проверены состав собственных файлов, SCSS/ARIA/focus/scroll, отсутствие реальных секретов, карта 035 и повторный read-only анализ (131 путь, SHA-256 `67b52007e63fb0e976b10a825e3ac0beb2ecba7d8c83e225974e66b8ff813e20`, unchanged=true). Кодовый SHA и обе GitHub CI jobs фиксируются после push. Новых зависимостей, БД, реальных запросов provider и изменения send/unknown/ACK нет.
+Проверены состав собственных файлов, SCSS/ARIA/focus/scroll, отсутствие реальных секретов, карта 035 и повторный read-only анализ (131 путь, SHA-256 `67b52007e63fb0e976b10a825e3ac0beb2ecba7d8c83e225974e66b8ff813e20`, unchanged=true). Кодовый SHA `b377bba9808702a2c360bfb5f24abfe33bb322b5` запушен в `refactor`; [Quality run 37153292888](https://github.com/Solio69/green-api-chat/actions/runs/37153292888): `quality=success`, `browser=success`, артефакты `quality-1` и `browser-1` сохранены. Документационный SHA и его обе CI jobs проверяются после отдельного push. Новых зависимостей, БД, реальных запросов provider и изменения send/unknown/ACK нет.
