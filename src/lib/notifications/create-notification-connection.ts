@@ -1,6 +1,13 @@
 import { applyNotification } from './apply-notification'
 import { acquireBrowserTabLease } from './browser-tab-lease'
 import {
+  initialConnectionModel,
+  pendingAckToken,
+  toConnectionState,
+  transitionConnection,
+} from './connection-model'
+import type { ConnectionEvent, ConnectionState } from './connection-model'
+import {
   createNotificationTransport,
   NotificationTransportError,
   waitForNotificationRetry,
@@ -20,37 +27,17 @@ import {
   POLLING_CONFIG,
 } from './constants'
 
-const {
-  INVALID_UPSTREAM,
-  OWNERSHIP_BUSY,
-  NOT_CONFIGURED,
-  DELIVERY_CHANGED,
-  RETRY_LATER,
-} = NOTIFICATION_CODE
+const { INVALID_UPSTREAM, OWNERSHIP_BUSY, NOT_CONFIGURED, DELIVERY_CHANGED } =
+  NOTIFICATION_CODE
 const { CONNECTION_SCOPE } = HTTP_HEADERS
 const { SESSION_REQUIRED, CONNECTION_CHANGED } = API_ERROR_CODE
 const { UNAUTHORIZED, CONFLICT } = HTTP_STATUS
-const { CONNECTED, CLOSED, CONNECTING, LIMITED, PAUSED, RETRYING } =
-  NOTIFICATION_STATE
+const { CLOSED } = NOTIFICATION_STATE
 const { SETTINGS, RECEIVE, ACK } = NOTIFICATION_ROUTES
-const {
-  BACKOFF_MS,
-  BACKOFF_JITTER_MIN,
-  BACKOFF_JITTER_RANGE,
-  OUTGOING_DISABLED,
-} = NOTIFICATION_CONFIG
+const { BACKOFF_MS, BACKOFF_JITTER_MIN, BACKOFF_JITTER_RANGE } =
+  NOTIFICATION_CONFIG
 const { REQUEST_SPACING_MS, LOCK_UNAVAILABLE } = POLLING_CONFIG
-export type ConnectionState = {
-  status:
-    | typeof CONNECTED
-    | typeof CLOSED
-    | typeof CONNECTING
-    | typeof LIMITED
-    | typeof PAUSED
-    | typeof RETRYING
-  canSend: boolean
-  issue: string | null
-}
+export type { ConnectionState } from './connection-model'
 const invalidFrame = () =>
   new SessionQueryError({ code: INVALID_UPSTREAM, status: null })
 export const createNotificationConnection = ({
@@ -62,33 +49,38 @@ export const createNotificationConnection = ({
   fetcher?: typeof fetch
   acquireLease?: typeof acquireBrowserTabLease
 }) => {
-  let state: ConnectionState = { status: CLOSED, canSend: false, issue: null }
+  let model = initialConnectionModel
+  let state: ConnectionState = toConnectionState(model)
   let owner: OwnerContext | null = null
   let releaseLease: (() => void) | null = null
-  let closed = false
   let runningTask: Promise<void> | null = null
-  let generation = 0
   let abort: AbortController | null = null
   let retained = 0
   let disposal: ReturnType<typeof setTimeout> | undefined
-  let readyOnce = false
-  let outgoingEnabled = true
   const listeners = new Set<() => void>()
   const recoveryListeners = new Set<() => void>()
   const refresh = createNotificationChatRefresh(session)
   const post = createNotificationTransport({ session, fetcher })
-  const setState = (next: ConnectionState) => {
-    const unchanged =
-      next.status === state.status &&
-      next.canSend === state.canSend &&
-      next.issue === state.issue
-    if (unchanged) return
-    state = next
-    listeners.forEach((listener) => listener())
+  const applyTransition = (event: ConnectionEvent) => {
+    const result = transitionConnection(model, event)
+    if (result.model === model) return
+    model = result.model
+    const next = toConnectionState(model)
+    const changed =
+      next.status !== state.status ||
+      next.canSend !== state.canSend ||
+      next.issue !== state.issue
+    if (changed) {
+      state = next
+      listeners.forEach((listener) => listener())
+    }
+    if (result.commands.includes('publish_recovery'))
+      recoveryListeners.forEach((listener) => listener())
   }
+  const isClosed = () => model.status === CLOSED && model.terminal
   const currentOwner = (context: OwnerContext) => {
     const current =
-      !closed &&
+      !isClosed() &&
       session.isActive() &&
       owner !== null &&
       releaseLease !== null &&
@@ -99,28 +91,16 @@ export const createNotificationConnection = ({
   const captureOwnerContext = () =>
     owner && currentOwner(owner) ? { ...owner } : null
   const close = () => {
-    if (closed) return
-    closed = true
-    generation += 1
+    if (isClosed()) return
+    applyTransition({ type: 'close' })
     abort?.abort()
     clearTimeout(disposal)
     owner = null
     releaseLease?.()
     releaseLease = null
     refresh.close()
-    setState({ status: CLOSED, canSend: false, issue: null })
   }
   session.registerCleanup(close)
-  const markConnected = () => {
-    const recovered = state.status !== CONNECTED && readyOnce
-    setState({
-      status: CONNECTED,
-      canSend: true,
-      issue: outgoingEnabled ? null : OUTGOING_DISABLED,
-    })
-    if (recovered) recoveryListeners.forEach((listener) => listener())
-    readyOnce = true
-  }
   const handleFailure = async (error: unknown) => {
     if (!(error instanceof SessionQueryError)) return false
     const auth =
@@ -131,13 +111,21 @@ export const createNotificationConnection = ({
       return true
     }
     if (error.code === LOCK_UNAVAILABLE) {
-      setState({ status: LIMITED, canSend: false, issue: LOCK_UNAVAILABLE })
+      applyTransition({
+        type: 'limited',
+        generation: model.generation,
+        issue: LOCK_UNAVAILABLE,
+      })
       return true
     }
     const invalid =
       error.code === INVALID_UPSTREAM || error.code === NOT_CONFIGURED
     if (invalid) {
-      setState({ status: PAUSED, canSend: false, issue: error.code })
+      applyTransition({
+        type: 'paused',
+        generation: model.generation,
+        issue: error.code,
+      })
       return true
     }
     return false
@@ -146,11 +134,10 @@ export const createNotificationConnection = ({
     abort = new AbortController()
     const signal = abort.signal
     const active = () =>
-      !closed &&
+      !isClosed() &&
       session.isActive() &&
-      generation === attemptGeneration &&
+      model.generation === attemptGeneration &&
       !signal.aborted
-    let pendingAck: string | null = null
     let settingsReady = false
     let failures = 0
     try {
@@ -163,7 +150,11 @@ export const createNotificationConnection = ({
           return
         }
         if (!lease) {
-          setState({ status: LIMITED, canSend: false, issue: OWNERSHIP_BUSY })
+          applyTransition({
+            type: 'limited',
+            generation: attemptGeneration,
+            issue: OWNERSHIP_BUSY,
+          })
           return
         }
         releaseLease = lease
@@ -179,11 +170,14 @@ export const createNotificationConnection = ({
             if (!active()) return
             if (typeof settings.outgoingEnabled !== 'boolean')
               throw invalidFrame()
-            outgoingEnabled = settings.outgoingEnabled
             settingsReady = true
-            markConnected()
+            applyTransition({
+              type: 'settings_ready',
+              generation: attemptGeneration,
+              outgoingEnabled: settings.outgoingEnabled,
+            })
           }
-          if (pendingAck === null) {
+          if (pendingAckToken(model) === null) {
             if (!owner) return
             const value = await post({
               url: RECEIVE,
@@ -204,9 +198,14 @@ export const createNotificationConnection = ({
                 refreshChats: refresh.request,
               })
               if (!applied) throw invalidFrame()
-              pendingAck = value.delivery.deliveryId
+              applyTransition({
+                type: 'delivery_applied',
+                generation: attemptGeneration,
+                token: value.delivery.deliveryId,
+              })
             } else if (value.ackToken !== null) throw invalidFrame()
           }
+          const pendingAck = pendingAckToken(model)
           if (pendingAck !== null) {
             const response = await post({
               url: ACK,
@@ -215,23 +214,36 @@ export const createNotificationConnection = ({
             })
             if (!active()) return
             if (response.deliveryId !== pendingAck) throw invalidFrame()
-            pendingAck = null
+            applyTransition({
+              type: 'ack_confirmed',
+              generation: attemptGeneration,
+              token: pendingAck,
+            })
           }
           failures = 0
-          markConnected()
+          applyTransition({
+            type: 'cycle_succeeded',
+            generation: attemptGeneration,
+          })
           await waitForNotificationRetry({ delay: REQUEST_SPACING_MS, signal })
         } catch (error) {
           if (!active()) return
           const expiredAck =
             error instanceof SessionQueryError &&
             error.code === DELIVERY_CHANGED &&
-            pendingAck !== null
+            pendingAckToken(model) !== null
           if (expiredAck) {
-            pendingAck = null
+            applyTransition({
+              type: 'ack_expired',
+              generation: attemptGeneration,
+            })
             continue
           }
           if (await handleFailure(error)) return
-          setState({ status: RETRYING, canSend: false, issue: RETRY_LATER })
+          applyTransition({
+            type: 'temporary_failure',
+            generation: attemptGeneration,
+          })
           const retryAfter =
             error instanceof NotificationTransportError ? error.retryAfterMs : 0
           const delay =
@@ -246,27 +258,31 @@ export const createNotificationConnection = ({
     } catch (error) {
       if (!active()) return
       if (await handleFailure(error)) return
-      setState({ status: LIMITED, canSend: false, issue: LOCK_UNAVAILABLE })
+      applyTransition({
+        type: 'limited',
+        generation: model.generation,
+        issue: LOCK_UNAVAILABLE,
+      })
     }
   }
   const start = () => {
-    const available = !runningTask && !closed && session.isActive()
+    const available = !runningTask && !isClosed() && session.isActive()
     if (!available) return
-    setState({ status: CONNECTING, canSend: false, issue: null })
-    const task = run(generation)
+    applyTransition({ type: 'start' })
+    const task = run(model.generation)
     runningTask = task
     void task.finally(() => {
       if (runningTask === task) runningTask = null
     })
   }
   const retry = async () => {
-    const unavailable = closed || !session.isActive()
+    const unavailable = isClosed() || !session.isActive()
     if (unavailable) return
-    generation += 1
-    const retryGeneration = generation
+    applyTransition({ type: 'retry_requested' })
+    const retryGeneration = model.generation
     abort?.abort()
     await runningTask
-    if (generation === retryGeneration) start()
+    if (model.generation === retryGeneration) start()
   }
   const retain = () => {
     retained += 1

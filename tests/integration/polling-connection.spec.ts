@@ -371,3 +371,20 @@ test('manual retry while receive is pending cancels it and keeps one browser lea
   expect(effects.leases).toBe(1)
   expect(connection.captureOwnerContext()).toEqual(owner)
 })
+
+test('disabled outgoing status webhooks warn without blocking message send', async () => {
+  const { connection, effects } = setup({
+    handler: async ({ url }) =>
+      url === SETTINGS
+        ? success({ outgoingEnabled: false })
+        : success({ delivery: null, ackToken: null }),
+  })
+  connection.start()
+  await waitForConnected(connection)
+  expect(connection.getSnapshot()).toEqual({
+    status: CONNECTED,
+    canSend: true,
+    issue: 'outgoing_notifications_disabled',
+  })
+  await expect.poll(() => effects.calls.includes(RECEIVE)).toBe(true)
+})
