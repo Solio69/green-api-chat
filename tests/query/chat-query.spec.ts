@@ -224,7 +224,7 @@ test('React query: expiry closes and navigates', async ({ page }) => {
   await expect(page).toHaveURL(LOGIN_PATTERN)
 })
 
-test('React query: StrictMode replay and rerender preserve one client', async ({
+test('React query: production wrapper remount and rerender preserve visible data', async ({
   page,
 }) => {
   let calls = 0
