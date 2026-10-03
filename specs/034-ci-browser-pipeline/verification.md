@@ -16,8 +16,9 @@
 | Первый GitHub run 37119826900 | quality Passed, browser Failed: query 43/45 при 320 px на Linux; diagnostic artifact 11272697793 содержит trace и HTML |
 | Мобильный заголовок, первый вариант | Query Passed 4/4, но полный E2E 109/110: имя скрыто при 200% root font-size; вариант отклонён |
 | Мобильный заголовок, grid | Точный E2E 1/1, полный E2E 110/110 и query 45/45; 320/390 px в обеих темах, без горизонтальной прокрутки |
-| Повторный GitHub browser+quality | NotRun |
-| Контрольное падение browser/trace и восстановление | NotRun |
+| Позитивный GitHub run 37121392413 на 107124d | quality и browser success; browser artifact 11273616226 содержит оба HTML-отчёта и логи query/E2E |
+| Контрольный GitHub run 37121813552 на c001b62 | quality success; browser и общий run failure: целевой assertion; 110 штатных E2E Passed, 1 контрольный Failed. Artifact 11273352304: HTML, trace.zip, screenshot, query/E2E logs |
+| Восстановленный GitHub run 37122341379 на e2697cc | quality и browser success; временный шаг удалён, browser artifact опубликован |
 
 Исходный DEFECT-01: baseline 028 зафиксировал 1 сбой из 3 повторов.
 Десять повторов старого теста до исправления прошли — это не
@@ -39,6 +40,7 @@ Playwright не удалил query HTML при E2E. Provider fixture через
 первого варианта не был достаточен:
 полный E2E нашёл скрытое имя при 200% root font-size. Принята
 двухстрочная grid-раскладка, её точный E2E, полный E2E и query Passed;
-следующий шаг — повторный commit/push, удалённая
-приёмка positive/negative/restore.
-Коммит: fix: run isolated browser suites in CI.
+позитивная и негативная удалённые проверки подтверждены. Восстановление
+выполнено отдельным commit e2697cc; обе jobs и общий run прошли.
+Начальный browser CI: 4d20646; CSS-исправление: 107124d; контроль:
+c001b62; удаление контроля: e2697cc.

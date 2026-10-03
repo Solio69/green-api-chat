@@ -47,8 +47,8 @@ C8 PASS: штатные инструменты, нет новых dependencies.
 ## Метрики
 
 8 FR, 4 SC, 8 задач; покрытие 12/12, задач без основания 0.
-MEDIUM-01 исправлено до кода. T003–T005 выполнены; T006–T008
-ожидают удалённой приёмки. Финальный read-only проход перед commit:
+MEDIUM-01 исправлено до кода. T001–T008 выполнены; удалённая
+приёмка positive/negative/restore подтверждена в verification.md. Финальный read-only проход перед commit:
 822 пути, SHA-256 до/после
 3d4d7a651f19d291e8f760487438e80893f4a4b6c36b529bfa2a3d31daaee817,
 unchanged=true. Открытых findings нет. Локальные результаты в verification.md.

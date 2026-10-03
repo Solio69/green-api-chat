@@ -8,9 +8,9 @@ Input: [spec.md](spec.md), [plan.md](plan.md).
 - [x] T003 [US1] Добавить регрессию задержанного ResizeObserver в tests/e2e/conversation-selection.spec.ts, подтвердить целевой поведенческий Red и отличить его от ошибки окружения.
 - [x] T004 [US1] Исправить src/components/ChatWorkspace/use-workspace-focus.ts; подтвердить Green нового и старого сценария, сохранение внешнего фокуса.
 - [x] T005 [US1] Добавить browser job в .github/workflows/quality.yml, HTML query report в playwright.query.config.ts, fail-fast provider origin в tests/e2e/fixtures/fake-green-api.ts, обновить README.md.
-- [ ] T006 [US1] Проверить YAML, type/lint/style/format, Vitest, query, полный E2E и повторы фокуса; предкоммитный рефакторинг/ревью, initial commit/push, реальный GitHub green и artifact.
-- [ ] T007 [US1] Временный runner-only browser failure: локальный контроль, review/commit/push, удалённый failure + HTML/trace/artifact; затем удалить контроль, review/commit/push и подтвердить green.
-- [ ] T008 [US1] Обновить verification, spec/checklist/tasks/analysis, docs/refactoring-roadmap.md, финальное ревью, commit/push и проверить итоговый head.
+- [x] T006 [US1] Проверить YAML, type/lint/style/format, Vitest, query, полный E2E и повторы фокуса; предкоммитный рефакторинг/ревью, initial commit/push, реальный GitHub green и artifact.
+- [x] T007 [US1] Временный runner-only browser failure: локальный контроль, review/commit/push, удалённый failure + HTML/trace/artifact; затем удалить контроль, review/commit/push и подтвердить green.
+- [x] T008 [US1] Обновить verification, spec/checklist/tasks/analysis, docs/refactoring-roadmap.md, финальное ревью, commit/push и проверить итоговый head.
 
 ## Зависимости
 
