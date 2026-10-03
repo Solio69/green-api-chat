@@ -15,4 +15,4 @@
 
 ## CI
 
-Результаты проверки SHA кода и финального документационного SHA будут записаны после push.
+Кодовый SHA `711be680b3073d5c1a5628d764e293294da53410` запушен в `refactor`; обе [GitHub CI jobs](https://github.com/Solio69/green-api-chat/actions/runs/37142727661) завершились success, отчёты `quality-1` и `browser-1` сохранены. Итоговый документационный SHA проверяется отдельно после push.

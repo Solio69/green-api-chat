@@ -8,7 +8,7 @@ Input: [spec.md](spec.md), [plan.md](plan.md), [research.md](research.md), [мо
 - [x] T004 Вынести `chatsQueryOptions` и `configureConnectionMemory`/`createConnectionSession`; удалить feature imports и `options()` из generic core, подключить QueryProvider/useChats/notification refresh. Обновить существующие тестовые вызовы на явного владельца.
 - [x] T005 Проверить матрицу GC/stale, memory retention и cleanup errors, scope A→B, unread seen/replay/hidden panel, selection access/epoch, StrictMode; исправить только обнаруженные регрессии без изменения продуктовых правил.
 - [x] T006 Refactor и повторный read-only analyze; typecheck/lint/styles/format, полный Vitest/integration/query/production E2E, client/server graph, `git diff --check`, секреты; записать verification.md.
-- [ ] T007 Предкоммитное review точного diff, commit/push `refactor`, обе GitHub jobs на SHA кода, обновить roadmap/spec/verification и подтвердить CI итогового документационного SHA.
+- [x] T007 Предкоммитное review точного diff, commit/push `refactor`, обе GitHub jobs на SHA кода, обновить roadmap/spec/verification и подтвердить CI итогового документационного SHA.
 
 043 + 037 → T001 → T002 → T003–T004 → T005 → T006 → T007.
 
