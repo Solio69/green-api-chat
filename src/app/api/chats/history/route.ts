@@ -1,5 +1,9 @@
 import { cookies } from 'next/headers'
-import { getQueryScope } from '@/lib/auth/get-query-scope'
+import {
+  AUTH_CONFIG,
+  getQueryScope,
+  IS_PRODUCTION,
+} from '@/features/auth/server'
 import {
   hasSessionPassword,
   openSession,
@@ -7,7 +11,6 @@ import {
 } from '@/lib/auth/session'
 import { getChatHistory } from '@/lib/green-api/get-chat-history'
 import { handleHistoryRequest } from '@/lib/history/handle-history-request'
-import { AUTH_CONFIG, IS_PRODUCTION } from '@/lib/auth/constants'
 
 const { COOKIE_NAME } = AUTH_CONFIG
 

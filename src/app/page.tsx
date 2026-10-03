@@ -1,14 +1,14 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { getQueryScope } from '@/lib/auth/get-query-scope'
-import { resolveHome } from '@/lib/auth/resolve-home'
+import { resolveHome } from '@/features/auth/application'
+import { HOME_RESULT_KIND } from '@/features/auth/model'
+import { getQueryScope, IS_PRODUCTION } from '@/features/auth/server'
 import {
   hasSessionPassword,
   openSession,
   readCredentials,
 } from '@/lib/auth/session'
 import { getAccountSettings } from '@/lib/green-api/get-account-settings'
-import { HOME_RESULT_KIND, IS_PRODUCTION } from '@/lib/auth/constants'
 import { ROUTES } from '@/lib/routes/constants'
 import { HOME_COPY } from './constants'
 import { AccountHeader } from '@/components/AccountHeader'

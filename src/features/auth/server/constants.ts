@@ -10,17 +10,6 @@ export const AUTH_CONFIG = {
 export const IS_PRODUCTION =
   process.env.NODE_ENV === AUTH_CONFIG.PRODUCTION_NODE_ENV
 
-export const AUTH_QUERY = {
-  REASON: 'reason',
-  ACCESS_LOST: 'access_lost',
-} as const
-
 export const AUTH_ERROR_MESSAGE = {
   SESSION_UNAVAILABLE: 'Session unavailable',
-} as const
-
-export const HOME_RESULT_KIND = {
-  LOGIN: 'login',
-  END_SESSION: 'end-session',
-  RETRY: 'retry',
 } as const

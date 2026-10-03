@@ -1,4 +1,4 @@
-import { resolveLogin } from './resolve-login'
+import { resolveLogin } from '@/features/auth/application'
 import type {
   InstanceCredentials,
   StateResult,

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
-import { AUTH_CONFIG, AUTH_QUERY } from '@/lib/auth/constants'
+import { AUTH_QUERY } from '@/features/auth/model'
+import { AUTH_CONFIG } from '@/features/auth/server'
 import { HTTP_STATUS } from '@/lib/http/constants'
 import { ROUTES } from '@/lib/routes/constants'
 

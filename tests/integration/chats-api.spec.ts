@@ -1,6 +1,6 @@
 import { createHmac } from 'node:crypto'
 import { expect, test } from '@playwright/test'
-import { getQueryScope } from '@/lib/auth/get-query-scope'
+import { getQueryScope } from '@/features/auth/server'
 import { handleChatsRequest } from '@/lib/chats/handle-chats-request'
 import { normalizeChats } from '@/lib/chats/normalize-chats'
 import type { GetChatsResult, ChatsErrorCode } from '@/lib/chats/types'

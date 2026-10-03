@@ -1,5 +1,5 @@
 import { createHmac } from 'node:crypto'
-import type { SessionPayload } from './session'
+import type { SessionPayload } from '@/lib/auth/session'
 import { CHAT_QUERY_CONFIG } from '@/lib/chats/constants'
 
 const { SCOPE_DOMAIN, SCOPE_ALGORITHM, SCOPE_ENCODING } = CHAT_QUERY_CONFIG

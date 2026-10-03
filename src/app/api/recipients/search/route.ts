@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers'
+import { AUTH_CONFIG, IS_PRODUCTION } from '@/features/auth/server'
 import {
   hasSessionPassword,
   openSession,
@@ -6,7 +7,6 @@ import {
 } from '@/lib/auth/session'
 import { checkAccount } from '@/lib/green-api/check-account'
 import { handleSearchRequest } from '@/lib/recipients/handle-search-request'
-import { AUTH_CONFIG, IS_PRODUCTION } from '@/lib/auth/constants'
 
 const { COOKIE_NAME } = AUTH_CONFIG
 

@@ -1,11 +1,14 @@
 import { cookies } from 'next/headers'
-import { getQueryScope } from '@/lib/auth/get-query-scope'
+import {
+  AUTH_CONFIG,
+  getQueryScope,
+  IS_PRODUCTION,
+} from '@/features/auth/server'
 import {
   hasSessionPassword,
   openSession,
   readCredentials,
 } from '@/lib/auth/session'
-import { AUTH_CONFIG, IS_PRODUCTION } from '@/lib/auth/constants'
 
 const { COOKIE_NAME: AUTH_CONFIG_COOKIE_NAME } = AUTH_CONFIG
 

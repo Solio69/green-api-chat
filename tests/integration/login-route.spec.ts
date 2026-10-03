@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { handleLoginRequest } from '@/lib/auth/handle-login-request'
+import { handleLoginRequest } from '@/features/auth/server'
 import type {
   InstanceCredentials,
   StateResult,

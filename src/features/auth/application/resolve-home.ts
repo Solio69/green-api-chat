@@ -1,8 +1,8 @@
+import { HOME_RESULT_KIND } from '@/features/auth/model'
 import type { AccountSettingsResult } from '@/lib/green-api/get-account-settings'
 import type { InstanceCredentials } from '@/lib/green-api/get-state'
 import { API_ERROR_CODE } from '@/lib/api/constants'
 import { GREEN_API_STATES } from '@/lib/green-api/constants'
-import { HOME_RESULT_KIND } from './constants'
 
 const { AUTHORIZED } = GREEN_API_STATES
 const { LOGIN, END_SESSION, RETRY } = HOME_RESULT_KIND

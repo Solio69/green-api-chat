@@ -1,5 +1,9 @@
 import { cookies } from 'next/headers'
-import { getQueryScope } from '@/lib/auth/get-query-scope'
+import {
+  AUTH_CONFIG,
+  getQueryScope,
+  IS_PRODUCTION,
+} from '@/features/auth/server'
 import {
   hasSessionPassword,
   openSession,
@@ -7,7 +11,6 @@ import {
 } from '@/lib/auth/session'
 import { handleChatsRequest } from '@/lib/chats/handle-chats-request'
 import { getChats } from '@/lib/green-api/get-chats'
-import { AUTH_CONFIG, IS_PRODUCTION } from '@/lib/auth/constants'
 
 const { COOKIE_NAME } = AUTH_CONFIG
 export const GET = async (request: Request): Promise<Response> => {

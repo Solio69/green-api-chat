@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { resolveLogin } from '@/lib/auth/resolve-login'
+import { resolveLogin } from '@/features/auth/application'
 import type {
   InstanceCredentials,
   StateResult,
