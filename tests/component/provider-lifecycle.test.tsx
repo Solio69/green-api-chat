@@ -3,17 +3,17 @@ import { useEffect } from 'react'
 import type { ReactNode } from 'react'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 import { createLifecycleTransport } from '../support/provider-lifecycle'
+import { NotificationProvider } from '@/features/conversation/ui/NotificationProvider'
+import {
+  useNotificationOwner,
+  useNotificationConnection,
+} from '@/features/conversation/ui/NotificationProvider/context'
 import { acquireBrowserTabLease } from '@/lib/notifications/browser-tab-lease'
 import type { NotificationDelivery } from '@/lib/notifications/types'
 import { isNotificationDelivery } from '@/lib/notifications/validate-delivery'
 import { createQuerySession } from '@/lib/query/create-query-session'
 import { NOTIFICATION_ROUTES } from '@/lib/notifications/constants'
 import { CHAT_FIXTURES } from '../chats/constants'
-import { NotificationProvider } from '@/components/NotificationProvider'
-import {
-  useNotificationOwner,
-  useNotificationConnection,
-} from '@/components/NotificationProvider/context'
 import {
   QueryProvider,
   useOptionalQuerySession,

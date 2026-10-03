@@ -2,8 +2,9 @@
 
 import { StrictMode, useState } from 'react'
 import { LogoutButton } from '@/features/auth/ui'
-import { useChats, ChatListPanel } from '@/features/chats/ui'
-import { ConversationSelectionProvider } from '@/components/ConversationSelectionProvider'
+import { useChats } from '@/features/chats/ui'
+import { ConversationChatListPanel } from '@/features/conversation/ui'
+import { ConversationSelectionProvider } from '@/features/conversation/ui/ConversationSelectionProvider'
 import { QueryProvider } from '@/components/QueryProvider'
 import { CHAT_FIXTURES } from '../../../../chats/constants'
 import { QUERY_PROBE_COPY, QUERY_PROBE_IDS } from '../../../../constants'
@@ -49,7 +50,7 @@ export const QueryProbe = () => {
           <>
             <Consumer id={FIRST} />
             <Consumer id={SECOND} />
-            <ChatListPanel />
+            <ConversationChatListPanel />
           </>
         )}
         <LogoutButton label={LOGOUT} />

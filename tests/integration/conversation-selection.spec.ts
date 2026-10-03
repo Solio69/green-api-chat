@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 import {
   createConversationSelection,
   reduceConversationSelection,
-} from '@/lib/conversations/selection'
+} from '@/features/conversation/selection/model'
 import {
   CONVERSATION_CONTRACT,
   CONVERSATION_FIXTURES,

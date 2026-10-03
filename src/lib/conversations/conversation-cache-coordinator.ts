@@ -5,7 +5,7 @@ import {
   isPersonalChatId,
   SESSION_CHAT_SOURCE,
 } from '@/features/chats/model'
-import type { ConversationTarget } from '@/lib/conversations/types'
+import type { ConversationTarget } from '@/features/conversation/selection/model'
 import { fetchHistory } from '@/lib/history/fetch-history'
 import {
   addAcceptedMessage,

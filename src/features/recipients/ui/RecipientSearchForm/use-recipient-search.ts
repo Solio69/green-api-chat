@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import type { SubmitEvent } from 'react'
 import { requestRecipientSearch } from './request-recipient-search'
 import type { SearchErrorCode, SearchMode } from './request-recipient-search'
+import { useConversationSelection } from '@/features/conversation/ui/ConversationSelectionProvider'
 import {
   formatRecipientLabel,
   parseSearchRequest,
@@ -13,7 +14,6 @@ import { API_ERROR_CODE } from '@/lib/api/constants'
 import { ROUTES } from '@/lib/routes/constants'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import { RECIPIENT_COPY, RECIPIENT_ERROR_COPY } from './constants'
-import { useConversationSelection } from '@/components/ConversationSelectionProvider'
 import { useOptionalQuerySession } from '@/components/QueryProvider'
 
 const { PHONE, USERNAME } = RECIPIENT_SEARCH_MODE

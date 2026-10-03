@@ -4,9 +4,9 @@ import { useId, useState } from 'react'
 import type { ChatsErrorCode } from '@/features/chats/model'
 import { ChatList } from '@/features/chats/ui/ChatList'
 import { ChatListRecovery } from '@/features/chats/ui/ChatListRecovery'
+import type { ChatListTarget } from '@/features/chats/ui/types'
 import { useChats } from '@/features/chats/ui/use-chats'
 import { useSessionChatLabels } from '@/features/chats/ui/use-session-chat-labels'
-import { useUnreadCounts } from '@/lib/unread/use-unread-counts'
 import { API_ERROR_CODE } from '@/lib/api/constants'
 import { EMPTY_STRING, HTML_VALUES } from '@/lib/ui/constants'
 import {
@@ -14,7 +14,6 @@ import {
   CHAT_LIST_RECOVERY_COPY,
   CHAT_LIST_PANEL_COPY,
 } from './constants'
-import { useConversationSelection } from '@/components/ConversationSelectionProvider'
 import styles from './ChatListPanel.module.scss'
 
 const { HEADING: CHATS } = CHAT_LIST_PANEL_COPY
@@ -26,12 +25,20 @@ const { RETRY, RETRY_PENDING } = CHAT_LIST_RECOVERY_COPY
 const readErrorCopy = (code: ChatsErrorCode) =>
   code === RATE_LIMITED ? RATE_LIMIT : GENERIC
 
-export const ChatListPanel = () => {
-  const { target, openConversation } = useConversationSelection()
+type ChatListPanelProps = {
+  selectedChatId?: string
+  unreadCountsByChatId?: Readonly<Record<string, number>>
+  onSelect: (target: ChatListTarget) => void
+}
+
+export const ChatListPanel = ({
+  selectedChatId,
+  unreadCountsByChatId,
+  onSelect,
+}: ChatListPanelProps) => {
   const headingId = useId()
   const { data, isPending, isFetching, error, refetch } = useChats()
   const labelsByChatId = useSessionChatLabels()
-  const { countsByChatId } = useUnreadCounts()
   const hasKnownItems = data !== undefined && data.length > 0
   const [retryErrorCode, setRetryErrorCode] = useState<ChatsErrorCode | null>(
     null,
@@ -77,10 +84,10 @@ export const ChatListPanel = () => {
         <ChatList
           chats={data}
           labelsByChatId={labelsByChatId}
-          unreadCountsByChatId={countsByChatId}
+          unreadCountsByChatId={unreadCountsByChatId}
           isPending={isPending}
-          selectedChatId={target?.chatId}
-          onSelect={openConversation}
+          selectedChatId={selectedChatId}
+          onSelect={onSelect}
         />
       )}
     </section>

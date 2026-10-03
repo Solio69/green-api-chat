@@ -1,0 +1,25 @@
+@use '../../../../styles/tokens' as tokens;
+@use '../../../../styles/mixins' as mixins;
+
+.notificationNotice {
+  position: relative;
+  padding: tokens.$space-sm;
+  border-radius: tokens.$radius-control;
+  background: var(--ui-surface-color);
+  color: var(--ui-error-color);
+  font-size: tokens.$font-size-caption;
+
+  &[role='status'] {
+    color: var(--ui-muted-color);
+  }
+
+  p {
+    margin: 0;
+  }
+
+  button {
+    @include mixins.recovery-button;
+
+    margin-top: tokens.$space-xs;
+  }
+}

@@ -2,14 +2,15 @@
 
 import { StrictMode } from 'react'
 import { AccountHeader } from '@/features/account/ui'
-import { ChatListPanel } from '@/features/chats/ui'
+import { ChatSidebar } from '@/features/chats/ui'
+import { ConversationChatListPanel } from '@/features/conversation/ui'
+import { ChatHistoryPanel } from '@/features/conversation/ui/ChatHistoryPanel'
+import { ChatWorkspace } from '@/features/conversation/ui/ChatWorkspace'
+import { MessageComposer } from '@/features/conversation/ui/MessageComposer'
+import { NotificationProvider } from '@/features/conversation/ui/NotificationProvider'
 import { RecipientSearchForm } from '@/features/recipients/ui'
 import { useUnreadCounts } from '@/lib/unread/use-unread-counts'
 import { EMPTY_STRING } from '@/lib/ui/constants'
-import { ChatHistoryPanel } from '@/components/ChatHistoryPanel'
-import { ChatWorkspace } from '@/components/ChatWorkspace'
-import { MessageComposer } from '@/components/MessageComposer'
-import { NotificationProvider } from '@/components/NotificationProvider'
 import { QueryProvider } from '@/components/QueryProvider'
 import { HISTORY_TEST } from '../../../../history/constants'
 import { UNREAD_TEST } from '../../../../unread/constants'
@@ -31,14 +32,18 @@ export const UnreadProbe = () => (
       <NotificationProvider>
         <UnreadSnapshot />
         <ChatWorkspace
-          account={
-            <AccountHeader
-              account={{ label: ACCOUNT, avatarUrl: EMPTY_STRING }}
-              logoutLabel={LOGOUT}
+          sidebar={
+            <ChatSidebar
+              account={
+                <AccountHeader
+                  account={{ label: ACCOUNT, avatarUrl: EMPTY_STRING }}
+                  logoutLabel={LOGOUT}
+                />
+              }
+              search={<RecipientSearchForm />}
+              chatList={<ConversationChatListPanel />}
             />
           }
-          search={<RecipientSearchForm />}
-          chatList={<ChatListPanel />}
           conversation={<ChatHistoryPanel />}
           composer={<MessageComposer />}
         />

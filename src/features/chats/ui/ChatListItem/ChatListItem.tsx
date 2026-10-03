@@ -2,8 +2,8 @@
 
 import { useId } from 'react'
 import type { PersonalChat } from '@/features/chats/model'
+import type { ChatListTarget } from '@/features/chats/ui/types'
 import { RECIPIENT_VALIDATION } from '@/features/recipients/model'
-import type { ConversationTarget } from '@/lib/conversations/types'
 import { ChatUnreadBadge } from '@/shared/ui'
 import { HTML_VALUES } from '@/lib/ui/constants'
 import styles from './ChatListItem.module.scss'
@@ -14,7 +14,7 @@ const { BUTTON } = HTML_VALUES
 type ChatListItemProps = {
   chat: PersonalChat
   isSelected: boolean
-  onSelect: (target: ConversationTarget) => void
+  onSelect: (target: ChatListTarget) => void
   fallbackLabel?: string
   unreadCount?: number
 }

@@ -13,7 +13,7 @@ beforeEach(() => {
   owner.current = null
 })
 
-vi.mock('@/components/ConversationSelectionProvider', () => ({
+vi.mock('@/features/conversation/ui/ConversationSelectionProvider', () => ({
   useConversationSelection: () => selection,
 }))
 

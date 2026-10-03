@@ -118,9 +118,9 @@ src/components/MessageList/use-message-scroll.ts,source,conversation,src/feature
 src/components/MessageSendButton/MessageSendButton.module.scss,source,conversation,src/features/conversation/ui/MessageSendButton,049,move,Feature UI; preserve component contract and accessibility
 src/components/MessageSendButton/MessageSendButton.tsx,source,conversation,src/features/conversation/ui/MessageSendButton,049,move,Feature UI; preserve component contract and accessibility
 src/components/MessageSendButton/index.ts,source,conversation,src/features/conversation/ui/MessageSendButton,049,move,Feature UI; preserve component contract and accessibility
-src/components/MessageSendProvider/MessageSendProvider.tsx,source,conversation,src/features/conversation/ui/MessageSendProvider,043,move,Feature UI; preserve component contract and accessibility
-src/components/MessageSendProvider/constants.ts,source,conversation,src/features/conversation/ui/MessageSendProvider,043,move,Feature UI; preserve component contract and accessibility
-src/components/MessageSendProvider/index.ts,source,conversation,src/features/conversation/ui/MessageSendProvider,043,move,Feature UI; preserve component contract and accessibility
+src/components/MessageSendProvider/MessageSendProvider.tsx,source,conversation,src/features/conversation/ui/MessageSendProvider,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageSendProvider/constants.ts,source,conversation,src/features/conversation/ui/MessageSendProvider,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageSendProvider/index.ts,source,conversation,src/features/conversation/ui/MessageSendProvider,049,move,Feature UI; preserve component contract and accessibility
 src/components/MessageStatusIndicator/MessageStatusIndicator.module.scss,source,conversation,src/features/conversation/ui/MessageStatusIndicator,049,move,Feature UI; preserve component contract and accessibility
 src/components/MessageStatusIndicator/MessageStatusIndicator.tsx,source,conversation,src/features/conversation/ui/MessageStatusIndicator,049,move,Feature UI; preserve component contract and accessibility
 src/components/MessageStatusIndicator/constants.ts,source,conversation,src/features/conversation/ui/MessageStatusIndicator,049,move,Feature UI; preserve component contract and accessibility
@@ -132,10 +132,10 @@ src/components/NotificationNotice/NotificationNotice.module.scss,source,conversa
 src/components/NotificationNotice/NotificationNotice.tsx,source,conversation,src/features/conversation/ui/NotificationNotice,049,move,Feature UI; preserve component contract and accessibility
 src/components/NotificationNotice/constants.ts,source,conversation,src/features/conversation/ui/NotificationNotice,049,move,Feature UI; preserve component contract and accessibility
 src/components/NotificationNotice/index.ts,source,conversation,src/features/conversation/ui/NotificationNotice,049,move,Feature UI; preserve component contract and accessibility
-src/components/NotificationProvider/NotificationProvider.tsx,source,conversation,src/features/conversation/ui/NotificationProvider,041,move,Notification runtime owner 041; UI composition remains in conversation
-src/components/NotificationProvider/constants.ts,source,conversation,src/features/conversation/ui/NotificationProvider,041,move,Notification runtime owner 041; UI composition remains in conversation
-src/components/NotificationProvider/context.ts,source,conversation,src/features/conversation/ui/NotificationProvider,041,move,Notification runtime owner 041; UI composition remains in conversation
-src/components/NotificationProvider/index.ts,source,conversation,src/features/conversation/ui/NotificationProvider,041,move,Notification runtime owner 041; UI composition remains in conversation
+src/components/NotificationProvider/NotificationProvider.tsx,source,conversation,src/features/conversation/ui/NotificationProvider,049,move,Notification runtime owner 041; UI composition remains in conversation
+src/components/NotificationProvider/constants.ts,source,conversation,src/features/conversation/ui/NotificationProvider,049,move,Notification runtime owner 041; UI composition remains in conversation
+src/components/NotificationProvider/context.ts,source,conversation,src/features/conversation/ui/NotificationProvider,049,move,Notification runtime owner 041; UI composition remains in conversation
+src/components/NotificationProvider/index.ts,source,conversation,src/features/conversation/ui/NotificationProvider,049,move,Notification runtime owner 041; UI composition remains in conversation
 src/components/QueryProvider/QueryProvider.tsx,source,shared,src/shared/query/ui,044,move,"Client Query context; expose client-only entry, no feature-specific fetch"
 src/components/QueryProvider/index.ts,source,shared,src/shared/query/ui,044,move,"Client Query context; expose client-only entry, no feature-specific fetch"
 src/components/RecipientSearchField/RecipientSearchField.module.scss,source,recipients,src/features/recipients/ui/RecipientSearchField,046,move,Feature UI; preserve component contract and accessibility

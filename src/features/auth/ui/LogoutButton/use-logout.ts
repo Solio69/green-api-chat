@@ -2,8 +2,8 @@ import { useRouter } from 'next/navigation'
 import { useRef, useState } from 'react'
 import type { SubmitEvent } from 'react'
 import { requestLogout } from './request-logout'
+import { useOptionalNotificationOwner } from '@/features/conversation/ui/NotificationProvider'
 import { ROUTES } from '@/lib/routes/constants'
-import { useOptionalNotificationOwner } from '@/components/NotificationProvider'
 import { useOptionalQuerySession } from '@/components/QueryProvider'
 
 const { LOGIN } = ROUTES

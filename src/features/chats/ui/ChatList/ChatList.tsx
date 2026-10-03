@@ -1,6 +1,6 @@
 import type { PersonalChat } from '@/features/chats/model'
 import { ChatListItem } from '@/features/chats/ui/ChatListItem'
-import type { ConversationTarget } from '@/lib/conversations/types'
+import type { ChatListTarget } from '@/features/chats/ui/types'
 import { HTML_VALUES } from '@/lib/ui/constants'
 import { CHAT_LIST_COPY } from './constants'
 import styles from './ChatList.module.scss'
@@ -14,7 +14,7 @@ type ChatListProps = {
   selectedChatId?: string
   labelsByChatId?: Readonly<Record<string, string>>
   unreadCountsByChatId?: Readonly<Record<string, number>>
-  onSelect: (target: ConversationTarget) => void
+  onSelect: (target: ChatListTarget) => void
 }
 
 export const ChatList = ({

@@ -1,9 +1,10 @@
 'use client'
 
 import { rememberPersonalChat } from '@/features/chats/application'
-import { useChats, ChatListPanel } from '@/features/chats/ui'
+import { useChats } from '@/features/chats/ui'
+import { ConversationChatListPanel } from '@/features/conversation/ui'
+import { ConversationSelectionProvider } from '@/features/conversation/ui/ConversationSelectionProvider'
 import { HTML_VALUES } from '@/lib/ui/constants'
-import { ConversationSelectionProvider } from '@/components/ConversationSelectionProvider'
 import {
   QueryProvider,
   useOptionalQuerySession,
@@ -40,7 +41,7 @@ const OverlayControls = () => {
         {REFRESH}
       </button>
       <output data-testid={OUTPUT}>{JSON.stringify(data ?? [])}</output>
-      <ChatListPanel />
+      <ConversationChatListPanel />
     </>
   )
 }

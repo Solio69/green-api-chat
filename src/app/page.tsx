@@ -4,15 +4,18 @@ import { AccountHeader } from '@/features/account/ui'
 import { resolveHome } from '@/features/auth/application'
 import { HOME_RESULT_KIND } from '@/features/auth/model'
 import { LogoutButton } from '@/features/auth/ui'
-import { ChatListPanel } from '@/features/chats/ui'
+import { ChatSidebar } from '@/features/chats/ui'
+import {
+  ChatHistoryPanel,
+  ChatWorkspace,
+  ConversationChatListPanel,
+  MessageComposer,
+  NotificationProvider,
+} from '@/features/conversation/ui'
 import { RecipientSearchForm } from '@/features/recipients/ui'
 import { readPageSession } from '@/server/session'
 import { ROUTES } from '@/lib/routes/constants'
 import { HOME_COPY } from './constants'
-import { ChatHistoryPanel } from '@/components/ChatHistoryPanel'
-import { ChatWorkspace } from '@/components/ChatWorkspace'
-import { MessageComposer } from '@/components/MessageComposer'
-import { NotificationProvider } from '@/components/NotificationProvider'
 import { QueryProvider } from '@/components/QueryProvider'
 import styles from './HomePage.module.scss'
 
@@ -48,14 +51,18 @@ const HomePage = async () => {
       <QueryProvider key={connectionScope} connectionScope={connectionScope}>
         <NotificationProvider>
           <ChatWorkspace
-            account={
-              <AccountHeader
-                account={result.body.profile}
-                logoutLabel={LOGOUT}
+            sidebar={
+              <ChatSidebar
+                account={
+                  <AccountHeader
+                    account={result.body.profile}
+                    logoutLabel={LOGOUT}
+                  />
+                }
+                search={<RecipientSearchForm />}
+                chatList={<ConversationChatListPanel />}
               />
             }
-            search={<RecipientSearchForm />}
-            chatList={<ChatListPanel />}
             conversation={<ChatHistoryPanel />}
             composer={<MessageComposer />}
           />

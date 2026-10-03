@@ -1,7 +1,7 @@
 import { setTimeout as wait } from 'node:timers/promises'
 import { classifyBadRequest } from './get-state'
 import { fetchGreenApi } from './transport'
-import { normalizeHistory } from '@/lib/history/normalize-history'
+import { normalizeHistory } from '@/features/conversation/history/model'
 import type { GetHistoryOptions, GetHistoryResult } from '@/lib/history/types'
 import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
 import { HISTORY_CONFIG } from '@/lib/history/constants'

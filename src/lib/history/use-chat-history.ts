@@ -3,11 +3,11 @@
 import { CancelledError, useQuery } from '@tanstack/react-query'
 import { useSyncExternalStore } from 'react'
 import { HistoryQueryError } from './types'
+import { useConversationSelection } from '@/features/conversation/ui/ConversationSelectionProvider'
 import { fetchAndApplyConversationHistory } from '@/lib/conversations/conversation-cache-coordinator'
 import { messageKey } from '@/lib/messages/message-cache'
 import type { MessageCache } from '@/lib/messages/types'
 import { HISTORY_CONFIG } from './constants'
-import { useConversationSelection } from '@/components/ConversationSelectionProvider'
 import { useOptionalQuerySession } from '@/components/QueryProvider'
 
 const { REQUEST_KEY, PROVIDER_REQUIRED } = HISTORY_CONFIG

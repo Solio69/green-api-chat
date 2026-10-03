@@ -1,11 +1,12 @@
 'use client'
 
 import { StrictMode, useState } from 'react'
-import { ChatListPanel } from '@/features/chats/ui'
+import { ChatSidebar } from '@/features/chats/ui'
+import { ConversationChatListPanel } from '@/features/conversation/ui'
+import { ChatWorkspace } from '@/features/conversation/ui/ChatWorkspace'
+import { useConversationSelection } from '@/features/conversation/ui/ConversationSelectionProvider'
 import { RecipientSearchForm } from '@/features/recipients/ui'
 import { EMPTY_STRING, HTML_VALUES } from '@/lib/ui/constants'
-import { ChatWorkspace } from '@/components/ChatWorkspace'
-import { useConversationSelection } from '@/components/ConversationSelectionProvider'
 import {
   QueryProvider,
   useOptionalQuerySession,
@@ -114,9 +115,13 @@ export const SelectionProbe = () => {
       <button onClick={handleScope}>{SWITCH_SCOPE}</button>
       <QueryProvider key={scope} connectionScope={scope}>
         <ChatWorkspace
-          account={<Controls />}
-          search={<RecipientSearchForm />}
-          chatList={<ChatListPanel />}
+          sidebar={
+            <ChatSidebar
+              account={<Controls />}
+              search={<RecipientSearchForm />}
+              chatList={<ConversationChatListPanel />}
+            />
+          }
           conversation={<HistorySlot />}
         />
       </QueryProvider>

@@ -3,9 +3,6 @@ export const HISTORY_CONFIG = {
   REQUEST_KEY: 'chat-history-request',
   QUERY_ERROR_NAME: 'HistoryQueryError',
   PROVIDER_REQUIRED: 'useChatHistory requires QueryProvider',
-  REQUEST_CHAT_ID_FIELD: 'chatId',
-  USER_CHAT: 'user',
-  TEXT_MESSAGE: 'textMessage',
   INVALID_TARGET_PATTERN: /validation failed/i,
 } as const
 

@@ -3,7 +3,7 @@
 import { useEffect, useEffectEvent } from 'react'
 import type { RefObject } from 'react'
 import { setReadableConversation } from './unread-cache'
-import type { ConversationSelection } from '@/lib/conversations/types'
+import type { ConversationSelection } from '@/features/conversation/selection/model'
 import { UNREAD_CONFIG, UNREAD_VISIBILITY } from './constants'
 import { useOptionalQuerySession } from '@/components/QueryProvider'
 

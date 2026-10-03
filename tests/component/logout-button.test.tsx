@@ -15,7 +15,7 @@ vi.mock('next/navigation', () => ({
     refresh: dependencies.refresh,
   }),
 }))
-vi.mock('@/components/NotificationProvider', () => ({
+vi.mock('@/features/conversation/ui/NotificationProvider', () => ({
   useOptionalNotificationOwner: () => ({
     getOwnedHeaders: dependencies.getOwnedHeaders,
   }),

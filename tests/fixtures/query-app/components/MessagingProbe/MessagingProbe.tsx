@@ -1,15 +1,15 @@
 'use client'
 
 import { StrictMode } from 'react'
-import { HTML_VALUES } from '@/lib/ui/constants'
-import { ChatHistoryPanel } from '@/components/ChatHistoryPanel'
+import { ChatHistoryPanel } from '@/features/conversation/ui/ChatHistoryPanel'
 import {
   ConversationSelectionProvider,
   useConversationSelection,
-} from '@/components/ConversationSelectionProvider'
-import { MessageComposer } from '@/components/MessageComposer'
-import { MessageSendProvider } from '@/components/MessageSendProvider'
-import { NotificationProvider } from '@/components/NotificationProvider'
+} from '@/features/conversation/ui/ConversationSelectionProvider'
+import { MessageComposer } from '@/features/conversation/ui/MessageComposer'
+import { MessageSendProvider } from '@/features/conversation/ui/MessageSendProvider'
+import { NotificationProvider } from '@/features/conversation/ui/NotificationProvider'
+import { HTML_VALUES } from '@/lib/ui/constants'
 import { QueryProvider } from '@/components/QueryProvider'
 import { HISTORY_TEST } from '../../../../history/constants'
 

@@ -1,9 +1,0 @@
-@use '../../styles/tokens' as tokens;
-
-.conversationBackground {
-  position: absolute;
-  inset: 0;
-  color: var(--ui-action-color);
-  opacity: tokens.$chat-pattern-opacity;
-  pointer-events: none;
-}
