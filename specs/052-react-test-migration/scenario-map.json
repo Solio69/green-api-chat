@@ -1,0 +1,376 @@
+{
+  "schemaVersion": 1,
+  "sourceScenarios": 46,
+  "migrateToRtl": 9,
+  "retainBrowser": 37,
+  "scenarios": [
+    {
+      "id": "B028-Q-0001",
+      "source": "tests/query/chat-query.spec.ts",
+      "title": "React query: two consumers, fresh remount and API recovery on reload",
+      "decision": "retain-browser",
+      "target": "tests/query/chat-query.spec.ts",
+      "reason": "Real Next API request/reload or route-scoped HTTP error alongside visible consumers is asserted."
+    },
+    {
+      "id": "B028-Q-0002",
+      "source": "tests/query/chat-query.spec.ts",
+      "title": "React query: empty success differs from loading",
+      "decision": "migrate-to-rtl",
+      "target": "tests/component/chats-query-contract.test.tsx",
+      "reason": "Real React provider/QueryClient behavior can be asserted through an accessible RTL host."
+    },
+    {
+      "id": "B028-Q-0003",
+      "source": "tests/query/chat-query.spec.ts",
+      "title": "React query: background refresh/error retain cache while UI shows recovery",
+      "decision": "retain-browser",
+      "target": "tests/query/chat-query.spec.ts",
+      "reason": "Real Next API request/reload or route-scoped HTTP error alongside visible consumers is asserted."
+    },
+    {
+      "id": "B028-Q-0004",
+      "source": "tests/query/chat-query.spec.ts",
+      "title": "React query: switching account rejects late data of old scope",
+      "decision": "retain-browser",
+      "target": "tests/query/chat-query.spec.ts",
+      "reason": "Real Next API request/reload or route-scoped HTTP error alongside visible consumers is asserted."
+    },
+    {
+      "id": "B028-Q-0005",
+      "source": "tests/query/chat-query.spec.ts",
+      "title": "React query: failed logout preserves cache, successful logout navigates",
+      "decision": "retain-browser",
+      "target": "tests/query/chat-query.spec.ts",
+      "reason": "Real Next session/error route and browser navigation/refresh must be observed."
+    },
+    {
+      "id": "B028-Q-0006",
+      "source": "tests/query/chat-query.spec.ts",
+      "title": "React query: expiry closes and navigates",
+      "decision": "retain-browser",
+      "target": "tests/query/chat-query.spec.ts",
+      "reason": "Real Next session/error route and browser navigation/refresh must be observed."
+    },
+    {
+      "id": "B028-Q-0007",
+      "source": "tests/query/chat-query.spec.ts",
+      "title": "React query: production wrapper remount and rerender preserve visible data",
+      "decision": "retain-browser",
+      "target": "tests/query/chat-query.spec.ts",
+      "reason": "Next-rendered production wrapper hydration/remount is the asserted boundary."
+    },
+    {
+      "id": "B028-Q-0008",
+      "source": "tests/query/chat-query.spec.ts",
+      "title": "React query: stale remount and inactive GC use clock, no polling/focus requests",
+      "decision": "retain-browser",
+      "target": "tests/query/chat-query.spec.ts",
+      "reason": "Browser clock, document focus and real remount/GC timing are the asserted boundary."
+    },
+    {
+      "id": "B028-Q-0009",
+      "source": "tests/query/chat-query.spec.ts",
+      "title": "React query: 409 closes both consumers and refreshes once without login",
+      "decision": "retain-browser",
+      "target": "tests/query/chat-query.spec.ts",
+      "reason": "Real Next session/error route and browser navigation/refresh must be observed."
+    },
+    {
+      "id": "B028-Q-0010",
+      "source": "tests/query/conversation-selection.spec.ts",
+      "title": "selection Context: StrictMode click is one access, both consumers share A → A → B",
+      "decision": "migrate-to-rtl",
+      "target": "tests/component/selection-provider-contract.test.tsx",
+      "reason": "Real React provider/QueryClient behavior can be asserted through an accessible RTL host."
+    },
+    {
+      "id": "B028-Q-0011",
+      "source": "tests/query/conversation-selection.spec.ts",
+      "title": "selection Context: found recipient opens without another lookup, Send or list entry",
+      "decision": "retain-browser",
+      "target": "tests/query/conversation-selection.spec.ts",
+      "reason": "Recipient search crosses the real HTTP route; the test asserts no extra lookup or send request."
+    },
+    {
+      "id": "B028-Q-0012",
+      "source": "tests/query/conversation-selection.spec.ts",
+      "title": "selection Context: close preserves Query data, closed session hides and guards selection",
+      "decision": "migrate-to-rtl",
+      "target": "tests/component/selection-provider-contract.test.tsx",
+      "reason": "Real React provider/QueryClient behavior can be asserted through an accessible RTL host."
+    },
+    {
+      "id": "B028-Q-0013",
+      "source": "tests/query/conversation-selection.spec.ts",
+      "title": "selection slots: pending/empty/error differ, access and editor epoch are independent",
+      "decision": "migrate-to-rtl",
+      "target": "tests/component/selection-provider-contract.test.tsx",
+      "reason": "Real React provider/QueryClient behavior can be asserted through an accessible RTL host."
+    },
+    {
+      "id": "N052-Q-0001",
+      "source": "tests/query/history-query.spec.ts",
+      "title": "history React: shared request applies once across consumers",
+      "decision": "migrate-to-rtl",
+      "target": "tests/component/history-provider-contract.test.tsx",
+      "reason": "Real React provider/QueryClient behavior can be asserted through an accessible RTL host."
+    },
+    {
+      "id": "B028-Q-0014",
+      "source": "tests/query/history-query.spec.ts",
+      "title": "history React: one request per access and retained merged cache without debug output",
+      "decision": "retain-browser",
+      "target": "tests/query/history-query.spec.ts",
+      "reason": "Real history HTTP response/retry and absence of browser console diagnostics are asserted."
+    },
+    {
+      "id": "B028-Q-0015",
+      "source": "tests/query/history-query.spec.ts",
+      "title": "history React: A to B to A discards the earlier completion",
+      "decision": "migrate-to-rtl",
+      "target": "tests/component/history-provider-contract.test.tsx",
+      "reason": "Real React provider/QueryClient behavior can be asserted through an accessible RTL host."
+    },
+    {
+      "id": "B028-Q-0016",
+      "source": "tests/query/history-query.spec.ts",
+      "title": "history React: error retains known messages and manual retry recovers without debug output",
+      "decision": "retain-browser",
+      "target": "tests/query/history-query.spec.ts",
+      "reason": "Real history HTTP response/retry and absence of browser console diagnostics are asserted."
+    },
+    {
+      "id": "B028-Q-0017",
+      "source": "tests/query/history-query.spec.ts",
+      "title": "history React: pending refresh is deduplicated, close suppresses its late result",
+      "decision": "migrate-to-rtl",
+      "target": "tests/component/history-provider-contract.test.tsx",
+      "reason": "Real React provider/QueryClient behavior can be asserted through an accessible RTL host."
+    },
+    {
+      "id": "B028-Q-0018",
+      "source": "tests/query/history-query.spec.ts",
+      "title": "history React: closed session rejects late data and new connection has independent history",
+      "decision": "migrate-to-rtl",
+      "target": "tests/component/history-provider-contract.test.tsx",
+      "reason": "Real React provider/QueryClient behavior can be asserted through an accessible RTL host."
+    },
+    {
+      "id": "B028-Q-0019",
+      "source": "tests/query/history-window.spec.ts",
+      "title": "history window: loading differs from successful empty response and failed retry preserves known messages",
+      "decision": "retain-browser",
+      "target": "tests/query/history-window.spec.ts",
+      "reason": "Production history panel is exercised through the real Next API; RTL state coverage exists in chat-history-panel.test.tsx."
+    },
+    {
+      "id": "B028-Q-0020",
+      "source": "tests/query/history-window.spec.ts",
+      "title": "history window: safe literal text, unsupported and accumulated messages use one request per access without scroll fetch",
+      "decision": "retain-browser",
+      "target": "tests/query/history-window.spec.ts",
+      "reason": "Actual layout, scroll position and browser geometry are asserted."
+    },
+    {
+      "id": "B028-Q-0021",
+      "source": "tests/query/history-window.spec.ts",
+      "title": "history window: guarded history consumer publishes a conflicting failure and retains read",
+      "decision": "retain-browser",
+      "target": "tests/query/history-window.spec.ts",
+      "reason": "Production history panel is exercised through the real Next API; RTL state coverage exists in chat-history-panel.test.tsx."
+    },
+    {
+      "id": "B028-Q-0022",
+      "source": "tests/query/history-window.spec.ts",
+      "title": "history window: opening ends at bottom and refreshing while reading retains scroll position",
+      "decision": "retain-browser",
+      "target": "tests/query/history-window.spec.ts",
+      "reason": "Actual layout, scroll position and browser geometry are asserted."
+    },
+    {
+      "id": "B028-Q-0023",
+      "source": "tests/query/message-composer.spec.ts",
+      "title": "composer submits original text and shows API acceptance before confirmed read",
+      "decision": "retain-browser",
+      "target": "tests/query/message-composer.spec.ts",
+      "reason": "Real send HTTP response, browser editor state and chat switching are asserted together."
+    },
+    {
+      "id": "B028-Q-0024",
+      "source": "tests/query/message-composer.spec.ts",
+      "title": "pending send survives switching chats and never clears the new editor",
+      "decision": "retain-browser",
+      "target": "tests/query/message-composer.spec.ts",
+      "reason": "Real send HTTP response, browser editor state and chat switching are asserted together."
+    },
+    {
+      "id": "B028-Q-0025",
+      "source": "tests/query/message-composer.spec.ts",
+      "title": "a second tab is limited and cannot send",
+      "decision": "retain-browser",
+      "target": "tests/query/message-composer.spec.ts",
+      "reason": "Two real browser tabs and lease ownership gate sending."
+    },
+    {
+      "id": "B028-Q-0026",
+      "source": "tests/query/message-composer.spec.ts",
+      "title": "lost response preserves input, requires a history check and leaves retry to the user",
+      "decision": "retain-browser",
+      "target": "tests/query/message-composer.spec.ts",
+      "reason": "Real notification receive/ACK and history/send HTTP ordering is asserted."
+    },
+    {
+      "id": "B028-Q-0027",
+      "source": "tests/query/message-composer.spec.ts",
+      "title": "IME Enter and Shift+Enter never submit, blank and over-limit input are rejected locally",
+      "decision": "retain-browser",
+      "target": "tests/query/message-composer.spec.ts",
+      "reason": "Real browser composition/keyboard events and local editor interaction are asserted."
+    },
+    {
+      "id": "B028-Q-0028",
+      "source": "tests/query/message-composer.spec.ts",
+      "title": "incoming is applied and ACKed before late history, which preserves live content without duplicates",
+      "decision": "retain-browser",
+      "target": "tests/query/message-composer.spec.ts",
+      "reason": "Real notification receive/ACK and history/send HTTP ordering is asserted."
+    },
+    {
+      "id": "B028-Q-0029",
+      "source": "tests/query/message-composer.spec.ts",
+      "title": "read notification before HTTP acceptance creates no empty bubble and attaches to the accepted message",
+      "decision": "retain-browser",
+      "target": "tests/query/message-composer.spec.ts",
+      "reason": "Real notification receive/ACK and history/send HTTP ordering is asserted."
+    },
+    {
+      "id": "B028-Q-0030",
+      "source": "tests/query/message-composer.spec.ts",
+      "title": "reopening history replaces API clock with confirmed delivery without a live status",
+      "decision": "retain-browser",
+      "target": "tests/query/message-composer.spec.ts",
+      "reason": "Real notification receive/ACK and history/send HTTP ordering is asserted."
+    },
+    {
+      "id": "B028-Q-0031",
+      "source": "tests/query/polling-workspace.spec.ts",
+      "title": "browser Web Lock blocks second tab and transfers after first closes without a server release",
+      "decision": "retain-browser",
+      "target": "tests/query/polling-workspace.spec.ts",
+      "reason": "Actual browser Web Locks, tab lifecycle or unsupported browser API are asserted."
+    },
+    {
+      "id": "B028-Q-0032",
+      "source": "tests/query/polling-workspace.spec.ts",
+      "title": "reload reacquires browser lease without the old server ownership grace",
+      "decision": "retain-browser",
+      "target": "tests/query/polling-workspace.spec.ts",
+      "reason": "Actual browser Web Locks, tab lifecycle or unsupported browser API are asserted."
+    },
+    {
+      "id": "B028-Q-0033",
+      "source": "tests/query/polling-workspace.spec.ts",
+      "title": "unsupported Web Locks shows explicit limitation instead of reading queue",
+      "decision": "retain-browser",
+      "target": "tests/query/polling-workspace.spec.ts",
+      "reason": "Actual browser Web Locks, tab lifecycle or unsupported browser API are asserted."
+    },
+    {
+      "id": "B028-Q-0034",
+      "source": "tests/query/session-chat-overlay.spec.ts",
+      "title": "session overlay: a pending known chat remains visible after empty and failed list refresh",
+      "decision": "migrate-to-rtl",
+      "target": "tests/component/session-chat-overlay.test.tsx",
+      "reason": "Real React provider/QueryClient behavior can be asserted through an accessible RTL host."
+    },
+    {
+      "id": "B028-Q-0035",
+      "source": "tests/query/unread-indicators.spec.ts",
+      "title": "unread UI: another chat counts, duplicate delivery and ACK preserve one mark, opening clears it",
+      "decision": "retain-browser",
+      "target": "tests/query/unread-indicators.spec.ts",
+      "reason": "Live notification/ACK HTTP and rendered unread state are asserted together in Chromium."
+    },
+    {
+      "id": "B028-Q-0036",
+      "source": "tests/query/unread-indicators.spec.ts",
+      "title": "unread UI: hidden selected chat counts and return clears only it; visible incoming/status do not count",
+      "decision": "retain-browser",
+      "target": "tests/query/unread-indicators.spec.ts",
+      "reason": "Live notification/ACK HTTP and rendered unread state are asserted together in Chromium."
+    },
+    {
+      "id": "B028-Q-0037",
+      "source": "tests/query/unread-indicators.spec.ts",
+      "title": "unread UI: unknown chat appears with mark and list refresh does not erase it",
+      "decision": "retain-browser",
+      "target": "tests/query/unread-indicators.spec.ts",
+      "reason": "Live notification/ACK HTTP and rendered unread state are asserted together in Chromium."
+    },
+    {
+      "id": "B028-Q-0038",
+      "source": "tests/query/unread-indicators.spec.ts",
+      "title": "unread UI: mobile hidden conversation counts, back button totals and resize reveals/clears selected chat",
+      "decision": "retain-browser",
+      "target": "tests/query/unread-indicators.spec.ts",
+      "reason": "Responsive layout, theme, navigation or visible badge geometry requires Chromium."
+    },
+    {
+      "id": "B028-Q-0039",
+      "source": "tests/query/unread-indicators.spec.ts",
+      "title": "unread preview: 1280px light count/99+ layout and mobile navigation",
+      "decision": "retain-browser",
+      "target": "tests/query/unread-indicators.spec.ts",
+      "reason": "Responsive layout, theme, navigation or visible badge geometry requires Chromium."
+    },
+    {
+      "id": "B028-Q-0040",
+      "source": "tests/query/unread-indicators.spec.ts",
+      "title": "unread preview: 1280px dark count/99+ layout and mobile navigation",
+      "decision": "retain-browser",
+      "target": "tests/query/unread-indicators.spec.ts",
+      "reason": "Responsive layout, theme, navigation or visible badge geometry requires Chromium."
+    },
+    {
+      "id": "B028-Q-0041",
+      "source": "tests/query/unread-indicators.spec.ts",
+      "title": "unread preview: 390px light count/99+ layout and mobile navigation",
+      "decision": "retain-browser",
+      "target": "tests/query/unread-indicators.spec.ts",
+      "reason": "Responsive layout, theme, navigation or visible badge geometry requires Chromium."
+    },
+    {
+      "id": "B028-Q-0042",
+      "source": "tests/query/unread-indicators.spec.ts",
+      "title": "unread preview: 390px dark count/99+ layout and mobile navigation",
+      "decision": "retain-browser",
+      "target": "tests/query/unread-indicators.spec.ts",
+      "reason": "Responsive layout, theme, navigation or visible badge geometry requires Chromium."
+    },
+    {
+      "id": "B028-Q-0043",
+      "source": "tests/query/unread-indicators.spec.ts",
+      "title": "unread preview: 320px light count/99+ layout and mobile navigation",
+      "decision": "retain-browser",
+      "target": "tests/query/unread-indicators.spec.ts",
+      "reason": "Responsive layout, theme, navigation or visible badge geometry requires Chromium."
+    },
+    {
+      "id": "B028-Q-0044",
+      "source": "tests/query/unread-indicators.spec.ts",
+      "title": "unread preview: 320px dark count/99+ layout and mobile navigation",
+      "decision": "retain-browser",
+      "target": "tests/query/unread-indicators.spec.ts",
+      "reason": "Responsive layout, theme, navigation or visible badge geometry requires Chromium."
+    },
+    {
+      "id": "B028-Q-0045",
+      "source": "tests/query/unread-indicators.spec.ts",
+      "title": "unread UI: long chat label truncates without moving the badge outside its row",
+      "decision": "retain-browser",
+      "target": "tests/query/unread-indicators.spec.ts",
+      "reason": "Responsive layout, theme, navigation or visible badge geometry requires Chromium."
+    }
+  ]
+}

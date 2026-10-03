@@ -122,12 +122,6 @@ test('React query: two consumers, fresh remount and API recovery on reload', asy
   await expect(first(page)).toContainText(chat.chatId)
 })
 
-test('React query: empty success differs from loading', async ({ page }) => {
-  await page.route(API, (route) => fulfill({ route, chats: [] }))
-  await page.goto(HOME)
-  await expectState({ page, expected: { data: [], isPending: false } })
-})
-
 test('React query: background refresh/error retain cache while UI shows recovery', async ({
   page,
 }) => {

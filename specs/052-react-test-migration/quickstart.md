@@ -1,0 +1,3 @@
+# Quickstart 052
+
+Из корня проекта в PowerShell выбрать `SPECIFY_FEATURE_DIRECTORY=specs/052-react-test-migration` и передавать абсолютный `ExpectedFeatureDirectory` всем Spec Kit scripts. Прочитать [inventory](inventory.md) и [scenario-map.json](scenario-map.json). До удаления старых тестов выполнить `npm run test:query` (46) и `npm run test:component` с новыми RTL файлами. После parity выполнить `npm run typecheck`, `npm run lint`, `npm run lint:styles`, `npm run format:check`, `npm test`, `npm run test:query`, `npm run test:e2e` последовательно для browser suites. Проверить discovery: 9 перенесённых и 37 оставшихся, нет потерянного ID. Зафиксировать результаты в `verification.md`, затем commit/push `refactor` и проверить обе CI jobs/артефакты.

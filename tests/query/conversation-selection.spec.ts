@@ -1,6 +1,5 @@
 import type { Page } from '@playwright/test'
 import { expect, test } from './owner-fixture'
-import { EMPTY_STRING } from '@/lib/ui/constants'
 import {
   CONVERSATION_CONTRACT,
   CONVERSATION_FIXTURES,
@@ -9,34 +8,13 @@ import {
   RECIPIENT_API_CONTRACT,
   RECIPIENT_CONTRACT,
   ROUTE_PATTERNS,
-  SELECTION_PROBE_COPY,
   SELECTION_PROBE_IDS,
   TEST_UI,
 } from '../constants'
 import { CHAT_LIST_UI } from '../e2e/chat-list-ui.constants'
 
-const { targetA, targetB, newChatId, phone, knownMessage, draftA, draftB } =
-  CONVERSATION_FIXTURES
-const { FIRST, SECOND, CACHE, HISTORY_TARGET } = SELECTION_PROBE_IDS
-const {
-  OPEN,
-  BACK,
-  CLOSE,
-  SEED_MESSAGES,
-  INSPECT_MESSAGES,
-  END_SESSION,
-  SWITCH_SCOPE,
-  HISTORY_PENDING,
-  HISTORY_EMPTY,
-  HISTORY_ERROR,
-  HISTORY_KNOWN,
-  HISTORY_LATE,
-  EDITOR,
-  EMPTY_REPLY,
-  ERROR_REPLY,
-  KNOWN_REPLY,
-  LATE_REPLY,
-} = SELECTION_PROBE_COPY
+const { targetA, targetB, newChatId, phone } = CONVERSATION_FIXTURES
+const { FIRST } = SELECTION_PROBE_IDS
 const { API: CHATS_API, SCOPE_HEADER, LIST } = CHAT_LIST_UI
 const { RESPONSE_OK } = LOGIN_API_CONTRACT
 const { RESULT_FOUND } = RECIPIENT_API_CONTRACT
@@ -77,28 +55,6 @@ const prepare = async (page: Page) => {
   await expect(page.getByRole(ROLE_LIST, { name: LIST })).toBeVisible()
 }
 
-test('selection Context: StrictMode click is one access, both consumers share A → A → B', async ({
-  page,
-}) => {
-  await prepare(page)
-  await page.getByRole(ROLE_BUTTON, { name: OPEN, exact: true }).click()
-  await expectSelection({ page, expected: { accessId: 1 } })
-  await expect(page.getByTestId(SECOND)).toHaveText(
-    await selection(page).innerText(),
-  )
-  await page
-    .getByRole(ROLE_BUTTON, { name: targetA.label, exact: true })
-    .click()
-  await expectSelection({ page, expected: { accessId: 2, selectionEpoch: 1 } })
-  await page
-    .getByRole(ROLE_BUTTON, { name: targetB.label, exact: true })
-    .click()
-  await expectSelection({
-    page,
-    expected: { target: { chatId: targetB.chatId }, selectionEpoch: 2 },
-  })
-})
-
 test('selection Context: found recipient opens without another lookup, Send or list entry', async ({
   page,
 }) => {
@@ -122,65 +78,4 @@ test('selection Context: found recipient opens without another lookup, Send or l
   await expect(page.getByRole(ROLE_LIST_ITEM)).toHaveCount(2)
   expect(lookups).toBe(1)
   expect(unexpected).toEqual([])
-})
-
-test('selection Context: close preserves Query data, closed session hides and guards selection', async ({
-  page,
-}) => {
-  await prepare(page)
-  await page.getByRole(ROLE_BUTTON, { name: OPEN }).click()
-  await page.getByRole(ROLE_BUTTON, { name: SEED_MESSAGES }).click()
-  await page.getByRole(ROLE_BUTTON, { name: BACK }).click()
-  await expectSelection({ page, expected: { selectionEpoch: 1 } })
-  await page.getByRole(ROLE_BUTTON, { name: CLOSE }).click()
-  await expectSelection({ page, expected: { selectionEpoch: 2 } })
-  await page.getByRole(ROLE_BUTTON, { name: INSPECT_MESSAGES }).click()
-  await expect(page.getByTestId(CACHE)).toContainText(knownMessage)
-  await page.getByRole(ROLE_BUTTON, { name: END_SESSION }).click()
-  await page.getByRole(ROLE_BUTTON, { name: OPEN }).click()
-  await expectSelection({ page, expected: { target: null } })
-  await page.getByRole(ROLE_BUTTON, { name: SWITCH_SCOPE }).click()
-  await expectSelection({ page, expected: { accessId: 0 } })
-  await page.getByRole(ROLE_BUTTON, { name: OPEN }).click()
-  await expectSelection({ page, expected: { accessId: 1 } })
-})
-
-test('selection slots: pending/empty/error differ, access and editor epoch are independent', async ({
-  page,
-}) => {
-  await prepare(page)
-  await page.getByRole(ROLE_BUTTON, { name: OPEN }).click()
-  await expect
-    .poll(async () =>
-      JSON.parse(await page.getByTestId(HISTORY_TARGET).innerText()),
-    )
-    .toMatchObject({ chatId: targetA.chatId })
-  await expect(page.getByText(HISTORY_PENDING, { exact: true })).toBeVisible()
-  await page.getByRole(ROLE_BUTTON, { name: EMPTY_REPLY }).click()
-  await expect(page.getByText(HISTORY_EMPTY, { exact: true })).toBeVisible()
-  await page.getByRole(ROLE_BUTTON, { name: ERROR_REPLY }).click()
-  await expect(page.getByText(HISTORY_ERROR, { exact: true })).toBeVisible()
-  await page.getByRole(ROLE_BUTTON, { name: KNOWN_REPLY }).click()
-  await expect(page.getByText(HISTORY_KNOWN, { exact: true })).toBeVisible()
-  const editor = page.getByLabel(EDITOR)
-  await editor.fill(draftA)
-  await page.getByRole(ROLE_BUTTON, { name: OPEN }).click()
-  await expect(editor).toHaveValue(draftA)
-  await page.getByRole(ROLE_BUTTON, { name: BACK }).click()
-  await expect(editor).toHaveValue(draftA)
-  await page.getByRole(ROLE_BUTTON, { name: LATE_REPLY }).click()
-  await page
-    .getByRole(ROLE_BUTTON, { name: targetB.label, exact: true })
-    .click()
-  await expect(editor).toHaveValue(EMPTY_STRING)
-  await editor.fill(draftB)
-  await expect(page.getByText(HISTORY_LATE, { exact: true })).toBeVisible()
-  await expectSelection({
-    page,
-    expected: { target: { chatId: targetB.chatId } },
-  })
-  await expect(editor).toHaveValue(draftB)
-  await page.getByRole(ROLE_BUTTON, { name: CLOSE }).click()
-  await page.getByRole(ROLE_BUTTON, { name: OPEN }).click()
-  await expect(editor).toHaveValue(EMPTY_STRING)
 })
