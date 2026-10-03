@@ -5,6 +5,7 @@ import {
   NOTIFICATION_STATE,
   NOTIFICATION_CONFIG,
   NOTIFICATION_CODE,
+  POLLING_CONFIG,
 } from '@/lib/notifications/constants'
 import { HTML_VALUES } from '@/lib/ui/constants'
 import { NOTIFICATION_NOTICE_COPY } from './constants'
@@ -13,17 +14,18 @@ import { useNotificationConnection } from '@/components/NotificationProvider/con
 import styles from './NotificationNotice.module.scss'
 
 const { OUTGOING_DISABLED } = NOTIFICATION_CONFIG
-const { INVALID_UPSTREAM, DELETE_FAILED } = NOTIFICATION_CODE
+const { INVALID_UPSTREAM } = NOTIFICATION_CODE
+const { LOCK_UNAVAILABLE } = POLLING_CONFIG
 const { LIMITED, PAUSED, RETRYING } = NOTIFICATION_STATE
 const { BUTTON, ROLE_ALERT, ROLE_STATUS } = HTML_VALUES
 const {
   LIMIT,
+  LOCK_UNAVAILABLE: LOCK_UNAVAILABLE_COPY,
   PAUSE,
   RETRY,
   RECONNECTING,
   SETTINGS,
   INVALID,
-  DELETE_FAILED: DELETE_FAILURE_COPY,
 } = NOTIFICATION_NOTICE_COPY
 export const NotificationNotice = () => {
   const { connection: issue } = useMessageIssues(null)
@@ -35,11 +37,11 @@ export const NotificationNotice = () => {
   const visible = restricted || reconnecting || settingsIssue
   if (!visible) return <MessageStatusIssue issue={issue} />
   let copy: string = SETTINGS
-  if (connection.status === LIMITED) copy = LIMIT
+  if (connection.status === LIMITED)
+    copy = connection.issue === LOCK_UNAVAILABLE ? LOCK_UNAVAILABLE_COPY : LIMIT
   else if (connection.status === PAUSED) {
     copy = PAUSE
     if (connection.issue === INVALID_UPSTREAM) copy = INVALID
-    else if (connection.issue === DELETE_FAILED) copy = DELETE_FAILURE_COPY
   } else if (reconnecting) copy = RECONNECTING
   return (
     <>

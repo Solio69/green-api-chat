@@ -1,7 +1,9 @@
-import { createNotificationStream } from './create-notification-stream'
-import type { createReceiverRegistry } from './receiver-registry'
-import type { ReceiverContext } from './types'
+import { createAckProof, verifyAckProof } from './ack-proof'
+import { normalizeNotification } from './normalize-notification'
+import { ReceiverError } from './receiver-error'
+import type { ReceiverContext, ReceiverProvider } from './types'
 import { isRecord } from '@/lib/api/is-record'
+import { hasSessionPassword } from '@/lib/auth/session'
 import { isChatId } from '@/lib/chats/validate-chat-id'
 import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
 import { CHAT_QUERY_CONFIG } from '@/lib/chats/constants'
@@ -20,8 +22,8 @@ import { SEND_CONFIG } from '@/lib/sending/constants'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import {
   NOTIFICATION_ACTION,
-  NOTIFICATION_CODE,
   NOTIFICATION_CONFIG,
+  NOTIFICATION_CODE,
 } from './constants'
 
 const {
@@ -31,9 +33,10 @@ const {
   CONTENT_TYPE,
   CONTENT_LENGTH,
   CONNECTION_SCOPE,
+  RETRY_AFTER,
 } = HTTP_HEADERS
 const { CONTENT_TYPE_PARAMETER_SEPARATOR } = HTTP_SYNTAX
-const { CLAIM, STREAM, ACK, RELEASE } = NOTIFICATION_ACTION
+const { SETTINGS, RECEIVE, ACK } = NOTIFICATION_ACTION
 const { NO_STORE } = CACHE_CONTROL
 const { ERROR, OK: RESPONSE_OK } = API_RESPONSE_STATUS
 const { HTTP, HTTPS } = HTTP_URL_PROTOCOL
@@ -41,18 +44,19 @@ const { ROOT_PATH, INVALID_HOST_PARTS } = SEND_CONFIG
 const { JSON: JSON_CONTENT_TYPE } = HTTP_CONTENT_TYPE
 const { MAX_REQUEST_BYTES } = HTTP_BODY_LIMIT
 const { UTF_8 } = TEXT_ENCODING
-const { GET, POST } = HTTP_METHOD
+const { POST } = HTTP_METHOD
 const { SERVER_UNAVAILABLE } = API_ERROR_CODE
+const { TIMEOUT_MS } = NOTIFICATION_CONFIG
 const { SCOPE_PATTERN } = CHAT_QUERY_CONFIG
-const { NOT_OWNER, RETRY_LATER, NOT_CONFIGURED, INVALID_UPSTREAM } =
-  NOTIFICATION_CODE
+const { DELIVERY_CHANGED, RETRY_LATER, INVALID_UPSTREAM } = NOTIFICATION_CODE
 
 export type NotificationRequestOptions = {
   request: Request
   action: (typeof NOTIFICATION_ACTION)[keyof typeof NOTIFICATION_ACTION]
   context: ReceiverContext | null
   configured: boolean
-  registry: ReturnType<typeof createReceiverRegistry>
+  provider: ReceiverProvider
+  password: string | undefined
   clearSession: () => Promise<void>
 }
 const {
@@ -66,7 +70,6 @@ const {
   BAD_GATEWAY,
 } = HTTP_STATUS
 const { INVALID_REQUEST, CONNECTION_CHANGED, SESSION_REQUIRED } = API_ERROR_CODE
-const { OWNER_HEADER, CAPABILITY_PATTERN } = NOTIFICATION_CONFIG
 const json = ({ body, status = OK }: { body: object; status?: number }) =>
   Response.json(body, {
     status,
@@ -143,20 +146,17 @@ export const handleNotificationRequest = async ({
   action,
   context,
   configured,
-  registry,
+  provider,
+  password,
   clearSession,
 }: NotificationRequestOptions): Promise<Response> => {
-  const expectedMethod = action === STREAM ? GET : POST
-  if (request.method !== expectedMethod)
+  if (request.method !== POST)
     return failure({ code: INVALID_REQUEST, status: METHOD_NOT_ALLOWED })
-  const invalidOrigin = action !== STREAM && !isNotificationOrigin(request)
-  if (invalidOrigin)
+  if (!isNotificationOrigin(request))
     return failure({ code: INVALID_REQUEST, status: FORBIDDEN })
-  if (!configured)
-    return failure({
-      code: SERVER_UNAVAILABLE,
-      status: SERVICE_UNAVAILABLE,
-    })
+  const available = configured && hasSessionPassword(password)
+  if (!available)
+    return failure({ code: SERVER_UNAVAILABLE, status: SERVICE_UNAVAILABLE })
   if (!context) {
     await clearSession()
     return failure({ code: SESSION_REQUIRED, status: UNAUTHORIZED })
@@ -167,75 +167,97 @@ export const handleNotificationRequest = async ({
     return failure({ code: INVALID_REQUEST, status: BAD_REQUEST })
   if (scope !== context.connectionScope)
     return failure({ code: CONNECTION_CHANGED })
-  const ownerCapability = request.headers.get(OWNER_HEADER)
-  const hasProof =
-    ownerCapability !== null && CAPABILITY_PATTERN.test(ownerCapability)
-  const missingProof = action !== CLAIM && !hasProof
-  if (missingProof) return failure({ code: NOT_OWNER })
-  const owned = { ...context, ownerCapability: ownerCapability ?? undefined }
-  if (action === STREAM) {
-    const response = createNotificationStream({
-      request,
-      context: owned,
-      registry,
-    })
-    return response instanceof Response ? response : failure(response)
-  }
   const body = await readBody(request)
   if (!isRecord(body))
     return failure({ code: INVALID_REQUEST, status: BAD_REQUEST })
   const keys = Object.keys(body)
-  const validBody =
-    action === ACK
-      ? keys.length === 1 &&
-        keys[0] === 'deliveryId' &&
-        isChatId(body.deliveryId)
-      : keys.length === 0
+  const settingsBody = action === SETTINGS && keys.length === 0
+  const receiveBody =
+    action === RECEIVE &&
+    keys.length === 1 &&
+    keys[0] === 'ownerEpoch' &&
+    isChatId(body.ownerEpoch)
+  const ackBody =
+    action === ACK &&
+    keys.length === 1 &&
+    keys[0] === 'ackToken' &&
+    typeof body.ackToken === 'string'
+  const validBody = settingsBody || receiveBody || ackBody
   if (!validBody) return failure({ code: INVALID_REQUEST, status: BAD_REQUEST })
-  if (request.signal.aborted)
-    return failure({
-      code: RETRY_LATER,
-      status: SERVICE_UNAVAILABLE,
-    })
-  if (action === CLAIM) {
-    const result = await registry.claimOwner(context)
-    if (result.kind === RESPONSE_OK)
-      return json({
-        body: {
-          status: RESPONSE_OK,
+  const signal = AbortSignal.any([
+    request.signal,
+    AbortSignal.timeout(action === ACK ? TIMEOUT_MS * 2 : TIMEOUT_MS),
+  ])
+  const success = (extra: object) =>
+    json({ body: { status: RESPONSE_OK, connectionScope: scope, ...extra } })
+  try {
+    signal.throwIfAborted()
+    if (action === SETTINGS) {
+      const settings = await provider.settings(context)
+      signal.throwIfAborted()
+      return success(settings)
+    }
+    if (action === RECEIVE) {
+      const value = await provider.receive({ context, signal })
+      signal.throwIfAborted()
+      if (value === null) return success({ delivery: null, ackToken: null })
+      const receipt = normalizeNotification({
+        value,
+        credentials: context.credentials,
+      })
+      if (!receipt)
+        return failure({ code: INVALID_UPSTREAM, status: BAD_GATEWAY })
+      const ackToken = createAckProof({
+        context,
+        receiptId: receipt.receiptId,
+        password,
+      })
+      return success({
+        ackToken,
+        delivery: {
           connectionScope: scope,
-          ownerCapability: result.ownerCapability,
-          ownerEpoch: result.ownerEpoch,
-          outgoingEnabled: result.outgoingEnabled,
+          ownerEpoch: body.ownerEpoch,
+          deliveryId: ackToken,
+          event: receipt.event,
         },
       })
-    if (result.code === SESSION_REQUIRED) {
-      await clearSession()
-      return failure({ code: SESSION_REQUIRED, status: UNAUTHORIZED })
     }
-    let status: number = CONFLICT
-    const unavailable =
-      result.code === NOT_CONFIGURED || result.code === RETRY_LATER
-    if (unavailable) status = SERVICE_UNAVAILABLE
-    else if (result.code === INVALID_UPSTREAM) status = BAD_GATEWAY
-    return failure({ code: result.code, status })
+    const ackToken = body.ackToken as string
+    const receiptId = verifyAckProof({ token: ackToken, context, password })
+    if (receiptId === null) return failure({ code: DELIVERY_CHANGED })
+    const deleted = await provider.delete({ context, receiptId, signal })
+    signal.throwIfAborted()
+    if (!deleted) {
+      const value = await provider.receive({ context, signal })
+      signal.throwIfAborted()
+      if (value !== null) {
+        const head = normalizeNotification({
+          value,
+          credentials: context.credentials,
+        })
+        if (!head)
+          return failure({ code: INVALID_UPSTREAM, status: BAD_GATEWAY })
+        if (head.receiptId === receiptId)
+          return failure({ code: RETRY_LATER, status: SERVICE_UNAVAILABLE })
+      }
+    }
+    return success({ deliveryId: ackToken })
+  } catch (error) {
+    if (error instanceof ReceiverError) {
+      if (error.code === SESSION_REQUIRED) {
+        await clearSession()
+        return failure({ code: SESSION_REQUIRED, status: UNAUTHORIZED })
+      }
+      const status =
+        error.code === INVALID_UPSTREAM ? BAD_GATEWAY : SERVICE_UNAVAILABLE
+      const response = failure({ code: error.code, status })
+      if (error.retryAfterMs > 0)
+        response.headers.set(
+          RETRY_AFTER,
+          String(Math.ceil(error.retryAfterMs / 1_000)),
+        )
+      return response
+    }
+    return failure({ code: RETRY_LATER, status: SERVICE_UNAVAILABLE })
   }
-  if (action === RELEASE) {
-    registry.releaseOwner(owned)
-    return json({
-      body: { status: RESPONSE_OK, connectionScope: scope },
-    })
-  }
-  const result = registry.ackDelivery({
-    context: owned,
-    deliveryId: body.deliveryId as string,
-  })
-  if (result.kind !== RESPONSE_OK) return failure(result)
-  return json({
-    body: {
-      status: RESPONSE_OK,
-      connectionScope: scope,
-      deliveryId: body.deliveryId,
-    },
-  })
 }

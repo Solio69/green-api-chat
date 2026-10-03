@@ -35,5 +35,5 @@ export const readNotificationContext = async () => {
   const clearSession = async () => {
     store.delete(AUTH_CONFIG_COOKIE_NAME)
   }
-  return { context, configured, clearSession }
+  return { context, configured, clearSession, password }
 }

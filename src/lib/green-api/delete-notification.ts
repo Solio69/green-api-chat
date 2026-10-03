@@ -1,6 +1,6 @@
 import { notificationRequest } from './notification-request'
 import { isRecord } from '@/lib/api/is-record'
-import { ReceiverError } from '@/lib/notifications/receiver-registry'
+import { ReceiverError } from '@/lib/notifications/receiver-error'
 import type { ReceiverContext } from '@/lib/notifications/types'
 import { HTTP_METHOD } from '@/lib/http/constants'
 import { NOTIFICATION_CODE } from '@/lib/notifications/constants'

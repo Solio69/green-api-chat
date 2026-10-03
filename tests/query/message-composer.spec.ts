@@ -321,7 +321,7 @@ test('read notification before HTTP acceptance creates no empty bubble and attac
   await expect(input).toHaveValue('')
 })
 
-test('reopening history replaces API clock with confirmed delivery without an SSE status', async ({
+test('reopening history replaces API clock with confirmed delivery without a live status', async ({
   page,
 }) => {
   await page.goto(PATH)

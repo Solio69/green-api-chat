@@ -6,7 +6,6 @@ import { handleSendRequest } from '@/lib/sending/handle-send-request'
 import { readSendBody } from '@/lib/sending/read-send-body'
 import type {
   ProviderSendResult,
-  SendLeaseResult,
   SendRequestOptions,
 } from '@/lib/sending/types'
 import { validateSendRequest } from '@/lib/sending/validate-send-request'
@@ -17,11 +16,7 @@ import {
 } from '@/lib/http/constants'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import { HISTORY_TEST } from '../history/constants'
-import {
-  TEST_HTTP_PROTOCOL,
-  TEST_API_CODE,
-  TEST_NOTIFICATION_PROTOCOL,
-} from '../protocol.constants'
+import { TEST_HTTP_PROTOCOL, TEST_API_CODE } from '../protocol.constants'
 
 const EXPECTED_PROVIDER_URL =
   'https://4100.api.green-api.com/waInstancefictional%2Fid/sendMessage/fictional%20token%2Fvalue'
@@ -42,13 +37,8 @@ const {
   NEEDS_AUTHORIZATION: TEST_API_CODE_NEEDS_AUTHORIZATION,
   INSTANCE_RESTRICTED: TEST_API_CODE_INSTANCE_RESTRICTED,
 } = TEST_API_CODE
-const {
-  NOT_OWNER: TEST_NOTIFICATION_PROTOCOL_NOT_OWNER,
-  RECEIVER_NOT_ACTIVE: TEST_NOTIFICATION_PROTOCOL_RECEIVER_NOT_ACTIVE,
-  SEND_IN_PROGRESS: TEST_NOTIFICATION_PROTOCOL_SEND_IN_PROGRESS,
-} = TEST_NOTIFICATION_PROTOCOL
 
-const { credentials, scopeA, scopeB, chatA, chatB } = HISTORY_TEST
+const { credentials, scopeA, scopeB, chatA } = HISTORY_TEST
 const { CONNECTION_SCOPE, ORIGIN, HOST, CONTENT_TYPE, CACHE_CONTROL } =
   HTTP_HEADERS
 const { POST } = HTTP_METHOD
@@ -108,7 +98,6 @@ const SEND_TEST = {
   API: 'https://app.example.test/api/messages',
   ORIGIN: 'https://app.example.test',
   ATTEMPT: '12345678-1234-4234-8234-123456789abc',
-  OWNER: 'fictional-owner-capability',
   ID: 'fictional-accepted-message',
   TEXT: '  Первая строка\nВторая строка 😃  ',
   EMOJI: '😃',
@@ -144,7 +133,6 @@ const {
   API,
   ORIGIN: APP_ORIGIN,
   ATTEMPT,
-  OWNER,
   ID,
   TEXT,
   EMOJI,
@@ -193,14 +181,13 @@ const makeRequest = (
   })
 }
 const createHarness = (options: Partial<SendRequestOptions> = {}) => {
-  const effects = { sends: 0, leases: 0, releases: 0, clears: 0 }
+  const effects = { sends: 0, clears: 0 }
   const requestOptions: SendRequestOptions = {
     request: makeRequest(),
     context: {
       configured: true,
       credentials,
       connectionScope: scopeA,
-      ownerCapability: OWNER,
     },
     send: async () => {
       effects.sends += 1
@@ -208,15 +195,6 @@ const createHarness = (options: Partial<SendRequestOptions> = {}) => {
     },
     clearSession: async () => {
       effects.clears += 1
-    },
-    tryAcquireSend: () => {
-      effects.leases += 1
-      return {
-        kind: RESPONSE_OK,
-        release: () => {
-          effects.releases += 1
-        },
-      }
     },
     ...options,
   }
@@ -554,13 +532,11 @@ test('handler binds accepted DTO to original scope, chat and attempt without fak
   })
   expect(harness.effects).toEqual({
     sends: 1,
-    leases: 1,
-    releases: 1,
     clears: 0,
   })
 })
 for (const origin of INVALID_ORIGINS) {
-  test(`handler rejects Origin ${JSON.stringify(origin)} before reading body, acquiring lease or clearing session`, async () => {
+  test(`handler rejects Origin ${JSON.stringify(origin)} before reading body, dispatching or clearing session`, async () => {
     const request = makeRequest({ origin })
     const originalBody = request.body
     let reads = 0
@@ -576,7 +552,6 @@ for (const origin of INVALID_ORIGINS) {
         configured: false,
         credentials: null,
         connectionScope: null,
-        ownerCapability: null,
       },
     })
     await expectFailure({
@@ -587,8 +562,6 @@ for (const origin of INVALID_ORIGINS) {
     expect(reads).toBe(0)
     expect(harness.effects).toEqual({
       sends: 0,
-      leases: 0,
-      releases: 0,
       clears: 0,
     })
   })
@@ -645,7 +618,6 @@ const guardCases: {
         configured: false,
         credentials,
         connectionScope: scopeA,
-        ownerCapability: OWNER,
       },
     },
     status: UNAVAILABLE,
@@ -659,7 +631,6 @@ const guardCases: {
         configured: true,
         credentials: null,
         connectionScope: null,
-        ownerCapability: OWNER,
       },
     },
     status: UNAUTHORIZED,
@@ -714,7 +685,7 @@ const guardCases: {
   },
 ]
 for (const scenario of guardCases) {
-  test(`handler ${scenario.label} prevents lease and provider effects`, async () => {
+  test(`handler ${scenario.label} prevents provider effects`, async () => {
     const harness = createHarness(scenario.options)
     await expectFailure({
       response: await harness.run(),
@@ -723,48 +694,11 @@ for (const scenario of guardCases) {
     })
     expect(harness.effects).toEqual({
       sends: 0,
-      leases: 0,
-      releases: 0,
       clears: scenario.clears,
     })
   })
 }
-const deniedLeases: SendLeaseResult[] = [
-  { kind: TEST_NOTIFICATION_PROTOCOL_NOT_OWNER },
-  { kind: TEST_NOTIFICATION_PROTOCOL_RECEIVER_NOT_ACTIVE },
-  { kind: TEST_NOTIFICATION_PROTOCOL_SEND_IN_PROGRESS },
-]
-for (const lease of deniedLeases) {
-  test(`handler ${lease.kind} never sends or clears cookie`, async () => {
-    const harness = createHarness({ tryAcquireSend: () => lease })
-    await expectFailure({
-      response: await harness.run(),
-      status: CONFLICT,
-      code: lease.kind,
-    })
-    expect(harness.effects.sends).toBe(0)
-    expect(harness.effects.clears).toBe(0)
-  })
-}
-test('handler passes captured identity and owner capability to the shared lease dependency', async () => {
-  const leaseCalls: unknown[] = []
-  const harness = createHarness({
-    tryAcquireSend: (options) => {
-      leaseCalls.push(options)
-      return { kind: RESPONSE_OK, release: () => undefined }
-    },
-  })
-  expect((await harness.run()).status).toBe(OK)
-  expect(leaseCalls).toEqual([
-    {
-      credentials,
-      connectionScope: scopeA,
-      ownerCapability: OWNER,
-      attemptId: ATTEMPT,
-    },
-  ])
-})
-test('handler rejects a cancelled request before dispatch and releases the acquired lease', async () => {
+test('handler rejects a cancelled request before dispatch', async () => {
   const controller = new AbortController()
   controller.abort()
   const harness = createHarness({
@@ -776,9 +710,8 @@ test('handler rejects a cancelled request before dispatch and releases the acqui
     code: SERVICE_UNAVAILABLE,
   })
   expect(harness.effects.sends).toBe(0)
-  expect(harness.effects.releases).toBe(harness.effects.leases)
 })
-test('disconnect does not release a dispatched send or move the late result to another chat', async () => {
+test('disconnect does not cancel a dispatched send or move the late result to another chat', async () => {
   const controller = new AbortController()
   const result = deferred<ProviderSendResult>()
   const started = deferred<boolean>()
@@ -796,7 +729,6 @@ test('disconnect does not release a dispatched send or move the late result to a
   await started.promise
   controller.abort()
   harness.requestOptions.context.connectionScope = scopeB
-  expect(harness.effects.releases).toBe(0)
   result.resolve(accepted)
   const response = await responsePromise
   expect(response.status).toBe(OK)
@@ -807,45 +739,6 @@ test('disconnect does not release a dispatched send or move the late result to a
     attemptId: ATTEMPT,
     idMessage: ID,
   })
-  expect(harness.effects.releases).toBe(1)
-})
-test('second send is rejected until the first upstream settles', async () => {
-  const gate = deferred<ProviderSendResult>()
-  const started = deferred<boolean>()
-  let pending = false
-  let sends = 0
-  const tryAcquireSend = (): SendLeaseResult => {
-    if (pending) return { kind: TEST_NOTIFICATION_PROTOCOL_SEND_IN_PROGRESS }
-    pending = true
-    return {
-      kind: RESPONSE_OK,
-      release: () => {
-        pending = false
-      },
-    }
-  }
-  const send = async () => {
-    sends += 1
-    started.resolve(true)
-    return gate.promise
-  }
-  const first = createHarness({ tryAcquireSend, send }).run()
-  await expect.poll(started.isSettled, { timeout: 1000 }).toBe(true)
-  await started.promise
-  const second = await createHarness({
-    request: makeRequest({ value: { ...input, chatId: chatB } }),
-    tryAcquireSend,
-    send,
-  }).run()
-  await expectFailure({
-    response: second,
-    status: CONFLICT,
-    code: TEST_NOTIFICATION_PROTOCOL_SEND_IN_PROGRESS,
-  })
-  expect(sends).toBe(1)
-  gate.resolve(accepted)
-  expect((await first).status).toBe(OK)
-  expect(pending).toBe(false)
 })
 const resultCases: {
   kind: Exclude<ProviderSendResult, { kind: typeof RESPONSE_OK }>['kind']
@@ -912,7 +805,7 @@ const resultCases: {
   },
 ]
 for (const scenario of resultCases) {
-  test(`handler maps ${scenario.kind} without retry and releases once`, async () => {
+  test(`handler maps ${scenario.kind} without retry`, async () => {
     const harness = createHarness()
     harness.requestOptions.send = async () => {
       harness.effects.sends += 1
@@ -921,62 +814,24 @@ for (const scenario of resultCases) {
     await expectFailure({ response: await harness.run(), ...scenario })
     expect(harness.effects).toEqual({
       sends: 1,
-      leases: 1,
-      releases: 1,
       clears: scenario.clears,
     })
   })
 }
-test('throwing lease is not_sent; throwing dispatched provider is unknown; both hide diagnostic data', async () => {
-  const before = createHarness({
-    tryAcquireSend: () => {
-      throw new Error(credentials.apiTokenInstance)
-    },
-  })
-  await expectFailure({
-    response: await before.run(),
-    status: UNAVAILABLE,
-    code: SERVICE_UNAVAILABLE,
-  })
-  expect(before.effects.sends).toBe(0)
-  const after = createHarness({
+test('throwing dispatched provider remains unknown and hides diagnostic data', async () => {
+  const harness = createHarness({
     send: async () => {
       throw new Error(credentials.apiTokenInstance)
     },
   })
   await expectFailure({
-    response: await after.run(),
-    status: BAD_GATEWAY,
-    code: OUTCOME_UNKNOWN,
-    outcome: UNKNOWN,
-  })
-  expect(after.effects.releases).toBe(1)
-})
-test('release failure never loses a known accepted message or downgrades an unknown outcome', async () => {
-  const tryAcquireSend = (): SendLeaseResult => ({
-    kind: RESPONSE_OK,
-    release: () => {
-      throw new Error(ERROR)
-    },
-  })
-  const harness = createHarness({ tryAcquireSend })
-  const response = await harness.run()
-  expect(response.status).toBe(OK)
-  expect(await response.json()).toMatchObject({
-    idMessage: ID,
-    status: RESPONSE_OK,
-  })
-  const unknown = createHarness({
-    tryAcquireSend,
-    send: async () => ({ kind: OUTCOME_UNKNOWN }),
-  })
-  await expectFailure({
-    response: await unknown.run(),
+    response: await harness.run(),
     status: BAD_GATEWAY,
     code: OUTCOME_UNKNOWN,
     outcome: UNKNOWN,
   })
 })
+
 test('cookie cleanup failure after a confirmed refusal retains not_sent certainty', async () => {
   const harness = createHarness({
     send: async () => ({ kind: TEST_API_CODE_INVALID_TOKEN }),
@@ -989,5 +844,4 @@ test('cookie cleanup failure after a confirmed refusal retains not_sent certaint
     status: UNAVAILABLE,
     code: SERVICE_UNAVAILABLE,
   })
-  expect(harness.effects.releases).toBe(1)
 })

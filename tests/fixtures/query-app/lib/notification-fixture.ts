@@ -1,6 +1,4 @@
 import { setTimeout as wait } from 'node:timers/promises'
-import { createReceiverLoop } from '@/lib/notifications/receiver-loop'
-import { createReceiverRegistry } from '@/lib/notifications/receiver-registry'
 import type { ReceiverProvider } from '@/lib/notifications/types'
 import type {
   SendMessageOptions,
@@ -12,6 +10,7 @@ import { HISTORY_TEST } from '../../../history/constants'
 import { NOTIFICATION_TEST } from '../../../notifications/constants'
 
 const FIXTURE_CONFIG = {
+  PASSWORD: 'fictional-fixture-password-with-more-than-32-characters',
   KEY: 'green-api-chat.messaging-fixture.v1',
   RECEIVE_DELAY_MS: 50,
   SEND_DELAY_MS: 100,
@@ -63,8 +62,8 @@ const createFixture = () => {
       state.claims += 1
       return { outgoingEnabled: true }
     },
-    receive: async () => {
-      await wait(RECEIVE_DELAY_MS)
+    receive: async ({ signal }) => {
+      await wait(RECEIVE_DELAY_MS, undefined, { signal })
       return state.queue[0] ?? null
     },
     delete: async ({ receiptId }) => {
@@ -75,10 +74,6 @@ const createFixture = () => {
       return true
     },
   }
-  const registry = createReceiverRegistry({
-    provider,
-    startReceiver: (options) => createReceiverLoop({ ...options, provider }),
-  })
   const enqueue = (body: Record<string, unknown>) => {
     state.receipt += 1
     state.queue.push({
@@ -138,7 +133,6 @@ const createFixture = () => {
       })
   }
   const reset = () => {
-    registry.shutdown()
     state.queue = []
     state.sends = []
     state.deletes = []
@@ -147,7 +141,15 @@ const createFixture = () => {
     state.unknown = false
     state.claims = 0
   }
-  return { context, registry, state, send, inject, reset }
+  return {
+    context,
+    provider,
+    password: FIXTURE_CONFIG.PASSWORD,
+    state,
+    send,
+    inject,
+    reset,
+  }
 }
 const key = Symbol.for(KEY)
 const processState = globalThis as typeof globalThis & {

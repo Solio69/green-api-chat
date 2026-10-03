@@ -1,0 +1,5 @@
+# Client contract
+
+Web Lock одним browser origin/connectionScope. Retain запускает один цикл; StrictMode release/retain откладывает close до следующей задачи. Нет lock/нет API => LIMITED и рабочая область inert, отправка недоступна. Отдельная copy при отсутствии API. Retry после освобождения повторяет acquisition; paused loop lock удерживается до close, не передаёт владение другим вкладкам молча.
+
+После settings CONNECTED/canSend; receive5 → validate scope/epoch/delivery → applyNotification → ACK → pause100ms → следующийreceive. Empty ответ только продолжает цикл. Transient error RETRYING/backoff, canSendfalse, затем recovery listeners обновляют текущую историю. Incoming/status/ignored/invalid правила сохранены. ACK retries не запускают receive одновременно; expiry запускает повторное получение той же головы с новым proof. Close/retire abort и release, поздние результаты не применяются. Отправка одна за раз в текущей вкладке; локальный контекст защищает привязку позднего ответа. Между разными устройствами/origins/profiles исключительность не обещается. Browser suspension может задержать восстановление, очередьGREENAPI24h — единственный внешний backlog.

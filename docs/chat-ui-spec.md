@@ -131,7 +131,7 @@
 - При каждом обращении запрашивается свежий `count: 10`; известные сообщения объединяются без дублей в памяти Query. Подгрузка старых сообщений отложена; нетекстовый элемент обозначается «Неподдерживаемое сообщение». Техническая политика Query определяется в plan; политика списка сохраняется из 014.
 - Query 5.104.0 установлена пользователем; слой списка 014 реализован. Постоянного browser storage нет.
 
-Фактический статус 014 на 2026-10-02: GetChats, внутренний HTTP API, QueryProvider/useChats и очистка кэша при успешном выходе реализованы и автоматически проверены. Query 5.104.0 установлена пользователем. Публичный hook используется ChatListPanel/ChatList в 015; существующий каркас и поиск сохранены. Политика списка: staleTime 60 секунд, gcTime 5 минут, без polling/focus/client retry, stale reconnect разрешён. История018 обеспечивает свежий HTTP-снимок; история019 показывает сообщения по макету и сохраняет известные в Query. Уведомления022/023 реализованы: server ReceiveNotification → SSE → browser apply → HTTP ACK → DeleteNotification. Согласованные решения и спецификации018–025 собраны в [общем комплекте](messaging-specs.md). Контракт передачи: [014 UI integration](../specs/014-chat-list-query/contracts/ui-integration.md).
+Фактический статус 014 на 2026-10-02: GetChats, внутренний HTTP API, QueryProvider/useChats и очистка кэша при успешном выходе реализованы и автоматически проверены. Query 5.104.0 установлена пользователем. Публичный hook используется ChatListPanel/ChatList в 015; существующий каркас и поиск сохранены. Политика списка: staleTime 60 секунд, gcTime 5 минут, без polling/focus/client retry, stale reconnect разрешён. История018 обеспечивает свежий HTTP-снимок; история019 показывает сообщения по макету и сохраняет известные в Query. Уведомления022/023 реализованы: server ReceiveNotification → JSON → browser apply → HTTP ACK → DeleteNotification. Согласованные решения и спецификации018–025 собраны в [общем комплекте](messaging-specs.md). Контракт передачи: [014 UI integration](../specs/014-chat-list-query/contracts/ui-integration.md).
 
 ## Небольшие этапы реализации
 
@@ -178,3 +178,5 @@
 - [SendMessage](https://green-api.com/telegram/docs/api/sending/SendMessage/): отправка текста и идентификатор принятого сообщения.
 - [ReceiveNotification](https://green-api.com/telegram/docs/api/receiving/technology-http-api/ReceiveNotification/) и [DeleteNotification](https://green-api.com/telegram/docs/api/receiving/technology-http-api/DeleteNotification/): чтение и подтверждение обработки уведомления из очереди.
 - [Исходное задание](<D:/anastasiaStorage/Проекты/Карьера/_work/Тестовое задание Грин-Апи - Фронтенд разработчик React.md>): React, текстовые сообщения, `SendMessage`, HTTP API уведомлений и внешний вид чата MAX.
+
+Транспорт и границы рабочей вкладки определяет [027](../specs/027-vercel-notification-polling/spec.md); изменение транспорта не меняет макет.

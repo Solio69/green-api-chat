@@ -1,76 +1,56 @@
-# Готовность комплекта истории, получения и отправки
+# Готовность истории, получения и отправки
 
-**Дата**: 2026-10-02. **Реализация**: Completed / CodeAuthorized.
-018–025 согласованы; прямое поручение разрешило все оставшиеся задачи до024.
-Все100 задач выполнены, включая совместную T011 истории019. Автоматическая
-приёмка PassedSynthetic: 342 integration,30 Query,99 production E2E и сборка.
-Реальный GREEN-API, ручное ревью и публикация: NotRun.
-Ниже покрытие означает карту требований→задачи; оно не является процентом
-тестового покрытия строк. Согласованные решения: [общий комплект](messaging-specs.md).
+**Дата**: 2026-10-03. **Статус**: Completed / PassedSynthetic.
+Функциональный комплект018–026 соединён в общий сценарий. Действующая архитектура
+размещения и доставки — [027](../specs/027-vercel-notification-polling/spec.md).
+Автоматические тесты используют фиктивный provider. Реальные GREEN-API и Vercel
+smoke — NotRun, выполняются пользователем после публикации.
 
-## Покрытие и полный анализ
+## Ответственность и контракты
 
-| Feature                                            | Назначение                 | FR  | SC  | Задач | Покрытие | Анализ                                                    |
-| -------------------------------------------------- | -------------------------- | --- | --- | ----- | -------- | --------------------------------------------------------- |
-| [018](../specs/018-chat-history-console/spec.md)   | История в консоль          | 9   | 6   | 14    | 100%     | [Passed](../specs/018-chat-history-console/analysis.md)   |
-| [019](../specs/019-chat-history-window/spec.md)    | История и общий кеш        | 12  | 6   | 14    | 100%     | [Passed](../specs/019-chat-history-window/analysis.md)    |
-| [020](../specs/020-send-message-api/spec.md)       | Серверная отправка         | 10  | 5   | 12    | 100%     | [Passed](../specs/020-send-message-api/analysis.md)       |
-| [021](../specs/021-message-composer/spec.md)       | Форма отправки             | 13  | 7   | 17    | 100%     | [Passed](../specs/021-message-composer/analysis.md)       |
-| [022](../specs/022-notification-receiver/spec.md)  | Получатель очереди         | 13  | 6   | 11    | 100%     | [Passed](../specs/022-notification-receiver/analysis.md)  |
-| [023](../specs/023-notification-sse/spec.md)       | SSE и обработка в браузере | 13  | 6   | 11    | 100%     | [Passed](../specs/023-notification-sse/analysis.md)       |
-| [024](../specs/024-message-statuses/spec.md)       | Статусы сообщений          | 13  | 5   | 11    | 100%     | [Passed](../specs/024-message-statuses/analysis.md)       |
-| [025](../specs/025-conversation-selection/spec.md) | Выбор переписки            | 10  | 5   | 10    | 100%     | [Passed](../specs/025-conversation-selection/analysis.md) |
+| Feature | Область |
+| --- | --- |
+| 018/019 | История count10, Query merge, early facts и локальные чаты |
+| 020/021 | Cookie/Origin/scope SendMessage, одна попытка, editor/Enter/IME, ручной повтор |
+| 022/023 | Нормализация событий и применение Query/skip/dedup/recovery |
+| 024 | Подтверждённые статусы, отсутствие понижения и безопасные ошибки без idMessage |
+| 025 | Выбор/закрытие/mobile-return, accessId/selectionEpoch |
+| 026 | Счётчики уникальных новых входящих вне открытого диалога |
+| 027 | Stateless receive/settings/ACK, signed proof, browser Web Lock и bounded polling |
 
-Итого: 93 FR, 46 SC, 139 требований/критериев, 100 задач. Неохваченных FR/SC,
-повторяющихся T-ID, непривязанных задач и параллельных шагов реализации нет.
-Процессные задачи имеют основание C3/C4/C7/C8. Все документы feature перечислены
-ниже; пути исходников и тестов подробно перечислены в каждом plan.
+Действующие [HTTP](../specs/027-vercel-notification-polling/contracts/notification-http.md)
+и [client](../specs/027-vercel-notification-polling/contracts/notification-client.md)
+перекрывают предположения022/023 о SSE и постоянном процессе. Серверного registry,
+send lease, Redis и БД нет. Старые verification — результаты указанного в них
+прогона, а не подтверждение текущего runtime.
 
-## Порядок реализации и общие границы
+## Проверки текущего комплекта
 
-025→018→019 foundation→020 core→022→023→020 HTTP→021→024→019 совместная приёмка.
-CodeAuthorized получено2026-10-02; повторных gate не требовалось.
-Новая логика проверена Red→Green→Refactor; существующий merge019 — baseline.
-Отдельный production E2E Red перед wiring не фиксировался: бизнес-поведение
-уже проверялось React Red, production цепочка проверена как регрессия.
+| Проверка | Результат |
+| --- | --- |
+| Behavioral Red027 до кода | 1 expected failed: receive409 вместо200 |
+| Green затронутых контрактов | 119 passed |
+| Полный integration | 353 passed |
+| React/Query и две реальные вкладки | 45 passed |
+| Production build + E2E | Сборка успешна, 109 passed |
+| ESLint/Stylelint/TypeScript | Passed |
+| Prettier | Passed |
+| Read-only анализ | Результат в analysis027 |
+| Реальные сообщения/настройки/очередь/деплой | NotRun |
 
-Shared core019 владеет MessageDTO/cache/early facts/issues и локальными чатами.
-022 владеет инстансом/registry/loop/settings,023 — private proof/SSE/ACK/recovery,
-020 — Send API/Origin/server lock,021 — editor/mutation,024 — status presentation.
-Scope не равен очереди инстанса. ACK происходит после apply/осознанного skip;
-уточняющий GetChats не удерживает ACK. Старый history не стирает live/accepted.
-Registry один на процесс и общий для route bundles, HMR invalidation дожидается drain.
-Только один постоянный Node runtime; многопроцессный hosting не заявлен.
+Ревью и рефакторинг выполнены после повторного чтения правил. Удалены зависимости
+от процессной памяти, состояния и повторные React updates; устаревшие тесты
+registry/SSE заменены контрактами независимых экземпляров/ACK и клиентского цикла.
+Provider, normalization, cache, unread, send guards и outcomes сохраняют покрытие.
+Превью desktop1280 и mobile320 проверено по синтетическим скриншотам светлой/тёмной темы;
+макет не менялся. Полное доказательство: [verification027](../specs/027-vercel-notification-polling/verification.md).
 
-## Доказательства и документы
+## Публикация
 
-| Feature | Проверки                                         | Авторитетные документы                                                                                                         |
-| ------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-| 019     | Совместная T011/SC-005 PassedSynthetic           | [verification](../specs/019-chat-history-window/verification.md)                                                               |
-| 020     | API/Origin/validation/single dispatch/owner      | [verification](../specs/020-send-message-api/verification.md), [analysis](../specs/020-send-message-api/analysis.md)           |
-| 021     | Editor/Enter/IME/pending/unknown/layout          | [verification](../specs/021-message-composer/verification.md), [analysis](../specs/021-message-composer/analysis.md)           |
-| 022     | Single reader/ACK→Delete/drain/pause/recovery    | [verification](../specs/022-notification-receiver/verification.md), [analysis](../specs/022-notification-receiver/analysis.md) |
-| 023     | HTTP/stream/parser/apply/ACK/reconnect/isolation | [verification](../specs/023-notification-sse/verification.md), [analysis](../specs/023-notification-sse/analysis.md)           |
-| 024     | Statuses/no-id issues/monotonic/early identity   | [verification](../specs/024-message-statuses/verification.md), [analysis](../specs/024-message-statuses/analysis.md)           |
-
-В каждом каталоге сохранены spec/plan/tasks/research/data-model/quickstart,
-contracts, checklists/requirements и acceptance, полный analysis и verification.
-Точная карта FR/SC→T-ID находится в tasks и analysis соответствующей feature.
-Rules/code style, formatter source и отдельный Markdown override NUL проверены.
-Итоговый read-only inventory/hash и C1–C8 сохранены в analysis после отдельного
-замороженного прохода. Настоящие настройки/очередь/сообщения агент не менял,
-пакеты не устанавливал, Git/index не изменял.
-
-Самостоятельное ревью кода и превью завершено в пределах текущего макета:
-локальный composer hook/feedback, контекст уведомлений без цикла, смысловые
-константы и оформление восстановления. Доказательства и границы:
-[verification021](../specs/021-message-composer/verification.md#ревью-компонентов-и-превью).
-
-## Следующий шаг
-
-Пользовательское ревью и проверка реального инстанса по README/quickstart024.
-Remote settings проверяет и при необходимости меняет пользователь.
-Сквозная цепочка ReceiveNotification→SSE→apply→ACK→Delete реализована;
-SendMessage один вызов без autoretry, accepted не выдаётся за delivered/read.
-История последние10 + Query RAM, без durable storage/pagination.
-Вопросов по согласованному поведению нет. Публикация — отдельный этап E06.
+Vercel GitHub import, Node24, только серверный SESSION_PASSWORD; после изменения
+переменной Redeploy. [Инструкция](../specs/027-vercel-notification-polling/quickstart.md).
+После публикации пользователь проверяет вход → история → отправка → ответ → статус
+→ выход и освобождение вкладки. Web Locks действует лишь в одном origin/scope
+одного браузера; разные устройства и окружения могут конкурировать за очередь.
+Новых запросов без вкладки нет; полное восстановление истории и exactly-once
+не заявляются. Git/index и реальные настройки агент не изменяет.

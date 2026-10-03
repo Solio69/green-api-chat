@@ -1,7 +1,10 @@
 import { handleNotificationRequest } from '@/lib/notifications/handle-notification-request'
-import type { NotificationRequestOptions } from '@/lib/notifications/handle-notification-request'
+import { HTTP_STATUS } from '@/lib/http/constants'
+import { NOTIFICATION_ACTION } from '@/lib/notifications/constants'
 import { notificationFixture } from '../../../../lib/notification-fixture'
 
+const { SETTINGS, RECEIVE, ACK } = NOTIFICATION_ACTION
+const { BAD_REQUEST } = HTTP_STATUS
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 const handle = async (
@@ -9,16 +12,16 @@ const handle = async (
   route: { params: Promise<{ action: string }> },
 ) => {
   const { action } = await route.params
-  const allowed = ['claim', 'stream', 'ack', 'release'].includes(action)
-  if (!allowed) return new Response(null, { status: 404 })
+  const valid = action === SETTINGS || action === RECEIVE || action === ACK
+  if (!valid) return new Response(null, { status: BAD_REQUEST })
   return handleNotificationRequest({
     request,
-    action: action as NotificationRequestOptions['action'],
+    action,
     context: notificationFixture.context,
     configured: true,
-    registry: notificationFixture.registry,
+    provider: notificationFixture.provider,
+    password: notificationFixture.password,
     clearSession: async () => undefined,
   })
 }
-export const GET = handle
 export const POST = handle

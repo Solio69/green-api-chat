@@ -1,5 +1,5 @@
 import { classifyBadRequest } from './get-state'
-import { ReceiverError } from '@/lib/notifications/receiver-registry'
+import { ReceiverError } from '@/lib/notifications/receiver-error'
 import type { ReceiverContext } from '@/lib/notifications/types'
 import { API_ERROR_CODE } from '@/lib/api/constants'
 import {

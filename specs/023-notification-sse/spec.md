@@ -1,5 +1,12 @@
 # Feature Specification: SSE и применение уведомлений в клиентском кеше
 
+**Действующая архитектура**: [027](../027-vercel-notification-polling/spec.md)
+определяет HTTP polling/подписанный ACK и Web Locks в одном browser origin/scope.
+Процессный registry, постоянный Node, SSE и общий серверный send lease не входят
+в текущую реализацию. Функциональные правила сообщений/статусов сохраняются;
+транспортные и процессные требования этого документа применяются по контракту027.
+Актуальные проверки: [verification027](../027-vercel-notification-polling/verification.md).
+
 **Feature Directory**: specs/023-notification-sse
 **Created**: 2026-10-02
 **Status**: Approved — согласована; реализация разрешена

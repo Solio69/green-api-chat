@@ -110,17 +110,15 @@ export const handleSendRequest = async ({
   context,
   send,
   clearSession,
-  tryAcquireSend,
 }: SendRequestOptions): Promise<Response> => {
   if (!isSameOrigin(request))
     return errorResponse({ code: INVALID_REQUEST, status: FORBIDDEN })
   if (!context.configured)
     return errorResponse({ code: SERVER_UNAVAILABLE, status: HTTP_UNAVAILABLE })
-  let release: (() => void) | undefined
   let outcome: SendFailure['outcome'] = NOT_SENT
   let response: Response
   try {
-    const { credentials, connectionScope, ownerCapability } = context
+    const { credentials, connectionScope } = context
     if (!credentials) {
       await clearSession()
       return errorResponse({ code: SESSION_REQUIRED, status: UNAUTHORIZED })
@@ -140,15 +138,6 @@ export const handleSendRequest = async ({
     const input = validateSendRequest({ value: body.value, credentials })
     if (!input)
       return errorResponse({ code: INVALID_REQUEST, status: BAD_REQUEST })
-    const lease = tryAcquireSend({
-      credentials,
-      connectionScope: scope,
-      ownerCapability: ownerCapability ?? EMPTY_STRING,
-      attemptId: input.attemptId,
-    })
-    if (lease.kind !== RESPONSE_OK)
-      return errorResponse({ code: lease.kind, status: CONFLICT })
-    release = lease.release
     request.signal.throwIfAborted()
     outcome = UNKNOWN
     const result = await send({
@@ -194,13 +183,6 @@ export const handleSendRequest = async ({
             outcome: UNKNOWN,
           })
         : errorResponse({ code: SERVICE_UNAVAILABLE, status: HTTP_UNAVAILABLE })
-  } finally {
-    // Cleanup cannot erase accepted data or turn uncertainty into a proven refusal.
-    try {
-      release?.()
-    } catch {
-      /* The shared registry still owns the failed lease. */
-    }
   }
   return response
 }

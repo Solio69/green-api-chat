@@ -31,13 +31,11 @@ const SEND_TEST = {
   LABEL: 'Тестовый собеседник',
   ID: 'accepted-send-1',
   ATTEMPT: '8f73aa97-6cbd-4250-a1c0-d44351a65aa3',
-  PROOF: 'p'.repeat(43),
 } as const
-const { OTHER_CHAT, LABEL, ID, ATTEMPT, PROOF } = SEND_TEST
+const { OTHER_CHAT, LABEL, ID, ATTEMPT } = SEND_TEST
 const owner = {
   connectionScope: SCOPE,
   ownerEpoch: EPOCH,
-  ownerCapability: PROOF,
 }
 const target = { chatId: CHAT, label: LABEL }
 test('client sends original text once and validates accepted correlation', async () => {
@@ -51,9 +49,9 @@ test('client sends original text once and validates accepted correlation', async
       message: TEXT,
       attemptId: ATTEMPT,
     })
-    expect(new Headers(init?.headers).get(TEST_HTTP_PROTOCOL_CHAT_OWNER)).toBe(
-      PROOF,
-    )
+    expect(
+      new Headers(init?.headers).get(TEST_HTTP_PROTOCOL_CHAT_OWNER),
+    ).toBeNull()
     return Response.json({
       status: TEST_API_RESPONSE_OK,
       connectionScope: SCOPE,
@@ -68,7 +66,6 @@ test('client sends original text once and validates accepted correlation', async
       target,
       text: TEXT,
       attemptId: ATTEMPT,
-      ownerCapability: PROOF,
       fetcher,
     }),
   ).toMatchObject({ idMessage: ID })
@@ -79,7 +76,6 @@ test('client sends original text once and validates accepted correlation', async
       target,
       text: TEXT,
       attemptId: ATTEMPT,
-      ownerCapability: PROOF,
       fetcher: async () =>
         Response.json({
           status: TEST_API_RESPONSE_OK,

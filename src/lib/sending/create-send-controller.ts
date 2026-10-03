@@ -87,7 +87,6 @@ export const createSendController = ({
         target: snapshot.target,
         text: snapshot.text,
         attemptId: snapshot.attemptId,
-        ownerCapability: owner.ownerCapability,
       })
       const current = session.isActive() && isCurrentOwnerContext(owner)
       if (!current) return null

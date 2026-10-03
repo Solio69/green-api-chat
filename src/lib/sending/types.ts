@@ -27,27 +27,15 @@ export type SendMessageOptions = {
   fetcher?: typeof fetch
   signal?: AbortSignal
 }
-export type SendLeaseResult =
-  | { kind: typeof API_RESPONSE_STATUS.OK; release: () => void }
-  | { kind: 'not_owner' | 'receiver_not_active' | 'send_in_progress' }
-export type AcquireSendOptions = {
-  credentials: InstanceCredentials
-  connectionScope: string
-  ownerCapability: string
-  attemptId: string
-  now?: number
-}
 export type SendRequestOptions = {
   request: Request
   context: {
     configured: boolean
     credentials: InstanceCredentials | null
     connectionScope: string | null
-    ownerCapability: string | null
   }
   send: (options: SendMessageOptions) => Promise<ProviderSendResult>
   clearSession: () => Promise<void>
-  tryAcquireSend: (options: AcquireSendOptions) => SendLeaseResult
 }
 export type AcceptedSend = {
   status: typeof API_RESPONSE_STATUS.OK
@@ -58,8 +46,6 @@ export type AcceptedSend = {
 }
 export type SendFailure = {
   status: typeof API_RESPONSE_STATUS.ERROR
-  code:
-    | (typeof API_ERROR_CODE)[keyof typeof API_ERROR_CODE]
-    | Exclude<SendLeaseResult, { kind: typeof API_RESPONSE_STATUS.OK }>['kind']
+  code: (typeof API_ERROR_CODE)[keyof typeof API_ERROR_CODE]
   outcome: (typeof SEND_OUTCOME)[keyof typeof SEND_OUTCOME]
 }

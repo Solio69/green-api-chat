@@ -13,10 +13,6 @@ import {
   HTTP_METHOD,
   HTTP_STATUS,
 } from '@/lib/http/constants'
-import {
-  NOTIFICATION_CONFIG,
-  NOTIFICATION_CODE,
-} from '@/lib/notifications/constants'
 import { ROUTES } from '@/lib/routes/constants'
 import { SEND_OUTCOME } from './constants'
 
@@ -26,7 +22,6 @@ const { SAME_ORIGIN } = FETCH_CREDENTIALS
 const { NO_STORE } = CACHE_CONTROL
 const { CONTENT_TYPE, CONNECTION_SCOPE } = HTTP_HEADERS
 const { JSON: JSON_CONTENT_TYPE } = HTTP_CONTENT_TYPE
-const { OWNER_HEADER } = NOTIFICATION_CONFIG
 const { OK: RESPONSE_OK, ERROR } = API_RESPONSE_STATUS
 
 export class SendMessageError extends SessionQueryError {
@@ -45,7 +40,6 @@ export type FetchSendOptions = {
   target: ConversationTarget
   text: string
   attemptId: string
-  ownerCapability: string
   fetcher?: typeof fetch
 }
 const { OK, UNAUTHORIZED, CONFLICT } = HTTP_STATUS
@@ -56,7 +50,6 @@ export const fetchSendMessage = async ({
   target,
   text,
   attemptId,
-  ownerCapability,
   fetcher = fetch,
 }: FetchSendOptions): Promise<AcceptedSend> => {
   if (!session.isActive())
@@ -73,7 +66,6 @@ export const fetchSendMessage = async ({
       headers: {
         [CONTENT_TYPE]: JSON_CONTENT_TYPE,
         [CONNECTION_SCOPE]: session.connectionScope,
-        [OWNER_HEADER]: ownerCapability,
       },
       body: JSON.stringify({ chatId: target.chatId, message: text, attemptId }),
     })
@@ -110,10 +102,7 @@ export const fetchSendMessage = async ({
         idMessage: value.idMessage as string,
       }
     }
-    const allowedCodes: readonly string[] = [
-      ...Object.values(API_ERROR_CODE),
-      ...Object.values(NOTIFICATION_CODE),
-    ]
+    const allowedCodes: readonly string[] = [...Object.values(API_ERROR_CODE)]
     const validError =
       value.status === ERROR &&
       typeof value.code === 'string' &&

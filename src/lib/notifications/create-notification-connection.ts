@@ -1,199 +1,126 @@
 import { applyNotification } from './apply-notification'
-import { createSseParser } from './parse-sse'
-import type { SseFrame } from './parse-sse'
+import { acquireBrowserTabLease } from './browser-tab-lease'
+import {
+  createNotificationTransport,
+  NotificationTransportError,
+  waitForNotificationRetry,
+} from './notification-transport'
 import { createNotificationChatRefresh } from './refresh-notification-chats'
 import type { OwnerContext } from './types'
 import { isNotificationDelivery } from './validate-delivery'
-import { isRecord } from '@/lib/api/is-record'
-import { isChatId } from '@/lib/chats/validate-chat-id'
 import type { QuerySession } from '@/lib/query/create-query-session'
 import { SessionQueryError } from '@/lib/query/session-query-error'
-import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
+import { API_ERROR_CODE } from '@/lib/api/constants'
+import { HTTP_HEADERS, HTTP_STATUS } from '@/lib/http/constants'
 import {
-  CACHE_CONTROL,
-  FETCH_CREDENTIALS,
-  HTTP_CONTENT_TYPE,
-  HTTP_SYNTAX,
-  HTTP_HEADERS,
-  HTTP_METHOD,
-  HTTP_STATUS,
-} from '@/lib/http/constants'
-import {
-  NOTIFICATION_CONFIG,
   NOTIFICATION_CODE,
-  NOTIFICATION_EVENT,
+  NOTIFICATION_CONFIG,
   NOTIFICATION_ROUTES,
   NOTIFICATION_STATE,
+  POLLING_CONFIG,
 } from './constants'
 
 const {
   INVALID_UPSTREAM,
   OWNERSHIP_BUSY,
-  NOT_OWNER,
-  STREAM_ALREADY_OPEN,
   NOT_CONFIGURED,
-  DELETE_FAILED,
   DELIVERY_CHANGED,
   RETRY_LATER,
 } = NOTIFICATION_CODE
-const { CONNECTION_SCOPE, CONTENT_TYPE } = HTTP_HEADERS
-const { CONTENT_TYPE_PARAMETER_SEPARATOR } = HTTP_SYNTAX
-const { POST } = HTTP_METHOD
-const { SAME_ORIGIN } = FETCH_CREDENTIALS
-const { NO_STORE } = CACHE_CONTROL
-const { JSON: JSON_CONTENT_TYPE } = HTTP_CONTENT_TYPE
-const { OK: RESPONSE_OK } = API_RESPONSE_STATUS
-const { READY, NOTIFICATION, STATE, ERROR } = NOTIFICATION_EVENT
-const { OUTGOING_DISABLED, SSE_BASE_CONTENT_TYPE } = NOTIFICATION_CONFIG
-const { RECEIVING } = NOTIFICATION_STATE
-
+const { CONNECTION_SCOPE } = HTTP_HEADERS
+const { SESSION_REQUIRED, CONNECTION_CHANGED } = API_ERROR_CODE
+const { UNAUTHORIZED, CONFLICT } = HTTP_STATUS
+const { CONNECTED, CLOSED, CONNECTING, LIMITED, PAUSED, RETRYING } =
+  NOTIFICATION_STATE
+const { SETTINGS, RECEIVE, ACK } = NOTIFICATION_ROUTES
+const {
+  BACKOFF_MS,
+  BACKOFF_JITTER_MIN,
+  BACKOFF_JITTER_RANGE,
+  OUTGOING_DISABLED,
+} = NOTIFICATION_CONFIG
+const { REQUEST_SPACING_MS, LOCK_UNAVAILABLE } = POLLING_CONFIG
 export type ConnectionState = {
   status:
-    | 'claiming'
-    | 'connecting'
-    | 'connected'
-    | 'retrying'
-    | 'limited'
-    | 'paused'
-    | 'closed'
+    | typeof CONNECTED
+    | typeof CLOSED
+    | typeof CONNECTING
+    | typeof LIMITED
+    | typeof PAUSED
+    | typeof RETRYING
   canSend: boolean
   issue: string | null
 }
-const { OWNER_HEADER, GRACE_MS, STALL_MS, BACKOFF_MS, CAPABILITY_PATTERN } =
-  NOTIFICATION_CONFIG
-const { CLAIM, STREAM, ACK, RELEASE } = NOTIFICATION_ROUTES
-const { BACKOFF_JITTER_MIN, BACKOFF_JITTER_RANGE } = NOTIFICATION_CONFIG
-const { SESSION_REQUIRED, CONNECTION_CHANGED } = API_ERROR_CODE
-const { OK, UNAUTHORIZED, CONFLICT } = HTTP_STATUS
-const { CONNECTED, CLOSED, CLAIMING, CONNECTING, LIMITED, PAUSED, RETRYING } =
-  NOTIFICATION_STATE
 const invalidFrame = () =>
-  new SessionQueryError({
-    code: INVALID_UPSTREAM,
-    status: null,
-  })
+  new SessionQueryError({ code: INVALID_UPSTREAM, status: null })
 export const createNotificationConnection = ({
   session,
   fetcher = fetch,
+  acquireLease = acquireBrowserTabLease,
 }: {
   session: QuerySession
   fetcher?: typeof fetch
+  acquireLease?: typeof acquireBrowserTabLease
 }) => {
   let state: ConnectionState = { status: CLOSED, canSend: false, issue: null }
   let owner: OwnerContext | null = null
-  let outgoingEnabled = true
-  let graceDeadline: number | null = null
-  let generation = 0
-  let running = false
+  let releaseLease: (() => void) | null = null
+  let closed = false
   let runningTask: Promise<void> | null = null
+  let generation = 0
+  let abort: AbortController | null = null
   let retained = 0
   let disposal: ReturnType<typeof setTimeout> | undefined
-  let graceTimer: ReturnType<typeof setTimeout> | undefined
-  let stallTimer: ReturnType<typeof setTimeout> | undefined
-  let abort: AbortController | null = null
   let readyOnce = false
-  let closed = false
+  let outgoingEnabled = true
   const listeners = new Set<() => void>()
   const recoveryListeners = new Set<() => void>()
   const refresh = createNotificationChatRefresh(session)
+  const post = createNotificationTransport({ session, fetcher })
   const setState = (next: ConnectionState) => {
+    const unchanged =
+      next.status === state.status &&
+      next.canSend === state.canSend &&
+      next.issue === state.issue
+    if (unchanged) return
     state = next
     listeners.forEach((listener) => listener())
   }
-  const headers = (proof: OwnerContext | null) => ({
-    [CONNECTION_SCOPE]: session.connectionScope,
-    ...(proof ? { [OWNER_HEADER]: proof.ownerCapability } : {}),
-  })
   const currentOwner = (context: OwnerContext) => {
-    const retainedOwner =
-      owner !== null &&
-      session.isActive() &&
+    const current =
       !closed &&
+      session.isActive() &&
+      owner !== null &&
+      releaseLease !== null &&
       context.connectionScope === owner.connectionScope &&
-      context.ownerEpoch === owner.ownerEpoch &&
-      context.ownerCapability === owner.ownerCapability &&
-      (graceDeadline === null || Date.now() < graceDeadline)
-    return retainedOwner
+      context.ownerEpoch === owner.ownerEpoch
+    return current
   }
   const captureOwnerContext = () =>
     owner && currentOwner(owner) ? { ...owner } : null
-  const clearOwner = () => {
-    owner = null
-    graceDeadline = null
-    clearTimeout(graceTimer)
-  }
-  const post = async ({
-    url,
-    body,
-    proof,
-    signal,
-  }: {
-    url: string
-    body: object
-    proof: OwnerContext | null
-    signal?: AbortSignal
-  }) => {
-    const response = await fetcher(url, {
-      method: POST,
-      credentials: SAME_ORIGIN,
-      cache: NO_STORE,
-      headers: {
-        ...headers(proof),
-        [CONTENT_TYPE]: JSON_CONTENT_TYPE,
-      },
-      body: JSON.stringify(body),
-      signal,
-    })
-    const value: unknown = await response.json()
-    if (!isRecord(value)) throw invalidFrame()
-    const rejected = response.status !== OK || value.status !== RESPONSE_OK
-    if (rejected)
-      throw new SessionQueryError({
-        code: typeof value.code === 'string' ? value.code : INVALID_UPSTREAM,
-        status: response.status,
-      })
-    if (value.connectionScope !== session.connectionScope)
-      throw new SessionQueryError({
-        code: CONNECTION_CHANGED,
-        status: CONFLICT,
-      })
-    return value
-  }
-  const release = async (proof: OwnerContext | null) => {
-    if (!proof) return
-    await post({ url: RELEASE, body: {}, proof }).catch(() => undefined)
-  }
   const close = () => {
     if (closed) return
     closed = true
     generation += 1
     abort?.abort()
-    clearTimeout(stallTimer)
     clearTimeout(disposal)
-    const proof = owner
-    clearOwner()
+    owner = null
+    releaseLease?.()
+    releaseLease = null
     refresh.close()
     setState({ status: CLOSED, canSend: false, issue: null })
-    void release(proof)
   }
   session.registerCleanup(close)
-  const wait = ({ delay, signal }: { delay: number; signal: AbortSignal }) =>
-    new Promise<void>((resolve) => {
-      if (signal.aborted) {
-        resolve()
-        return
-      }
-      const finish = () => {
-        clearTimeout(timer)
-        signal.removeEventListener('abort', finish)
-        resolve()
-      }
-      const timer = setTimeout(finish, delay)
-      signal.addEventListener('abort', finish, { once: true })
+  const markConnected = () => {
+    const recovered = state.status !== CONNECTED && readyOnce
+    setState({
+      status: CONNECTED,
+      canSend: true,
+      issue: outgoingEnabled ? null : OUTGOING_DISABLED,
     })
-  const backoff = (attempt: number) =>
-    BACKOFF_MS[Math.min(attempt, BACKOFF_MS.length - 1)] *
-    (BACKOFF_JITTER_MIN + Math.random() * BACKOFF_JITTER_RANGE)
+    if (recovered) recoveryListeners.forEach((listener) => listener())
+    readyOnce = true
+  }
   const handleFailure = async (error: unknown) => {
     if (!(error instanceof SessionQueryError)) return false
     const auth =
@@ -203,297 +130,142 @@ export const createNotificationConnection = ({
       await session.handleSessionError(error)
       return true
     }
-    const limited =
-      error.code === OWNERSHIP_BUSY ||
-      error.code === NOT_OWNER ||
-      error.code === STREAM_ALREADY_OPEN
-    if (limited) {
-      clearOwner()
-      setState({ status: LIMITED, canSend: false, issue: error.code })
+    if (error.code === LOCK_UNAVAILABLE) {
+      setState({ status: LIMITED, canSend: false, issue: LOCK_UNAVAILABLE })
       return true
     }
-    const paused =
-      error.code === INVALID_UPSTREAM ||
-      error.code === NOT_CONFIGURED ||
-      error.code === DELETE_FAILED
-    if (paused) {
+    const invalid =
+      error.code === INVALID_UPSTREAM || error.code === NOT_CONFIGURED
+    if (invalid) {
       setState({ status: PAUSED, canSend: false, issue: error.code })
       return true
     }
     return false
   }
-  const ack = async ({
-    deliveryId,
-    signal,
-    attemptGeneration,
-  }: {
-    deliveryId: string
-    signal: AbortSignal
-    attemptGeneration: number
-  }) => {
-    let failures = 0
-    while (
-      !signal.aborted &&
+  const run = async (attemptGeneration: number) => {
+    abort = new AbortController()
+    const signal = abort.signal
+    const active = () =>
+      !closed &&
+      session.isActive() &&
       generation === attemptGeneration &&
-      owner !== null
-    ) {
-      try {
-        const response = await post({
-          url: ACK,
-          body: { deliveryId },
-          proof: owner,
-          signal,
+      !signal.aborted
+    let pendingAck: string | null = null
+    let settingsReady = false
+    let failures = 0
+    try {
+      if (!releaseLease) {
+        const lease = await acquireLease({
+          connectionScope: session.connectionScope,
         })
-        if (response.deliveryId !== deliveryId) throw invalidFrame()
-        return
-      } catch (error) {
-        if (signal.aborted) return
-        const deliveryChanged =
-          error instanceof SessionQueryError && error.code === DELIVERY_CHANGED
-        if (deliveryChanged) return
-        if (await handleFailure(error)) {
-          abort?.abort()
+        if (!active()) {
+          lease?.()
           return
         }
-        await wait({ delay: backoff(failures++), signal })
-      }
-    }
-  }
-  const frame = async ({
-    value,
-    signal,
-    attemptGeneration,
-  }: {
-    value: SseFrame
-    signal: AbortSignal
-    attemptGeneration: number
-  }) => {
-    if (!Object.values(NOTIFICATION_EVENT).some((name) => name === value.event))
-      return
-    let data: unknown
-    try {
-      data = JSON.parse(value.data) as unknown
-    } catch {
-      throw invalidFrame()
-    }
-    if (!isRecord(data)) throw invalidFrame()
-    const matching =
-      owner !== null &&
-      data.connectionScope === session.connectionScope &&
-      data.ownerEpoch === owner.ownerEpoch &&
-      generation === attemptGeneration &&
-      session.isActive()
-    if (!matching) throw invalidFrame()
-    if (value.event === READY) {
-      graceDeadline = null
-      clearTimeout(graceTimer)
-      setState({
-        status: CONNECTED,
-        canSend: true,
-        issue: outgoingEnabled ? null : OUTGOING_DISABLED,
-      })
-      if (readyOnce) recoveryListeners.forEach((listener) => listener())
-      readyOnce = true
-    } else if (value.event === NOTIFICATION) {
-      if (!owner) throw invalidFrame()
-      if (!isNotificationDelivery(data)) throw invalidFrame()
-      const applied = applyNotification({
-        session,
-        delivery: data,
-        ownerEpoch: owner.ownerEpoch,
-        refreshChats: refresh.request,
-      })
-      if (!applied) throw invalidFrame()
-      await ack({
-        deliveryId: data.deliveryId,
-        signal,
-        attemptGeneration,
-      })
-    } else if (value.event === STATE) {
-      if (data.state === PAUSED) {
-        setState({
-          status: PAUSED,
-          canSend: false,
-          issue: typeof data.code === 'string' ? data.code : INVALID_UPSTREAM,
-        })
-        throw invalidFrame()
-      }
-      if (data.state === RETRYING)
-        setState({
-          status: RETRYING,
-          canSend: false,
-          issue: RETRY_LATER,
-        })
-      else if (data.state === RECEIVING)
-        setState({
-          status: CONNECTED,
-          canSend: true,
-          issue: outgoingEnabled ? null : OUTGOING_DISABLED,
-        })
-      else throw invalidFrame()
-    } else if (value.event === ERROR) {
-      if (!isChatId(data.code)) throw invalidFrame()
-      throw new SessionQueryError({
-        code: data.code,
-        status: data.code === SESSION_REQUIRED ? UNAUTHORIZED : null,
-      })
-    }
-  }
-  const readStream = async ({
-    signal,
-    attemptGeneration,
-  }: {
-    signal: AbortSignal
-    attemptGeneration: number
-  }) => {
-    const response = await fetcher(STREAM, {
-      credentials: SAME_ORIGIN,
-      cache: NO_STORE,
-      headers: headers(owner),
-      signal,
-    })
-    if (!response.ok) {
-      const value: unknown = await response.json()
-      throw new SessionQueryError({
-        code:
-          isRecord(value) && typeof value.code === 'string'
-            ? value.code
-            : RETRY_LATER,
-        status: response.status,
-      })
-    }
-    const validStream =
-      response.headers
-        .get(CONTENT_TYPE)
-        ?.split(CONTENT_TYPE_PARAMETER_SEPARATOR)[0] ===
-        SSE_BASE_CONTENT_TYPE && response.body !== null
-    if (!validStream) throw invalidFrame()
-    if (!response.body) throw invalidFrame()
-    const reader = response.body.getReader()
-    const parser = createSseParser()
-    const resetStall = () => {
-      clearTimeout(stallTimer)
-      stallTimer = setTimeout(() => abort?.abort(), STALL_MS)
-    }
-    resetStall()
-    try {
-      while (!signal.aborted && generation === attemptGeneration) {
-        const chunk = await reader.read()
-        if (chunk.done) break
-        let frames: SseFrame[]
-        try {
-          frames = parser.push(chunk.value)
-        } catch {
-          throw invalidFrame()
+        if (!lease) {
+          setState({ status: LIMITED, canSend: false, issue: OWNERSHIP_BUSY })
+          return
         }
-        for (const value of frames) {
-          await frame({ value, signal, attemptGeneration })
-          resetStall()
+        releaseLease = lease
+        owner = {
+          connectionScope: session.connectionScope,
+          ownerEpoch: crypto.randomUUID(),
         }
       }
-      try {
-        parser.finish()
-      } catch {
-        throw invalidFrame()
-      }
-    } finally {
-      clearTimeout(stallTimer)
-      await reader.cancel().catch(() => undefined)
-      reader.releaseLock()
-    }
-  }
-  const run = async (attemptGeneration: number) => {
-    if (running) return
-    running = true
-    let failures = 0
-    try {
-      while (
-        !closed &&
-        session.isActive() &&
-        generation === attemptGeneration
-      ) {
-        abort = new AbortController()
-        const signal = abort.signal
+      while (active()) {
         try {
-          if (!owner) {
-            setState({ status: CLAIMING, canSend: false, issue: null })
-            const result = await post({
-              url: CLAIM,
-              body: {},
-              proof: null,
+          if (!settingsReady) {
+            const settings = await post({ url: SETTINGS, body: {}, signal })
+            if (!active()) return
+            if (typeof settings.outgoingEnabled !== 'boolean')
+              throw invalidFrame()
+            outgoingEnabled = settings.outgoingEnabled
+            settingsReady = true
+            markConnected()
+          }
+          if (pendingAck === null) {
+            if (!owner) return
+            const value = await post({
+              url: RECEIVE,
+              body: { ownerEpoch: owner.ownerEpoch },
               signal,
             })
-            const valid =
-              typeof result.ownerCapability === 'string' &&
-              CAPABILITY_PATTERN.test(result.ownerCapability) &&
-              isChatId(result.ownerEpoch) &&
-              typeof result.outgoingEnabled === 'boolean'
-            if (!valid) throw invalidFrame()
-            const obsolete = closed || generation !== attemptGeneration
-            if (obsolete) return
-            owner = {
-              connectionScope: session.connectionScope,
-              ownerCapability: result.ownerCapability as string,
-              ownerEpoch: result.ownerEpoch as string,
-            }
-            outgoingEnabled = result.outgoingEnabled as boolean
+            if (!active()) return
+            if (value.delivery !== null) {
+              if (!isNotificationDelivery(value.delivery)) throw invalidFrame()
+              const validProof =
+                typeof value.ackToken === 'string' &&
+                value.ackToken === value.delivery.deliveryId
+              if (!validProof) throw invalidFrame()
+              const applied = applyNotification({
+                session,
+                delivery: value.delivery,
+                ownerEpoch: owner.ownerEpoch,
+                refreshChats: refresh.request,
+              })
+              if (!applied) throw invalidFrame()
+              pendingAck = value.delivery.deliveryId
+            } else if (value.ackToken !== null) throw invalidFrame()
           }
-          setState({ status: CONNECTING, canSend: false, issue: null })
-          await readStream({ signal, attemptGeneration })
-        } catch (error) {
-          const obsolete = closed || generation !== attemptGeneration
-          if (obsolete) return
-          if (state.status === PAUSED) return
-          if (await handleFailure(error)) return
-        }
-        const obsolete = closed || generation !== attemptGeneration
-        if (obsolete) return
-        abort.abort()
-        const beginsGrace = owner !== null && graceDeadline === null
-        if (beginsGrace) {
-          graceDeadline = Date.now() + GRACE_MS
-          graceTimer = setTimeout(() => {
-            generation += 1
-            clearOwner()
-            setState({
-              status: LIMITED,
-              canSend: false,
-              issue: NOT_OWNER,
+          if (pendingAck !== null) {
+            const response = await post({
+              url: ACK,
+              body: { ackToken: pendingAck },
+              signal,
             })
-            abort?.abort()
-          }, GRACE_MS)
+            if (!active()) return
+            if (response.deliveryId !== pendingAck) throw invalidFrame()
+            pendingAck = null
+          }
+          failures = 0
+          markConnected()
+          await waitForNotificationRetry({ delay: REQUEST_SPACING_MS, signal })
+        } catch (error) {
+          if (!active()) return
+          const expiredAck =
+            error instanceof SessionQueryError &&
+            error.code === DELIVERY_CHANGED &&
+            pendingAck !== null
+          if (expiredAck) {
+            pendingAck = null
+            continue
+          }
+          if (await handleFailure(error)) return
+          setState({ status: RETRYING, canSend: false, issue: RETRY_LATER })
+          const retryAfter =
+            error instanceof NotificationTransportError ? error.retryAfterMs : 0
+          const delay =
+            BACKOFF_MS[Math.min(failures++, BACKOFF_MS.length - 1)] *
+            (BACKOFF_JITTER_MIN + Math.random() * BACKOFF_JITTER_RANGE)
+          await waitForNotificationRetry({
+            delay: Math.max(delay, retryAfter),
+            signal,
+          })
         }
-        setState({
-          status: RETRYING,
-          canSend: false,
-          issue: RETRY_LATER,
-        })
-        const delayAbort = new AbortController()
-        abort = delayAbort
-        await wait({ delay: backoff(failures++), signal: delayAbort.signal })
-        if (state.status === LIMITED) return
       }
-    } finally {
-      running = false
+    } catch (error) {
+      if (!active()) return
+      if (await handleFailure(error)) return
+      setState({ status: LIMITED, canSend: false, issue: LOCK_UNAVAILABLE })
     }
   }
   const start = () => {
-    const available = !running && !closed && session.isActive()
-    if (available) runningTask = run(generation)
+    const available = !runningTask && !closed && session.isActive()
+    if (!available) return
+    setState({ status: CONNECTING, canSend: false, issue: null })
+    const task = run(generation)
+    runningTask = task
+    void task.finally(() => {
+      if (runningTask === task) runningTask = null
+    })
   }
   const retry = async () => {
     const unavailable = closed || !session.isActive()
     if (unavailable) return
-    const proof = owner
-    const previousTask = runningTask
     generation += 1
     const retryGeneration = generation
     abort?.abort()
-    clearTimeout(stallTimer)
-    clearOwner()
-    setState({ status: CONNECTING, canSend: false, issue: null })
-    await release(proof)
-    await previousTask
+    await runningTask
     if (generation === retryGeneration) start()
   }
   const retain = () => {
@@ -527,10 +299,9 @@ export const createNotificationConnection = ({
     getSnapshot: () => state,
     captureOwnerContext,
     isCurrentOwnerContext: currentOwner,
-    getOwnedHeaders: () => {
-      const proof = captureOwnerContext()
-      return proof && headers(proof)
-    },
-    getOwnerHeaders: () => (state.canSend ? headers(owner) : null),
+    getOwnedHeaders: () =>
+      captureOwnerContext()
+        ? { [CONNECTION_SCOPE]: session.connectionScope }
+        : null,
   }
 }

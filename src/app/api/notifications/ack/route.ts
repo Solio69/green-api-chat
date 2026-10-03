@@ -1,16 +1,9 @@
-import { handleNotificationRequest } from '@/lib/notifications/handle-notification-request'
-import { readNotificationContext } from '@/lib/notifications/request-context'
-import { getReceiverRegistry } from '@/lib/notifications/server-registry'
+import { handleNotificationRoute } from '@/lib/notifications/handle-notification-route'
 import { NOTIFICATION_ACTION } from '@/lib/notifications/constants'
 
 const { ACK } = NOTIFICATION_ACTION
-
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
-export const POST = async (request: Request): Promise<Response> =>
-  handleNotificationRequest({
-    request,
-    action: ACK,
-    ...(await readNotificationContext()),
-    registry: getReceiverRegistry(),
-  })
+export const maxDuration = 20
+export const POST = (request: Request) =>
+  handleNotificationRoute({ request, action: ACK })
