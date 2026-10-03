@@ -3,7 +3,11 @@ import type { Page, Route } from '@playwright/test'
 import type { MessageDTO } from '@/lib/messages/types'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import { TEST_UI } from '../constants'
-import { HISTORY_TEST, HISTORY_CONSOLE_TEST } from '../history/constants'
+import {
+  HISTORY_TEST,
+  HISTORY_CONSOLE_TEST,
+  MESSAGE_CACHE_TEST,
+} from '../history/constants'
 
 const {
   API,
@@ -65,6 +69,25 @@ const state = async ({ page, id = FIRST }: { page: Page; id?: string }) =>
     fetching: boolean
     error: string | null
   }
+test('history React: shared request applies once across consumers', async ({
+  page,
+}) => {
+  let calls = 0
+  await page.route(API, async (route) => {
+    calls += 1
+    await fulfill({ route })
+  })
+  await page.goto(PROBE_PATH)
+  await page
+    .getByRole(ROLE_BUTTON, { name: BUTTON_OPEN_A, exact: true })
+    .click()
+  await expect.poll(() => calls).toBe(1)
+  await expect.poll(async () => (await state({ page })).fetching).toBe(false)
+  await expect(
+    page.getByTestId(MESSAGE_CACHE_TEST.WRITE_COUNT_OUTPUT),
+  ).toHaveText('1')
+  expect(await state({ page, id: SECOND })).toEqual(await state({ page }))
+})
 test('history React: one request per access and retained merged cache without debug output', async ({
   page,
 }) => {

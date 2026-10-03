@@ -136,6 +136,7 @@ export const MESSAGE_CACHE_TEST = {
   SESSION_CHAT_KEY: 'session-chats',
   ISSUES_KEY: 'message-status-issues',
   ISSUES_OUTPUT: 'history-issues',
+  WRITE_COUNT_OUTPUT: 'history-message-writes',
   FAILURE_BUTTON: 'Добавить фиктивный отказ',
   STATUS_FACTS_KEY: 'message-status-facts',
   EARLY_FACT_TTL_MS: 300_000,

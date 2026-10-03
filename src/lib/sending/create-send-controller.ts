@@ -1,19 +1,15 @@
 import type { FetchSendOptions } from './fetch-send-message'
 import { SendMessageError } from './fetch-send-message'
 import type { AcceptedSend } from './types'
-import { rememberPersonalChat } from '@/lib/chats/session-chat-facts'
+import { applyAcceptedConversation } from '@/lib/conversations/conversation-cache-coordinator'
 import type { ConversationTarget } from '@/lib/conversations/types'
-import { addAcceptedMessage } from '@/lib/messages/message-cache'
-import { publishMessageIssues } from '@/lib/messages/message-status-issues'
 import type { OwnerContext } from '@/lib/notifications/types'
 import type { QuerySession } from '@/lib/query/create-query-session'
 import { API_ERROR_CODE } from '@/lib/api/constants'
-import { SESSION_CHAT_SOURCE } from '@/lib/chats/constants'
 import { SEND_CONFIG, SEND_OUTCOME, SEND_RESULT_KIND } from './constants'
 
 const { ACCEPTED: RESULT_ACCEPTED, ERROR: RESULT_ERROR } = SEND_RESULT_KIND
 const { MAX_CODE_POINTS } = SEND_CONFIG
-const { ACCEPTED: SESSION_CHAT_SOURCE_ACCEPTED } = SESSION_CHAT_SOURCE
 const { UNKNOWN } = SEND_OUTCOME
 const { OUTCOME_UNKNOWN } = API_ERROR_CODE
 
@@ -90,19 +86,12 @@ export const createSendController = ({
       })
       const current = session.isActive() && isCurrentOwnerContext(owner)
       if (!current) return null
-      const { issues } = addAcceptedMessage({
+      applyAcceptedConversation({
         session,
-        chatId: snapshot.target.chatId,
+        target: snapshot.target,
         idMessage: accepted.idMessage,
         text: snapshot.text,
         acceptedAt: Date.now(),
-      })
-      publishMessageIssues({ session, issues })
-      rememberPersonalChat({
-        session,
-        chatId: snapshot.target.chatId,
-        label: snapshot.target.label,
-        source: SESSION_CHAT_SOURCE_ACCEPTED,
       })
       const result: AttemptResult = {
         kind: RESULT_ACCEPTED,

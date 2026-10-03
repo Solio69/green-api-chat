@@ -1,18 +1,16 @@
 'use client'
 
-import { hashKey, useQuery } from '@tanstack/react-query'
-import { useLayoutEffect, useSyncExternalStore } from 'react'
-import { fetchHistory } from './fetch-history'
+import { CancelledError, useQuery } from '@tanstack/react-query'
+import { useSyncExternalStore } from 'react'
 import { HistoryQueryError } from './types'
-import { messageKey, applyHistoryMessages } from '@/lib/messages/message-cache'
-import { publishMessageIssues } from '@/lib/messages/message-status-issues'
-import type { MessageCache, MessageDTO } from '@/lib/messages/types'
-import { HISTORY_CONFIG, HISTORY_QUERY_STATE } from './constants'
+import { fetchAndApplyConversationHistory } from '@/lib/conversations/conversation-cache-coordinator'
+import { messageKey } from '@/lib/messages/message-cache'
+import type { MessageCache } from '@/lib/messages/types'
+import { HISTORY_CONFIG } from './constants'
 import { useConversationSelection } from '@/components/ConversationSelectionProvider'
 import { useOptionalQuerySession } from '@/components/QueryProvider'
 
 const { REQUEST_KEY, PROVIDER_REQUIRED } = HISTORY_CONFIG
-const { SUCCESS } = HISTORY_QUERY_STATE
 
 export const historyRequestKey = ({
   connectionScope,
@@ -35,14 +33,12 @@ export const useChatHistory = (chatId: string | null) => {
   )
   const enabled = active && chatId !== null && target?.chatId === chatId
   const currentChat = enabled ? chatId : null
-  const requestKey = historyRequestKey({
-    connectionScope: session.connectionScope,
-    chatId: currentChat,
-    accessId,
-  })
-  const requestHash = hashKey(requestKey)
   const result = useQuery({
-    queryKey: requestKey,
+    queryKey: historyRequestKey({
+      connectionScope: session.connectionScope,
+      chatId: currentChat,
+      accessId,
+    }),
     enabled,
     staleTime: Infinity,
     gcTime: 0,
@@ -51,13 +47,14 @@ export const useChatHistory = (chatId: string | null) => {
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     refetchInterval: false,
-    queryFn: ({ signal }) =>
-      fetchHistory({
-        connectionScope: session.connectionScope,
-        chatId: currentChat!,
+    queryFn: ({ signal }) => {
+      if (currentChat === null) throw new CancelledError({ silent: true })
+      return fetchAndApplyConversationHistory({
+        session,
+        chatId: currentChat,
         signal,
-        isActive: session.isActive,
-      }),
+      })
+    },
   })
   const merged = useQuery<MessageCache>({
     queryKey: messageKey({
@@ -66,39 +63,6 @@ export const useChatHistory = (chatId: string | null) => {
     }),
     enabled: false,
   })
-  useLayoutEffect(() => {
-    if (!currentChat) return
-    const key = historyRequestKey({
-      connectionScope: session.connectionScope,
-      chatId: currentChat,
-      accessId,
-    })
-    let appliedCount = 0
-    const applyCompletion = () => {
-      if (!session.isActive()) return
-      const state = session.client.getQueryState<MessageDTO[]>(key)
-      if (!state) return
-      const { data } = state
-      const completed =
-        state.status === SUCCESS &&
-        data !== undefined &&
-        state.dataUpdateCount > appliedCount
-      if (!completed) return
-      appliedCount = state.dataUpdateCount
-      const applied = applyHistoryMessages({
-        session,
-        chatId: currentChat,
-        messages: data,
-      })
-      publishMessageIssues({ session, issues: applied.issues })
-    }
-    const unsubscribe = session.client.getQueryCache().subscribe((event) => {
-      if (event.query.queryHash !== requestHash) return
-      applyCompletion()
-    })
-    applyCompletion()
-    return unsubscribe
-  }, [session, currentChat, accessId, requestHash])
   const refetch = async (): Promise<void> => {
     const canRefetch = enabled && session.isActive() && !result.isFetching
     if (canRefetch) await result.refetch({ cancelRefetch: false })
