@@ -1,6 +1,7 @@
 import type { CheckAccountResult } from '@/lib/green-api/check-account'
+import { jsonNoStore } from '@/server/http'
 import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
-import { CACHE_CONTROL, HTTP_HEADERS, HTTP_STATUS } from '@/lib/http/constants'
+import { HTTP_STATUS } from '@/lib/http/constants'
 import { RECIPIENT_RESULT_KIND } from './constants'
 
 const {
@@ -20,9 +21,6 @@ const {
   BAD_GATEWAY: HTTP_BAD_GATEWAY,
   SERVICE_UNAVAILABLE: HTTP_SERVICE_UNAVAILABLE,
 } = HTTP_STATUS
-const { CACHE_CONTROL: CACHE_CONTROL_HEADER } = HTTP_HEADERS
-const { NO_STORE } = CACHE_CONTROL
-
 type SearchErrorCode =
   | typeof API_ERROR_CODE.INVALID_REQUEST
   | typeof SESSION_REQUIRED
@@ -32,25 +30,13 @@ type SearchErrorCode =
   | typeof INVALID_UPSTREAM_RESPONSE
   | typeof API_ERROR_CODE.SERVER_UNAVAILABLE
 
-const jsonResponse = ({
-  body,
-  status,
-}: {
-  body: object
-  status: number
-}): Response =>
-  Response.json(body, {
-    status,
-    headers: { [CACHE_CONTROL_HEADER]: NO_STORE },
-  })
-
 export const searchErrorResponse = ({
   code,
   status,
 }: {
   code: SearchErrorCode
   status: number
-}): Response => jsonResponse({ body: { status: RESPONSE_ERROR, code }, status })
+}): Response => jsonNoStore({ body: { status: RESPONSE_ERROR, code }, status })
 
 export const resolveSearchResult = async ({
   result,
@@ -60,12 +46,12 @@ export const resolveSearchResult = async ({
   clearSession: () => Promise<void>
 }): Promise<Response> => {
   if (result.kind === FOUND)
-    return jsonResponse({
+    return jsonNoStore({
       body: { status: RESPONSE_OK, result: FOUND, chatId: result.chatId },
       status: HTTP_OK,
     })
   if (result.kind === NOT_FOUND)
-    return jsonResponse({
+    return jsonNoStore({
       body: { status: RESPONSE_OK, result: NOT_FOUND },
       status: HTTP_OK,
     })

@@ -1,8 +1,8 @@
 import type { GetChatsOptions, GetChatsResult, ChatsErrorCode } from './types'
 import type { InstanceCredentials } from '@/lib/green-api/get-state'
+import { jsonNoStore, readConnectionScope } from '@/server/http'
 import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
-import { CACHE_CONTROL, HTTP_HEADERS, HTTP_STATUS } from '@/lib/http/constants'
-import { CHAT_QUERY_CONFIG } from './constants'
+import { HTTP_STATUS } from '@/lib/http/constants'
 
 const {
   INVALID_REQUEST,
@@ -29,9 +29,6 @@ const {
   BAD_GATEWAY,
   SERVICE_UNAVAILABLE: HTTP_UNAVAILABLE,
 } = HTTP_STATUS
-const { CACHE_CONTROL: CACHE_HEADER, CONNECTION_SCOPE } = HTTP_HEADERS
-const { NO_STORE } = CACHE_CONTROL
-const { SCOPE_PATTERN } = CHAT_QUERY_CONFIG
 export type ChatsRequestOptions = {
   request: Request
   context: {
@@ -42,15 +39,13 @@ export type ChatsRequestOptions = {
   lookup: (options: GetChatsOptions) => Promise<GetChatsResult>
   clearSession: () => Promise<void>
 }
-const jsonResponse = ({ body, status }: { body: object; status: number }) =>
-  Response.json(body, { status, headers: { [CACHE_HEADER]: NO_STORE } })
 const errorResponse = ({
   code,
   status,
 }: {
   code: ChatsErrorCode
   status: number
-}) => jsonResponse({ body: { status: RESPONSE_ERROR, code }, status })
+}) => jsonNoStore({ body: { status: RESPONSE_ERROR, code }, status })
 export const handleChatsRequest = async ({
   request,
   context,
@@ -64,9 +59,8 @@ export const handleChatsRequest = async ({
       await clearSession()
       return errorResponse({ code: SESSION_REQUIRED, status: UNAUTHORIZED })
     }
-    const scope = request.headers.get(CONNECTION_SCOPE)
-    const isValidScope = scope !== null && SCOPE_PATTERN.test(scope)
-    if (!isValidScope)
+    const scope = readConnectionScope(request)
+    if (scope === null)
       return errorResponse({ code: INVALID_REQUEST, status: BAD_REQUEST })
     if (scope !== context.connectionScope)
       return errorResponse({ code: CONNECTION_CHANGED, status: CONFLICT })
@@ -75,7 +69,7 @@ export const handleChatsRequest = async ({
       signal: request.signal,
     })
     if (result.kind === RESPONSE_OK)
-      return jsonResponse({
+      return jsonNoStore({
         body: {
           status: RESPONSE_OK,
           connectionScope: scope,

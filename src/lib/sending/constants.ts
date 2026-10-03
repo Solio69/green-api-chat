@@ -6,8 +6,6 @@ export const SEND_CONFIG = {
   ATTEMPT_ID_PATTERN:
     /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
   INVALID_IDENTIFIER_PATTERN: /[\u0000-\u001f\u007f]/u,
-  ROOT_PATH: '/',
-  INVALID_HOST_PARTS: /[\\/@?#\s]/u,
   PROVIDER_VALIDATION_PATTERN: /validation failed|bad request data/i,
 } as const
 

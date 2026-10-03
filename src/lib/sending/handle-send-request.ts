@@ -1,21 +1,14 @@
 import { readSendBody } from './read-send-body'
 import type {
-  AcceptedSend,
   ProviderSendResult,
   SendFailure,
   SendRequestOptions,
 } from './types'
 import { validateSendRequest } from './validate-send-request'
+import { isSameOrigin, jsonNoStore, readConnectionScope } from '@/server/http'
 import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
-import { CHAT_QUERY_CONFIG } from '@/lib/chats/constants'
-import {
-  CACHE_CONTROL,
-  HTTP_HEADERS,
-  HTTP_STATUS,
-  HTTP_URL_PROTOCOL,
-} from '@/lib/http/constants'
-import { EMPTY_STRING } from '@/lib/ui/constants'
-import { SEND_CONFIG, SEND_OUTCOME } from './constants'
+import { HTTP_STATUS } from '@/lib/http/constants'
+import { SEND_OUTCOME } from './constants'
 
 const {
   INVALID_REQUEST,
@@ -44,25 +37,8 @@ const {
   BAD_GATEWAY,
   SERVICE_UNAVAILABLE: HTTP_UNAVAILABLE,
 } = HTTP_STATUS
-const {
-  CACHE_CONTROL: CACHE_HEADER,
-  CONNECTION_SCOPE,
-  ORIGIN,
-  HOST,
-} = HTTP_HEADERS
-const { HTTP, HTTPS } = HTTP_URL_PROTOCOL
-const { NO_STORE } = CACHE_CONTROL
-const { SCOPE_PATTERN } = CHAT_QUERY_CONFIG
-const { ROOT_PATH, INVALID_HOST_PARTS } = SEND_CONFIG
 const { NOT_SENT, UNKNOWN } = SEND_OUTCOME
 
-const jsonResponse = ({
-  body,
-  status,
-}: {
-  body: AcceptedSend | SendFailure
-  status: number
-}) => Response.json(body, { status, headers: { [CACHE_HEADER]: NO_STORE } })
 const errorResponse = ({
   code,
   status,
@@ -71,31 +47,7 @@ const errorResponse = ({
   code: SendFailure['code']
   status: number
   outcome?: SendFailure['outcome']
-}) => jsonResponse({ body: { status: RESPONSE_ERROR, code, outcome }, status })
-const isSameOrigin = (request: Request) => {
-  const origin = request.headers.get(ORIGIN)
-  if (origin === null) return false
-  try {
-    const source = new URL(origin)
-    const validSource =
-      (source.protocol === HTTP || source.protocol === HTTPS) &&
-      source.username === EMPTY_STRING &&
-      source.password === EMPTY_STRING &&
-      source.pathname === ROOT_PATH &&
-      source.search === EMPTY_STRING &&
-      source.hash === EMPTY_STRING
-    if (!validSource) return false
-    const requestUrl = new URL(request.url)
-    const host = request.headers.get(HOST)
-    if (host === null) return source.origin === requestUrl.origin
-    const validHost = host.length > 0 && !INVALID_HOST_PARTS.test(host)
-    if (!validHost) return false
-    const target = new URL(`${requestUrl.protocol}//${host}`)
-    return source.origin === target.origin
-  } catch {
-    return false
-  }
-}
+}) => jsonNoStore({ body: { status: RESPONSE_ERROR, code, outcome }, status })
 const isConfirmedRefusal = (result: ProviderSendResult) =>
   result.kind !== RESPONSE_OK && result.kind !== OUTCOME_UNKNOWN
 const isAccessDenied = (result: ProviderSendResult) =>
@@ -123,9 +75,8 @@ export const handleSendRequest = async ({
       await clearSession()
       return errorResponse({ code: SESSION_REQUIRED, status: UNAUTHORIZED })
     }
-    const scope = request.headers.get(CONNECTION_SCOPE)
-    const validScope = scope !== null && SCOPE_PATTERN.test(scope)
-    if (!validScope)
+    const scope = readConnectionScope(request)
+    if (scope === null)
       return errorResponse({ code: INVALID_REQUEST, status: BAD_REQUEST })
     if (scope !== connectionScope)
       return errorResponse({ code: CONNECTION_CHANGED, status: CONFLICT })
@@ -147,7 +98,7 @@ export const handleSendRequest = async ({
     })
     if (isConfirmedRefusal(result)) outcome = NOT_SENT
     if (result.kind === RESPONSE_OK) {
-      response = jsonResponse({
+      response = jsonNoStore({
         body: {
           status: RESPONSE_OK,
           connectionScope: scope,

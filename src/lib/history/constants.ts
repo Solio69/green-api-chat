@@ -13,8 +13,3 @@ export const HISTORY_QUERY_STATE = {
   SUCCESS: 'success',
   ERROR: 'error',
 } as const
-
-export const HISTORY_ORIGIN_CONFIG = {
-  ROOT_PATH: '/',
-  INVALID_HOST_PARTS: /[\\/@?#\s]/u,
-} as const

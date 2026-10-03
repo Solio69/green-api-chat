@@ -3,13 +3,9 @@ import { parseSearchRequest } from './validate-search'
 import type { RecipientQuery } from './validate-search'
 import type { CheckAccountResult } from '@/lib/green-api/check-account'
 import type { InstanceCredentials } from '@/lib/green-api/get-state'
+import { isJsonMediaType, readUnboundedJsonBody } from '@/server/http'
 import { API_ERROR_CODE } from '@/lib/api/constants'
-import {
-  HTTP_CONTENT_TYPE,
-  HTTP_HEADERS,
-  HTTP_STATUS,
-  HTTP_SYNTAX,
-} from '@/lib/http/constants'
+import { HTTP_STATUS } from '@/lib/http/constants'
 
 const {
   INVALID_REQUEST,
@@ -17,9 +13,6 @@ const {
   SERVICE_UNAVAILABLE,
   SERVER_UNAVAILABLE,
 } = API_ERROR_CODE
-const { CONTENT_TYPE } = HTTP_HEADERS
-const { JSON: JSON_CONTENT_TYPE } = HTTP_CONTENT_TYPE
-const { CONTENT_TYPE_PARAMETER_SEPARATOR } = HTTP_SYNTAX
 const {
   BAD_REQUEST: HTTP_BAD_REQUEST,
   UNAUTHORIZED: HTTP_UNAUTHORIZED,
@@ -56,27 +49,19 @@ export const handleSearchRequest = async ({
       status: HTTP_UNAUTHORIZED,
     })
 
-  const mediaType = request.headers
-    .get(CONTENT_TYPE)
-    ?.split(CONTENT_TYPE_PARAMETER_SEPARATOR)[0]
-    .trim()
-    .toLowerCase()
-  if (mediaType !== JSON_CONTENT_TYPE)
+  if (!isJsonMediaType(request))
     return searchErrorResponse({
       code: INVALID_REQUEST,
       status: HTTP_BAD_REQUEST,
     })
 
-  let parsed: unknown
-  try {
-    parsed = await request.json()
-  } catch {
+  const parsed = await readUnboundedJsonBody(request)
+  if (parsed.kind !== 'ok')
     return searchErrorResponse({
       code: INVALID_REQUEST,
       status: HTTP_BAD_REQUEST,
     })
-  }
-  const query = parseSearchRequest(parsed)
+  const query = parseSearchRequest(parsed.value)
   if (!query)
     return searchErrorResponse({
       code: INVALID_REQUEST,
