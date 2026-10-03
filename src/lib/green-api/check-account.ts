@@ -1,15 +1,9 @@
 import type { InstanceCredentials } from './get-state'
+import { fetchGreenApi } from './transport'
 import { isRecord } from '@/lib/api/is-record'
 import type { RecipientQuery } from '@/lib/recipients/validate-search'
 import { API_ERROR_CODE } from '@/lib/api/constants'
-import {
-  CACHE_CONTROL,
-  FETCH_REDIRECT,
-  HTTP_CONTENT_TYPE,
-  HTTP_HEADERS,
-  HTTP_METHOD,
-  HTTP_STATUS,
-} from '@/lib/http/constants'
+import { HTTP_METHOD, HTTP_STATUS } from '@/lib/http/constants'
 import { RECIPIENT_RESULT_KIND } from '@/lib/recipients/constants'
 import { GREEN_API_BAD_REQUEST, GREEN_API_CONFIG } from './constants'
 
@@ -30,12 +24,7 @@ const {
   SERVER_ERROR_START,
 } = HTTP_STATUS
 const { POST: HTTP_POST } = HTTP_METHOD
-const { CONTENT_TYPE } = HTTP_HEADERS
-const { JSON: JSON_CONTENT_TYPE } = HTTP_CONTENT_TYPE
-const { NO_STORE } = CACHE_CONTROL
-const { ERROR: REDIRECT_ERROR } = FETCH_REDIRECT
-const { HOST, INSTANCE_PATH_PREFIX, CHECK_ACCOUNT_METHOD, TIMEOUT_MS } =
-  GREEN_API_CONFIG
+const { CHECK_ACCOUNT_METHOD, TIMEOUT_MS } = GREEN_API_CONFIG
 const { STARTING, AMBIGUOUS } = GREEN_API_BAD_REQUEST
 
 const CHECK_ACCOUNT_RESPONSE = {
@@ -90,17 +79,14 @@ export const checkAccount = async ({
   query: RecipientQuery
   fetcher?: typeof fetch
 }): Promise<CheckAccountResult> => {
-  const id = encodeURIComponent(credentials.idInstance)
-  const token = encodeURIComponent(credentials.apiTokenInstance)
-  const url = `${HOST}/${INSTANCE_PATH_PREFIX}${id}/${CHECK_ACCOUNT_METHOD}/${token}`
   try {
-    const response = await fetcher(url, {
+    const response = await fetchGreenApi({
+      credentials,
+      methodName: CHECK_ACCOUNT_METHOD,
       method: HTTP_POST,
-      headers: { [CONTENT_TYPE]: JSON_CONTENT_TYPE },
-      body: JSON.stringify(query),
-      cache: NO_STORE,
-      redirect: REDIRECT_ERROR,
+      jsonBody: query,
       signal: AbortSignal.timeout(TIMEOUT_MS),
+      fetcher,
     })
     const isRateLimited =
       response.status === HTTP_TOO_MANY_REQUESTS ||

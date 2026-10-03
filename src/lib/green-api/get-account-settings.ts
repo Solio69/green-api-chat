@@ -1,15 +1,11 @@
 import { setTimeout as wait } from 'node:timers/promises'
 import { classifyBadRequest, classifyState } from './get-state'
 import type { InstanceCredentials, StateResult } from './get-state'
+import { fetchGreenApi } from './transport'
 import { normalizeAccountProfile } from '@/lib/account/normalize-profile'
 import type { AccountProfile } from '@/lib/account/types'
 import { API_ERROR_CODE } from '@/lib/api/constants'
-import {
-  CACHE_CONTROL,
-  FETCH_REDIRECT,
-  HTTP_METHOD,
-  HTTP_STATUS,
-} from '@/lib/http/constants'
+import { HTTP_METHOD, HTTP_STATUS } from '@/lib/http/constants'
 import { GREEN_API_CONFIG, GREEN_API_STATES } from './constants'
 
 const { AUTHORIZED } = GREEN_API_STATES
@@ -20,13 +16,8 @@ const {
   SERVICE_UNAVAILABLE,
   INVALID_UPSTREAM_RESPONSE,
 } = API_ERROR_CODE
-const {
-  HOST,
-  INSTANCE_PATH_PREFIX,
-  ACCOUNT_SETTINGS_METHOD,
-  TIMEOUT_MS,
-  RATE_LIMIT_RETRY_DELAY_MS,
-} = GREEN_API_CONFIG
+const { ACCOUNT_SETTINGS_METHOD, TIMEOUT_MS, RATE_LIMIT_RETRY_DELAY_MS } =
+  GREEN_API_CONFIG
 const {
   OK,
   BAD_REQUEST,
@@ -36,8 +27,6 @@ const {
   SERVER_ERROR_START,
 } = HTTP_STATUS
 const { GET } = HTTP_METHOD
-const { NO_STORE } = CACHE_CONTROL
-const { ERROR: REDIRECT_ERROR } = FETCH_REDIRECT
 
 export type AccountSettingsResult =
   | Exclude<StateResult, { kind: typeof AUTHORIZED }>
@@ -62,17 +51,15 @@ export const getAccountSettings = async ({
   fetcher = fetch,
   waitForRetry = waitForRateLimit,
 }: GetAccountSettingsOptions): Promise<AccountSettingsResult> => {
-  const id = encodeURIComponent(credentials.idInstance)
-  const token = encodeURIComponent(credentials.apiTokenInstance)
-  const url = `${HOST}/${INSTANCE_PATH_PREFIX}${id}/${ACCOUNT_SETTINGS_METHOD}/${token}`
   try {
     const signal = AbortSignal.timeout(TIMEOUT_MS)
     const requestAccount = () =>
-      fetcher(url, {
+      fetchGreenApi({
+        credentials,
+        methodName: ACCOUNT_SETTINGS_METHOD,
         method: GET,
-        cache: NO_STORE,
-        redirect: REDIRECT_ERROR,
         signal,
+        fetcher,
       })
     let response = await requestAccount()
     if (response.status === TOO_MANY_REQUESTS) {

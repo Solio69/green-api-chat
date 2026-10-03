@@ -1,23 +1,13 @@
 import { setTimeout as wait } from 'node:timers/promises'
 import { classifyBadRequest } from './get-state'
+import { fetchGreenApi } from './transport'
 import { normalizeChats } from '@/lib/chats/normalize-chats'
 import type { GetChatsOptions, GetChatsResult } from '@/lib/chats/types'
 import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
-import {
-  CACHE_CONTROL,
-  FETCH_REDIRECT,
-  HTTP_METHOD,
-  HTTP_STATUS,
-} from '@/lib/http/constants'
+import { HTTP_METHOD, HTTP_STATUS } from '@/lib/http/constants'
 import { GREEN_API_CONFIG } from './constants'
 
-const {
-  HOST,
-  INSTANCE_PATH_PREFIX,
-  CHATS_METHOD,
-  TIMEOUT_MS,
-  RATE_LIMIT_RETRY_DELAY_MS,
-} = GREEN_API_CONFIG
+const { CHATS_METHOD, TIMEOUT_MS, RATE_LIMIT_RETRY_DELAY_MS } = GREEN_API_CONFIG
 const {
   INVALID_TOKEN,
   INVALID_INSTANCE,
@@ -35,8 +25,6 @@ const {
   SERVER_ERROR_START,
 } = HTTP_STATUS
 const { GET } = HTTP_METHOD
-const { NO_STORE } = CACHE_CONTROL
-const { ERROR: REDIRECT_ERROR } = FETCH_REDIRECT
 const waitForRateLimit = ({
   delay,
   signal,
@@ -51,9 +39,6 @@ export const getChats = async ({
   fetcher = fetch,
   waitForRetry = waitForRateLimit,
 }: GetChatsOptions): Promise<GetChatsResult> => {
-  const id = encodeURIComponent(credentials.idInstance)
-  const token = encodeURIComponent(credentials.apiTokenInstance)
-  const url = `${HOST}/${INSTANCE_PATH_PREFIX}${id}/${CHATS_METHOD}/${token}`
   const deadline = AbortSignal.timeout(TIMEOUT_MS)
   const signal = callerSignal
     ? AbortSignal.any([callerSignal, deadline])
@@ -61,11 +46,12 @@ export const getChats = async ({
   try {
     signal.throwIfAborted()
     const request = () =>
-      fetcher(url, {
+      fetchGreenApi({
+        credentials,
+        methodName: CHATS_METHOD,
         method: GET,
-        cache: NO_STORE,
-        redirect: REDIRECT_ERROR,
         signal,
+        fetcher,
       })
     let response = await request()
     signal.throwIfAborted()

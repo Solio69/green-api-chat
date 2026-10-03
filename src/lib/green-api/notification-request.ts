@@ -1,24 +1,16 @@
 import { classifyBadRequest } from './get-state'
+import { fetchGreenApi } from './transport'
 import { ReceiverError } from '@/lib/notifications/receiver-error'
 import type { ReceiverContext } from '@/lib/notifications/types'
 import { API_ERROR_CODE } from '@/lib/api/constants'
-import {
-  CACHE_CONTROL,
-  FETCH_REDIRECT,
-  HTTP_METHOD,
-  HTTP_HEADERS,
-  HTTP_STATUS,
-} from '@/lib/http/constants'
+import { HTTP_METHOD, HTTP_HEADERS, HTTP_STATUS } from '@/lib/http/constants'
 import {
   NOTIFICATION_CONFIG,
   NOTIFICATION_CODE,
 } from '@/lib/notifications/constants'
 import { EMPTY_STRING } from '@/lib/ui/constants'
-import { GREEN_API_CONFIG } from './constants'
 
 const { GET } = HTTP_METHOD
-const { NO_STORE } = CACHE_CONTROL
-const { ERROR } = FETCH_REDIRECT
 const { SESSION_REQUIRED, INSTANCE_EXPIRED, RETRY_LATER } = API_ERROR_CODE
 const {
   RETRY_LATER: RECEIVER_RETRY_LATER,
@@ -27,7 +19,6 @@ const {
 } = NOTIFICATION_CODE
 const { RETRY_AFTER } = HTTP_HEADERS
 
-const { HOST, INSTANCE_PATH_PREFIX } = GREEN_API_CONFIG
 const { TIMEOUT_MS } = NOTIFICATION_CONFIG
 const { OK, UNAUTHORIZED, FORBIDDEN, BAD_REQUEST } = HTTP_STATUS
 export const notificationRequest = async ({
@@ -45,14 +36,14 @@ export const notificationRequest = async ({
   signal?: AbortSignal
   fetcher?: typeof fetch
 }): Promise<unknown> => {
-  const { idInstance, apiTokenInstance } = context.credentials
-  const url = `${HOST}/${INSTANCE_PATH_PREFIX}${encodeURIComponent(idInstance)}/${methodName}/${encodeURIComponent(apiTokenInstance)}${suffix}`
   const timeout = AbortSignal.timeout(TIMEOUT_MS)
-  const response = await fetcher(url, {
+  const response = await fetchGreenApi({
+    credentials: context.credentials,
+    methodName,
     method,
+    suffix,
     signal: signal ? AbortSignal.any([signal, timeout]) : timeout,
-    cache: NO_STORE,
-    redirect: ERROR,
+    fetcher,
   })
   const authFailure =
     response.status === UNAUTHORIZED || response.status === FORBIDDEN

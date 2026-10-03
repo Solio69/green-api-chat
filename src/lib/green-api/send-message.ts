@@ -1,19 +1,13 @@
 import { classifyBadRequest } from './get-state'
 import { isSafeIdentifier } from './safe-identifier'
+import { fetchGreenApi } from './transport'
 import { isRecord } from '@/lib/api/is-record'
 import type {
   ProviderSendResult,
   SendMessageOptions,
 } from '@/lib/sending/types'
 import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
-import {
-  CACHE_CONTROL,
-  FETCH_REDIRECT,
-  HTTP_CONTENT_TYPE,
-  HTTP_HEADERS,
-  HTTP_METHOD,
-  HTTP_STATUS,
-} from '@/lib/http/constants'
+import { HTTP_METHOD, HTTP_STATUS } from '@/lib/http/constants'
 import { SEND_CONFIG } from '@/lib/sending/constants'
 import { GREEN_API_CONFIG } from './constants'
 
@@ -29,13 +23,8 @@ const { OK: RESPONSE_OK } = API_RESPONSE_STATUS
 const { OK, BAD_REQUEST, UNAUTHORIZED, FORBIDDEN, TOO_MANY_REQUESTS } =
   HTTP_STATUS
 const { POST } = HTTP_METHOD
-const { CONTENT_TYPE } = HTTP_HEADERS
-const { JSON: JSON_CONTENT_TYPE } = HTTP_CONTENT_TYPE
-const { NO_STORE } = CACHE_CONTROL
-const { ERROR: REDIRECT_ERROR } = FETCH_REDIRECT
 const { PROVIDER_VALIDATION_PATTERN } = SEND_CONFIG
-const { HOST, INSTANCE_PATH_PREFIX, SEND_MESSAGE_METHOD, TIMEOUT_MS } =
-  GREEN_API_CONFIG
+const { SEND_MESSAGE_METHOD, TIMEOUT_MS } = GREEN_API_CONFIG
 
 export const sendMessage = async ({
   credentials,
@@ -44,20 +33,17 @@ export const sendMessage = async ({
   fetcher = fetch,
   signal: callerSignal,
 }: SendMessageOptions): Promise<ProviderSendResult> => {
-  const id = encodeURIComponent(credentials.idInstance)
-  const token = encodeURIComponent(credentials.apiTokenInstance)
-  const url = `${HOST}/${INSTANCE_PATH_PREFIX}${id}/${SEND_MESSAGE_METHOD}/${token}`
   try {
     callerSignal?.throwIfAborted()
     // Once dispatched, only the server deadline ends the local attempt.
     const signal = AbortSignal.timeout(TIMEOUT_MS)
-    const response = await fetcher(url, {
+    const response = await fetchGreenApi({
+      credentials,
+      methodName: SEND_MESSAGE_METHOD,
       method: POST,
-      cache: NO_STORE,
-      redirect: REDIRECT_ERROR,
-      headers: { [CONTENT_TYPE]: JSON_CONTENT_TYPE },
-      body: JSON.stringify({ chatId, message }),
+      jsonBody: { chatId, message },
       signal,
+      fetcher,
     })
     signal.throwIfAborted()
     if (response.status === UNAUTHORIZED) return { kind: INVALID_TOKEN }

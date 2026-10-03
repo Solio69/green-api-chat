@@ -1,26 +1,15 @@
 import { setTimeout as wait } from 'node:timers/promises'
 import { classifyBadRequest } from './get-state'
+import { fetchGreenApi } from './transport'
 import { normalizeHistory } from '@/lib/history/normalize-history'
 import type { GetHistoryOptions, GetHistoryResult } from '@/lib/history/types'
 import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
 import { HISTORY_CONFIG } from '@/lib/history/constants'
-import {
-  CACHE_CONTROL,
-  FETCH_REDIRECT,
-  HTTP_METHOD,
-  HTTP_STATUS,
-  HTTP_HEADERS,
-  HTTP_CONTENT_TYPE,
-} from '@/lib/http/constants'
+import { HTTP_METHOD, HTTP_STATUS } from '@/lib/http/constants'
 import { GREEN_API_CONFIG } from './constants'
 
-const {
-  HOST,
-  INSTANCE_PATH_PREFIX,
-  CHAT_HISTORY_METHOD,
-  TIMEOUT_MS,
-  RATE_LIMIT_RETRY_DELAY_MS,
-} = GREEN_API_CONFIG
+const { CHAT_HISTORY_METHOD, TIMEOUT_MS, RATE_LIMIT_RETRY_DELAY_MS } =
+  GREEN_API_CONFIG
 const { COUNT, INVALID_TARGET_PATTERN } = HISTORY_CONFIG
 const {
   INVALID_REQUEST,
@@ -40,10 +29,6 @@ const {
   SERVER_ERROR_START,
 } = HTTP_STATUS
 const { POST } = HTTP_METHOD
-const { CONTENT_TYPE } = HTTP_HEADERS
-const { JSON: JSON_CONTENT_TYPE } = HTTP_CONTENT_TYPE
-const { NO_STORE } = CACHE_CONTROL
-const { ERROR: REDIRECT_ERROR } = FETCH_REDIRECT
 const waitForRateLimit = ({
   delay,
   signal,
@@ -59,9 +44,6 @@ export const getChatHistory = async ({
   fetcher = fetch,
   waitForRetry = waitForRateLimit,
 }: GetHistoryOptions): Promise<GetHistoryResult> => {
-  const id = encodeURIComponent(credentials.idInstance)
-  const token = encodeURIComponent(credentials.apiTokenInstance)
-  const url = `${HOST}/${INSTANCE_PATH_PREFIX}${id}/${CHAT_HISTORY_METHOD}/${token}`
   const deadline = AbortSignal.timeout(TIMEOUT_MS)
   const signal = callerSignal
     ? AbortSignal.any([callerSignal, deadline])
@@ -69,13 +51,13 @@ export const getChatHistory = async ({
   try {
     signal.throwIfAborted()
     const request = () =>
-      fetcher(url, {
+      fetchGreenApi({
+        credentials,
+        methodName: CHAT_HISTORY_METHOD,
         method: POST,
-        cache: NO_STORE,
-        redirect: REDIRECT_ERROR,
+        jsonBody: { chatId, count: COUNT },
         signal,
-        headers: { [CONTENT_TYPE]: JSON_CONTENT_TYPE },
-        body: JSON.stringify({ chatId, count: COUNT }),
+        fetcher,
       })
     let response = await request()
     signal.throwIfAborted()

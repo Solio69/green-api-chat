@@ -88,3 +88,50 @@ test('Delete uses DELETE with exact receipt and does not expose provider reason'
     }),
   ).toBe(true)
 })
+
+test('notification request keeps Retry-After seconds and HTTP-date without retry', async () => {
+  const fixedNow = Date.UTC(2025, 0, 1)
+  const originalNow = Date.now
+  Date.now = () => fixedNow
+  try {
+    for (const [retryAfter, retryAfterMs] of [
+      ['2.5', 2_500],
+      ['Wed, 01 Jan 2025 00:00:03 GMT', 3_000],
+    ] as const) {
+      let calls = 0
+      await expect(
+        receiveNotification({
+          context,
+          signal: new AbortController().signal,
+          fetcher: async () => {
+            calls += 1
+            return new Response('private provider detail', {
+              status: 429,
+              headers: { 'Retry-After': retryAfter },
+            })
+          },
+        }),
+      ).rejects.toMatchObject({ code: 'retry_later', retryAfterMs })
+      expect(calls).toBe(1)
+    }
+  } finally {
+    Date.now = originalNow
+  }
+})
+
+test('Delete false stays an unconfirmed deletion, while malformed provider JSON is safe', async () => {
+  expect(
+    await deleteNotification({
+      context,
+      receiptId: RECEIPT,
+      signal: new AbortController().signal,
+      fetcher: async () => Response.json({ result: false }),
+    }),
+  ).toBe(false)
+  await expect(
+    getNotificationSettings({
+      context,
+      fetcher: async () => new Response('private malformed provider detail'),
+    }),
+  ).rejects.toMatchObject({ code: 'invalid_upstream_response' })
+})

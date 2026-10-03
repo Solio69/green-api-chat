@@ -1,12 +1,8 @@
 import { setTimeout as wait } from 'node:timers/promises'
+import { fetchGreenApi } from './transport'
 import { isRecord } from '@/lib/api/is-record'
 import { API_ERROR_CODE } from '@/lib/api/constants'
-import {
-  CACHE_CONTROL,
-  FETCH_REDIRECT,
-  HTTP_METHOD,
-  HTTP_STATUS,
-} from '@/lib/http/constants'
+import { HTTP_METHOD, HTTP_STATUS } from '@/lib/http/constants'
 import {
   GREEN_API_BAD_REQUEST,
   GREEN_API_CONFIG,
@@ -33,15 +29,7 @@ const {
   SERVER_ERROR_START,
 } = HTTP_STATUS
 const { GET: HTTP_GET } = HTTP_METHOD
-const { NO_STORE } = CACHE_CONTROL
-const { ERROR: REDIRECT_ERROR } = FETCH_REDIRECT
-const {
-  HOST,
-  INSTANCE_PATH_PREFIX,
-  METHOD,
-  TIMEOUT_MS,
-  RATE_LIMIT_RETRY_DELAY_MS,
-} = GREEN_API_CONFIG
+const { METHOD, TIMEOUT_MS, RATE_LIMIT_RETRY_DELAY_MS } = GREEN_API_CONFIG
 const {
   AUTHORIZED,
   NOT_AUTHORIZED,
@@ -119,17 +107,15 @@ export const getStateInstance = async ({
     signal: AbortSignal
   }) => Promise<void>
 }): Promise<StateResult> => {
-  const id = encodeURIComponent(credentials.idInstance)
-  const token = encodeURIComponent(credentials.apiTokenInstance)
-  const url = `${HOST}/${INSTANCE_PATH_PREFIX}${id}/${METHOD}/${token}`
   try {
     const signal = AbortSignal.timeout(TIMEOUT_MS)
     const requestState = () =>
-      fetcher(url, {
+      fetchGreenApi({
+        credentials,
+        methodName: METHOD,
         method: HTTP_GET,
-        cache: NO_STORE,
-        redirect: REDIRECT_ERROR,
         signal,
+        fetcher,
       })
     let response = await requestState()
     if (response.status === HTTP_TOO_MANY_REQUESTS) {
