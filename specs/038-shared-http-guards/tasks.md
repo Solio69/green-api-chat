@@ -9,7 +9,7 @@ Input: [spec.md](spec.md), [plan.md](plan.md), [матрица](research.md), [c
 - [x] T005 Реализовать `src/server/http/{constants,is-same-origin,read-connection-scope,is-json-media-type,read-json-body,json-no-store,index}.ts`; добиться Green T004, не вводя route-level mapping.
 - [x] T006 Перевести `src/lib/sending/{read-send-body,handle-send-request}.ts`, `src/lib/history/handle-history-request.ts`, `src/lib/notifications/handle-notification-request.ts`, `src/lib/chats/handle-chats-request.ts`, `src/lib/recipients/{handle-search-request,resolve-search}.ts`, `src/features/auth/server/handle-login-request.ts` на общие функции; сохранить точный порядок/response и legacy wrapper readSendBody до 054. Повторить integration matrix Green.
 - [x] T007 Провести Refactor, повторный read-only analyze, проверить typecheck/lint/style/format, полный Vitest/integration/query/production E2E, server/client graph, matrix, diff и отсутствие реальных секретов; записать verification.
-- [ ] T008 Провести предкоммитное review, commit/push `refactor`, подтвердить обе GitHub jobs на SHA кода, обновить roadmap/spec/verification и проверить CI итогового документационного SHA.
+- [x] T008 Провести предкоммитное review, commit/push `refactor`, подтвердить обе GitHub jobs на SHA кода, обновить roadmap/spec/verification и проверить CI итогового документационного SHA.
 
 037 → T001 → T002 → T003 baseline → T004 Red → T005 Green → T006 → T007 Refactor/verification → T008.
 

@@ -1,6 +1,6 @@
 # Проверка 038: общие HTTP-проверки
 
-Дата: 2026-10-03. Реализация и локальная регрессия завершены; commit/push и удалённый CI фиксируются после публикации.
+Дата: 2026-10-03. Реализация и локальная регрессия завершены; удалённый CI Passed на `06391d4d227be870053d517d612ce94b5e9aded5`.
 
 | Проверка | Результат |
 | --- | --- |
@@ -17,6 +17,8 @@
 | Граф Client Components → server auth/session/http | Passed: 28 roots, 225 source TS/TSX; запрещённых путей 0 |
 | Повторный read-only анализ | Passed: 873 пути, SHA-256 до/после `e426d6aba47ae5613ebc5255aa6e6ad34d8f5e67dd4e6604f85614207d671e4c`, unchanged; findings 0 |
 | `git diff --check` | Passed |
-| GitHub Actions quality/browser | NotRun до commit/push |
+| GitHub Actions quality/browser | Passed: обе jobs [run 37130040839](https://github.com/Solio69/green-api-chat/actions/runs/37130040839), artifacts `quality-1` и `browser-1` |
 
 Строгие Origin/Host и scope имеют общую реализацию, но маршруты по-прежнему сами задают порядок проверок и ответы. Send сохраняет фактический лимит 65 536 байт и 413; notifications — 8 192 и 400, в том числе прежний precheck Content-Length; history/recipient не получили нового лимита. JSON no-store helper не скрывает тело и статус. Реальные реквизиты в тестах не используются.
+
+Итоговый документационный SHA проверяется отдельно после push.
