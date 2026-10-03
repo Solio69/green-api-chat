@@ -61,7 +61,7 @@ jobs:
         run: npm test 2>&1 | tee test-results/quality/vitest.log
 
       - name: Run integration tests
-        run: npm run test:integration 2>&1 | tee test-results/quality/integration.log
+        run: npm run test:integration -- --output=test-results/integration 2>&1 | tee test-results/quality/integration.log
 
       - name: Upload quality logs
         if: ${{ !cancelled() }}
@@ -70,4 +70,4 @@ jobs:
           name: quality-${{ github.run_attempt }}
           path: test-results/quality/
           retention-days: 7
-          if-no-files-found: warn
+          if-no-files-found: error

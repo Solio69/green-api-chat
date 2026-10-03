@@ -11,6 +11,8 @@ npm test
 npm run test:integration
 ~~~
 
+Playwright integration запускается с --output=test-results/integration, поэтому очистка собственного каталога результатов не удаляет логи quality. Отсутствие логов делает upload неуспешным.
+
 Workflow на GitHub сам выполняет npm ci в чистом runner; локально повторная
 установка для этой задачи не требуется. Логи доступны в Actions шаге и
 artifact quality-<run_attempt> в течение 7 дней.

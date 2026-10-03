@@ -27,7 +27,10 @@ main подтверждена Git ls-remote --symref и GitHub API. Actions-за
 
 Полные npm stdout/stderr сохраняются через tee; Bash pipefail обеспечивает
 ошибку шага при падении npm. Upload выполняется при успехе/ошибке, но не
-при отменённом run; missing files дают warning и не скрывают исходную причину.
+при отменённом run; missing files дают ошибку отчёта, сигнализируя о нарушении контракта.
+Playwright очищает outputDir перед integration: проверено на первом GitHub run.
+Установка --output=test-results/integration сохраняет соседний каталог quality.
+Локальный контрольный файл пережил полный набор 351/351.
 Артефакты качества хранятся 7 дней. Секреты пользователя не используются.
 Контроль Node/npm проверяет major versions до npm ci.
 

@@ -42,6 +42,8 @@ Push main/refactor + PR + workflow_dispatch; contents:read,
 persist-credentials:false; cache npm не заменяет npm ci.
 Логи каждой команды пишутся в test-results/quality и загружаются отдельным
 artifact quality-<run_attempt>, retention 7 дней. Bash -e -o pipefail.
+Integration использует --output=test-results/integration, иначе Playwright удаляет
+каталог quality при очистке test-results. Отсутствие логов делает upload ошибкой.
 Checkout failure виден в Actions даже если artifact создать невозможно.
 
 ## Порядок

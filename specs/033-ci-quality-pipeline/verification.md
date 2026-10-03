@@ -1,6 +1,6 @@
 # Проверка 033
 
-Дата: 2026-10-03. Локальная реализация Passed; удалённая приёмка NotRun.
+Дата: 2026-10-03. Локальные проверки Passed; удалённая приёмка частично Failed из-за отсутствия artifact. Исправление проверяется.
 
 | Проверка | Результат |
 | --- | --- |
@@ -11,7 +11,9 @@
 | npm run format:check | Passed |
 | npm test | Passed: 5 файлов, 15 тестов |
 | npm run test:integration | Passed: 351 тест |
-| Чистый remote run | NotRun |
+| npm run test:integration -- --output=test-results/integration | Passed: 351 тест; контрольный quality log сохранился |
+| Первый remote run | Job success и все команды Passed, но artifact отсутствует: ошибка в сохранении логов |
+| Повтор после исправления | NotRun |
 | Remote negative/restore | NotRun |
 | Manual dispatch / fork PR | NotRun, ограничения описаны в plan |
 
@@ -21,5 +23,7 @@
 -e -o pipefail; tee не маскирует сбой. Нет continue-on-error, secrets или
 сохраняемых checkout credentials. Кеш не заменяет npm ci.
 Все изменения принадлежат этой задаче. main и продуктовый код не изменены.
-Следующий шаг: initial commit/push и фактическая удалённая приёмка T004–T007.
-Коммит: chore: add continuous quality checks.
+Следующий шаг: commit/push исправления и повторная удалённая приёмка T004–T007.
+Коммит исправления: fix: preserve quality logs during integration.
+
+Первый run: https://github.com/Solio69/green-api-chat/actions/runs/37117418374, commit d1ccf99. Job success, но upload выдал No files were found. Причина: Playwright перед integration очищает общий test-results; логи находились внутри. Изолирован output каталога integration, отсутствие логов теперь ошибка upload. Проверка 10:49–10:50 UTC: 351/351, контрольный лог сохранён.
