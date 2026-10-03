@@ -21,7 +21,12 @@
     "lint:styles": "stylelint \"src/**/*.scss\"",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
-    "lint:fix": "eslint . --fix --max-warnings=0"
+    "lint:fix": "eslint . --fix --max-warnings=0",
+    "test": "vitest run",
+    "test:unit": "vitest run --project node",
+    "test:component": "vitest run --project dom",
+    "test:watch": "vitest --watch",
+    "typecheck:tests": "tsc --noEmit -p tsconfig.vitest.json"
   },
   "dependencies": {
     "@tanstack/react-query": "5.104.0",
@@ -32,17 +37,25 @@
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/jest-dom": "7.0.1",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.7",
     "@types/node": "24.19.0",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.1",
     "eslint": "9.39.5",
     "eslint-config-next": "16.3.7",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-import": "2.32.0",
+    "jsdom": "29.1.1",
     "prettier": "3.9.9",
     "sass": "1.105.0",
     "stylelint": "17.14.1",
     "stylelint-config-standard-scss": "17.0.0",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "vite": "8.3.2",
+    "vitest": "5.0.3"
   }
 }

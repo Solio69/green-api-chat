@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test'
+import { expect, test } from 'vitest'
 import { parseSearchRequest } from '@/lib/recipients/validate-search'
 import { formatRecipientLabel } from '@/components/RecipientSearchForm/format-recipient-label'
 

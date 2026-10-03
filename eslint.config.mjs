@@ -8,7 +8,7 @@ export default defineConfig([
   ...nextVitals,
   ...nextTypescript,
   {
-    files: ['**/*.{js,cjs,mjs,ts,tsx}'],
+    files: ['**/*.{js,cjs,mjs,ts,mts,tsx}'],
     plugins: {
       import: importPlugin,
     },
@@ -86,7 +86,7 @@ export default defineConfig([
     },
   },
   {
-    files: ['src/**/*.{js,cjs,mjs,ts,tsx}'],
+    files: ['src/**/*.{js,cjs,mjs,ts,mts,tsx}'],
     rules: {
       'no-restricted-imports': [
         'error',
@@ -103,7 +103,7 @@ export default defineConfig([
     },
   },
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ['**/*.{ts,mts,tsx}'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-unused-vars': 'error',
