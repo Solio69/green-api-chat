@@ -16,7 +16,7 @@
     "test:integration": "playwright test --config playwright.integration.config.ts",
     "test:report": "playwright show-report",
     "test:install-browser": "playwright install chromium",
-    "typecheck": "next typegen && tsc --noEmit",
+    "typecheck": "npm run typecheck:app && npm run typecheck:tests && npm run typecheck:query",
     "lint": "eslint . --max-warnings=0",
     "lint:styles": "stylelint \"src/**/*.scss\"",
     "format:check": "prettier --check .",
@@ -26,7 +26,9 @@
     "test:unit": "vitest run --project node",
     "test:component": "vitest run --project dom",
     "test:watch": "vitest --watch",
-    "typecheck:tests": "tsc --noEmit -p tsconfig.vitest.json"
+    "typecheck:tests": "tsc --noEmit -p tsconfig.vitest.json",
+    "typecheck:app": "next typegen && tsc --noEmit --incremental false",
+    "typecheck:query": "next typegen tests/fixtures/query-app && tsc --noEmit -p tests/fixtures/query-app/tsconfig.json"
   },
   "dependencies": {
     "@tanstack/react-query": "5.104.0",

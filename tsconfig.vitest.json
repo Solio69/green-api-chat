@@ -8,10 +8,13 @@
   "include": [
     "vitest.config.mts",
     "tests/unit/**/*.ts",
+    "tests/unit/**/*.tsx",
     "tests/component/**/*.ts",
     "tests/component/**/*.tsx",
     "tests/setup/**/*.ts",
-    "tests/support/**/*.ts"
+    "tests/setup/**/*.tsx",
+    "tests/support/**/*.ts",
+    "tests/support/**/*.tsx"
   ],
   "exclude": ["node_modules"]
 }

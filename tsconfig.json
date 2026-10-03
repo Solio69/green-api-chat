@@ -20,19 +20,33 @@
     ],
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "types": ["node"]
   },
   "include": [
     "next-env.d.ts",
     "next.config.ts",
-    "playwright.config.ts",
-    "playwright.integration.config.ts",
-    "tests/e2e/**/*.ts",
-    "tests/integration/**/*.ts",
+    "playwright*.config.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
+    "tests/**/*.ts",
+    "tests/**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "test-results",
+    "playwright-report",
+    "coverage",
+    "out",
+    "build",
+    ".vercel",
+    "tests/unit",
+    "tests/component",
+    "tests/setup",
+    "tests/support",
+    "tests/query",
+    "tests/fixtures/query-app"
+  ]
 }

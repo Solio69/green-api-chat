@@ -292,11 +292,17 @@ production-приложение и запускают собственный с�
 
 ```sh
 npm run typecheck
-npm run typecheck:tests
 npm run lint
 npm run lint:styles
 npm run format:check
 ```
+
+Команда typecheck последовательно проверяет три области: приложение и Playwright
+(typecheck:app), Vitest (typecheck:tests), query-стенд (typecheck:query).
+Для обоих Next.js приложений типы маршрутов генерируются перед tsc; предварительная
+сборка не нужна. Сбой любой области завершает общую команду ошибкой.
+Отдельные команды доступны для диагностики. Типы matchers Vitest изолированы
+от Playwright; новые TS/TSX файлы в существующих исходных папках входят автоматически.
 
 HTML-отчёт последнего E2E-прогона:
 
