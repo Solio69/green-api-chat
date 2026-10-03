@@ -13,7 +13,7 @@
     "start": "next start",
     "test:e2e": "playwright test",
     "test:query": "playwright test --config playwright.query.config.ts",
-    "test:integration": "playwright test --config playwright.integration.config.ts",
+    "test:integration": "vitest run --project integration",
     "test:report": "playwright show-report",
     "test:install-browser": "playwright install chromium",
     "typecheck": "npm run typecheck:app && npm run typecheck:tests && npm run typecheck:query",

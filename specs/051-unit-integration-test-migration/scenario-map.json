@@ -1,0 +1,2203 @@
+{
+  "schemaVersion": 1,
+  "sourceRun": "050 successful integration 366/366",
+  "baseline": "specs/028-refactor-test-baseline/test-inventory.json",
+  "scenarios": [
+    {
+      "id": "B028-I-0001",
+      "title": "account-profile: whitelists display fields and trims username before phone",
+      "source": "tests/integration/account-profile.spec.ts",
+      "destination": "tests/unit/account-profile-contract.test.ts"
+    },
+    {
+      "id": "B028-I-0002",
+      "title": "account-profile: uses phone when username is absent or invalid",
+      "source": "tests/integration/account-profile.spec.ts",
+      "destination": "tests/unit/account-profile-contract.test.ts"
+    },
+    {
+      "id": "B028-I-0003",
+      "title": "account-profile: missing and mistyped optional fields remain empty",
+      "source": "tests/integration/account-profile.spec.ts",
+      "destination": "tests/unit/account-profile-contract.test.ts"
+    },
+    {
+      "id": "B028-I-0004",
+      "title": "account-profile: accepts an absolute HTTPS avatar and trims it",
+      "source": "tests/integration/account-profile.spec.ts",
+      "destination": "tests/unit/account-profile-contract.test.ts"
+    },
+    {
+      "id": "B028-I-0005",
+      "title": "account-profile: rejects unsafe, relative and malformed avatar URLs",
+      "source": "tests/integration/account-profile.spec.ts",
+      "destination": "tests/unit/account-profile-contract.test.ts"
+    },
+    {
+      "id": "B028-I-0006",
+      "title": "account-profile: suppresses raw and encoded credentials in every display field",
+      "source": "tests/integration/account-profile.spec.ts",
+      "destination": "tests/unit/account-profile-contract.test.ts"
+    },
+    {
+      "id": "B028-I-0007",
+      "title": "account-profile: safe phone remains usable when username contains a credential",
+      "source": "tests/integration/account-profile.spec.ts",
+      "destination": "tests/unit/account-profile-contract.test.ts"
+    },
+    {
+      "id": "B028-I-0008",
+      "title": "auth-flow: authorized saves exact credentials and returns only ok",
+      "source": "tests/integration/auth-flow.spec.ts",
+      "destination": "tests/integration/auth-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0009",
+      "title": "auth-flow: rejects invalid body case 0 before provider",
+      "source": "tests/integration/auth-flow.spec.ts",
+      "destination": "tests/integration/auth-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0010",
+      "title": "auth-flow: rejects invalid body case 1 before provider",
+      "source": "tests/integration/auth-flow.spec.ts",
+      "destination": "tests/integration/auth-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0011",
+      "title": "auth-flow: rejects invalid body case 2 before provider",
+      "source": "tests/integration/auth-flow.spec.ts",
+      "destination": "tests/integration/auth-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0012",
+      "title": "auth-flow: rejects invalid body case 3 before provider",
+      "source": "tests/integration/auth-flow.spec.ts",
+      "destination": "tests/integration/auth-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0013",
+      "title": "auth-flow: rejects invalid body case 4 before provider",
+      "source": "tests/integration/auth-flow.spec.ts",
+      "destination": "tests/integration/auth-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0014",
+      "title": "auth-flow: rejects invalid body case 5 before provider",
+      "source": "tests/integration/auth-flow.spec.ts",
+      "destination": "tests/integration/auth-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0015",
+      "title": "auth-flow: rejects invalid body case 6 before provider",
+      "source": "tests/integration/auth-flow.spec.ts",
+      "destination": "tests/integration/auth-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0016",
+      "title": "auth-flow: rejects invalid body case 7 before provider",
+      "source": "tests/integration/auth-flow.spec.ts",
+      "destination": "tests/integration/auth-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0017",
+      "title": "auth-flow: rejects invalid body case 8 before provider",
+      "source": "tests/integration/auth-flow.spec.ts",
+      "destination": "tests/integration/auth-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0018",
+      "title": "auth-flow: invalid_token never saves a session",
+      "source": "tests/integration/auth-flow.spec.ts",
+      "destination": "tests/integration/auth-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0019",
+      "title": "auth-flow: invalid_instance never saves a session",
+      "source": "tests/integration/auth-flow.spec.ts",
+      "destination": "tests/integration/auth-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0020",
+      "title": "auth-flow: needs_authorization never saves a session",
+      "source": "tests/integration/auth-flow.spec.ts",
+      "destination": "tests/integration/auth-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0021",
+      "title": "auth-flow: instance_restricted never saves a session",
+      "source": "tests/integration/auth-flow.spec.ts",
+      "destination": "tests/integration/auth-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0022",
+      "title": "auth-flow: instance_expired never saves a session",
+      "source": "tests/integration/auth-flow.spec.ts",
+      "destination": "tests/integration/auth-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0023",
+      "title": "auth-flow: retry_later never saves a session",
+      "source": "tests/integration/auth-flow.spec.ts",
+      "destination": "tests/integration/auth-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0024",
+      "title": "auth-flow: service_unavailable never saves a session",
+      "source": "tests/integration/auth-flow.spec.ts",
+      "destination": "tests/integration/auth-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0025",
+      "title": "auth-flow: invalid_upstream_response never saves a session",
+      "source": "tests/integration/auth-flow.spec.ts",
+      "destination": "tests/integration/auth-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0026",
+      "title": "auth-flow: session storage failure has a safe response",
+      "source": "tests/integration/auth-flow.spec.ts",
+      "destination": "tests/integration/auth-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0027",
+      "title": "auth-flow: exhausted rate limit returns 429 and never saves a session",
+      "source": "tests/integration/auth-flow.spec.ts",
+      "destination": "tests/integration/auth-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0028",
+      "title": "query: client binds scope/header/signal and returns safe DTO",
+      "source": "tests/integration/chat-query.spec.ts",
+      "destination": "tests/integration/chat-query.test.ts"
+    },
+    {
+      "id": "B028-I-0029",
+      "title": "query: rejects foreign scope and invalid public payload",
+      "source": "tests/integration/chat-query.spec.ts",
+      "destination": "tests/integration/chat-query.test.ts"
+    },
+    {
+      "id": "B028-I-0030",
+      "title": "query: normalized error and network failure",
+      "source": "tests/integration/chat-query.spec.ts",
+      "destination": "tests/integration/chat-query.test.ts"
+    },
+    {
+      "id": "B028-I-0031",
+      "title": "query: two observers share a request, fresh remount reuses data",
+      "source": "tests/integration/chat-query.spec.ts",
+      "destination": "tests/integration/chat-query.test.ts"
+    },
+    {
+      "id": "B028-I-0032",
+      "title": "query: refresh failure retains confirmed data and manual retry recovers",
+      "source": "tests/integration/chat-query.spec.ts",
+      "destination": "tests/integration/chat-query.test.ts"
+    },
+    {
+      "id": "B028-I-0033",
+      "title": "query: close aborts and late promise cannot restore cache; new account independent",
+      "source": "tests/integration/chat-query.spec.ts",
+      "destination": "tests/integration/chat-query.test.ts"
+    },
+    {
+      "id": "B028-I-0034",
+      "title": "query: explicit timing/event policy and closed loader guard",
+      "source": "tests/integration/chat-query.spec.ts",
+      "destination": "tests/integration/chat-query.test.ts"
+    },
+    {
+      "id": "B028-I-0035",
+      "title": "query: two access errors retire context and notify exactly once",
+      "source": "tests/integration/chat-query.spec.ts",
+      "destination": "tests/integration/chat-query.test.ts"
+    },
+    {
+      "id": "B028-I-0036",
+      "title": "query: abort during JSON parsing rejects a late body",
+      "source": "tests/integration/chat-query.spec.ts",
+      "destination": "tests/integration/chat-query.test.ts"
+    },
+    {
+      "id": "B028-I-0037",
+      "title": "chats: personal normalization, order, first duplicate and allowlist",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0038",
+      "title": "chats: valid empty []",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0039",
+      "title": "chats: valid empty [{\"type\":\"group\"}]",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0040",
+      "title": "chats: valid empty [{\"type\":\"future\"}]",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0041",
+      "title": "chats: malformed {}",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0042",
+      "title": "chats: malformed null",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0043",
+      "title": "chats: malformed [null]",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0044",
+      "title": "chats: malformed [[]]",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0045",
+      "title": "chats: malformed [{}]",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0046",
+      "title": "chats: malformed [{\"type\":1}]",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0047",
+      "title": "chats: malformed [{\"type\":\" \"}]",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0048",
+      "title": "chats: malformed [{\"type\":\"user\"}]",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0049",
+      "title": "chats: malformed [{\"type\":\"user\",\"chatId\":12}]",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0050",
+      "title": "chats: optional malformed fields and credential-bearing text are removed",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0051",
+      "title": "chats: scope uses independently computed protocol and changes with connection",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0052",
+      "title": "chats: provider GET uses fixed host, encoded credentials, abort and no-store",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0053",
+      "title": "chats: provider status 401",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0054",
+      "title": "chats: provider status 403",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0055",
+      "title": "chats: provider status 503",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0056",
+      "title": "chats: provider status 418",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0057",
+      "title": "chats: provider malformed JSON/root and network failure preserve category",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0058",
+      "title": "chats: provider expired/starting 400 follow existing categories",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0059",
+      "title": "chats: one rate-limit retry, success=true",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0060",
+      "title": "chats: one rate-limit retry, success=false",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0061",
+      "title": "chats: aborted signal prevents initial call and retry",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0062",
+      "title": "chats: rejects before provider server_unavailable",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0063",
+      "title": "chats: rejects before provider session_required",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0064",
+      "title": "chats: rejects before provider invalid_request",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0065",
+      "title": "chats: rejects before provider connection_changed",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0066",
+      "title": "chats: internal success is safe and scoped",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0067",
+      "title": "chats: HTTP error and cookie invalid_token",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0068",
+      "title": "chats: HTTP error and cookie invalid_instance",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0069",
+      "title": "chats: HTTP error and cookie instance_expired",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0070",
+      "title": "chats: HTTP error and cookie needs_authorization",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0071",
+      "title": "chats: HTTP error and cookie instance_restricted",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0072",
+      "title": "chats: HTTP error and cookie rate_limited",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0073",
+      "title": "chats: HTTP error and cookie retry_later",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0074",
+      "title": "chats: HTTP error and cookie service_unavailable",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0075",
+      "title": "chats: HTTP error and cookie invalid_upstream_response",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0076",
+      "title": "chats: deadline aborts an unresponsive provider",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0077",
+      "title": "chats: failed cookie cleanup never confirms logout of session",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0078",
+      "title": "chats: cancellation during provider body prevents a late success",
+      "source": "tests/integration/chats-api.spec.ts",
+      "destination": "tests/integration/chats-api.test.ts"
+    },
+    {
+      "id": "B028-I-0079",
+      "title": "check-account: phone lookup uses one fixed-host POST and exposes only chatId",
+      "source": "tests/integration/check-account.spec.ts",
+      "destination": "tests/unit/check-account.test.ts"
+    },
+    {
+      "id": "B028-I-0080",
+      "title": "check-account: username lookup sends @ and distinguishes not found",
+      "source": "tests/integration/check-account.spec.ts",
+      "destination": "tests/unit/check-account.test.ts"
+    },
+    {
+      "id": "B028-I-0081",
+      "title": "check-account: limit in HTTP 200 and HTTP 429/469 is not absence",
+      "source": "tests/integration/check-account.spec.ts",
+      "destination": "tests/unit/check-account.test.ts"
+    },
+    {
+      "id": "B028-I-0082",
+      "title": "check-account: only HTTP 401 proves invalid token",
+      "source": "tests/integration/check-account.spec.ts",
+      "destination": "tests/unit/check-account.test.ts"
+    },
+    {
+      "id": "B028-I-0083",
+      "title": "check-account: documented startup is retryable, other HTTP 400 is not",
+      "source": "tests/integration/check-account.spec.ts",
+      "destination": "tests/unit/check-account.test.ts"
+    },
+    {
+      "id": "B028-I-0084",
+      "title": "check-account: incomplete or unknown body never confirms a recipient",
+      "source": "tests/integration/check-account.spec.ts",
+      "destination": "tests/unit/check-account.test.ts"
+    },
+    {
+      "id": "B028-I-0085",
+      "title": "check-account: provider outage and transport failure are retryable",
+      "source": "tests/integration/check-account.spec.ts",
+      "destination": "tests/unit/check-account.test.ts"
+    },
+    {
+      "id": "N051-I-0001",
+      "title": "late history preserves a live fact and confirmed read within one cache application",
+      "source": "tests/integration/conversation-cache-coordinator.spec.ts",
+      "destination": "tests/integration/conversation-cache-coordinator.test.ts"
+    },
+    {
+      "id": "N051-I-0002",
+      "title": "accepted event writes message and temporary chat, invalid target leaves both absent",
+      "source": "tests/integration/conversation-cache-coordinator.spec.ts",
+      "destination": "tests/integration/conversation-cache-coordinator.test.ts"
+    },
+    {
+      "id": "N051-I-0003",
+      "title": "incoming delivery updates message, temporary chat and unread before ACK decision; replay is idempotent",
+      "source": "tests/integration/conversation-cache-coordinator.spec.ts",
+      "destination": "tests/integration/conversation-cache-coordinator.test.ts"
+    },
+    {
+      "id": "B028-I-0086",
+      "title": "selection: A → A → B distinguishes access from recipient changes",
+      "source": "tests/integration/conversation-selection.spec.ts",
+      "destination": "tests/unit/conversation-selection.test.ts"
+    },
+    {
+      "id": "B028-I-0087",
+      "title": "selection: mobile back preserves target and reopening increments only access",
+      "source": "tests/integration/conversation-selection.spec.ts",
+      "destination": "tests/unit/conversation-selection.test.ts"
+    },
+    {
+      "id": "B028-I-0088",
+      "title": "selection: close is idempotent and only increments the selection epoch",
+      "source": "tests/integration/conversation-selection.spec.ts",
+      "destination": "tests/unit/conversation-selection.test.ts"
+    },
+    {
+      "id": "B028-I-0089",
+      "title": "selection: empty confirmed ID is ignored and missing label uses actual ID",
+      "source": "tests/integration/conversation-selection.spec.ts",
+      "destination": "tests/unit/conversation-selection.test.ts"
+    },
+    {
+      "id": "B028-I-0090",
+      "title": "GetAccountSettings: uses its own encoded URL and safe fetch options",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0091",
+      "title": "GetAccountSettings: classifies state notAuthorized",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0092",
+      "title": "GetAccountSettings: classifies state pendingPassword",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0093",
+      "title": "GetAccountSettings: classifies state blocked",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0094",
+      "title": "GetAccountSettings: classifies state suspended",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0095",
+      "title": "GetAccountSettings: classifies state starting",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0096",
+      "title": "GetAccountSettings: classifies state unrecognized",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0097",
+      "title": "GetAccountSettings: classifies HTTP 401",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0098",
+      "title": "GetAccountSettings: classifies HTTP 403",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0099",
+      "title": "GetAccountSettings: classifies HTTP 500",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0100",
+      "title": "GetAccountSettings: classifies HTTP 503",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0101",
+      "title": "GetAccountSettings: classifies HTTP 418",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0102",
+      "title": "GetAccountSettings: classifies HTTP 400 retry_later instance in starting process try later",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0103",
+      "title": "GetAccountSettings: classifies HTTP 400 retry_later instance is starting or not authorized",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0104",
+      "title": "GetAccountSettings: classifies HTTP 400 instance_expired Instance account is expired. Renew your instance from personal area",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0105",
+      "title": "GetAccountSettings: classifies HTTP 400 invalid_upstream_response {bad json",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0106",
+      "title": "GetAccountSettings: rejects malformed JSON and non-object or unknown states",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0107",
+      "title": "GetAccountSettings: optional profile data cannot revoke authorized access",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0108",
+      "title": "GetAccountSettings: Error becomes a temporary error",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0109",
+      "title": "GetAccountSettings: TypeError becomes a temporary error",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0110",
+      "title": "GetAccountSettings: TimeoutError becomes a temporary error",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0111",
+      "title": "GetAccountSettings: retries 429 once then classifies HTTP 200",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0112",
+      "title": "GetAccountSettings: retries 429 once then classifies HTTP 429",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0113",
+      "title": "GetAccountSettings: retries 429 once then classifies HTTP 401",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0114",
+      "title": "GetAccountSettings: aborted retry stops before a second fetch",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0115",
+      "title": "GetAccountSettings: the real deadline aborts a stalled provider",
+      "source": "tests/integration/get-account-settings.spec.ts",
+      "destination": "tests/unit/get-account-settings.test.ts"
+    },
+    {
+      "id": "B028-I-0116",
+      "title": "get-state: authorized requires the documented body and fixed server URL",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0117",
+      "title": "get-state: notAuthorized is needs_authorization",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0118",
+      "title": "get-state: pendingPassword is needs_authorization",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0119",
+      "title": "get-state: blocked is instance_restricted",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0120",
+      "title": "get-state: suspended is instance_restricted",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0121",
+      "title": "get-state: starting is retry_later",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0122",
+      "title": "get-state: HTTP 401 is invalid_token",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0123",
+      "title": "get-state: HTTP 403 is invalid_instance",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0124",
+      "title": "get-state: HTTP 502 is service_unavailable",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0125",
+      "title": "get-state: HTTP 400 retry_later (instance in starting process try later)",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0126",
+      "title": "get-state: HTTP 400 retry_later (instance is starting or not authorized)",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0127",
+      "title": "get-state: HTTP 400 instance_expired (Instance account is expired. Renew your instance from personal area)",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0128",
+      "title": "get-state: HTTP 400 invalid_upstream_response (unknown provider error)",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0129",
+      "title": "get-state: invalid body {bad json never authorizes",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0130",
+      "title": "get-state: invalid body {} never authorizes",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0131",
+      "title": "get-state: invalid body {\"stateInstance\":42} never authorizes",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0132",
+      "title": "get-state: invalid body {\"stateInstance\":\"unrecognized\"} never authorizes",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0133",
+      "title": "get-state: network failure is retryable and contains no raw error",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0134",
+      "title": "get-state: times out after ten seconds with a retryable result",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0135",
+      "title": "get-state: retries HTTP 429 once before accepting authorized state",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0136",
+      "title": "get-state: a second HTTP 429 stops after one retry",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0137",
+      "title": "get-state: other failures do not trigger a delayed retry",
+      "source": "tests/integration/get-state.spec.ts",
+      "destination": "tests/unit/get-state.test.ts"
+    },
+    {
+      "id": "B028-I-0138",
+      "title": "history target Origin: actual loopback Host wins over normalized NextRequest URL",
+      "source": "tests/integration/history-api.spec.ts",
+      "destination": "tests/integration/history-api.test.ts"
+    },
+    {
+      "id": "B028-I-0139",
+      "title": "history target Origin: normalized localhost is foreign to actual loopback Host",
+      "source": "tests/integration/history-api.spec.ts",
+      "destination": "tests/integration/history-api.test.ts"
+    },
+    {
+      "id": "B028-I-0140",
+      "title": "history target Origin: malformed Host never permits normalized URL fallback",
+      "source": "tests/integration/history-api.spec.ts",
+      "destination": "tests/integration/history-api.test.ts"
+    },
+    {
+      "id": "B028-I-0141",
+      "title": "history target Origin: path, query, fragment and non HTTP origin remain invalid",
+      "source": "tests/integration/history-api.spec.ts",
+      "destination": "tests/integration/history-api.test.ts"
+    },
+    {
+      "id": "B028-I-0142",
+      "title": "history request: only the confirmed personal chat identifier is accepted",
+      "source": "tests/integration/history-api.spec.ts",
+      "destination": "tests/integration/history-api.test.ts"
+    },
+    {
+      "id": "B028-I-0143",
+      "title": "history normalizes text, unsupported messages, timestamps and status without raw metadata",
+      "source": "tests/integration/history-api.spec.ts",
+      "destination": "tests/integration/history-api.test.ts"
+    },
+    {
+      "id": "B028-I-0144",
+      "title": "history invalid identity, chat, type and time reject the complete upstream snapshot",
+      "source": "tests/integration/history-api.spec.ts",
+      "destination": "tests/integration/history-api.test.ts"
+    },
+    {
+      "id": "B028-I-0145",
+      "title": "history duplicate identifiers merge and optional unknown status does not invent delivery",
+      "source": "tests/integration/history-api.spec.ts",
+      "destination": "tests/integration/history-api.test.ts"
+    },
+    {
+      "id": "B028-I-0146",
+      "title": "history handler binds session, scope and chat without leaking credentials",
+      "source": "tests/integration/history-api.spec.ts",
+      "destination": "tests/integration/history-api.test.ts"
+    },
+    {
+      "id": "B028-I-0147",
+      "title": "history handler rejects Origin null before body and provider",
+      "source": "tests/integration/history-api.spec.ts",
+      "destination": "tests/integration/history-api.test.ts"
+    },
+    {
+      "id": "B028-I-0148",
+      "title": "history handler rejects Origin \"null\" before body and provider",
+      "source": "tests/integration/history-api.spec.ts",
+      "destination": "tests/integration/history-api.test.ts"
+    },
+    {
+      "id": "B028-I-0149",
+      "title": "history handler rejects Origin \"not a url\" before body and provider",
+      "source": "tests/integration/history-api.spec.ts",
+      "destination": "tests/integration/history-api.test.ts"
+    },
+    {
+      "id": "B028-I-0150",
+      "title": "history handler rejects Origin \"https://foreign.example.test\" before body and provider",
+      "source": "tests/integration/history-api.spec.ts",
+      "destination": "tests/integration/history-api.test.ts"
+    },
+    {
+      "id": "B028-I-0151",
+      "title": "history handler rejects session, scope and body in the required order",
+      "source": "tests/integration/history-api.spec.ts",
+      "destination": "tests/integration/history-api.test.ts"
+    },
+    {
+      "id": "B028-I-0152",
+      "title": "history handler preserves session on target, upstream and transient failures",
+      "source": "tests/integration/history-api.spec.ts",
+      "destination": "tests/integration/history-api.test.ts"
+    },
+    {
+      "id": "B028-I-0153",
+      "title": "history provider uses fixed POST count and bounded rate-limit retry",
+      "source": "tests/integration/history-api.spec.ts",
+      "destination": "tests/integration/history-api.test.ts"
+    },
+    {
+      "id": "B028-I-0154",
+      "title": "history provider maps invalid target, response and two rate limits safely",
+      "source": "tests/integration/history-api.spec.ts",
+      "destination": "tests/integration/history-api.test.ts"
+    },
+    {
+      "id": "B028-I-0155",
+      "title": "history provider abort during retry or body never publishes a snapshot",
+      "source": "tests/integration/history-api.spec.ts",
+      "destination": "tests/integration/history-api.test.ts"
+    },
+    {
+      "id": "B028-I-0156",
+      "title": "history fetch posts only chatId and guards the public normalized response",
+      "source": "tests/integration/history-query.spec.ts",
+      "destination": "tests/integration/history-query.test.ts"
+    },
+    {
+      "id": "B028-I-0157",
+      "title": "history fetch accepts empty and rejects foreign or invalid normalized data",
+      "source": "tests/integration/history-query.spec.ts",
+      "destination": "tests/integration/history-query.test.ts"
+    },
+    {
+      "id": "B028-I-0158",
+      "title": "history fetch normalized HTTP errors and network failure remain distinct from empty success",
+      "source": "tests/integration/history-query.spec.ts",
+      "destination": "tests/integration/history-query.test.ts"
+    },
+    {
+      "id": "B028-I-0159",
+      "title": "history fetch guards closed scope before fetch and after asynchronous JSON",
+      "source": "tests/integration/history-query.spec.ts",
+      "destination": "tests/integration/history-query.test.ts"
+    },
+    {
+      "id": "B028-I-0160",
+      "title": "history merge retains messages missing from latest ten and distinguishes equal text with different ids",
+      "source": "tests/integration/history-query.spec.ts",
+      "destination": "tests/integration/history-query.test.ts"
+    },
+    {
+      "id": "B028-I-0161",
+      "title": "history merge does not downgrade confirmed status or replace known text with null",
+      "source": "tests/integration/history-query.spec.ts",
+      "destination": "tests/integration/history-query.test.ts"
+    },
+    {
+      "id": "B028-I-0162",
+      "title": "history cache is retained independently of request observers and is cleared by session close",
+      "source": "tests/integration/history-query.spec.ts",
+      "destination": "tests/integration/history-query.test.ts"
+    },
+    {
+      "id": "B028-I-0163",
+      "title": "history and chats share one normalized session transition and isolated cleanup errors",
+      "source": "tests/integration/history-query.spec.ts",
+      "destination": "tests/integration/history-query.test.ts"
+    },
+    {
+      "id": "B028-I-0164",
+      "title": "history normalized 409 alone cannot retire a session without matching connection code and status",
+      "source": "tests/integration/history-query.spec.ts",
+      "destination": "tests/integration/history-query.test.ts"
+    },
+    {
+      "id": "B028-I-0165",
+      "title": "home-flow: passes only the prepared profile from the account loader",
+      "source": "tests/integration/home-flow.spec.ts",
+      "destination": "tests/integration/home-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0166",
+      "title": "home-flow: missing session never calls GREEN-API",
+      "source": "tests/integration/home-flow.spec.ts",
+      "destination": "tests/integration/home-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0167",
+      "title": "home-flow: authorized rechecks and returns state for home",
+      "source": "tests/integration/home-flow.spec.ts",
+      "destination": "tests/integration/home-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0168",
+      "title": "home-flow: invalid_token ends the session",
+      "source": "tests/integration/home-flow.spec.ts",
+      "destination": "tests/integration/home-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0169",
+      "title": "home-flow: invalid_instance ends the session",
+      "source": "tests/integration/home-flow.spec.ts",
+      "destination": "tests/integration/home-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0170",
+      "title": "home-flow: needs_authorization ends the session",
+      "source": "tests/integration/home-flow.spec.ts",
+      "destination": "tests/integration/home-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0171",
+      "title": "home-flow: instance_restricted ends the session",
+      "source": "tests/integration/home-flow.spec.ts",
+      "destination": "tests/integration/home-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0172",
+      "title": "home-flow: instance_expired ends the session",
+      "source": "tests/integration/home-flow.spec.ts",
+      "destination": "tests/integration/home-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0173",
+      "title": "home-flow: retry_later preserves the session for retry",
+      "source": "tests/integration/home-flow.spec.ts",
+      "destination": "tests/integration/home-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0174",
+      "title": "home-flow: service_unavailable preserves the session for retry",
+      "source": "tests/integration/home-flow.spec.ts",
+      "destination": "tests/integration/home-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0175",
+      "title": "home-flow: invalid_upstream_response preserves the session for retry",
+      "source": "tests/integration/home-flow.spec.ts",
+      "destination": "tests/integration/home-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0176",
+      "title": "home-flow: thrown provider error preserves the session",
+      "source": "tests/integration/home-flow.spec.ts",
+      "destination": "tests/integration/home-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0177",
+      "title": "home-flow: end-session deletes only the app cookie and fixes redirect",
+      "source": "tests/integration/home-flow.spec.ts",
+      "destination": "tests/integration/home-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0178",
+      "title": "home-flow: rate limit preserves the existing session for manual retry",
+      "source": "tests/integration/home-flow.spec.ts",
+      "destination": "tests/integration/home-flow.test.ts"
+    },
+    {
+      "id": "B028-I-0179",
+      "title": "login-route: authorized responds with no-store and no credentials",
+      "source": "tests/integration/login-route.spec.ts",
+      "destination": "tests/integration/login-route.test.ts"
+    },
+    {
+      "id": "B028-I-0180",
+      "title": "login-route: malformed request case 0 is rejected before provider",
+      "source": "tests/integration/login-route.spec.ts",
+      "destination": "tests/integration/login-route.test.ts"
+    },
+    {
+      "id": "B028-I-0181",
+      "title": "login-route: malformed request case 1 is rejected before provider",
+      "source": "tests/integration/login-route.spec.ts",
+      "destination": "tests/integration/login-route.test.ts"
+    },
+    {
+      "id": "B028-I-0182",
+      "title": "login-route: malformed request case 2 is rejected before provider",
+      "source": "tests/integration/login-route.spec.ts",
+      "destination": "tests/integration/login-route.test.ts"
+    },
+    {
+      "id": "B028-I-0183",
+      "title": "login-route: provider rejection uses normalized status and body",
+      "source": "tests/integration/login-route.spec.ts",
+      "destination": "tests/integration/login-route.test.ts"
+    },
+    {
+      "id": "B028-I-0184",
+      "title": "memory query: messages reads retained cache without development console errors",
+      "source": "tests/integration/memory-query.spec.ts",
+      "destination": "tests/integration/memory-query.test.ts"
+    },
+    {
+      "id": "B028-I-0185",
+      "title": "memory query: session-chats reads retained cache without development console errors",
+      "source": "tests/integration/memory-query.spec.ts",
+      "destination": "tests/integration/memory-query.test.ts"
+    },
+    {
+      "id": "B028-I-0186",
+      "title": "memory query: message-status-facts reads retained cache without development console errors",
+      "source": "tests/integration/memory-query.spec.ts",
+      "destination": "tests/integration/memory-query.test.ts"
+    },
+    {
+      "id": "B028-I-0187",
+      "title": "memory query: message-status-issues reads retained cache without development console errors",
+      "source": "tests/integration/memory-query.spec.ts",
+      "destination": "tests/integration/memory-query.test.ts"
+    },
+    {
+      "id": "B028-I-0188",
+      "title": "facts: status before a message does not create a bubble and attaches to real history",
+      "source": "tests/integration/message-cache.spec.ts",
+      "destination": "tests/integration/message-cache.test.ts"
+    },
+    {
+      "id": "B028-I-0189",
+      "title": "facts: early failed and conflicting later status retain confirmation and publish issue",
+      "source": "tests/integration/message-cache.spec.ts",
+      "destination": "tests/integration/message-cache.test.ts"
+    },
+    {
+      "id": "B028-I-0190",
+      "title": "facts: early delivered and conflicting later status retain confirmation and publish issue",
+      "source": "tests/integration/message-cache.spec.ts",
+      "destination": "tests/integration/message-cache.test.ts"
+    },
+    {
+      "id": "B028-I-0191",
+      "title": "facts: early read and conflicting later status retain confirmation and publish issue",
+      "source": "tests/integration/message-cache.spec.ts",
+      "destination": "tests/integration/message-cache.test.ts"
+    },
+    {
+      "id": "B028-I-0192",
+      "title": "facts: duplicate does not extend TTL, stronger status renews it, expired facts never attach",
+      "source": "tests/integration/message-cache.spec.ts",
+      "destination": "tests/integration/message-cache.test.ts"
+    },
+    {
+      "id": "B028-I-0193",
+      "title": "facts: bounded early queue evicts oldest deterministically and retains GC until close",
+      "source": "tests/integration/message-cache.spec.ts",
+      "destination": "tests/integration/message-cache.test.ts"
+    },
+    {
+      "id": "B028-I-0194",
+      "title": "facts: provider fields replace accepted fields; late history preserves live content, identity and read",
+      "source": "tests/integration/message-cache.spec.ts",
+      "destination": "tests/integration/message-cache.test.ts"
+    },
+    {
+      "id": "B028-I-0195",
+      "title": "facts: validation is atomic for wrong-chat messages and partial statuses",
+      "source": "tests/integration/message-cache.spec.ts",
+      "destination": "tests/integration/message-cache.test.ts"
+    },
+    {
+      "id": "B028-I-0196",
+      "title": "facts: live provider content without timestamp survives later history after local acceptance",
+      "source": "tests/integration/message-cache.spec.ts",
+      "destination": "tests/integration/message-cache.test.ts"
+    },
+    {
+      "id": "B028-I-0197",
+      "title": "facts: accepted-message API preserves exact text, timestamp semantics and prior read",
+      "source": "tests/integration/message-cache.spec.ts",
+      "destination": "tests/integration/message-cache.test.ts"
+    },
+    {
+      "id": "B028-I-0198",
+      "title": "client sends original text once and validates accepted correlation",
+      "source": "tests/integration/message-send-controller.spec.ts",
+      "destination": "tests/integration/message-send-controller.test.ts"
+    },
+    {
+      "id": "B028-I-0199",
+      "title": "shared latch rejects a second send and late acceptance publishes to its captured chat",
+      "source": "tests/integration/message-send-controller.spec.ts",
+      "destination": "tests/integration/message-send-controller.test.ts"
+    },
+    {
+      "id": "B028-I-0200",
+      "title": "late send result follows captured owner lifetime: grace",
+      "source": "tests/integration/message-send-controller.spec.ts",
+      "destination": "tests/integration/message-send-controller.test.ts"
+    },
+    {
+      "id": "B028-I-0201",
+      "title": "late send result follows captured owner lifetime: revoked",
+      "source": "tests/integration/message-send-controller.spec.ts",
+      "destination": "tests/integration/message-send-controller.test.ts"
+    },
+    {
+      "id": "B028-I-0202",
+      "title": "late send result follows captured owner lifetime: closed",
+      "source": "tests/integration/message-send-controller.spec.ts",
+      "destination": "tests/integration/message-send-controller.test.ts"
+    },
+    {
+      "id": "B028-I-0203",
+      "title": "unknown outcome is never retried automatically and a rejected manual retry preserves uncertainty",
+      "source": "tests/integration/message-send-controller.spec.ts",
+      "destination": "tests/integration/message-send-controller.test.ts"
+    },
+    {
+      "id": "B028-I-0204",
+      "title": "status DTO delivered updates only the exact outgoing message and strips descriptions",
+      "source": "tests/integration/message-statuses.spec.ts",
+      "destination": "tests/integration/message-statuses.test.ts"
+    },
+    {
+      "id": "B028-I-0205",
+      "title": "status DTO read updates only the exact outgoing message and strips descriptions",
+      "source": "tests/integration/message-statuses.spec.ts",
+      "destination": "tests/integration/message-statuses.test.ts"
+    },
+    {
+      "id": "B028-I-0206",
+      "title": "status DTO failed updates only the exact outgoing message and strips descriptions",
+      "source": "tests/integration/message-statuses.spec.ts",
+      "destination": "tests/integration/message-statuses.test.ts"
+    },
+    {
+      "id": "B028-I-0207",
+      "title": "status DTO noAccount updates only the exact outgoing message and strips descriptions",
+      "source": "tests/integration/message-statuses.spec.ts",
+      "destination": "tests/integration/message-statuses.test.ts"
+    },
+    {
+      "id": "B028-I-0208",
+      "title": "uncorrelated failed publishes a connection issue without guessing a bubble",
+      "source": "tests/integration/message-statuses.spec.ts",
+      "destination": "tests/integration/message-statuses.test.ts"
+    },
+    {
+      "id": "B028-I-0209",
+      "title": "uncorrelated noAccount publishes a connection issue without guessing a bubble",
+      "source": "tests/integration/message-statuses.spec.ts",
+      "destination": "tests/integration/message-statuses.test.ts"
+    },
+    {
+      "id": "B028-I-0210",
+      "title": "unknown status is a valid ignored event; known success without identity and unsafe identifiers are rejected",
+      "source": "tests/integration/message-statuses.spec.ts",
+      "destination": "tests/integration/message-statuses.test.ts"
+    },
+    {
+      "id": "B028-I-0211",
+      "title": "incoming facts preserve unknown chat immediately and ACK does not wait for chat refresh",
+      "source": "tests/integration/notification-cache.spec.ts",
+      "destination": "tests/integration/notification-cache.test.ts"
+    },
+    {
+      "id": "B028-I-0212",
+      "title": "stale scope or owner deliveries never mutate facts",
+      "source": "tests/integration/notification-cache.spec.ts",
+      "destination": "tests/integration/notification-cache.test.ts"
+    },
+    {
+      "id": "B028-I-0213",
+      "title": "incoming normalization preserves original text and exposes only safe canonical fields",
+      "source": "tests/integration/notification-normalization.spec.ts",
+      "destination": "tests/unit/notification-normalization.test.ts"
+    },
+    {
+      "id": "B028-I-0214",
+      "title": "extended text and known media normalize without downloading attachments",
+      "source": "tests/integration/notification-normalization.spec.ts",
+      "destination": "tests/unit/notification-normalization.test.ts"
+    },
+    {
+      "id": "B028-I-0215",
+      "title": "groups and valid unrelated events are acknowledged as ignored",
+      "source": "tests/integration/notification-normalization.spec.ts",
+      "destination": "tests/unit/notification-normalization.test.ts"
+    },
+    {
+      "id": "B028-I-0216",
+      "title": "malformed event 0 is not delivered or deleted",
+      "source": "tests/integration/notification-normalization.spec.ts",
+      "destination": "tests/unit/notification-normalization.test.ts"
+    },
+    {
+      "id": "B028-I-0217",
+      "title": "malformed event 1 is not delivered or deleted",
+      "source": "tests/integration/notification-normalization.spec.ts",
+      "destination": "tests/unit/notification-normalization.test.ts"
+    },
+    {
+      "id": "B028-I-0218",
+      "title": "malformed event 2 is not delivered or deleted",
+      "source": "tests/integration/notification-normalization.spec.ts",
+      "destination": "tests/unit/notification-normalization.test.ts"
+    },
+    {
+      "id": "B028-I-0219",
+      "title": "malformed event 3 is not delivered or deleted",
+      "source": "tests/integration/notification-normalization.spec.ts",
+      "destination": "tests/unit/notification-normalization.test.ts"
+    },
+    {
+      "id": "B028-I-0220",
+      "title": "malformed event 4 is not delivered or deleted",
+      "source": "tests/integration/notification-normalization.spec.ts",
+      "destination": "tests/unit/notification-normalization.test.ts"
+    },
+    {
+      "id": "B028-I-0221",
+      "title": "malformed event 5 is not delivered or deleted",
+      "source": "tests/integration/notification-normalization.spec.ts",
+      "destination": "tests/unit/notification-normalization.test.ts"
+    },
+    {
+      "id": "B028-I-0222",
+      "title": "known success status needs exact identity while noAccount without id is a general issue",
+      "source": "tests/integration/notification-normalization.spec.ts",
+      "destination": "tests/unit/notification-normalization.test.ts"
+    },
+    {
+      "id": "B028-I-0223",
+      "title": "preflight validates HTTP API settings and reports outgoing availability",
+      "source": "tests/integration/notification-provider.spec.ts",
+      "destination": "tests/unit/notification-provider.test.ts"
+    },
+    {
+      "id": "B028-I-0224",
+      "title": "Receive uses GET with 5-second polling and empty response is empty queue",
+      "source": "tests/integration/notification-provider.spec.ts",
+      "destination": "tests/unit/notification-provider.test.ts"
+    },
+    {
+      "id": "B028-I-0225",
+      "title": "Delete uses DELETE with exact receipt and does not expose provider reason",
+      "source": "tests/integration/notification-provider.spec.ts",
+      "destination": "tests/unit/notification-provider.test.ts"
+    },
+    {
+      "id": "N051-I-0004",
+      "title": "notification request keeps Retry-After seconds and HTTP-date without retry",
+      "source": "tests/integration/notification-provider.spec.ts",
+      "destination": "tests/unit/notification-provider.test.ts"
+    },
+    {
+      "id": "N051-I-0005",
+      "title": "Delete false stays an unconfirmed deletion, while malformed provider JSON is safe",
+      "source": "tests/integration/notification-provider.spec.ts",
+      "destination": "tests/unit/notification-provider.test.ts"
+    },
+    {
+      "id": "B028-I-0226",
+      "title": "loop applies a delivery before ACK and never receives again while ACK is pending",
+      "source": "tests/integration/polling-connection.spec.ts",
+      "destination": "tests/integration/polling-connection.test.ts"
+    },
+    {
+      "id": "B028-I-0227",
+      "title": "duplicate deliveries ACK twice but count once",
+      "source": "tests/integration/polling-connection.spec.ts",
+      "destination": "tests/integration/polling-connection.test.ts"
+    },
+    {
+      "id": "B028-I-0228",
+      "title": "lost ACK retries the same proof without a concurrent receive",
+      "source": "tests/integration/polling-connection.spec.ts",
+      "destination": "tests/integration/polling-connection.test.ts"
+    },
+    {
+      "id": "B028-I-0229",
+      "title": "expired ACK obtains a fresh proof without duplicating incoming facts",
+      "source": "tests/integration/polling-connection.spec.ts",
+      "destination": "tests/integration/polling-connection.test.ts"
+    },
+    {
+      "id": "B028-I-0230",
+      "title": "transient receive failure blocks sending then publishes one recovery",
+      "source": "tests/integration/polling-connection.spec.ts",
+      "destination": "tests/integration/polling-connection.test.ts"
+    },
+    {
+      "id": "B028-I-0231",
+      "title": "busy browser lease blocks all network work and sending",
+      "source": "tests/integration/polling-connection.spec.ts",
+      "destination": "tests/integration/polling-connection.test.ts"
+    },
+    {
+      "id": "B028-I-0232",
+      "title": "unsupported browser locks do not silently create a second reader",
+      "source": "tests/integration/polling-connection.spec.ts",
+      "destination": "tests/integration/polling-connection.test.ts"
+    },
+    {
+      "id": "B028-I-0233",
+      "title": "close during asynchronous lease acquisition releases the late lease without requests",
+      "source": "tests/integration/polling-connection.spec.ts",
+      "destination": "tests/integration/polling-connection.test.ts"
+    },
+    {
+      "id": "B028-I-0234",
+      "title": "StrictMode retain release retain starts one lease and closes once",
+      "source": "tests/integration/polling-connection.spec.ts",
+      "destination": "tests/integration/polling-connection.test.ts"
+    },
+    {
+      "id": "B028-I-0235",
+      "title": "closing during receive discards the late result and sends no ACK",
+      "source": "tests/integration/polling-connection.spec.ts",
+      "destination": "tests/integration/polling-connection.test.ts"
+    },
+    {
+      "id": "N051-I-0006",
+      "title": "closing during ACK ignores the late confirmation and releases the lease",
+      "source": "tests/integration/polling-connection.spec.ts",
+      "destination": "tests/integration/polling-connection.test.ts"
+    },
+    {
+      "id": "B028-I-0236",
+      "title": "access failure closes Query and releases lock: session_required",
+      "source": "tests/integration/polling-connection.spec.ts",
+      "destination": "tests/integration/polling-connection.test.ts"
+    },
+    {
+      "id": "B028-I-0237",
+      "title": "access failure closes Query and releases lock: connection_changed",
+      "source": "tests/integration/polling-connection.spec.ts",
+      "destination": "tests/integration/polling-connection.test.ts"
+    },
+    {
+      "id": "B028-I-0238",
+      "title": "wrong scope or invalid delivery pauses without applying or acknowledging",
+      "source": "tests/integration/polling-connection.spec.ts",
+      "destination": "tests/integration/polling-connection.test.ts"
+    },
+    {
+      "id": "B028-I-0239",
+      "title": "manual retry while receive is pending cancels it and keeps one browser lease",
+      "source": "tests/integration/polling-connection.spec.ts",
+      "destination": "tests/integration/polling-connection.test.ts"
+    },
+    {
+      "id": "N051-I-0007",
+      "title": "disabled outgoing status webhooks warn without blocking message send",
+      "source": "tests/integration/polling-connection.spec.ts",
+      "destination": "tests/integration/polling-connection.test.ts"
+    },
+    {
+      "id": "B028-I-0242",
+      "title": "recipient-search: parser accepts either username spelling and safe phone",
+      "source": "tests/integration/recipient-search.spec.ts",
+      "destination": "tests/integration/recipient-search.test.ts"
+    },
+    {
+      "id": "B028-I-0243",
+      "title": "recipient-search: parser rejects malformed input before provider",
+      "source": "tests/integration/recipient-search.spec.ts",
+      "destination": "tests/integration/recipient-search.test.ts"
+    },
+    {
+      "id": "B028-I-0244",
+      "title": "recipient-search: configuration and session fail before body is read",
+      "source": "tests/integration/recipient-search.spec.ts",
+      "destination": "tests/integration/recipient-search.test.ts"
+    },
+    {
+      "id": "B028-I-0245",
+      "title": "recipient-search: invalid JSON, media type, size and value skip provider",
+      "source": "tests/integration/recipient-search.spec.ts",
+      "destination": "tests/integration/recipient-search.test.ts"
+    },
+    {
+      "id": "B028-I-0246",
+      "title": "recipient-search: found and absent results expose only safe fields",
+      "source": "tests/integration/recipient-search.spec.ts",
+      "destination": "tests/integration/recipient-search.test.ts"
+    },
+    {
+      "id": "B028-I-0247",
+      "title": "recipient-search: only confirmed invalid token clears current session",
+      "source": "tests/integration/recipient-search.spec.ts",
+      "destination": "tests/integration/recipient-search.test.ts"
+    },
+    {
+      "id": "B028-I-0248",
+      "title": "recipient-search: thrown lookup becomes safe retryable error",
+      "source": "tests/integration/recipient-search.spec.ts",
+      "destination": "tests/integration/recipient-search.test.ts"
+    },
+    {
+      "id": "B028-I-0249",
+      "title": "send validation keeps original text and opaque personal chat identifiers",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0250",
+      "title": "send validation rejects missing/extra fields, whitespace, groups, aliases and invalid UUIDs",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0251",
+      "title": "safe identifier permits opaque IDs but never raw or encoded credentials",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0252",
+      "title": "send body supports JSON parameters and escaped 4096 Unicode points",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0253",
+      "title": "send body counts actual UTF-8 bytes and stops oversized streams despite a false Content-Length",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0254",
+      "title": "send body accepts the exact byte boundary, rejects malformed JSON and invalid UTF-8",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0255",
+      "title": "send body rejects media type null",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0256",
+      "title": "send body rejects media type text/plain",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0257",
+      "title": "send body rejects media type application/jsonp",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0258",
+      "title": "provider dispatches one POST with original text, encoded credentials, deadline and no retry",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0259",
+      "title": "provider validation yields upstream_rejected without retry or raw payload",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0260",
+      "title": "provider expired yields instance_expired without retry or raw payload",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0261",
+      "title": "provider unknown 400 yields outcome_unknown without retry or raw payload",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0262",
+      "title": "provider invalid token yields invalid_token without retry or raw payload",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0263",
+      "title": "provider invalid instance yields invalid_instance without retry or raw payload",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0264",
+      "title": "provider rate limit yields rate_limited without retry or raw payload",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0265",
+      "title": "provider server failure yields outcome_unknown without retry or raw payload",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0266",
+      "title": "provider redirect yields outcome_unknown without retry or raw payload",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0267",
+      "title": "provider missing ID yields outcome_unknown without retry or raw payload",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0268",
+      "title": "provider numeric ID yields outcome_unknown without retry or raw payload",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0269",
+      "title": "provider malformed accepted yields outcome_unknown without retry or raw payload",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0270",
+      "title": "provider rejects raw and encoded secrets in accepted IDs without changing user-authored text",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0271",
+      "title": "provider network failure is unknown and never retried",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0272",
+      "title": "provider uses a 10 second deadline, classifies timeout as unknown, and never retries",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0273",
+      "title": "handler binds accepted DTO to original scope, chat and attempt without fake timestamp/status",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0274",
+      "title": "handler rejects Origin null before reading body, dispatching or clearing session",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0275",
+      "title": "handler rejects Origin \"null\" before reading body, dispatching or clearing session",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0276",
+      "title": "handler rejects Origin \"invalid\" before reading body, dispatching or clearing session",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0277",
+      "title": "handler rejects Origin \"https://foreign.example.test\" before reading body, dispatching or clearing session",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0278",
+      "title": "handler rejects Origin \"https://app.example.test/path\" before reading body, dispatching or clearing session",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0279",
+      "title": "handler rejects Origin \"https://app.example.test?q=1\" before reading body, dispatching or clearing session",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0280",
+      "title": "handler rejects Origin \"https://app.example.test#fragment\" before reading body, dispatching or clearing session",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0281",
+      "title": "handler rejects Origin \"ftp://app.example.test\" before reading body, dispatching or clearing session",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0282",
+      "title": "handler rejects Origin \"https://user:password@app.example.test\" before reading body, dispatching or clearing session",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0283",
+      "title": "handler uses actual loopback Host when Next normalizes the request URL",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0284",
+      "title": "handler rejects malformed Host app.example.test/path",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0285",
+      "title": "handler rejects malformed Host user@app.example.test",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0286",
+      "title": "handler rejects malformed Host app.example.test#fragment",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0287",
+      "title": "handler rejects malformed Host app.example.test?query",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0288",
+      "title": "handler rejects malformed Host app.example.test\\path",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0289",
+      "title": "handler ignores arbitrary forwarded headers for Origin",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0290",
+      "title": "handler unconfigured prevents provider effects",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0291",
+      "title": "handler no session prevents provider effects",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0292",
+      "title": "handler missing scope prevents provider effects",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0293",
+      "title": "handler invalid scope prevents provider effects",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0294",
+      "title": "handler foreign scope prevents provider effects",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0295",
+      "title": "handler invalid input prevents provider effects",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0296",
+      "title": "handler secret target prevents provider effects",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0297",
+      "title": "handler body limit prevents provider effects",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0298",
+      "title": "handler rejects a cancelled request before dispatch",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0299",
+      "title": "disconnect does not cancel a dispatched send or move the late result to another chat",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0300",
+      "title": "handler maps invalid_token without retry",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0301",
+      "title": "handler maps invalid_instance without retry",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0302",
+      "title": "handler maps instance_expired without retry",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0303",
+      "title": "handler maps needs_authorization without retry",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0304",
+      "title": "handler maps instance_restricted without retry",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0305",
+      "title": "handler maps upstream_rejected without retry",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0306",
+      "title": "handler maps rate_limited without retry",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0307",
+      "title": "handler maps outcome_unknown without retry",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0308",
+      "title": "throwing dispatched provider remains unknown and hides diagnostic data",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0309",
+      "title": "cookie cleanup failure after a confirmed refusal retains not_sent certainty",
+      "source": "tests/integration/send-message.spec.ts",
+      "destination": "tests/integration/send-message.test.ts"
+    },
+    {
+      "id": "B028-I-0310",
+      "title": "session chats: successful provider confirmation consumes pending fact while retaining independent label",
+      "source": "tests/integration/session-chat-facts.spec.ts",
+      "destination": "tests/integration/session-chat-facts.test.ts"
+    },
+    {
+      "id": "B028-I-0311",
+      "title": "session chats: empty provider reply does not consume pending chat and close clears both caches",
+      "source": "tests/integration/session-chat-facts.spec.ts",
+      "destination": "tests/integration/session-chat-facts.test.ts"
+    },
+    {
+      "id": "B028-I-0312",
+      "title": "session chats: accepted/incoming share one fact, independent label and provider priority with safe keys",
+      "source": "tests/integration/session-chat-facts.spec.ts",
+      "destination": "tests/integration/session-chat-facts.test.ts"
+    },
+    {
+      "id": "B028-I-0313",
+      "title": "session: cookie is encrypted, HttpOnly and scoped for production",
+      "source": "tests/integration/session.spec.ts",
+      "destination": "tests/integration/session.test.ts"
+    },
+    {
+      "id": "B028-I-0314",
+      "title": "session: local HTTP cookie is not Secure while retaining other protection",
+      "source": "tests/integration/session.spec.ts",
+      "destination": "tests/integration/session.test.ts"
+    },
+    {
+      "id": "B028-I-0315",
+      "title": "session: absolute 24-hour expiry is not extended by reading",
+      "source": "tests/integration/session.spec.ts",
+      "destination": "tests/integration/session.test.ts"
+    },
+    {
+      "id": "B028-I-0316",
+      "title": "session: missing and malformed payload do not grant access",
+      "source": "tests/integration/session.spec.ts",
+      "destination": "tests/integration/session.test.ts"
+    },
+    {
+      "id": "B028-I-0317",
+      "title": "session: modified cookie cannot be read",
+      "source": "tests/integration/session.spec.ts",
+      "destination": "tests/integration/session.test.ts"
+    },
+    {
+      "id": "B028-I-0318",
+      "title": "session: missing or short secret is unavailable",
+      "source": "tests/integration/session.spec.ts",
+      "destination": "tests/integration/session.test.ts"
+    },
+    {
+      "id": "N051-I-0008",
+      "title": "send preserves Origin refusal and not_sent before provider dispatch",
+      "source": "tests/integration/shared-http-contract.spec.ts",
+      "destination": "tests/integration/shared-http-contract.test.ts"
+    },
+    {
+      "id": "N051-I-0009",
+      "title": "history preserves scope-before-Origin refusal and no provider call",
+      "source": "tests/integration/shared-http-contract.spec.ts",
+      "destination": "tests/integration/shared-http-contract.test.ts"
+    },
+    {
+      "id": "N051-I-0010",
+      "title": "history keeps invalid scope ahead of foreign Origin",
+      "source": "tests/integration/shared-http-contract.spec.ts",
+      "destination": "tests/integration/shared-http-contract.test.ts"
+    },
+    {
+      "id": "N051-I-0011",
+      "title": "history still accepts a large JSON body without Content-Type or byte limit",
+      "source": "tests/integration/shared-http-contract.spec.ts",
+      "destination": "tests/integration/shared-http-contract.test.ts"
+    },
+    {
+      "id": "N051-I-0012",
+      "title": "notifications preserve Origin refusal before session and body",
+      "source": "tests/integration/shared-http-contract.spec.ts",
+      "destination": "tests/integration/shared-http-contract.test.ts"
+    },
+    {
+      "id": "N051-I-0013",
+      "title": "chats preserves invalid scope response before provider",
+      "source": "tests/integration/shared-http-contract.spec.ts",
+      "destination": "tests/integration/shared-http-contract.test.ts"
+    },
+    {
+      "id": "N051-I-0014",
+      "title": "recipient search preserves media-type refusal before provider call",
+      "source": "tests/integration/shared-http-contract.spec.ts",
+      "destination": "tests/integration/shared-http-contract.test.ts"
+    },
+    {
+      "id": "N051-I-0015",
+      "title": "login preserves media-type refusal before provider or cookie write",
+      "source": "tests/integration/shared-http-contract.spec.ts",
+      "destination": "tests/integration/shared-http-contract.test.ts"
+    },
+    {
+      "id": "B028-I-0319",
+      "title": "unread: incoming notification records one unique unread message before ACK",
+      "source": "tests/integration/unread-notifications.spec.ts",
+      "destination": "tests/integration/unread-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0320",
+      "title": "unread: unique IDs increment, replays before and after reading do not",
+      "source": "tests/integration/unread-notifications.spec.ts",
+      "destination": "tests/integration/unread-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0321",
+      "title": "unread: chat identity isolates equal IDs and reading clears only one chat",
+      "source": "tests/integration/unread-notifications.spec.ts",
+      "destination": "tests/integration/unread-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0322",
+      "title": "unread: visible conversation consumes incoming, hidden conversation counts and return clears",
+      "source": "tests/integration/unread-notifications.spec.ts",
+      "destination": "tests/integration/unread-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0323",
+      "title": "unread: history and outgoing facts do not count or erase incoming marks",
+      "source": "tests/integration/unread-notifications.spec.ts",
+      "destination": "tests/integration/unread-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0324",
+      "title": "unread: unsupported incoming counts once, status and ignored events do not count",
+      "source": "tests/integration/unread-notifications.spec.ts",
+      "destination": "tests/integration/unread-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0325",
+      "title": "unread: foreign owner, scope and invalid events cannot mutate marks",
+      "source": "tests/integration/unread-notifications.spec.ts",
+      "destination": "tests/integration/unread-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0326",
+      "title": "unread: memory defaults never refetch and close prevents resurrection or cross-scope reuse",
+      "source": "tests/integration/unread-notifications.spec.ts",
+      "destination": "tests/integration/unread-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0327",
+      "title": "receive returns a notification without registering a process-local owner",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0328",
+      "title": "receive on A and ACK on a fresh B delete only the signed receipt",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0329",
+      "title": "empty receive returns bounded JSON and never ACKs/deletes",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0330",
+      "title": "settings keeps disabled outgoing status distinguishable without an owner registry",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0331",
+      "title": "signed ACK rejects tamper, different secret, changed scope, malformed and exact expiry",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0332",
+      "title": "ACK expiry never exceeds cookie expiry",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0333",
+      "title": "forged, expired and foreign ACK never delete",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0334",
+      "title": "lost successful delete reply recovers without deleting the next head: empty=true",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0335",
+      "title": "lost successful delete reply recovers without deleting the next head: empty=false",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0336",
+      "title": "delete false with the same head requests retry instead of claiming success",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0337",
+      "title": "damaged event is returned as failure and stays in queue",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0338",
+      "title": "Origin guard denies null",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0339",
+      "title": "Origin guard denies https://foreign.example.test",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0340",
+      "title": "Origin guard denies https://polling.example.test/path",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0341",
+      "title": "Origin guard denies https://polling.example.test#fragment",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0342",
+      "title": "scope guard denies null",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0343",
+      "title": "scope guard denies invalid",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0344",
+      "title": "scope guard denies bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0345",
+      "title": "receive body guard denies {}",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0346",
+      "title": "receive body guard denies {\"ownerEpoch\":null}",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0347",
+      "title": "receive body guard denies {\"ownerEpoch\":\"polling-browser-epoch\",\"extra\":true}",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0348",
+      "title": "receive body guard denies []",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0349",
+      "title": "receive body guard denies null",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0350",
+      "title": "wrong method, content type, oversized actual bytes and invalid JSON do not reach provider",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0351",
+      "title": "missing session/configuration never reads; missing session clears cookie",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0352",
+      "title": "upstream access failure retires cookie; transient Retry-After is preserved",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    },
+    {
+      "id": "B028-I-0353",
+      "title": "aborted receive never issues a proof or deletes",
+      "source": "tests/integration/vercel-notifications.spec.ts",
+      "destination": "tests/integration/vercel-notifications.test.ts"
+    }
+  ]
+}

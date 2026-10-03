@@ -28,6 +28,16 @@ export default defineConfig({
       },
       {
         test: {
+          name: 'integration',
+          environment: 'node',
+          include: ['tests/integration/**/*.test.ts'],
+          setupFiles: ['tests/setup/node.ts'],
+          testTimeout: 30_000,
+          expect: { poll: { timeout: 5_000 } },
+        },
+      },
+      {
+        test: {
           name: 'dom',
           environment: 'jsdom',
           include: ['tests/component/**/*.test.{ts,tsx}'],

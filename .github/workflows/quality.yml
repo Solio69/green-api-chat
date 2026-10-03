@@ -60,9 +60,6 @@ jobs:
       - name: Run Vitest
         run: npm test 2>&1 | tee test-results/quality/vitest.log
 
-      - name: Run integration tests
-        run: npm run test:integration -- --output=test-results/integration 2>&1 | tee test-results/quality/integration.log
-
       - name: Upload quality logs
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
