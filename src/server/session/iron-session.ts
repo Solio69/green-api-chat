@@ -4,8 +4,8 @@ import {
   type IronSession,
   type SessionOptions,
 } from 'iron-session'
+import { AUTH_CONFIG } from '@/features/auth/server'
 import type { InstanceCredentials } from '@/lib/green-api/get-state'
-import { AUTH_CONFIG } from '@/features/auth/server/constants'
 
 const {
   COOKIE_NAME,

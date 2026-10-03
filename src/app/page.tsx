@@ -1,14 +1,8 @@
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { resolveHome } from '@/features/auth/application'
 import { HOME_RESULT_KIND } from '@/features/auth/model'
-import { getQueryScope, IS_PRODUCTION } from '@/features/auth/server'
-import {
-  hasSessionPassword,
-  openSession,
-  readCredentials,
-} from '@/lib/auth/session'
 import { getAccountSettings } from '@/lib/green-api/get-account-settings'
+import { readPageSession } from '@/server/session'
 import { ROUTES } from '@/lib/routes/constants'
 import { HOME_COPY } from './constants'
 import { AccountHeader } from '@/components/AccountHeader'
@@ -30,13 +24,8 @@ const {
 } = HOME_RESULT_KIND
 const { RETRY, RETRY_LINK, LOGOUT } = HOME_COPY
 const HomePage = async () => {
-  const password = process.env.SESSION_PASSWORD
-  const session = await openSession({
-    store: await cookies(),
-    password,
-    production: IS_PRODUCTION,
-  })
-  const credentials = session && readCredentials({ session })
+  const access = await readPageSession()
+  const credentials = access.context?.credentials ?? null
   const result = await resolveHome({ credentials, getAccountSettings })
   if (result.kind === REQUIRE_LOGIN) redirect(LOGIN)
   if (result.kind === END_CURRENT_SESSION) redirect(END_SESSION)
@@ -52,9 +41,8 @@ const HomePage = async () => {
         </div>
       </main>
     )
-  if (!session) redirect(LOGIN)
-  if (!hasSessionPassword(password)) redirect(LOGIN)
-  const connectionScope = getQueryScope({ session, password })
+  if (access.kind !== 'authorized') redirect(LOGIN)
+  const connectionScope = access.context.connectionScope
   return (
     <main className={styles.homePage}>
       <QueryProvider key={connectionScope} connectionScope={connectionScope}>

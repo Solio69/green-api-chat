@@ -1,10 +1,6 @@
 import { expect, test } from '@playwright/test'
 import type { CookieStore } from 'iron-session'
-import {
-  openSession,
-  readCredentials,
-  saveCredentials,
-} from '@/lib/auth/session'
+import { openSession, readCredentials, saveCredentials } from '@/server/session'
 import {
   CREDENTIALS,
   SESSION_CONTRACT,

@@ -1,5 +1,4 @@
 import { createHmac } from 'node:crypto'
-import type { SessionPayload } from '@/lib/auth/session'
 import { CHAT_QUERY_CONFIG } from '@/lib/chats/constants'
 
 const { SCOPE_DOMAIN, SCOPE_ALGORITHM, SCOPE_ENCODING } = CHAT_QUERY_CONFIG
@@ -8,7 +7,11 @@ export const getQueryScope = ({
   session,
   password,
 }: {
-  session: Partial<SessionPayload>
+  session: {
+    idInstance?: string
+    apiTokenInstance?: string
+    expiresAt?: number
+  }
   password: string
 }): string =>
   createHmac(SCOPE_ALGORITHM, password)

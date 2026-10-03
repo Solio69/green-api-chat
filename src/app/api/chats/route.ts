@@ -1,36 +1,17 @@
-import { cookies } from 'next/headers'
-import {
-  AUTH_CONFIG,
-  getQueryScope,
-  IS_PRODUCTION,
-} from '@/features/auth/server'
-import {
-  hasSessionPassword,
-  openSession,
-  readCredentials,
-} from '@/lib/auth/session'
 import { handleChatsRequest } from '@/lib/chats/handle-chats-request'
 import { getChats } from '@/lib/green-api/get-chats'
+import { readRouteSession } from '@/server/session'
 
-const { COOKIE_NAME } = AUTH_CONFIG
 export const GET = async (request: Request): Promise<Response> => {
-  const store = await cookies()
-  const password = process.env.SESSION_PASSWORD
-  const configured = hasSessionPassword(password)
-  const session = await openSession({
-    store,
-    password,
-    production: IS_PRODUCTION,
-  })
-  const credentials = session && readCredentials({ session })
-  const canBind = configured && session !== null && credentials !== null
-  const connectionScope = canBind ? getQueryScope({ session, password }) : null
+  const { configured, context, clearSession } = await readRouteSession()
   return handleChatsRequest({
     request,
-    context: { configured, credentials, connectionScope },
-    lookup: getChats,
-    clearSession: async () => {
-      store.delete(COOKIE_NAME)
+    context: {
+      configured,
+      credentials: context?.credentials ?? null,
+      connectionScope: context?.connectionScope ?? null,
     },
+    lookup: getChats,
+    clearSession,
   })
 }

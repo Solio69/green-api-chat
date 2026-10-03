@@ -4,9 +4,9 @@ import {
   handleLoginRequest,
   IS_PRODUCTION,
 } from '@/features/auth/server'
-import { openSession, saveCredentials } from '@/lib/auth/session'
 import { getStateInstance } from '@/lib/green-api/get-state'
 import type { InstanceCredentials } from '@/lib/green-api/get-state'
+import { openSession, saveCredentials } from '@/server/session'
 
 const { SESSION_UNAVAILABLE } = AUTH_ERROR_MESSAGE
 
