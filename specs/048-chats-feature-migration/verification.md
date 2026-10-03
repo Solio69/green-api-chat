@@ -15,4 +15,4 @@
 
 ## CI
 
-Кодовый SHA и итоговый документационный SHA проверяются после push.
+Кодовый SHA `5e301258ea4ab6a85ff974481a743e0ee6164dd7` запушен в `refactor`; [Quality run 37150666313](https://github.com/Solio69/green-api-chat/actions/runs/37150666313): `quality=success`, `browser=success`, артефакты `quality-1` и `browser-1` сохранены. Документационный SHA и его обе CI jobs фиксируются после отдельного push.

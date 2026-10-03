@@ -8,7 +8,7 @@ Input: [spec](spec.md), [plan](plan.md), [research](research.md), [model](data-m
 - [x] T004 Разделить `lib/chats` на model/application/server/ui с отдельными types/constants и public entries; перенести компоненты в chats/ui и общий badge в shared/ui; обновить весь граф runtime/test imports и SCSS, две строки карты 035 (`chats-query-options` и физический перенос `session-chat-facts`).
 - [x] T005 Green/Refactor: сверить API, query сроки, overlay, retry, selection/unread и client/server graph; при необходимости поведенческого изменения отдельно провести Red → Green → Refactor.
 - [x] T006 Выполнить typecheck/lint/styles/format, Vitest/integration/Query/E2E, post-analyze и diff/secret review; оформить verification.md.
-- [ ] T007 Предкоммитное review, commit/push `refactor` и обе CI jobs кодового SHA; обновить roadmap/spec/tasks/verification и подтвердить CI документационного SHA.
+- [x] T007 Предкоммитное review, commit/push `refactor` и обе CI jobs кодового SHA; обновить roadmap/spec/tasks/verification и подтвердить CI документационного SHA.
 
 035 + 043 + 044 → T001 → T002 → T003 → T004 → T005 → T006 → T007. Перенос и разделение типов сохраняют поведение, поэтому искусственный Red не нужен; любая новая бизнес-логика требует поведенческого Red до кода.
 
