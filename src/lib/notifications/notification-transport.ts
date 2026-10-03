@@ -41,9 +41,11 @@ export const createNotificationTransport =
   ({
     session,
     fetcher = fetch,
+    now = Date.now,
   }: {
     session: QuerySession
     fetcher?: typeof fetch
+    now?: () => number
   }) =>
   async ({
     url,
@@ -86,8 +88,7 @@ export const createNotificationTransport =
       const date = header === null ? NaN : Date.parse(header)
       let retryAfterMs = 0
       if (Number.isFinite(seconds)) retryAfterMs = Math.max(0, seconds * 1_000)
-      else if (Number.isFinite(date))
-        retryAfterMs = Math.max(0, date - Date.now())
+      else if (Number.isFinite(date)) retryAfterMs = Math.max(0, date - now())
       throw new NotificationTransportError({
         code: typeof value.code === 'string' ? value.code : INVALID_UPSTREAM,
         status: response.status,

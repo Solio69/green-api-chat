@@ -313,6 +313,23 @@ test('closing during receive discards the late result and sends no ACK', async (
     deriveUnreadCounts(session.client.getQueryData(unreadKey(scopeA))).total,
   ).toBe(0)
 })
+test('closing during ACK ignores the late confirmation and releases the lease', async () => {
+  const ack = Promise.withResolvers<Response>()
+  const { connection, effects } = setup({
+    handler: async ({ url, body }) => {
+      if (url === SETTINGS) return success({ outgoingEnabled: true })
+      if (url === RECEIVE) return delivery({ body })
+      return ack.promise
+    },
+  })
+  connection.start()
+  await expect.poll(() => effects.calls.includes(ACK)).toBe(true)
+  connection.close()
+  ack.resolve(success({ deliveryId: TOKEN }))
+  await expect.poll(() => effects.releases).toBe(1)
+  expect(connection.getSnapshot().status).toBe(CLOSED)
+  expect(effects.calls.filter((url) => url === RECEIVE)).toHaveLength(1)
+})
 for (const failure of [
   { status: 401, code: SESSION_REQUIRED },
   { status: 409, code: CONNECTION_CHANGED },

@@ -9,45 +9,50 @@ import {
 import type { ConnectionEvent, ConnectionState } from './connection-model'
 import {
   createNotificationTransport,
-  NotificationTransportError,
   waitForNotificationRetry,
 } from './notification-transport'
 import { createNotificationChatRefresh } from './refresh-notification-chats'
+import { runNotificationCycle } from './run-notification-cycle'
+import type {
+  NotificationCyclePorts,
+  NotificationPost,
+} from './run-notification-cycle'
 import type { OwnerContext } from './types'
-import { isNotificationDelivery } from './validate-delivery'
 import type { QuerySession } from '@/lib/query/create-query-session'
 import { SessionQueryError } from '@/lib/query/session-query-error'
 import { API_ERROR_CODE } from '@/lib/api/constants'
 import { HTTP_HEADERS, HTTP_STATUS } from '@/lib/http/constants'
 import {
   NOTIFICATION_CODE,
-  NOTIFICATION_CONFIG,
-  NOTIFICATION_ROUTES,
   NOTIFICATION_STATE,
   POLLING_CONFIG,
 } from './constants'
 
-const { INVALID_UPSTREAM, OWNERSHIP_BUSY, NOT_CONFIGURED, DELIVERY_CHANGED } =
-  NOTIFICATION_CODE
+const { OWNERSHIP_BUSY, NOT_CONFIGURED, INVALID_UPSTREAM } = NOTIFICATION_CODE
 const { CONNECTION_SCOPE } = HTTP_HEADERS
 const { SESSION_REQUIRED, CONNECTION_CHANGED } = API_ERROR_CODE
 const { UNAUTHORIZED, CONFLICT } = HTTP_STATUS
 const { CLOSED } = NOTIFICATION_STATE
-const { SETTINGS, RECEIVE, ACK } = NOTIFICATION_ROUTES
-const { BACKOFF_MS, BACKOFF_JITTER_MIN, BACKOFF_JITTER_RANGE } =
-  NOTIFICATION_CONFIG
-const { REQUEST_SPACING_MS, LOCK_UNAVAILABLE } = POLLING_CONFIG
+const { LOCK_UNAVAILABLE } = POLLING_CONFIG
+
 export type { ConnectionState } from './connection-model'
-const invalidFrame = () =>
-  new SessionQueryError({ code: INVALID_UPSTREAM, status: null })
+
 export const createNotificationConnection = ({
   session,
   fetcher = fetch,
   acquireLease = acquireBrowserTabLease,
+  transport,
+  wait = waitForNotificationRetry,
+  random = Math.random,
+  now = Date.now,
 }: {
   session: QuerySession
   fetcher?: typeof fetch
   acquireLease?: typeof acquireBrowserTabLease
+  transport?: NotificationPost
+  wait?: NotificationCyclePorts['wait']
+  random?: NotificationCyclePorts['random']
+  now?: () => number
 }) => {
   let model = initialConnectionModel
   let state: ConnectionState = toConnectionState(model)
@@ -59,8 +64,9 @@ export const createNotificationConnection = ({
   let disposal: ReturnType<typeof setTimeout> | undefined
   const listeners = new Set<() => void>()
   const recoveryListeners = new Set<() => void>()
-  const refresh = createNotificationChatRefresh(session)
-  const post = createNotificationTransport({ session, fetcher })
+  const refresh = createNotificationChatRefresh({ session, now })
+  const post =
+    transport ?? createNotificationTransport({ session, fetcher, now })
   const applyTransition = (event: ConnectionEvent) => {
     const result = transitionConnection(model, event)
     if (result.model === model) return
@@ -78,16 +84,13 @@ export const createNotificationConnection = ({
       recoveryListeners.forEach((listener) => listener())
   }
   const isClosed = () => model.status === CLOSED && model.terminal
-  const currentOwner = (context: OwnerContext) => {
-    const current =
-      !isClosed() &&
-      session.isActive() &&
-      owner !== null &&
-      releaseLease !== null &&
-      context.connectionScope === owner.connectionScope &&
-      context.ownerEpoch === owner.ownerEpoch
-    return current
-  }
+  const currentOwner = (context: OwnerContext) =>
+    !isClosed() &&
+    session.isActive() &&
+    owner !== null &&
+    releaseLease !== null &&
+    context.connectionScope === owner.connectionScope &&
+    context.ownerEpoch === owner.ownerEpoch
   const captureOwnerContext = () =>
     owner && currentOwner(owner) ? { ...owner } : null
   const close = () => {
@@ -138,8 +141,6 @@ export const createNotificationConnection = ({
       session.isActive() &&
       model.generation === attemptGeneration &&
       !signal.aborted
-    let settingsReady = false
-    let failures = 0
     try {
       if (!releaseLease) {
         const lease = await acquireLease({
@@ -163,98 +164,27 @@ export const createNotificationConnection = ({
           ownerEpoch: crypto.randomUUID(),
         }
       }
-      while (active()) {
-        try {
-          if (!settingsReady) {
-            const settings = await post({ url: SETTINGS, body: {}, signal })
-            if (!active()) return
-            if (typeof settings.outgoingEnabled !== 'boolean')
-              throw invalidFrame()
-            settingsReady = true
-            applyTransition({
-              type: 'settings_ready',
-              generation: attemptGeneration,
-              outgoingEnabled: settings.outgoingEnabled,
-            })
-          }
-          if (pendingAckToken(model) === null) {
-            if (!owner) return
-            const value = await post({
-              url: RECEIVE,
-              body: { ownerEpoch: owner.ownerEpoch },
-              signal,
-            })
-            if (!active()) return
-            if (value.delivery !== null) {
-              if (!isNotificationDelivery(value.delivery)) throw invalidFrame()
-              const validProof =
-                typeof value.ackToken === 'string' &&
-                value.ackToken === value.delivery.deliveryId
-              if (!validProof) throw invalidFrame()
-              const applied = applyNotification({
-                session,
-                delivery: value.delivery,
-                ownerEpoch: owner.ownerEpoch,
-                refreshChats: refresh.request,
-              })
-              if (!applied) throw invalidFrame()
-              applyTransition({
-                type: 'delivery_applied',
-                generation: attemptGeneration,
-                token: value.delivery.deliveryId,
-              })
-            } else if (value.ackToken !== null) throw invalidFrame()
-          }
-          const pendingAck = pendingAckToken(model)
-          if (pendingAck !== null) {
-            const response = await post({
-              url: ACK,
-              body: { ackToken: pendingAck },
-              signal,
-            })
-            if (!active()) return
-            if (response.deliveryId !== pendingAck) throw invalidFrame()
-            applyTransition({
-              type: 'ack_confirmed',
-              generation: attemptGeneration,
-              token: pendingAck,
-            })
-          }
-          failures = 0
-          applyTransition({
-            type: 'cycle_succeeded',
-            generation: attemptGeneration,
-          })
-          await waitForNotificationRetry({ delay: REQUEST_SPACING_MS, signal })
-        } catch (error) {
-          if (!active()) return
-          const expiredAck =
-            error instanceof SessionQueryError &&
-            error.code === DELIVERY_CHANGED &&
-            pendingAckToken(model) !== null
-          if (expiredAck) {
-            applyTransition({
-              type: 'ack_expired',
-              generation: attemptGeneration,
-            })
-            continue
-          }
-          if (await handleFailure(error)) return
-          applyTransition({
-            type: 'temporary_failure',
-            generation: attemptGeneration,
-          })
-          const retryAfter =
-            error instanceof NotificationTransportError ? error.retryAfterMs : 0
-          const delay =
-            BACKOFF_MS[Math.min(failures++, BACKOFF_MS.length - 1)] *
-            (BACKOFF_JITTER_MIN + Math.random() * BACKOFF_JITTER_RANGE)
-          await waitForNotificationRetry({
-            delay: Math.max(delay, retryAfter),
-            signal,
-          })
-        }
-      }
+      const runtimeOwner = owner
+      if (!runtimeOwner) return
+      await runNotificationCycle({
+        generation: attemptGeneration,
+        owner: runtimeOwner,
+        signal,
+        active,
+        post,
+        wait,
+        random,
+        pendingAck: () => pendingAckToken(model),
+        transition: applyTransition,
+        applyDelivery: (delivery) =>
+          applyNotification({
+            session,
+            delivery,
+            ownerEpoch: runtimeOwner.ownerEpoch,
+            refreshChats: refresh.request,
+          }),
+        handleFailure,
+      })
     } catch (error) {
       if (!active()) return
       if (await handleFailure(error)) return

@@ -3,7 +3,13 @@ import { NOTIFICATION_CONFIG } from './constants'
 
 const { CHAT_REFRESH_MS } = NOTIFICATION_CONFIG
 
-export const createNotificationChatRefresh = (session: QuerySession) => {
+export const createNotificationChatRefresh = ({
+  session,
+  now = Date.now,
+}: {
+  session: QuerySession
+  now?: () => number
+}) => {
   let timer: ReturnType<typeof setTimeout> | undefined
   let running = false
   let dirty = false
@@ -15,7 +21,7 @@ export const createNotificationChatRefresh = (session: QuerySession) => {
     if (running) return
     dirty = false
     running = true
-    lastStarted = Date.now()
+    lastStarted = now()
     try {
       await session.client.fetchQuery({ ...session.options(), staleTime: 0 })
     } catch {
@@ -33,7 +39,7 @@ export const createNotificationChatRefresh = (session: QuerySession) => {
         timer = undefined
         void run()
       },
-      Math.max(0, CHAT_REFRESH_MS - (Date.now() - lastStarted)),
+      Math.max(0, CHAT_REFRESH_MS - (now() - lastStarted)),
     )
   }
   return {
