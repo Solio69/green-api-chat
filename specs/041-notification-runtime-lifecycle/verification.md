@@ -1,6 +1,6 @@
 # Проверка 041: сетевой цикл и жизненный цикл уведомлений
 
-Дата: 2026-10-03. Локальная реализация и регрессия завершены; GitHub CI на SHA кода пока NotRun.
+Дата: 2026-10-03. Локальная реализация и регрессия завершены; GitHub CI Passed на SHA кода `5bc96a2a9d04a92bf76607d7ce4b165043215eb3`.
 
 | Проверка | Результат |
 | --- | --- |
@@ -20,8 +20,8 @@
 | Граф Client Components → server runtime | Passed: 28 client roots, 228 source TS/TSX, запрещённых runtime-путей 0 |
 | Повторный read-only анализ | Passed: 906 путей, SHA-256 до/после `301f7e91c0b6f18f9f497484205f07311d9d44250b17f2cad5c760ccf0c3085e`, unchanged; findings 0 |
 | `git diff --check` | Passed |
-| GitHub Actions quality/browser | NotRun: ожидается push SHA кода |
+| GitHub Actions quality/browser | Passed: обе jobs [run 37137039165](https://github.com/Solio69/green-api-chat/actions/runs/37137039165), artifacts `quality-1` и `browser-1` |
 
 Сетевой runtime выполняет один последовательный settings/receive/ACK-цикл и сохраняет proof до подтверждения или expiry. Контроллер владеет Web Lock, поколением, abort, подписками и моделью 040; поздние settings/receive/ACK не применяются после закрытия. HTTP-date Retry-After, jitter/backoff и throttled refresh имеют управляемые зависимости для теста с прежними production defaults. Серверный protocol, UI и данные переписки не менялись. Тесты используют фиктивные scope/proof.
 
-Playwright Query, integration и E2E запускались последовательно из-за пересекающихся каталогов артефактов; исправление этой организации остаётся в задаче 050. Итоговый SHA и CI фиксируются после commit/push.
+Playwright Query, integration и E2E запускались последовательно из-за пересекающихся каталогов артефактов; исправление этой организации остаётся в задаче 050. Итоговый документационный SHA проверяется отдельно после push.
