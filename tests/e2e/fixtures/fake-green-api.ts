@@ -1,6 +1,7 @@
 import accountScenarios from './account-scenarios.json' with { type: 'json' }
 import chatsScenarios from './chats-scenarios.json' with { type: 'json' }
 import historyScenarios from './history-scenarios.json' with { type: 'json' }
+import FAKE_RESET from './reset-contract.json' with { type: 'json' }
 import scenarios from './scenarios.json' with { type: 'json' }
 import sendScenarios from './send-scenarios.json' with { type: 'json' }
 
@@ -50,6 +51,15 @@ const notificationHeads = new Map<
 >()
 const sendCounts = new Map<string, number>()
 let notificationReceipt = 0
+let generation = 0
+const resetFake = () => {
+  generation += 1
+  notificationHeads.clear()
+  sendCounts.clear()
+  stateCalls.clear()
+  accountCalls.clear()
+  notificationReceipt = 0
+}
 const enqueueNotification = ({ id, body }: { id: string; body: object }) => {
   notificationReceipt += 1
   const queue = notificationHeads.get(id) ?? []
@@ -188,23 +198,24 @@ const fakeGreenApiFetch = async (
     const payload = JSON.parse(
       typeof init?.body === 'string' ? init.body : EMPTY_BODY,
     )
+    const sendGeneration = generation
     const count = (sendCounts.get(id) ?? 0) + 1
     sendCounts.set(id, count)
     const idMessage = `e2e-send-${count}`
-    setTimeout(
-      () =>
-        enqueueNotification({
-          id,
-          body: {
-            typeWebhook: STATUS,
-            chatId: payload.chatId,
-            idMessage,
-            status: DELIVERED,
-          },
-        }),
-      DELIVERY_DELAY_MS,
-    )
     setTimeout(() => {
+      if (sendGeneration !== generation) return
+      enqueueNotification({
+        id,
+        body: {
+          typeWebhook: STATUS,
+          chatId: payload.chatId,
+          idMessage,
+          status: DELIVERED,
+        },
+      })
+    }, DELIVERY_DELAY_MS)
+    setTimeout(() => {
+      if (sendGeneration !== generation) return
       enqueueNotification({
         id,
         body: {
@@ -238,6 +249,10 @@ const fakeGreenApiFetch = async (
   )
   if (sendingFixture && method === HISTORY_METHOD) return response({ body: [] })
   if (method === STATE_METHOD) {
+    if (id === FAKE_RESET.ID) {
+      resetFake()
+      return response({ body: { stateInstance: AUTHORIZED } })
+    }
     const calls = (stateCalls.get(id) ?? 0) + 1
     stateCalls.set(id, calls)
     const isBudgetExceeded =

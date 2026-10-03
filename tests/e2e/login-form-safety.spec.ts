@@ -1,4 +1,5 @@
-import { expect, test, type BrowserContext } from '@playwright/test'
+import type { BrowserContext } from '@playwright/test'
+import { expect, test } from './owner-fixture'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import {
   BASE_URL,

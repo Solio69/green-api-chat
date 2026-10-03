@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test'
 import type { Page, Route } from '@playwright/test'
+import { expect, test } from './owner-fixture'
 import type { MessageDTO } from '@/lib/messages/types'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import { TEST_UI } from '../constants'

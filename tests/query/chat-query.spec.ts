@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test'
 import type { Page, Route } from '@playwright/test'
+import { expect, test } from './owner-fixture'
 import { BROWSER_EVENTS, EMPTY_STRING } from '@/lib/ui/constants'
 import { CHAT_FIXTURES } from '../chats/constants'
 import {

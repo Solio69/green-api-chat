@@ -4,10 +4,13 @@ import type {
   SendMessageOptions,
   ProviderSendResult,
 } from '@/lib/sending/types'
-import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
-import { PROVIDER_NOTIFICATION } from '@/lib/notifications/constants'
 import { HISTORY_TEST } from '../../../history/constants'
 import { NOTIFICATION_TEST } from '../../../notifications/constants'
+import {
+  TEST_API_CODE,
+  TEST_API_RESPONSE,
+  TEST_PROVIDER_PROTOCOL,
+} from '../../../protocol.constants'
 
 const FIXTURE_CONFIG = {
   PASSWORD: 'fictional-fixture-password-with-more-than-32-characters',
@@ -28,9 +31,15 @@ const {
   INCOMING_ID_PREFIX,
   SENDER_LABEL,
 } = FIXTURE_CONFIG
-const { OK } = API_RESPONSE_STATUS
-const { OUTCOME_UNKNOWN } = API_ERROR_CODE
-const { TELEGRAM, STATUS, INCOMING, USER, TEXT } = PROVIDER_NOTIFICATION
+const { OK } = TEST_API_RESPONSE
+const { OUTCOME_UNKNOWN } = TEST_API_CODE
+const {
+  TELEGRAM,
+  STATUS_WEBHOOK: STATUS,
+  USER,
+  TEXT_MESSAGE: TEXT,
+} = TEST_PROVIDER_PROTOCOL
+const INCOMING = 'incomingMessageReceived'
 const { CREDENTIALS, TIMESTAMP } = NOTIFICATION_TEST
 const { scopeA, chatA } = HISTORY_TEST
 type FixtureState = {
@@ -43,7 +52,7 @@ type FixtureState = {
   claims: number
 }
 const createFixture = () => {
-  const state: FixtureState = {
+  const newState = (): FixtureState => ({
     queue: [],
     receipt: 0,
     sends: [],
@@ -51,20 +60,24 @@ const createFixture = () => {
     sendDelay: SEND_DELAY_MS,
     unknown: false,
     claims: 0,
-  }
-  const context = {
-    credentials: CREDENTIALS,
+  })
+  const newContext = () => ({
+    credentials: { ...CREDENTIALS },
     connectionScope: scopeA,
     expiresAt: Date.now() + SESSION_TTL_MS,
-  }
+  })
+  let state = newState()
+  let context = newContext()
+  let generation = 0
   const provider: ReceiverProvider = {
     settings: async () => {
       state.claims += 1
       return { outgoingEnabled: true }
     },
     receive: async ({ signal }) => {
+      const receiveState = state
       await wait(RECEIVE_DELAY_MS, undefined, { signal })
-      return state.queue[0] ?? null
+      return receiveState === state ? (receiveState.queue[0] ?? null) : null
     },
     delete: async ({ receiptId }) => {
       state.deletes.push(receiptId)
@@ -92,10 +105,14 @@ const createFixture = () => {
     chatId,
     message,
   }: SendMessageOptions): Promise<ProviderSendResult> => {
-    state.sends.push({ chatId, message })
-    await wait(state.sendDelay)
-    if (state.unknown) return { kind: OUTCOME_UNKNOWN }
-    return { kind: OK, idMessage: `${SEND_ID_PREFIX}${state.sends.length}` }
+    const sendState = state
+    const sendGeneration = generation
+    sendState.sends.push({ chatId, message })
+    const count = sendState.sends.length
+    await wait(sendState.sendDelay)
+    if (sendGeneration !== generation || sendState.unknown)
+      return { kind: OUTCOME_UNKNOWN }
+    return { kind: OK, idMessage: `${SEND_ID_PREFIX}${count}` }
   }
   const inject = ({
     status,
@@ -133,19 +150,19 @@ const createFixture = () => {
       })
   }
   const reset = () => {
-    state.queue = []
-    state.sends = []
-    state.deletes = []
-    state.receipt = 0
-    state.sendDelay = SEND_DELAY_MS
-    state.unknown = false
-    state.claims = 0
+    generation += 1
+    state = newState()
+    context = newContext()
   }
   return {
-    context,
+    get context() {
+      return context
+    },
     provider,
     password: FIXTURE_CONFIG.PASSWORD,
-    state,
+    get state() {
+      return state
+    },
     send,
     inject,
     reset,

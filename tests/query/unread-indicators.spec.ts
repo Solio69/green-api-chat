@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test'
 import type { APIRequestContext, Page } from '@playwright/test'
+import { expect, test } from './owner-fixture'
 import { MESSAGING_UI_TEST } from '../notifications/ui-constants'
 import { EMPTY_STRING, HTML_VALUES } from '@/lib/ui/constants'
 import { THEME_BROWSER, TEST_UI } from '../constants'
@@ -85,8 +85,7 @@ const waitForOwner = async (page: Page) => {
   await input.fill(EMPTY_STRING)
 }
 
-test.beforeEach(async ({ page, request }) => {
-  await request.post(CONTROL_API, { data: { reset: true } })
+test.beforeEach(async ({ page }) => {
   await page.route(CHATS, (route) =>
     route.fulfill({
       json: {

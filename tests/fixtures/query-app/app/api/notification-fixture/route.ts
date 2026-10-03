@@ -1,10 +1,9 @@
 import { isRecord } from '@/lib/api/is-record'
-import { API_RESPONSE_STATUS } from '@/lib/api/constants'
-import { HTTP_STATUS } from '@/lib/http/constants'
+import { TEST_API_RESPONSE } from '../../../../../protocol.constants'
 import { notificationFixture } from '../../../lib/notification-fixture'
 
-const { OK } = API_RESPONSE_STATUS
-const { BAD_REQUEST } = HTTP_STATUS
+const { OK } = TEST_API_RESPONSE
+const BAD_REQUEST = 400
 
 export const GET = () => Response.json(notificationFixture.state)
 export const POST = async (request: Request) => {

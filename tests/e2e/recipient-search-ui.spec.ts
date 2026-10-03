@@ -31,7 +31,6 @@ const { CLOSE } = CONVERSATION_CONTRACT
 const {
   phone,
   recipientChatId,
-  searchDelayMs,
   searchWidths,
   viewportHeight,
   enlargedTextStyle,
@@ -55,18 +54,26 @@ test('search UI: result label and functional write button preserve the request c
   page.on(EVENT_REQUEST, (request) => {
     if (new URL(request.url()).pathname === RECIPIENT_SEARCH_API) requests += 1
   })
+  let releaseSearch!: () => void
+  const searchGate = new Promise<void>((resolve) => {
+    releaseSearch = resolve
+  })
   await page.route(RECIPIENT_SEARCH_API, async (route) => {
-    await new Promise((resolve) => setTimeout(resolve, searchDelayMs))
+    await searchGate
     await route.continue()
   })
   await page.getByLabel(PHONE_LABEL).fill(foundPhone)
   await page.getByRole(ROLE_BUTTON, { name: SUBMIT, exact: true }).click()
-  await expect(
-    page.getByRole(ROLE_STATUS).filter({ hasText: PENDING }),
-  ).toBeVisible()
-  await expect(
-    page.getByRole(ROLE_BUTTON, { name: PENDING, exact: true }),
-  ).toBeDisabled()
+  try {
+    await expect(
+      page.getByRole(ROLE_STATUS).filter({ hasText: PENDING }),
+    ).toBeVisible()
+    await expect(
+      page.getByRole(ROLE_BUTTON, { name: PENDING, exact: true }),
+    ).toBeDisabled()
+  } finally {
+    releaseSearch()
+  }
   await expect(page.getByText(FOUND, { exact: true })).toBeVisible()
   await expect(page.getByText(foundPhone, { exact: true })).toBeVisible()
   const write = page.getByRole(ROLE_BUTTON, { name: WRITE, exact: true })

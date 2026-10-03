@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test'
+import { expect, test } from './owner-fixture'
 import { SESSION_CHAT_TEST } from '../chats/session-constants'
 import { TEST_UI } from '../constants'
 import { HISTORY_TEST } from '../history/constants'
