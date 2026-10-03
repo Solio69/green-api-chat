@@ -8,7 +8,7 @@ Input: [spec](spec.md), [plan](plan.md), [research](research.md), [model](data-m
 - [x] T004 Перенести parser/format/constants в features/recipients/model и server handler/response в server, UI компонентов в ui, добавить browser adapter/hook, публичные входы; обновить route, consumers, tests и две фактически ошибочные строки CSV; выполнить Green.
 - [x] T005 Refactor: проверить оба режима, границы, pending/retry, 401/close, stale response, подпись/выбор, клавиатуру/адаптивность и отсутствие отправки.
 - [x] T006 Повторный read-only analyze, typecheck/lint/styles/format, полный Vitest/integration/Query/E2E, server/client graph, diff/secret review; записать verification.md.
-- [ ] T007 Предкоммитное review, commit/push refactor, обе GitHub CI jobs на кодовом SHA; обновить roadmap/spec/verification и подтвердить CI документационного SHA.
+- [x] T007 Предкоммитное review, commit/push refactor, обе GitHub CI jobs на кодовом SHA; обновить roadmap/spec/verification и подтвердить CI документационного SHA.
 
 035 + 038 + 030 → T001 → T002 → T003 Red → T004 Green → T005 Refactor → T006 → T007.
 

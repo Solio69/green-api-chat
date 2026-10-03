@@ -2,7 +2,7 @@
 
 **Feature Directory**: specs/046-recipient-search-model
 **Created**: 2026-10-03
-**Status**: Реализация и локальная проверка завершены; предкоммитное ревью
+**Status**: Выполнена: локальная регрессия и обе CI jobs прошли
 **User Approval**: Пользователь поручил завершить полный цикл 030–055 по согласованному объёму; повторное разрешение не требуется.
 **Workflow Mode**: Standard. Полный комплект → анализ → Red/Green/Refactor → review → commit/push.
 **Implementation Authorization**: Пользователь разрешил этому чату полный рефакторинг 030–055 и самостоятельные commit/push в refactor.
