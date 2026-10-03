@@ -8,7 +8,7 @@ review/commit/push в refactor.
 - [x] T003 Создать ownership-map.csv для каждого tracked src/tests с владельцем, target area и migration task/retain; проверить уникальность и точное равенство инвентарю.
 - [x] T004 Написать docs/architecture.md: целевое дерево, DAG, public entries, границы server/client, план 036–049 и текущие нарушения.
 - [x] T005 Согласовать CODING_RULES с feature-local расположением и import rules без изменения иных правил стиля; обновить roadmap.
-- [ ] T006 Проверить CSV/граф/ссылки, format и diff; подготовить verification, предкоммитное ревью, commit/push и фактический CI на head_sha.
+- [x] T006 Проверить CSV/граф/ссылки, format и diff; подготовить verification, предкоммитное ревью, commit/push и фактический CI на head_sha.
 
 Зависимость: 034 завершена → T001 → T002 → T003 → T004 → T005 → T006.
 
