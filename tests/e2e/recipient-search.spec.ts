@@ -66,7 +66,6 @@ const { METHOD_POST } = TEST_FETCH_CONTRACT
 const {
   ROLE_BUTTON,
   ROLE_HEADING,
-  MAIN_SELECTOR,
   OUTPUT_SELECTOR,
   ATTR_ARIA_PRESSED,
   BOOLEAN_TRUE,
@@ -84,7 +83,7 @@ test('recipient search: fixture signs in and opens protected home', async ({
   page,
 }) => {
   await signIn(page)
-  await expect(page.locator(MAIN_SELECTOR)).toBeVisible()
+  await expect(page.getByRole('main')).toBeVisible()
   await expect(page.getByRole(ROLE_BUTTON, { name: LOGOUT })).toBeVisible()
 })
 

@@ -1,0 +1,9 @@
+# Research 053
+
+- По официальной [Playwright locators](https://playwright.dev/docs/locators), `getByRole`/accessible name ближе к пользовательскому действию и устойчивее к безопасному изменению DOM; `locator` уместен для структуры, которая сама является предметом проверки.
+- По [auto-waiting](https://playwright.dev/docs/actionability), Playwright повторяет actionable conditions и assertions; произвольный sleep не нужен. Поиск `waitForTimeout` в оставшихся suite дал ноль. Обе конфигурации имеют `retries: 0`; неопределённый assertion не прячется повтором.
+- [Trace Viewer](https://playwright.dev/docs/trace-viewer) позволяет разбирать падение по действиям, DOM и сети. Конфигурация 034 сохраняет trace и E2E screenshot при отказе; CI `if: !cancelled()` публикует отчёты. Негативный run 034 `37121813552` подтвердил failure job и artifact с trace/screenshot; актуальный run 053 проверяется после push.
+- `innerHTML()` и сравнение строк SVG в `login-form.spec.ts` зависят от path реализации, хотя контракт — доступная кнопка и смена `password`/`text` без потери значения. Проверка наличия SVG и `aria-hidden` остаётся визуально-доступностной, без сравнения path.
+- Generic `input` count в `home.spec.ts` повторяет две проверки по label/required; `main` CSS selector в `recipient-search.spec.ts` проверяет роль landmark и заменяется `getByRole('main')`.
+- CSS селекторы `MAIN_SELECTOR`, `SECTION_SELECTOR`, `SVG_SELECTOR`, `IMAGE_SELECTOR`, initials/decoration, `PARENT_SELECTOR` и `PARAGRAPH_SELECTOR` в layout/theme/safety сценариях либо измеряют геометрию/стили/отсутствие секретов, либо проверяют декоративную семантику. Полная замена на roles ухудшила бы контракт; исключения перечислены в `selector-audit.md`.
+- Разные сборки Query fixture и production E2E требуют последовательного запуска. Наличие пересечения с RTL/Node не делает сквозной контракт дубликатом: именно integration маршрутов/браузера является проверяемым результатом.

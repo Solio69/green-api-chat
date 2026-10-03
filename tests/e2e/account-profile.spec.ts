@@ -45,7 +45,7 @@ const {
   KEY_TAB,
   KEY_ENTER,
   SVG_SELECTOR,
-  INPUT_SELECTOR,
+  ROLE_TEXTBOX,
   ATTR_ARIA_INVALID,
   BOOLEAN_TRUE,
 } = TEST_UI
@@ -362,6 +362,6 @@ for (const { viewport, scenario } of [
     expect((await readStyles(field)).border).toBe(DARK.ERROR)
     expect((await readStyles(field)).shadow).not.toBe(STYLE_NONE)
     expect((await readStyles(field)).outlineWidth).toBe(0)
-    expect(await page.locator(INPUT_SELECTOR).count()).toBe(1)
+    await expect(page.getByRole(ROLE_TEXTBOX)).toHaveCount(1)
   })
 }
