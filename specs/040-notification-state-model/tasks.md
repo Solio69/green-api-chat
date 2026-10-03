@@ -9,7 +9,7 @@ Input: [spec.md](spec.md), [plan.md](plan.md), [матрица](research.md), [�
 - [x] T005 Подключить model к `src/lib/notifications/create-notification-connection.ts`, заменить дублируемые state/canSend/issue/pendingAck/readyOnce/outgoingEnabled/generation источники, сохранить стабильную ссылку snapshot и порядок побочных эффектов. Проверить `tests/integration/polling-connection.spec.ts` Green.
 - [x] T006 Добавить `tests/component/notification-notice.test.tsx` для существующих текстов, role и retry; проверить DOM Vitest и затронутые browser Query/E2E; не менять UX без обнаруженного расхождения.
 - [x] T007 Провести Refactor и повторный read-only analyze; выполнить typecheck/lint/styles/format, полный Vitest/integration/query/production E2E, проверку client/server graph, ACK/recovery/late events, diff/секреты; записать verification.
-- [ ] T008 Провести предкоммитное review, commit/push `refactor`, подтвердить обе GitHub jobs на SHA кода, обновить roadmap/spec/verification и проверить CI итогового документационного SHA.
+- [x] T008 Провести предкоммитное review, commit/push `refactor`, подтвердить обе GitHub jobs на SHA кода, обновить roadmap/spec/verification и проверить CI итогового документационного SHA.
 
 039 → T001 → T002 → T003 Red → T004 Green → T005 → T006 → T007 Refactor/verification → T008.
 

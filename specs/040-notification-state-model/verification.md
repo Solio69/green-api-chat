@@ -1,6 +1,6 @@
 # Проверка 040: явная модель состояний уведомлений
 
-Дата: 2026-10-03. Локальная реализация и регрессия завершены; GitHub CI на SHA кода пока NotRun.
+Дата: 2026-10-03. Локальная реализация и регрессия завершены; GitHub CI Passed на SHA кода `21fe96198cd45886a5bb2e0c4a46c1b85944dc31`.
 
 | Проверка | Результат |
 | --- | --- |
@@ -19,10 +19,10 @@
 | Граф Client Components → server runtime | Passed: 28 client roots, 227 source TS/TSX, запрещённых runtime-путей 0 |
 | Повторный read-only анализ | Passed: 894 пути, SHA-256 до/после `e99ea7731affeac44a488644f4f8ccf4d42e99eabc6367cbe06caa4e7cc8ad33`, unchanged; findings 0 |
 | `git diff --check` | Passed |
-| GitHub Actions quality/browser | NotRun: ожидается push SHA кода |
+| GitHub Actions quality/browser | Passed: обе jobs [run 37134784122](https://github.com/Solio69/green-api-chat/actions/runs/37134784122), artifacts `quality-1` и `browser-1` |
 
 Чистая модель вычисляет состояние и единственную команду recovery; контроллер исполняет сеть, lease, таймеры и публикацию подписчикам. Публичный snapshot не меняет форму и ссылку на внутренних переходах ACK. При временной ошибке ACK proof сохраняется, ручной retry сбрасывает его и инвалидирует предыдущее поколение. Закрытие терминально; поздние события игнорируются. Отключённые outgoing status webhooks показывают предупреждение и сохраняют возможность отправки.
 
 Первый Query-прогон дал 44 успешных сценария и ошибку записи trace на визуальном сценарии 320 px при одновременном integration-прогоне. Конфигурация integration использует родительский `test-results`, а Query — `test-results/query`; отдельный повтор прошёл 45/45. Это ограничение организации тестовых артефактов учтено для задачи 050; поведенческого падения UI не было.
 
-Итоговый SHA и CI фиксируются после commit/push.
+Итоговый документационный SHA проверяется отдельно после push.
