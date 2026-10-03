@@ -6,10 +6,10 @@ Input: [spec.md](spec.md), [plan.md](plan.md).
 - [x] T001 [US1] Проверить GitHub/default branch/actions/Node, подготовить research, plan, data-model, contracts/quality-ci и quickstart в specs/033-ci-quality-pipeline.
 - [x] T002 [US1] Провести read-only анализ комплекта и C1–C8; отдельно сохранить analysis.md.
 - [x] T003 [US1] Создать .github/workflows/quality.yml и описать CI в README.md; проверить YAML и локальные команды quickstart.
-- [ ] T004 [US1] Провести предкоммитное ревью, записать локальные результаты verification.md, commit/push; проверить настоящий чистый успешный Actions run и artifact.
-- [ ] T005 [US1] Проверить локально TS2322, временно добавить runner-only контроль в workflow; review/commit/push и проверить ожидаемый failed run с диагностикой.
-- [ ] T006 [US1] Удалить контроль из workflow, review/commit/push; подтвердить восстановленный успешный Actions run.
-- [ ] T007 [US1] Обновить verification/spec/checklist/tasks/analysis и docs/refactoring-roadmap.md, провести финальное ревью, commit/push и проверить итоговый head.
+- [x] T004 [US1] Провести предкоммитное ревью, записать локальные результаты verification.md, commit/push; проверить настоящий чистый успешный Actions run и artifact.
+- [x] T005 [US1] Проверить локально TS2322, временно добавить runner-only контроль в workflow; review/commit/push и проверить ожидаемый failed run с диагностикой.
+- [x] T006 [US1] Удалить контроль из workflow, review/commit/push; подтвердить восстановленный успешный Actions run.
+- [x] T007 [US1] Обновить verification/spec/checklist/tasks/analysis и docs/refactoring-roadmap.md, провести финальное ревью, commit/push и проверить итоговый head.
 
 ## Зависимости и приёмка
 

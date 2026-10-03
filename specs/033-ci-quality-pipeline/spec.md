@@ -2,7 +2,7 @@
 
 **Feature Directory**: specs/033-ci-quality-pipeline
 **Created**: 2026-10-03
-**Status**: Локальные проверки Passed; удалённая приёмка NotRun
+**Status**: Выполнено; удалённые positive/negative/restore проверки Passed
 **User Approval**: Пользователь поручил весь согласованный рефакторинг, включая CI.
 **Workflow Mode**: Standard. Полный комплект спецификаций подготовлен по прямой просьбе пользователя.
 **Implementation Authorization**: Разрешён полный цикл с commit/push в refactor и фактической приёмкой CI; повторное разрешение не требуется.

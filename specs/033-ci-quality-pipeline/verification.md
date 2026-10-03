@@ -1,34 +1,30 @@
 # Проверка 033
 
-Дата: 2026-10-03. Локальные проверки Passed; удалённая приёмка частично Failed из-за отсутствия artifact. Исправление проверяется.
+Дата: 2026-10-03. Статус: Completed. Текущий workflow без
+временного контроля; задачи T001–T007 выполнены.
 
 | Проверка | Результат |
 | --- | --- |
-| YAML/js-yaml: triggers, SHA, runtime, commands, permissions, reports | Passed |
-| npm run typecheck | Passed |
-| npm run lint | Passed |
-| npm run lint:styles | Passed |
-| npm run format:check | Passed |
-| npm test | Passed: 5 файлов, 15 тестов |
-| npm run test:integration | Passed: 351 тест |
-| npm run test:integration -- --output=test-results/integration | Passed: 351 тест; контрольный quality log сохранился |
-| Первый remote run | Job success и все команды Passed, но artifact отсутствует: ошибка в сохранении логов |
-| Повтор после исправления | Passed: run 37117733655 на a568c36, quality-1 artifact 11 337 bytes |
-| Remote negative | Passed: run 37118087704 on a9b2d7e failed at TS2322; log artifact 11271958831 saved |
-| Remote restore | NotRun |
-| Manual dispatch / fork PR | NotRun, ограничения описаны в plan |
+| YAML и структура: события, SHA actions, runtime, permissions, timeout, concurrency, команды и artifact | Passed |
+| Локальные typecheck, ESLint, Stylelint, Prettier | Passed |
+| Локальный Vitest | Passed: 15/15 |
+| Локальный Playwright integration | Passed: 351/351 |
+| Локальный контроль outputDir | Passed: 351/351, quality log сохранился |
+| Чистый GitHub runner | [Passed](https://github.com/Solio69/green-api-chat/actions/runs/37117733655): a568c36, artifact 11272401600 |
+| Намеренная ошибка типов | [Expected Failed](https://github.com/Solio69/green-api-chat/actions/runs/37118087704): a9b2d7e, TS2322, artifact 11271958831 |
+| Восстановленный workflow | [Passed](https://github.com/Solio69/green-api-chat/actions/runs/37118202727): f211969, artifact 11271739484 |
+| Manual dispatch до merge в main / fork PR | NotRun: не нужны для приёмки push; ограничения указаны в plan |
 
-Локальные команды выполнены 10:42–10:43 UTC, Node 24.14.1/npm 11.11.0.
-Новая бизнес-логика отсутствует; применяется проверка конфигурации.
-Предкоммитное ревью: workflow соответствует контракту, Bash shell обеспечивает
--e -o pipefail; tee не маскирует сбой. Нет continue-on-error, secrets или
-сохраняемых checkout credentials. Кеш не заменяет npm ci.
-Все изменения принадлежат этой задаче. main и продуктовый код не изменены.
-Следующий шаг: commit/push исправления и повторная удалённая приёмка T004–T007.
-Коммит исправления: fix: preserve quality logs during integration.
+Первый запуск на d1ccf99 прошёл все тесты, но не сохранил artifact:
+Playwright очищал общий test-results. Исправлен отдельный outputDir integration;
+теперь отсутствие логов делает upload ошибкой. На чистом первом runner npm cache
+отсутствовал; обязательный npm ci прошёл. В контрольном failed run ошибка
+src/ci-typecheck-probe.ts:1 дала TS2322 и failure шага, job и run, лог сохранился;
+все последующие проверки были skipped. Временный шаг удалён отдельным коммитом.
+Продуктовый код и package/lockfile не менялись.
 
-Первый run: https://github.com/Solio69/green-api-chat/actions/runs/37117418374, commit d1ccf99. Job success, но upload выдал No files were found. Причина: Playwright перед integration очищает общий test-results; логи находились внутри. Изолирован output каталога integration, отсутствие логов теперь ошибка upload. Проверка 10:49–10:50 UTC: 351/351, контрольный лог сохранён.
-
-Успешный run: https://github.com/Solio69/green-api-chat/actions/runs/37117733655. Job/все шаги success, artifact id 11272401600. Локальный TS2322 контроль: npm run typecheck Exit 2; файл удалён, продуктовый код не менялся. Следующий commit временно добавляет runner-only контроль к workflow.
-
-Ожидаемый failed run: https://github.com/Solio69/green-api-chat/actions/runs/37118087704, head a9b2d7e. Typecheck failure TS2322 по src/ci-typecheck-probe.ts:1, job/run failure. Upload quality logs success, artifact id 11271958831. Последующие проверки skipped по штатному fail-fast. Временный шаг удалён из рабочего workflow.
+Проверка перед финальным коммитом: все изменённые файлы принадлежат 033,
+read-only аудит 814 путей unchanged (см. analysis.md), workflow соответствует
+контракту и не содержит secrets, контрольно созданного TS-файла или
+continue-on-error. Bash pipefail сохраняет exit code npm при tee. Префикс
+коммита: chore: document verified quality CI.
