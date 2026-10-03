@@ -1,7 +1,11 @@
 import { createHmac } from 'node:crypto'
-import { CHAT_QUERY_CONFIG } from '@/lib/chats/constants'
+import { CHAT_SCOPE_CONFIG } from '@/features/chats/model'
 
-const { SCOPE_DOMAIN, SCOPE_ALGORITHM, SCOPE_ENCODING } = CHAT_QUERY_CONFIG
+const {
+  DOMAIN: SCOPE_DOMAIN,
+  ALGORITHM: SCOPE_ALGORITHM,
+  ENCODING: SCOPE_ENCODING,
+} = CHAT_SCOPE_CONFIG
 // Server import graph: this binding never replaces the HttpOnly cookie.
 export const getQueryScope = ({
   session,

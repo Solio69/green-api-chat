@@ -1,6 +1,6 @@
 import type { SendRequest } from './types'
+import { isPersonalChatId } from '@/features/chats/model'
 import { isRecord } from '@/lib/api/is-record'
-import { isPersonalChatId } from '@/lib/chats/validate-chat-id'
 import type { InstanceCredentials } from '@/lib/green-api/get-state'
 import { isSafeIdentifier } from '@/lib/green-api/safe-identifier'
 import { SEND_CONFIG } from './constants'

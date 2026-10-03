@@ -1,6 +1,6 @@
 import { skipToken } from '@tanstack/react-query'
 import type { QueryClient } from '@tanstack/react-query'
-import { SESSION_CHAT_CONFIG } from '@/lib/chats/constants'
+import { SESSION_CHAT_CONFIG } from '@/features/chats/application'
 import { MESSAGE_CACHE_CONFIG } from '@/lib/messages/constants'
 import { UNREAD_CONFIG } from '@/lib/unread/constants'
 

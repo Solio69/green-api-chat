@@ -1,6 +1,6 @@
 import type { MessageDTO } from './types'
+import { isChatId } from '@/features/chats/model'
 import { isRecord } from '@/lib/api/is-record'
-import { isChatId } from '@/lib/chats/validate-chat-id'
 import { MESSAGE_DIRECTION, MESSAGE_KIND, MESSAGE_STATUS } from './constants'
 
 const { INCOMING, OUTGOING } = MESSAGE_DIRECTION

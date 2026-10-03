@@ -9,7 +9,7 @@ import type {
   MessageApplyResult,
 } from './types'
 import { isMessageDTO } from './validate-message'
-import { isPersonalChatId, isChatId } from '@/lib/chats/validate-chat-id'
+import { isPersonalChatId, isChatId } from '@/features/chats/model'
 import type { QuerySession } from '@/lib/query/create-query-session'
 import {
   MESSAGE_CACHE_CONFIG,

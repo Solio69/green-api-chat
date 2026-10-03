@@ -1,9 +1,9 @@
 'use client'
 
 import { StrictMode, useState } from 'react'
+import { ChatListPanel } from '@/features/chats/ui'
 import { RecipientSearchForm } from '@/features/recipients/ui'
 import { EMPTY_STRING, HTML_VALUES } from '@/lib/ui/constants'
-import { ChatListPanel } from '@/components/ChatListPanel'
 import { ChatWorkspace } from '@/components/ChatWorkspace'
 import { useConversationSelection } from '@/components/ConversationSelectionProvider'
 import {

@@ -2,10 +2,10 @@
 
 **Feature Directory**: specs/048-chats-feature-migration
 **Created**: 2026-10-03
-**Status**: Черновик для рассмотрения
-**User Approval**: Направление согласовано; подробный объём этой спецификации представлен на рассмотрение.
+**Status**: Реализация и локальная проверка завершены; предкоммитное ревью
+**User Approval**: Пользователь поручил полный цикл 030–055 в согласованном объёме; повторное разрешение не требуется.
 **Workflow Mode**: Standard. Полный комплект спецификаций подготовлен по прямой просьбе пользователя.
-**Implementation Authorization**: Текущий запрос — подготовить спецификации всех этапов; реализация этой задачи ещё не начата.
+**Implementation Authorization**: Полный рефакторинг 030–055 и самостоятельные commit/push в refactor разрешены пользователем этому чату.
 **Input**: R08 общей дорожной карты — Список чатов получает готовую модель через интерфейс своего модуля, сохраняя обновление, временные записи, выбор и непрочитанные.
 **Work Type**: Рефакторинг приложения.
 
@@ -91,7 +91,7 @@ Vitest с QueryClient для списка и overlay; React Testing Library дл
 - Согласованы функциональные модули, Vitest и React Testing Library вместе с Playwright, а также CI на GitHub Actions.
 - Работа ведётся в текущем объёме проекта. Новые продуктовые требования не выводятся из слова «образцовый».
 - Изменения поведения и новые зависимости за пределами согласованных инструментов обсуждаются до реализации. Версии и необходимые вспомогательные пакеты определяются техническим планом; агент самостоятельно ничего не устанавливает.
-- Проектные правила Git и сохранения чужих правок остаются обязательными. Подготовка спецификаций не включает commit, push или отправку реальных сообщений.
+- Проектные правила Git и сохранения чужих правок остаются обязательными. Реализация включает разрешённые commit/push в refactor; отправка реальных сообщений не входит в задачу.
 
 ### Предшествующие задачи
 
@@ -103,12 +103,12 @@ Vitest с QueryClient для списка и overlay; React Testing Library дл
 
 ### Основание требований
 
-- [src/lib/chats](../../src/lib/chats)
-- [src/components/ChatList](../../src/components/ChatList)
-- [src/components/ChatListItem](../../src/components/ChatListItem)
-- [src/components/ChatListPanel](../../src/components/ChatListPanel)
-- [src/components/ChatListRecovery](../../src/components/ChatListRecovery)
-- [src/components/ChatUnreadBadge](../../src/components/ChatUnreadBadge)
+- [src/features/chats](../../src/features/chats)
+- [src/features/chats/ui/ChatList](../../src/features/chats/ui/ChatList)
+- [src/features/chats/ui/ChatListItem](../../src/features/chats/ui/ChatListItem)
+- [src/features/chats/ui/ChatListPanel](../../src/features/chats/ui/ChatListPanel)
+- [src/features/chats/ui/ChatListRecovery](../../src/features/chats/ui/ChatListRecovery)
+- [src/shared/ui/ChatUnreadBadge](../../src/shared/ui/ChatUnreadBadge)
 - [tests/query/session-chat-overlay.spec.ts](../../tests/query/session-chat-overlay.spec.ts)
 - [tests/e2e/chat-list-ui.spec.ts](../../tests/e2e/chat-list-ui.spec.ts)
 

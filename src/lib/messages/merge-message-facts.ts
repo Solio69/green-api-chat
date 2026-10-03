@@ -10,7 +10,7 @@ import type {
   MessageCache,
 } from './types'
 import { isMessageDTO } from './validate-message'
-import { isPersonalChatId } from '@/lib/chats/validate-chat-id'
+import { isPersonalChatId } from '@/features/chats/model'
 import {
   MESSAGE_CACHE_CONFIG,
   MESSAGE_STATUS,

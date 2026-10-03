@@ -1,4 +1,5 @@
-import type { ChatsErrorCode, GetChatsOptions } from '@/lib/chats/types'
+import type { ChatsErrorCode } from '@/features/chats/model'
+import type { GetChatsOptions } from '@/features/chats/server'
 import type { MessageDTO } from '@/lib/messages/types'
 import { SessionQueryError } from '@/lib/query/session-query-error'
 import type { API_RESPONSE_STATUS } from '@/lib/api/constants'

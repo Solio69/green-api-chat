@@ -1,13 +1,13 @@
 import { expect, test } from '@playwright/test'
 import { SESSION_CHAT_TEST } from '../chats/session-constants'
-import { chatsQueryOptions } from '@/lib/chats/chats-query-options'
 import {
+  chatsQueryOptions,
   rememberPersonalChat,
   deriveSessionChats,
   sessionChatKey,
   reconcileSessionChats,
-} from '@/lib/chats/session-chat-facts'
-import type { SessionChatCache } from '@/lib/chats/session-chat-facts'
+} from '@/features/chats/application'
+import type { SessionChatCache } from '@/features/chats/application'
 import { createConnectionSession } from '@/lib/conversations/create-connection-session'
 import { HISTORY_TEST } from '../history/constants'
 

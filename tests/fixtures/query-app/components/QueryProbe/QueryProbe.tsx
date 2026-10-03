@@ -2,8 +2,7 @@
 
 import { StrictMode, useState } from 'react'
 import { LogoutButton } from '@/features/auth/ui'
-import { useChats } from '@/lib/chats/use-chats'
-import { ChatListPanel } from '@/components/ChatListPanel'
+import { useChats, ChatListPanel } from '@/features/chats/ui'
 import { ConversationSelectionProvider } from '@/components/ConversationSelectionProvider'
 import { QueryProvider } from '@/components/QueryProvider'
 import { CHAT_FIXTURES } from '../../../../chats/constants'

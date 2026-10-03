@@ -172,15 +172,16 @@ src/lib/auth/handle-login-request.ts,source,auth,src/features/auth/server,036,mo
 src/lib/auth/resolve-home.ts,source,auth,src/features/auth/application,036,move,Auth policy and session scope; split pure types when moved
 src/lib/auth/resolve-login.ts,source,auth,src/features/auth/application,036,move,Auth policy and session scope; split pure types when moved
 src/lib/auth/session.ts,source,auth,src/features/auth/server,037,move,Server session/cookie secret boundary
+src/lib/chats/chats-query-options.ts,source,chats,src/features/chats/application,048,move,Query options introduced after 035 inventory; preserve scope and cache timings
 src/lib/chats/constants.ts,source,chats,src/features/chats,048,split,Split chat domain facts from Query runtime and error copy
-src/lib/chats/fetch-chats.ts,source,chats,src/features/chats/application,048,move,Chat list/model/API; UI hooks must stop importing global component providers
-src/lib/chats/handle-chats-request.ts,source,chats,src/features/chats/server,048,move,Chat list/model/API; UI hooks must stop importing global component providers
-src/lib/chats/normalize-chats.ts,source,chats,src/features/chats/model,048,move,Chat list/model/API; UI hooks must stop importing global component providers
-src/lib/chats/session-chat-facts.ts,source,chats,src/features/chats/application,043,move,Current type-only cycle with create-query-session; replace with one-way contract
+src/lib/chats/fetch-chats.ts,source,chats,src/features/chats/application,048,move,Browser API client; no server runtime import
+src/lib/chats/handle-chats-request.ts,source,chats,src/features/chats/server,048,move,Server HTTP handler; preserve response contract
+src/lib/chats/normalize-chats.ts,source,chats,src/features/chats/model,048,move,Pure provider normalization; filter credentials
+src/lib/chats/session-chat-facts.ts,source,chats,src/features/chats/application,048,move,Physical migration after 043 cache coordination; retain one-way QuerySession contract
 src/lib/chats/types.ts,source,chats,src/features/chats,048,split,Split PersonalChat model from Query error and server credentials/options
-src/lib/chats/use-chats.ts,source,chats,src/features/chats/ui,048,move,Chat list/model/API; UI hooks must stop importing global component providers
-src/lib/chats/use-session-chat-labels.ts,source,chats,src/features/chats/ui,048,move,Chat list/model/API; UI hooks must stop importing global component providers
-src/lib/chats/validate-chat-id.ts,source,chats,src/features/chats/model,048,move,Chat list/model/API; UI hooks must stop importing global component providers
+src/lib/chats/use-chats.ts,source,chats,src/features/chats/ui,048,move,UI hook uses public QueryProvider until 049/054
+src/lib/chats/use-session-chat-labels.ts,source,chats,src/features/chats/ui,048,move,UI hook uses public QueryProvider until 049/054
+src/lib/chats/validate-chat-id.ts,source,chats,src/features/chats/model,048,move,Pure chat ID validation shared by consumers
 src/lib/conversations/constants.ts,source,conversation,src/features/conversation/selection/model,049,move,Conversation selection domain
 src/lib/conversations/selection.ts,source,conversation,src/features/conversation/selection/model,049,move,Conversation selection domain
 src/lib/conversations/types.ts,source,conversation,src/features/conversation/selection/model,049,move,Conversation selection domain

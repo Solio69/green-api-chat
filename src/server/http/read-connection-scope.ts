@@ -1,7 +1,7 @@
-import { CHAT_QUERY_CONFIG } from '@/lib/chats/constants'
+import { CHAT_SCOPE_CONFIG } from '@/features/chats/model'
 import { HTTP_HEADERS } from '@/lib/http/constants'
 
-const { SCOPE_PATTERN } = CHAT_QUERY_CONFIG
+const { PATTERN: SCOPE_PATTERN } = CHAT_SCOPE_CONFIG
 const { CONNECTION_SCOPE } = HTTP_HEADERS
 
 export const readConnectionScope = (request: Request): string | null => {

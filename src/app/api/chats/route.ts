@@ -1,5 +1,4 @@
-import { handleChatsRequest } from '@/lib/chats/handle-chats-request'
-import { getChats } from '@/lib/green-api/get-chats'
+import { handleChatsRequest, getChats } from '@/features/chats/server'
 import { readRouteSession } from '@/server/session'
 
 export const GET = async (request: Request): Promise<Response> => {

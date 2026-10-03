@@ -1,5 +1,5 @@
+import { isChatId, isPersonalChatId } from '@/features/chats/model'
 import { isRecord } from '@/lib/api/is-record'
-import { isChatId, isPersonalChatId } from '@/lib/chats/validate-chat-id'
 import type { InstanceCredentials } from '@/lib/green-api/get-state'
 import { mergeMessageFacts } from '@/lib/messages/merge-message-facts'
 import type { MessageDTO } from '@/lib/messages/types'

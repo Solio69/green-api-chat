@@ -1,9 +1,8 @@
 'use client'
 
-import { rememberPersonalChat } from '@/lib/chats/session-chat-facts'
-import { useChats } from '@/lib/chats/use-chats'
+import { rememberPersonalChat } from '@/features/chats/application'
+import { useChats, ChatListPanel } from '@/features/chats/ui'
 import { HTML_VALUES } from '@/lib/ui/constants'
-import { ChatListPanel } from '@/components/ChatListPanel'
 import { ConversationSelectionProvider } from '@/components/ConversationSelectionProvider'
 import {
   QueryProvider,

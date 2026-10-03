@@ -1,11 +1,11 @@
 import { CancelledError } from '@tanstack/react-query'
 import { HistoryQueryError } from './types'
+import type { ChatsErrorCode } from '@/features/chats/model'
+import { CHAT_SCOPE_CONFIG } from '@/features/chats/model'
 import { isRecord } from '@/lib/api/is-record'
-import type { ChatsErrorCode } from '@/lib/chats/types'
 import type { MessageDTO } from '@/lib/messages/types'
 import { isMessageDTO } from '@/lib/messages/validate-message'
 import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
-import { CHAT_QUERY_CONFIG } from '@/lib/chats/constants'
 import {
   CACHE_CONTROL,
   FETCH_CREDENTIALS,
@@ -44,7 +44,7 @@ const { NO_STORE } = CACHE_CONTROL
 const { SAME_ORIGIN } = FETCH_CREDENTIALS
 const { CONNECTION_SCOPE, CONTENT_TYPE } = HTTP_HEADERS
 const { JSON: JSON_CONTENT_TYPE } = HTTP_CONTENT_TYPE
-const { SCOPE_PATTERN } = CHAT_QUERY_CONFIG
+const { PATTERN: SCOPE_PATTERN } = CHAT_SCOPE_CONFIG
 const { DELIVERED, READ } = MESSAGE_STATUS
 const errorStatuses: Partial<Record<ChatsErrorCode, readonly number[]>> = {
   [SESSION_REQUIRED]: [UNAUTHORIZED],

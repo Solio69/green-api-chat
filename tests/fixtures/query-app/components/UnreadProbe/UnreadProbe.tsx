@@ -2,11 +2,11 @@
 
 import { StrictMode } from 'react'
 import { AccountHeader } from '@/features/account/ui'
+import { ChatListPanel } from '@/features/chats/ui'
 import { RecipientSearchForm } from '@/features/recipients/ui'
 import { useUnreadCounts } from '@/lib/unread/use-unread-counts'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import { ChatHistoryPanel } from '@/components/ChatHistoryPanel'
-import { ChatListPanel } from '@/components/ChatListPanel'
 import { ChatWorkspace } from '@/components/ChatWorkspace'
 import { MessageComposer } from '@/components/MessageComposer'
 import { NotificationProvider } from '@/components/NotificationProvider'

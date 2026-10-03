@@ -2,8 +2,8 @@ import { createAckProof, verifyAckProof } from './ack-proof'
 import { normalizeNotification } from './normalize-notification'
 import { ReceiverError } from './receiver-error'
 import type { ReceiverContext, ReceiverProvider } from './types'
+import { isChatId } from '@/features/chats/model'
 import { isRecord } from '@/lib/api/is-record'
-import { isChatId } from '@/lib/chats/validate-chat-id'
 import {
   isSameOrigin,
   jsonNoStore,

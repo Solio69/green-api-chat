@@ -1,0 +1,22 @@
+@use '../../../../styles/tokens' as tokens;
+
+.chatListPanel {
+  min-width: 0;
+
+  &__heading {
+    margin: 0;
+    padding: tokens.$space-xs tokens.$account-header-padding-inline;
+    font-size: tokens.$chat-list-heading-size;
+    font-weight: tokens.$max-heading-weight;
+    line-height: tokens.$chat-line-height;
+  }
+
+  &__status {
+    position: absolute;
+    width: tokens.$visually-hidden-size;
+    height: tokens.$visually-hidden-size;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

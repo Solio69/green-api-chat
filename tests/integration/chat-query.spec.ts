@@ -1,8 +1,10 @@
 import { expect, test } from '@playwright/test'
 import { CancelledError, QueryObserver } from '@tanstack/react-query'
-import { chatsQueryOptions } from '@/lib/chats/chats-query-options'
-import { fetchChats } from '@/lib/chats/fetch-chats'
-import { ChatsQueryError } from '@/lib/chats/types'
+import {
+  chatsQueryOptions,
+  fetchChats,
+  ChatsQueryError,
+} from '@/features/chats/application'
 import { createQuerySession } from '@/lib/query/create-query-session'
 import { CHAT_FIXTURES } from '../chats/constants'
 import {

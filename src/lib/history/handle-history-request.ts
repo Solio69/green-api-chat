@@ -1,6 +1,6 @@
 import type { GetHistoryOptions, GetHistoryResult } from './types'
 import { validateHistoryRequest } from './validate-history-request'
-import type { ChatsErrorCode } from '@/lib/chats/types'
+import type { ChatsErrorCode } from '@/features/chats/model'
 import type { InstanceCredentials } from '@/lib/green-api/get-state'
 import {
   isSameOrigin,

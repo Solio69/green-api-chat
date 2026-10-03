@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { chatsQueryOptions } from '@/lib/chats/chats-query-options'
+import { chatsQueryOptions } from '@/features/chats/application'
 import { createConnectionSession } from '@/lib/conversations/create-connection-session'
 import { createQuerySession } from '@/lib/query/create-query-session'
 

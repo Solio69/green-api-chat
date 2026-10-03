@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { sessionChatKey } from '@/lib/chats/session-chat-facts'
+import { sessionChatKey } from '@/features/chats/application'
 import { messageKey } from '@/lib/messages/message-cache'
 import { applyNotification } from '@/lib/notifications/apply-notification'
 import { normalizeNotification } from '@/lib/notifications/normalize-notification'

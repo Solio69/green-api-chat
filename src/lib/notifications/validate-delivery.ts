@@ -1,6 +1,6 @@
 import type { NotificationDelivery } from './types'
+import { isChatId, isPersonalChatId } from '@/features/chats/model'
 import { isRecord } from '@/lib/api/is-record'
-import { isChatId, isPersonalChatId } from '@/lib/chats/validate-chat-id'
 import { isMessageDTO } from '@/lib/messages/validate-message'
 import { MESSAGE_DIRECTION, MESSAGE_STATUS } from '@/lib/messages/constants'
 import { NOTIFICATION_CONFIG, NOTIFICATION_KIND } from './constants'

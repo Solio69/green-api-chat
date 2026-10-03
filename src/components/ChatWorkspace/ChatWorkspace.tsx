@@ -2,8 +2,8 @@
 
 import type { ReactNode } from 'react'
 import { useWorkspaceFocus } from './use-workspace-focus'
+import { ChatSidebar } from '@/features/chats/ui'
 import { useConversationReadState } from '@/lib/unread/use-conversation-read-state'
-import { ChatSidebar } from '@/components/ChatSidebar'
 import { ConversationEmptyState } from '@/components/ConversationEmptyState'
 import { ConversationPane } from '@/components/ConversationPane'
 import {

@@ -1,6 +1,10 @@
 import { CancelledError, notifyManager } from '@tanstack/react-query'
-import { rememberPersonalChat } from '@/lib/chats/session-chat-facts'
-import { isChatId, isPersonalChatId } from '@/lib/chats/validate-chat-id'
+import { rememberPersonalChat } from '@/features/chats/application'
+import {
+  isChatId,
+  isPersonalChatId,
+  SESSION_CHAT_SOURCE,
+} from '@/features/chats/model'
 import type { ConversationTarget } from '@/lib/conversations/types'
 import { fetchHistory } from '@/lib/history/fetch-history'
 import {
@@ -14,7 +18,6 @@ import type { NotificationDelivery } from '@/lib/notifications/types'
 import { isNotificationDelivery } from '@/lib/notifications/validate-delivery'
 import type { QuerySession } from '@/lib/query/create-query-session'
 import { recordIncomingUnread } from '@/lib/unread/unread-cache'
-import { SESSION_CHAT_SOURCE } from '@/lib/chats/constants'
 import {
   MESSAGE_CACHE_CONFIG,
   MESSAGE_SOURCE,

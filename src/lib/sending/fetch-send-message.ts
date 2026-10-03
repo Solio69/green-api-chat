@@ -1,6 +1,6 @@
 import type { AcceptedSend } from './types'
+import { isChatId } from '@/features/chats/model'
 import { isRecord } from '@/lib/api/is-record'
-import { isChatId } from '@/lib/chats/validate-chat-id'
 import type { ConversationTarget } from '@/lib/conversations/types'
 import type { QuerySession } from '@/lib/query/create-query-session'
 import { SessionQueryError } from '@/lib/query/session-query-error'

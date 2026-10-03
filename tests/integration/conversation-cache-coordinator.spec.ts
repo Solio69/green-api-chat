@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { sessionChatKey } from '@/lib/chats/session-chat-facts'
+import { sessionChatKey } from '@/features/chats/application'
 import {
   applyAcceptedConversation,
   applyConversationDelivery,

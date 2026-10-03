@@ -1,4 +1,4 @@
-import { chatsQueryOptions } from '@/lib/chats/chats-query-options'
+import { chatsQueryOptions } from '@/features/chats/application'
 import type { QuerySession } from '@/lib/query/create-query-session'
 import { NOTIFICATION_CONFIG } from './constants'
 

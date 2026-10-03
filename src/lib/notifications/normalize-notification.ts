@@ -1,7 +1,7 @@
 import { normalizeMessageStatus } from './normalize-message-status'
 import type { NormalizedNotification } from './types'
+import { isChatId, isPersonalChatId } from '@/features/chats/model'
 import { isRecord } from '@/lib/api/is-record'
-import { isChatId, isPersonalChatId } from '@/lib/chats/validate-chat-id'
 import type { InstanceCredentials } from '@/lib/green-api/get-state'
 import { isSafeIdentifier } from '@/lib/green-api/safe-identifier'
 import { MESSAGE_DIRECTION, MESSAGE_KIND } from '@/lib/messages/constants'

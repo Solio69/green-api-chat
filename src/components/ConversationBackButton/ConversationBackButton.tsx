@@ -1,9 +1,9 @@
 'use client'
 
 import { useId } from 'react'
+import { ChatUnreadBadge } from '@/shared/ui'
 import { HTML_VALUES } from '@/lib/ui/constants'
 import { CONVERSATION_BACK_COPY } from './constants'
-import { ChatUnreadBadge } from '@/components/ChatUnreadBadge'
 import styles from './ConversationBackButton.module.scss'
 
 const { BUTTON } = HTML_VALUES

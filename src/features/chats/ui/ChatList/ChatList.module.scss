@@ -1,0 +1,30 @@
+@use '../../../../styles/tokens' as tokens;
+
+.chatList {
+  min-width: 0;
+  color: var(--ui-text-color);
+  font-size: tokens.$font-size-caption;
+  line-height: tokens.$chat-line-height;
+  overflow-wrap: anywhere;
+
+  &__status {
+    margin: 0;
+    color: var(--ui-muted-color);
+
+    &:not(:empty) {
+      padding: tokens.$space-xs tokens.$account-header-padding-inline;
+    }
+  }
+
+  &__items {
+    margin: 0;
+    padding: 0 tokens.$space-xs;
+    list-style: none;
+  }
+
+  &__empty {
+    margin: 0;
+    padding: tokens.$space-xs tokens.$account-header-padding-inline;
+    color: var(--ui-muted-color);
+  }
+}
