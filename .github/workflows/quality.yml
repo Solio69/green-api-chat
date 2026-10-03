@@ -1,0 +1,73 @@
+name: Quality
+
+on:
+  push:
+    branches: [main, refactor]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  quality:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Check runtime
+        run: |
+          mkdir -p test-results/quality
+          node --version | tee test-results/quality/runtime.log
+          npm --version | tee -a test-results/quality/runtime.log
+          node -e "if (process.versions.node.split('.')[0] !== '24') process.exit(1)"
+          test "$(npm --version | cut -d. -f1)" = "11"
+
+      - name: Install dependencies
+        run: npm ci 2>&1 | tee test-results/quality/install.log
+
+      - name: Check types
+        run: npm run typecheck 2>&1 | tee test-results/quality/types.log
+
+      - name: Lint TypeScript
+        run: npm run lint 2>&1 | tee test-results/quality/lint.log
+
+      - name: Lint styles
+        run: npm run lint:styles 2>&1 | tee test-results/quality/styles.log
+
+      - name: Check formatting
+        run: npm run format:check 2>&1 | tee test-results/quality/format.log
+
+      - name: Run Vitest
+        run: npm test 2>&1 | tee test-results/quality/vitest.log
+
+      - name: Run integration tests
+        run: npm run test:integration 2>&1 | tee test-results/quality/integration.log
+
+      - name: Upload quality logs
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: quality-${{ github.run_attempt }}
+          path: test-results/quality/
+          retention-days: 7
+          if-no-files-found: warn
