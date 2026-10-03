@@ -1,5 +1,5 @@
+import type { AccountSettingsResult } from '@/features/account/server'
 import { HOME_RESULT_KIND } from '@/features/auth/model'
-import type { AccountSettingsResult } from '@/lib/green-api/get-account-settings'
 import type { InstanceCredentials } from '@/lib/green-api/get-state'
 import { API_ERROR_CODE } from '@/lib/api/constants'
 import { GREEN_API_STATES } from '@/lib/green-api/constants'

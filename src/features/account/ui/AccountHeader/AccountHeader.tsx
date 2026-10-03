@@ -1,7 +1,7 @@
+import type { AccountProfile } from '@/features/account/model'
+import { AccountAvatar } from '@/features/account/ui/AccountAvatar'
 import { LogoutButton } from '@/features/auth/ui'
-import type { AccountProfile } from '@/lib/account/types'
 import { ACCOUNT_HEADER_COPY } from './constants'
-import { AccountAvatar } from '@/components/AccountAvatar'
 import styles from './AccountHeader.module.scss'
 
 const { REGION_LABEL, DEFAULT_LABEL, CONNECTED } = ACCOUNT_HEADER_COPY

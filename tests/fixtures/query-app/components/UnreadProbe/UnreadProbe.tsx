@@ -1,10 +1,10 @@
 'use client'
 
 import { StrictMode } from 'react'
+import { AccountHeader } from '@/features/account/ui'
 import { RecipientSearchForm } from '@/features/recipients/ui'
 import { useUnreadCounts } from '@/lib/unread/use-unread-counts'
 import { EMPTY_STRING } from '@/lib/ui/constants'
-import { AccountHeader } from '@/components/AccountHeader'
 import { ChatHistoryPanel } from '@/components/ChatHistoryPanel'
 import { ChatListPanel } from '@/components/ChatListPanel'
 import { ChatWorkspace } from '@/components/ChatWorkspace'

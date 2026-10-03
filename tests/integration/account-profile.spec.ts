@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { normalizeAccountProfile } from '@/lib/account/normalize-profile'
+import { normalizeAccountProfile } from '@/features/account/model'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import { ACCOUNT_CONTRACT, ACCOUNT_SCENARIOS, CREDENTIALS } from '../constants'
 

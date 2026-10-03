@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { getAccountSettings } from '@/lib/green-api/get-account-settings'
+import { getAccountSettings } from '@/features/account/server'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import {
   ACCOUNT_CONTRACT,

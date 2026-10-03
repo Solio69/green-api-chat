@@ -1,14 +1,18 @@
 import type { AccountProfile } from './types'
 import { isRecord } from '@/lib/api/is-record'
-import type { InstanceCredentials } from '@/lib/green-api/get-state'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import { ACCOUNT_AVATAR_URL } from './constants'
 
 const { PROTOCOL, ABSOLUTE_PREFIX } = ACCOUNT_AVATAR_URL
 
+type CredentialsForFiltering = {
+  idInstance: string
+  apiTokenInstance: string
+}
+
 type NormalizeAccountProfileOptions = {
   value: unknown
-  credentials: InstanceCredentials
+  credentials: CredentialsForFiltering
 }
 
 const readText = (value: unknown): string =>
@@ -19,7 +23,7 @@ const containsCredentials = ({
   credentials,
 }: {
   value: string
-  credentials: InstanceCredentials
+  credentials: CredentialsForFiltering
 }): boolean => {
   let decoded = value
   try {
@@ -45,7 +49,7 @@ const readDisplayText = ({
   credentials,
 }: {
   value: unknown
-  credentials: InstanceCredentials
+  credentials: CredentialsForFiltering
 }): string => {
   const text = readText(value)
   if (containsCredentials({ value: text, credentials })) return EMPTY_STRING

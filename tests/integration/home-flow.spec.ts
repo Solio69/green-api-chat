@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 import { GET as endSession } from '@/app/api/auth/end-session/route'
+import type { AccountSettingsResult } from '@/features/account/server'
 import { resolveHome } from '@/features/auth/application'
-import type { AccountSettingsResult } from '@/lib/green-api/get-account-settings'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import {
   CREDENTIALS,
