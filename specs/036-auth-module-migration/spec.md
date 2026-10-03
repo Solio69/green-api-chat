@@ -2,7 +2,7 @@
 
 **Feature Directory**: specs/036-auth-module-migration
 **Created**: 2026-10-03
-**Status**: Код перенесён; локальные проверки прошли, CI ожидается
+**Status**: Выполнено; локальные проверки и обе CI jobs прошли
 **User Approval**: Функциональные модули и полный последовательный цикл согласованы в переписке.
 **Workflow Mode**: Standard. Полный комплект → анализ → код → проверки/review → commit/push.
 **Implementation Authorization**: Пользователь разрешил этому чату самостоятельные commit/push в refactor и поручил завершить задачи 030–055 без остановок.
