@@ -48,8 +48,30 @@
   }
 
   @media (max-width: tokens.$chat-mobile-breakpoint) {
+    display: grid;
+    grid-template-areas:
+      'back back close'
+      'avatar identity identity';
+    grid-template-columns: auto minmax(0, 1fr) auto;
     gap: tokens.$space-xs;
     padding-inline: tokens.$space-sm;
+
+    > :first-child {
+      grid-area: back;
+    }
+
+    > :last-child {
+      grid-area: close;
+    }
+
+    &__avatar {
+      grid-area: avatar;
+    }
+
+    &__identity {
+      grid-area: identity;
+      min-width: 0;
+    }
 
     &__heading {
       @include mixins.truncate-line;

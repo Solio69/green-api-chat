@@ -29,6 +29,10 @@ C8 PASS: штатные Playwright configs и один browser job, без но�
 - playwright.query.config.ts — HTML query report в test-results/query-report.
 - tests/e2e/fixtures/fake-green-api.ts — fail-fast на неожиданном GREEN-API origin.
 - tests/e2e/conversation-selection.spec.ts — детерминированная проверка фокуса.
+- src/components/ConversationHeader/ConversationHeader.module.scss — мобильная
+  grid-раскладка: кнопки сверху, avatar и сжимаемое имя снизу.
+- tests/query/unread-indicators.spec.ts — положение кнопок и отсутствие
+  горизонтальной прокрутки открытого чата на 320/390 px.
 - src/components/ChatWorkspace/use-workspace-focus.ts — fallback window resize
   с cleanup; точное исправление после Red.
 - README.md — наборы и browser CI.
