@@ -105,6 +105,15 @@ jobs:
       - name: Run query browser tests
         run: npm run test:query -- --output=test-results/query 2>&1 | tee test-results/browser/query.log
 
+      - name: Inject browser failure control
+        run: |
+          printf '%s\n' \
+            "import { test, expect } from '@playwright/test'" \
+            "test('CI browser failure control', async ({ page }) => {" \
+            "  await page.goto('/login')" \
+            "  await expect(page.getByRole('heading', { name: 'CI browser failure control' })).toBeVisible({ timeout: 1000 })" \
+            "})" > tests/e2e/ci-browser-failure.spec.ts
+
       - name: Run production browser tests
         run: npm run test:e2e -- --output=test-results/e2e 2>&1 | tee test-results/browser/e2e.log
 
