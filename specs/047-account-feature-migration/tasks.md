@@ -8,7 +8,7 @@ Input: [spec](spec.md), [plan](plan.md), [research](research.md), [model](data-m
 - [x] T004 Перенести `lib/account` в `features/account/model`, оба компонента в `features/account/ui`; добавить public entries model/ui/server; обновить get-account-settings, auth/application, app, Query fixture и тестовые импорты без изменения контракта.
 - [x] T005 Выполнить Green и Refactor: проверить полный/частичный/ошибочный профиль, `resolveHome`, avatar fallback, темизацию, отсутствие credentials/DTO в UI и импортов server runtime в client.
 - [x] T006 Выполнить typecheck/lint/styles/format, Vitest/integration/Query/E2E, post-analyze, diff/secret review; оформить verification.md.
-- [ ] T007 Предкоммитное review, commit/push `refactor`, обе GitHub CI jobs на кодовом SHA; обновить spec/tasks/roadmap/verification и проверить CI документационного SHA.
+- [x] T007 Предкоммитное review, commit/push `refactor`, обе GitHub CI jobs на кодовом SHA; обновить spec/tasks/roadmap/verification и проверить CI документационного SHA.
 
 035 + 037 → T001 → T002 → T003 → T004 → T005 → T006 → T007. Изменений бизнес-логики или server-контракта нет, поэтому искусственный Red не требуется. Если при реализации понадобится поведение вне существующего контракта, для него до кода нужны отдельный тест и поведенческий Red.
 
