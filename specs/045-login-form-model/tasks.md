@@ -8,7 +8,7 @@ Input: [spec](spec.md), [plan](plan.md), [research](research.md), [модель]
 - [x] T004 Добавить `features/auth/ui/LoginForm/{request-login,use-login-form}.ts` и `features/auth/ui/LogoutButton/{request-logout,use-logout}.ts`; перенести четыре auth-компонента из `src/components` в `features/auth/ui`, обновить публичный entry и внешние импорты; оставить LoginForm/LogoutButton отображением. Сохранить DOM/API и выполнить targeted Green.
 - [x] T005 Refactor компонентов, проверить double submit, отказ/повтор, фокус, reveal, keyboard, prehydration/credential safety, logout/cookie и поздний ответ. Исправлять только доказанные расхождения.
 - [x] T006 Повторный read-only analyze, typecheck/lint/styles/format, полный Vitest/integration/Query/production E2E, client/server graph, `git diff --check`, проверка секретов; записать verification.md.
-- [ ] T007 Предкоммитное review точного diff, commit/push `refactor`, обе GitHub CI jobs на кодовом SHA; обновить roadmap/spec/verification и подтвердить CI итогового документационного SHA.
+- [x] T007 Предкоммитное review точного diff, commit/push `refactor`, обе GitHub CI jobs на кодовом SHA; обновить roadmap/spec/verification и подтвердить CI итогового документационного SHA.
 
 044 + 036 + 030 → T001 → T002 → T003 Red → T004 Green → T005 Refactor → T006 → T007.
 
