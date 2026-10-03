@@ -1,6 +1,6 @@
 import { resolveSearchResult, searchErrorResponse } from './resolve-search'
-import { parseSearchRequest } from './validate-search'
-import type { RecipientQuery } from './validate-search'
+import { parseSearchRequest } from '@/features/recipients/model'
+import type { RecipientQuery } from '@/features/recipients/model'
 import type { CheckAccountResult } from '@/lib/green-api/check-account'
 import type { InstanceCredentials } from '@/lib/green-api/get-state'
 import { isJsonMediaType, readUnboundedJsonBody } from '@/server/http'

@@ -1,9 +1,9 @@
 import { expect, test } from '@playwright/test'
 import { handleLoginRequest } from '@/features/auth/server'
+import { handleSearchRequest } from '@/features/recipients/server'
 import { handleChatsRequest } from '@/lib/chats/handle-chats-request'
 import { handleHistoryRequest } from '@/lib/history/handle-history-request'
 import { handleNotificationRequest } from '@/lib/notifications/handle-notification-request'
-import { handleSearchRequest } from '@/lib/recipients/handle-search-request'
 import { handleSendRequest } from '@/lib/sending/handle-send-request'
 import { HISTORY_TEST } from '../history/constants'
 

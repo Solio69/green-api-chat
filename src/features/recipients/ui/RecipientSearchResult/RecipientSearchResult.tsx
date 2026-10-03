@@ -1,5 +1,5 @@
-import { RECIPIENT_COPY } from '@/components/RecipientSearchForm/constants'
-import { RECIPIENT_RESULT_KIND } from '@/lib/recipients/constants'
+import { RECIPIENT_RESULT_KIND } from '@/features/recipients/model'
+import { RECIPIENT_COPY } from '@/features/recipients/ui/RecipientSearchForm/constants'
 import { HTML_VALUES } from '@/lib/ui/constants'
 import styles from './RecipientSearchResult.module.scss'
 

@@ -1,10 +1,10 @@
 import type { InstanceCredentials } from './get-state'
 import { fetchGreenApi } from './transport'
+import type { RecipientQuery } from '@/features/recipients/model'
+import { RECIPIENT_RESULT_KIND } from '@/features/recipients/model'
 import { isRecord } from '@/lib/api/is-record'
-import type { RecipientQuery } from '@/lib/recipients/validate-search'
 import { API_ERROR_CODE } from '@/lib/api/constants'
 import { HTTP_METHOD, HTTP_STATUS } from '@/lib/http/constants'
-import { RECIPIENT_RESULT_KIND } from '@/lib/recipients/constants'
 import { GREEN_API_BAD_REQUEST, GREEN_API_CONFIG } from './constants'
 
 const {

@@ -1,8 +1,8 @@
 'use client'
 
 import type { Ref } from 'react'
+import { RECIPIENT_VALIDATION } from '@/features/recipients/model'
 import { useUnreadCounts } from '@/lib/unread/use-unread-counts'
-import { RECIPIENT_VALIDATION } from '@/lib/recipients/constants'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import { CONVERSATION_COPY } from './constants'
 import { ConversationBackButton } from '@/components/ConversationBackButton'

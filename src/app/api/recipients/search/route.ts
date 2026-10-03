@@ -1,5 +1,5 @@
+import { handleSearchRequest } from '@/features/recipients/server'
 import { checkAccount } from '@/lib/green-api/check-account'
-import { handleSearchRequest } from '@/lib/recipients/handle-search-request'
 import { readRouteSession } from '@/server/session'
 
 export const POST = async (request: Request): Promise<Response> => {

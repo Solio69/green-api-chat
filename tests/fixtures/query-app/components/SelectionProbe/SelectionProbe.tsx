@@ -1,6 +1,7 @@
 'use client'
 
 import { StrictMode, useState } from 'react'
+import { RecipientSearchForm } from '@/features/recipients/ui'
 import { EMPTY_STRING, HTML_VALUES } from '@/lib/ui/constants'
 import { ChatListPanel } from '@/components/ChatListPanel'
 import { ChatWorkspace } from '@/components/ChatWorkspace'
@@ -9,7 +10,6 @@ import {
   QueryProvider,
   useOptionalQuerySession,
 } from '@/components/QueryProvider'
-import { RecipientSearchForm } from '@/components/RecipientSearchForm'
 import {
   CONVERSATION_FIXTURES,
   SELECTION_PROBE_COPY,

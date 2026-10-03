@@ -1,9 +1,9 @@
 'use client'
 
 import { useId } from 'react'
+import { RECIPIENT_VALIDATION } from '@/features/recipients/model'
 import type { PersonalChat } from '@/lib/chats/types'
 import type { ConversationTarget } from '@/lib/conversations/types'
-import { RECIPIENT_VALIDATION } from '@/lib/recipients/constants'
 import { HTML_VALUES } from '@/lib/ui/constants'
 import { ChatUnreadBadge } from '@/components/ChatUnreadBadge'
 import styles from './ChatListItem.module.scss'

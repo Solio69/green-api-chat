@@ -144,7 +144,7 @@ src/components/RecipientSearchField/index.ts,source,recipients,src/features/reci
 src/components/RecipientSearchForm/RecipientSearchForm.module.scss,source,recipients,src/features/recipients/ui/RecipientSearchForm,046,move,Feature UI; preserve component contract and accessibility
 src/components/RecipientSearchForm/RecipientSearchForm.tsx,source,recipients,src/features/recipients/ui/RecipientSearchForm,046,move,Feature UI; preserve component contract and accessibility
 src/components/RecipientSearchForm/constants.ts,source,recipients,src/features/recipients/ui/RecipientSearchForm,046,move,Feature UI; preserve component contract and accessibility
-src/components/RecipientSearchForm/format-recipient-label.ts,source,recipients,src/features/recipients/ui/RecipientSearchForm,046,move,Feature UI; preserve component contract and accessibility
+src/components/RecipientSearchForm/format-recipient-label.ts,source,recipients,src/features/recipients/model,046,move,Pure recipient label formatting without React or server runtime
 src/components/RecipientSearchForm/index.ts,source,recipients,src/features/recipients/ui/RecipientSearchForm,046,move,Feature UI; preserve component contract and accessibility
 src/components/RecipientSearchHint/RecipientSearchHint.module.scss,source,recipients,src/features/recipients/ui/RecipientSearchHint,046,move,Feature UI; preserve component contract and accessibility
 src/components/RecipientSearchHint/RecipientSearchHint.tsx,source,recipients,src/features/recipients/ui/RecipientSearchHint,046,move,Feature UI; preserve component contract and accessibility
@@ -231,7 +231,7 @@ src/lib/query/create-query-session.ts,source,shared,src/shared/query,044,move,Ne
 src/lib/query/session-query-error.ts,source,shared,src/shared/query,044,move,Neutral client Query runtime
 src/lib/recipients/constants.ts,source,recipients,src/features/recipients/model,046,move,Recipient validation/search contract
 src/lib/recipients/handle-search-request.ts,source,recipients,src/features/recipients/server,046,move,Recipient validation/search contract
-src/lib/recipients/resolve-search.ts,source,recipients,src/features/recipients/model,046,move,Recipient validation/search contract
+src/lib/recipients/resolve-search.ts,source,recipients,src/features/recipients/server,046,move,Recipient validation/search contract
 src/lib/recipients/validate-search.ts,source,recipients,src/features/recipients/model,046,move,Recipient validation/search contract
 src/lib/routes/constants.ts,source,shared,src/shared/kernel/routes,054,move,Move only neutral protocol/UI constants; no feature runtime dependency
 src/lib/sending/constants.ts,source,conversation,src/features/conversation/sending,039,split,Split send domain contract from transport/runtime configuration

@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
+import { parseSearchRequest } from '@/features/recipients/model'
+import { handleSearchRequest } from '@/features/recipients/server'
 import type { InstanceCredentials } from '@/lib/green-api/get-state'
-import { handleSearchRequest } from '@/lib/recipients/handle-search-request'
-import { parseSearchRequest } from '@/lib/recipients/validate-search'
 import { HTTP_HEADERS, HTTP_METHOD } from '@/lib/http/constants'
 import { EMPTY_STRING } from '@/lib/ui/constants'
 import {

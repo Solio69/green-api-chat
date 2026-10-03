@@ -1,4 +1,4 @@
-import { RECIPIENT_COPY } from '@/components/RecipientSearchForm/constants'
+import { RECIPIENT_COPY } from '@/features/recipients/ui/RecipientSearchForm/constants'
 import { HTML_VALUES } from '@/lib/ui/constants'
 import styles from './RecipientSearchModeSwitch.module.scss'
 

@@ -1,6 +1,8 @@
 import { expect, test } from 'vitest'
-import { parseSearchRequest } from '@/lib/recipients/validate-search'
-import { formatRecipientLabel } from '@/components/RecipientSearchForm/format-recipient-label'
+import {
+  parseSearchRequest,
+  formatRecipientLabel,
+} from '@/features/recipients/model'
 
 test('recipient label: displays the normalized submitted username', () => {
   const query = parseSearchRequest({ mode: 'username', value: 'demo_user' })

@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { expect, test, vi } from 'vitest'
+import { RecipientSearchResult } from '@/features/recipients/ui/RecipientSearchResult'
 import {
   CONVERSATION_FIXTURES,
   RECIPIENT_CONTRACT,
   RECIPIENT_SCENARIOS,
 } from '../constants'
-import { RecipientSearchResult } from '@/components/RecipientSearchResult'
 
 const { recipientChatId } = CONVERSATION_FIXTURES
 const { FOUND, WRITE } = RECIPIENT_CONTRACT
