@@ -9,7 +9,7 @@ Input: [spec.md](spec.md), [plan.md](plan.md), [матрица](research.md), [c
 - [x] T005 Перевести `src/lib/green-api/{get-state,get-account-settings,get-chats,get-chat-history,check-account}.ts` на transport, сохранив порядок и количество повторов, отмену тела 429 только там, где она есть, сигналы и публичные результаты. Запустить целевые integration-тесты.
 - [x] T006 Перевести `src/lib/green-api/{send-message,notification-request}.ts`, а через последний settings/receive/delete; сохранить deadline-only после dispatch и zero retry у SendMessage, parsing Retry-After и Delete false. Запустить целевые integration-тесты.
 - [x] T007 Провести Refactor и повторный read-only analyze; выполнить typecheck/lint/styles/format, полный Vitest/integration/query/production E2E, server/client graph, diff и secret review; записать verification.
-- [ ] T008 Провести предкоммитное review, commit/push `refactor`, подтвердить обе GitHub jobs на SHA кода, обновить roadmap/spec/verification и проверить CI итогового документационного SHA.
+- [x] T008 Провести предкоммитное review, commit/push `refactor`, подтвердить обе GitHub jobs на SHA кода, обновить roadmap/spec/verification и проверить CI итогового документационного SHA.
 
 038 → T001 → T002 → T003 Red → T004 Green → T005 → T006 → T007 Refactor/verification → T008.
 

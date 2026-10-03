@@ -1,6 +1,6 @@
 # Проверка 039: общий транспорт GREEN-API
 
-Дата: 2026-10-03. Локальная реализация и регрессия завершены; GitHub CI фиксируется после commit/push.
+Дата: 2026-10-03. Локальная реализация и регрессия завершены; GitHub CI Passed на `c2764f934271395aca7afc2d24e451d9b6dbd2f4`.
 
 | Проверка | Результат |
 | --- | --- |
@@ -19,6 +19,8 @@
 | Граф Client Components → server auth/session/http/transport | Passed: 28 roots, 226 source TS/TSX, запрещённых runtime-путей 0; type-only edges исключены |
 | Повторный read-only анализ | Passed: 883 пути, SHA-256 до/после `73d244e30689682cf21d143794222e9a08141e899746286bac1280139f45c4dd`, unchanged; findings 0 |
 | `git diff --check` | Passed |
-| GitHub Actions quality/browser | NotRun до commit/push |
+| GitHub Actions quality/browser | Passed: обе jobs [run 37132597823](https://github.com/Solio69/green-api-chat/actions/runs/37132597823), artifacts `quality-1` и `browser-1` |
 
 Общий transport делает один fetch и возвращает сырой Response. URL с токеном не логируется. GetState/Account, Chats/History, CheckAccount, SendMessage и notificationRequest сохраняют собственные retry, deadline, cancellation и классификацию ошибок. Notification deadline равен исходным 8 секундам; все остальные операции — исходным 10 секундам. После dispatch SendMessage не повторяется и не связывается с caller abort. В тестах применяются только фиктивные credentials.
+
+Итоговый документационный SHA проверяется отдельно после push.
