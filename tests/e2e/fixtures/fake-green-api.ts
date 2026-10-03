@@ -32,6 +32,8 @@ const {
 } = NOTIFICATION_FIXTURE
 
 const HOST = 'https://4100.api.green-api.com'
+const PROVIDER_HOST = 'api.green-api.com'
+const UNEXPECTED_PROVIDER_ORIGIN = 'Unexpected GREEN-API origin in E2E fixture'
 const INSTANCE_PATH = /^\/waInstance([^/]+)\/([^/]+)\/[^/]+(?:\/(\d+))?$/
 const STATE_METHOD = 'getStateInstance'
 const ACCOUNT_METHOD = 'getAccountSettings'
@@ -141,7 +143,13 @@ const fakeGreenApiFetch = async (
 ): Promise<Response> => {
   const requestUrl = input instanceof Request ? input.url : String(input)
   const url = new URL(requestUrl)
-  if (url.origin !== HOST) return originalFetch(input, init)
+  if (url.origin !== HOST) {
+    const isProviderHost =
+      url.hostname === PROVIDER_HOST ||
+      url.hostname.endsWith(`.${PROVIDER_HOST}`)
+    if (isProviderHost) throw new Error(UNEXPECTED_PROVIDER_ORIGIN)
+    return originalFetch(input, init)
+  }
 
   const path = INSTANCE_PATH.exec(url.pathname)
   const id = path?.[1]

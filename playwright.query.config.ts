@@ -8,7 +8,10 @@ export default defineConfig({
   forbidOnly: true,
   timeout: 15_000,
   expect: { timeout: 3_000 },
-  reporter: [['list']],
+  reporter: [
+    ['list'],
+    ['html', { open: 'never', outputFolder: 'test-results/query-report' }],
+  ],
   outputDir: 'test-results/query',
   use: {
     baseURL: 'http://127.0.0.1:3102',

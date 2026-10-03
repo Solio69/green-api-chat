@@ -325,8 +325,12 @@ ESLint, Stylelint, Prettier, Vitest и интеграционные тесты P
 Логи каждой команды доступны в шаге Actions и в artifact quality-<run_attempt>
 в течение 7 дней, включая неуспешные проверки. Устаревший запуск той же ветки
 отменяется. Ручной workflow_dispatch станет доступен после включения workflow
-в основную ветку main. Браузерные CI-проверки добавляются отдельным этапом 034.
-Приёмка и ссылки на фактические запуски: [033](specs/033-ci-quality-pipeline/verification.md).
+в основную ветку main. Отдельная browser job устанавливает Chromium с
+системными библиотеками. Она последовательно запускает query-стенд и
+E2E production-приложения и сохраняет
+HTML-отчёты, traces и скриншоты в artifact browser-<run_attempt>.
+Общий запуск успешен только при успехе обеих jobs.
+Приёмка и ссылки на фактические запуски: [033](specs/033-ci-quality-pipeline/verification.md) и [034](specs/034-ci-browser-pipeline/verification.md).
 
 ## Ограничения и размещение
 

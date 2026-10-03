@@ -85,7 +85,11 @@ export const useWorkspaceFocus = ({
     const observer = new ResizeObserver(recoverFocus)
     observer.observe(sidebar)
     observer.observe(pane)
-    return () => observer.disconnect()
+    window.addEventListener('resize', recoverFocus)
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', recoverFocus)
+    }
   }, [])
 
   useEffect(() => {
