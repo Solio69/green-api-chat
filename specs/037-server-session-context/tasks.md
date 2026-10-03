@@ -8,7 +8,7 @@ Input: [spec.md](spec.md), [plan.md](plan.md), [contract](contracts/server-sessi
 - [x] T004 Перенести `src/lib/auth/session.ts` в `src/server/session/iron-session.ts`; реализовать `types.ts`, `read-request-session.ts` и server entry, убрать старый type-only import в `get-query-scope.ts`; довести T003 до Green без изменения cookie.
 - [x] T005 Реализовать read-only page и route adapter в `src/server/session`; перевести `src/app/page.tsx`, auth login, chats, history, recipients, messages и notification route; удалить `src/lib/notifications/request-context.ts`. Сохранить password только для notification ACK и старые HTTP/redirect контракты.
 - [x] T006 Выполнить Refactor и повторить unit Green, typecheck, lint/styles/format, весь Vitest, integration/query/production E2E; проверить client/server graph, независимость messages от notifications, отсутствие legacy session imports, точный diff и реальные секреты.
-- [ ] T007 Повторить read-only analyze, обновить verification/spec/roadmap, провести предкоммитное ревью, commit/push `refactor`, подтвердить обе GitHub jobs на head_sha и итоговом docs SHA.
+- [x] T007 Повторить read-only analyze, обновить verification/spec/roadmap, провести предкоммитное ревью, commit/push `refactor`, подтвердить обе GitHub jobs на head_sha и итоговом docs SHA.
 
 036 → T001 → T002 → T003 Red → T004 Green → T005 → T006 Refactor/verification → T007.
 

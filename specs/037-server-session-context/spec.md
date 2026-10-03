@@ -2,7 +2,7 @@
 
 **Feature Directory**: specs/037-server-session-context
 **Created**: 2026-10-03
-**Status**: Код и локальные проверки выполнены; удалённый CI ожидается
+**Status**: Выполнено; локальные проверки и обе CI jobs прошли
 **User Approval**: Направление и последовательный полный цикл согласованы в переписке.
 **Workflow Mode**: Standard. Полный комплект → анализ → Red/Green/Refactor → review → commit/push.
 **Implementation Authorization**: Пользователь разрешил этому чату полный рефакторинг 030–055 и самостоятельные commit/push в refactor.

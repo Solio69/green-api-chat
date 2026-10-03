@@ -1,6 +1,6 @@
 # Проверка 037: единый серверный контекст
 
-Дата: 2026-10-03. Локальная реализация и проверки завершены; удалённый CI NotRun до push.
+Дата: 2026-10-03. Локальная реализация и проверки завершены; удалённый CI Passed на `c9d5f5dafeeea332e41e1f907efe2ab17077d407`.
 
 | Проверка | Результат |
 | --- | --- |
@@ -17,9 +17,9 @@
 | ESLint, Stylelint, Prettier | Passed |
 | Граф Client Components → auth/server и server/session | Passed: 28 roots, 218 source TS/TSX; запрещённых путей 0 |
 | Старые session/notification пути | Passed: импортов `@/lib/auth/session`, `readNotificationContext`, `request-context` в src/tests 0 |
-| GitHub Actions quality/browser | NotRun |
+| GitHub Actions quality/browser | Passed: обе jobs [run 37127671609](https://github.com/Solio69/green-api-chat/actions/runs/37127671609), отчёты `quality-1` и `browser-1` |
 | Предкоммитный review | Passed: 28 staged files, `git diff --cached --check` чист; перенос 97%-rename, удалён только duplicate notification reader, новые tests/Spec Kit в объёме 037 |
 
 Сессия по-прежнему в cookie с теми же 24 часами, HttpOnly/SameSite Lax и Secure в production. `readRequestSession` различает три состояния без cookie write и не отдаёт секрет; `readRouteSession` замыкает удаление на cookie store конкретного запроса. `readPageSession` имеет только чтение. `messages/route.ts` больше не зависит от notifications для сессии. HTTP-коды, редиректы и ответы проверены regression suite.
 
-Удалённый CI и head_sha будут добавлены после публикации.
+Итоговый документационный коммит проверяется отдельно на фактическом head_sha.
