@@ -24,4 +24,4 @@
 
 Сетевой runtime выполняет один последовательный settings/receive/ACK-цикл и сохраняет proof до подтверждения или expiry. Контроллер владеет Web Lock, поколением, abort, подписками и моделью 040; поздние settings/receive/ACK не применяются после закрытия. HTTP-date Retry-After, jitter/backoff и throttled refresh имеют управляемые зависимости для теста с прежними production defaults. Серверный protocol, UI и данные переписки не менялись. Тесты используют фиктивные scope/proof.
 
-Playwright Query, integration и E2E запускались последовательно из-за пересекающихся каталогов артефактов; исправление этой организации остаётся в задаче 050. Итоговый документационный SHA проверяется отдельно после push.
+Playwright Query, integration и E2E запускались последовательно из-за пересекающихся каталогов артефактов; исправление этой организации остаётся в задаче 050. Итоговый документационный SHA `4d7357f396de0c0b721eaeeba409b91f63e33b8a` прошёл обе [CI jobs](https://github.com/Solio69/green-api-chat/actions/runs/37137732947).

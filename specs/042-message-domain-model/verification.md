@@ -1,6 +1,6 @@
 # Проверка 042: чистая модель сообщений и статусов
 
-Дата: 2026-10-03. Локальная реализация, регрессия и предкоммитный анализ завершены; GitHub CI ожидает commit/push.
+Дата: 2026-10-03. Локальная реализация, регрессия и предкоммитный анализ завершены; GitHub CI Passed на SHA кода `7f3a38fc266c5716c02857fb60cf52dffb0fbc19`.
 
 | Проверка | Результат |
 | --- | --- |
@@ -19,7 +19,7 @@
 | Граф Client Components → server runtime | Passed: 28 client roots, 228 source TS/TSX, запрещённых runtime-путей 0 |
 | Повторный read-only анализ | Passed: 915 путей, SHA-256 до/после `cfcf5b11fb540d644798a64c38d35291cde877d0f8114555d6bd665571d01c5e`, unchanged; findings 0 |
 | `git diff --check` | Passed |
-| GitHub Actions quality/browser | NotRun до push кода |
+| GitHub Actions quality/browser | Passed: обе jobs [run 37139125512](https://github.com/Solio69/green-api-chat/actions/runs/37139125512), artifacts `quality-1` и `browser-1` |
 
 Модель принимает проверенные факты с явным источником, использует пару chatId/idMessage для сообщений, ранних статусов и provenance. Совместимый адаптер сохраняет прежние вызовы кеша. Непроверенные assertions в обработке статусов заменены явными guards. Тесты подтверждают приоритеты источников, монотонность статуса, TTL/лимит ранних фактов, изоляцию чатов и отсутствие мутаций входов. Внешний DTO, HTTP API и UI не менялись.
 

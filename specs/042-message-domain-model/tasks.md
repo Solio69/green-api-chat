@@ -8,7 +8,7 @@ Input: [spec.md](spec.md), [plan.md](plan.md), [research.md](research.md), [мо
 - [x] T004 В `src/lib/messages/types.ts`, `merge-message-facts.ts` и при необходимости `validate-message.ts` ввести DTO/fact/view границу, source-tagged канонический merge, составной identity и совместимый adapter. Получить Green T003 без React/QueryClient и без изменения публичного DTO.
 - [x] T005 Убрать небезопасные `!`/casts в обработке ранних статусов и `normalize-message-status.ts` через явные guards. Проверить targeted 26 integration, атомарную валидацию cache и независимость чатов; не переносить Query orchestration 043.
 - [x] T006 Провести Refactor и повторный read-only analyze; выполнить typecheck/lint/styles/format, полный Vitest/integration/query/production E2E, client/server graph, `git diff --check`, отсутствие мутаций и секретов; записать verification.md.
-- [ ] T007 Предкоммитное review точного diff, commit/push `refactor`, обе GitHub jobs на SHA кода, обновить roadmap/spec/verification и подтвердить CI итогового документационного SHA.
+- [x] T007 Предкоммитное review точного diff, commit/push `refactor`, обе GitHub jobs на SHA кода, обновить roadmap/spec/verification и подтвердить CI итогового документационного SHA.
 
 041 → T001 → T002 → T003 Red → T004 Green → T005 → T006 Refactor/verification → T007.
 
