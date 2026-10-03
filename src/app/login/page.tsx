@@ -1,7 +1,6 @@
 import { AUTH_QUERY } from '@/features/auth/model'
-import { LOGIN_COPY } from '@/components/LoginForm/constants'
+import { LOGIN_COPY, LoginForm } from '@/features/auth/ui'
 import { HTML_VALUES } from '@/lib/ui/constants'
-import { LoginForm } from '@/components/LoginForm'
 import styles from './LoginPage.module.scss'
 
 const { HEADING, ACCESS_LOST: ACCESS_LOST_COPY } = LOGIN_COPY

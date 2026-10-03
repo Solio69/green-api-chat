@@ -1,10 +1,10 @@
 'use client'
 
 import { StrictMode, useState } from 'react'
+import { LogoutButton } from '@/features/auth/ui'
 import { useChats } from '@/lib/chats/use-chats'
 import { ChatListPanel } from '@/components/ChatListPanel'
 import { ConversationSelectionProvider } from '@/components/ConversationSelectionProvider'
-import { LogoutButton } from '@/components/LogoutButton'
 import { QueryProvider } from '@/components/QueryProvider'
 import { CHAT_FIXTURES } from '../../../../chats/constants'
 import { QUERY_PROBE_COPY, QUERY_PROBE_IDS } from '../../../../constants'
