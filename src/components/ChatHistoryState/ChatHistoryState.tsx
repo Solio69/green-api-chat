@@ -50,7 +50,10 @@ export const ChatHistoryState = ({
           className={styles.chatHistoryState__retry}
           type={BUTTON}
           disabled={isBusy}
-          onClick={onRetry}
+          onClick={() => {
+            // Query owns refetch errors; React does not await click handlers.
+            void onRetry()
+          }}
         >
           {isBusy ? RETRY_PENDING : RETRY}
         </button>

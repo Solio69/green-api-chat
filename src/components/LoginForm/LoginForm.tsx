@@ -146,7 +146,7 @@ export const LoginForm = () => {
   const handleTokenVisibilityToggle = () =>
     setIsTokenVisible((visible) => !visible)
 
-  const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
+  const submit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (requestPending.current) return
     setHasSubmitted(true)
@@ -192,6 +192,11 @@ export const LoginForm = () => {
       requestPending.current = false
       setIsSubmitting(false)
     }
+  }
+
+  // The operation handles request errors and resets pending state internally.
+  const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
+    void submit(event)
   }
 
   return (

@@ -56,7 +56,10 @@ const Controls = () => {
   const handleOpen = () => selection.openConversation(targetA)
   const handleBack = () => selection.showChatList()
   const handleClose = () => selection.closeConversation()
-  const handleEnd = () => session?.close()
+  // The session/Query hook owns completion and error state.
+  const handleEnd = () => {
+    void session?.close()
+  }
   const handleSeed = () =>
     session?.client.setQueryData(messagesKey, [knownMessage])
   const handleInspect = () =>

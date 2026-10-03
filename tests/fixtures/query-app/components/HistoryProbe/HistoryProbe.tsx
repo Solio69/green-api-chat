@@ -55,8 +55,14 @@ const HistoryControls = () => {
   const handleOpenB = () => openConversation(TARGET_B)
   const handleBack = () => showChatList()
   const handleClose = () => closeConversation()
-  const handleEnd = () => session?.close()
-  const handleRefresh = () => refetch()
+  // The session/Query hook owns completion and error state.
+  const handleEnd = () => {
+    void session?.close()
+  }
+  // The session/Query hook owns completion and error state.
+  const handleRefresh = () => {
+    void refetch()
+  }
   return (
     <>
       <button type={BUTTON} onClick={handleOpenA}>

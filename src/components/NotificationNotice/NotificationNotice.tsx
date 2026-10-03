@@ -52,7 +52,13 @@ export const NotificationNotice = () => {
       >
         <p>{copy}</p>
         {restricted && (
-          <button type={BUTTON} onClick={connection.retry}>
+          <button
+            type={BUTTON}
+            onClick={() => {
+              // The controller owns transport failures and recovery state.
+              void connection.retry()
+            }}
+          >
             {RETRY}
           </button>
         )}

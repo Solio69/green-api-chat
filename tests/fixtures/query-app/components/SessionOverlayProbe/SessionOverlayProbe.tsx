@@ -28,7 +28,10 @@ const OverlayControls = () => {
       source: ACCEPTED,
     })
   }
-  const handleRefresh = () => refetch()
+  // The session/Query hook owns completion and error state.
+  const handleRefresh = () => {
+    void refetch()
+  }
   return (
     <>
       <button type={BUTTON} onClick={handleAdd}>

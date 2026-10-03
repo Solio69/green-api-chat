@@ -63,7 +63,8 @@ export const createQuerySession = ({
     queryCache: new QueryCache({
       onError: (error) => {
         if (!(error instanceof SessionQueryError)) return
-        return handleSessionError(error)
+        // QueryCache does not await this callback; the session owns closing and navigation.
+        void handleSessionError(error)
       },
     }),
   })

@@ -51,7 +51,10 @@ export const MessageComposerFeedback = ({
               <button
                 type={BUTTON}
                 disabled={checkingHistory}
-                onClick={onCheckHistory}
+                onClick={() => {
+                  // The history hook keeps errors in Query state.
+                  void onCheckHistory()
+                }}
               >
                 {CHECK_HISTORY}
               </button>

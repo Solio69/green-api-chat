@@ -44,7 +44,10 @@ export const ChatListRecovery = ({
       className={styles.chatListRecovery__retry}
       type={BUTTON}
       disabled={isBusy}
-      onClick={onRetry}
+      onClick={() => {
+        // Query owns refetch errors; React does not await click handlers.
+        void onRetry()
+      }}
     >
       <svg
         className={styles.chatListRecovery__retryIcon}

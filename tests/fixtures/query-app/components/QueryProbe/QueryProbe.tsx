@@ -16,7 +16,10 @@ const { REFRESH, SWITCH_ACCOUNT, CONSUMERS, STRICT_MODE, RENDER, LOGOUT } =
 
 const Consumer = ({ id }: { id: string }) => {
   const { data, isPending, isFetching, error, refetch } = useChats()
-  const handleRefetch = () => refetch()
+  // The session/Query hook owns completion and error state.
+  const handleRefetch = () => {
+    void refetch()
+  }
   return (
     <section data-testid={id}>
       <output>

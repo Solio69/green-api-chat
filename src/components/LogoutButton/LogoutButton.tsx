@@ -28,7 +28,7 @@ export const LogoutButton = ({ label }: LogoutButtonProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [hasError, setHasError] = useState(false)
 
-  const handleLogoutSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
+  const logout = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (requestPending.current) return
     requestPending.current = true
@@ -53,6 +53,11 @@ export const LogoutButton = ({ label }: LogoutButtonProps) => {
       requestPending.current = false
       setIsSubmitting(false)
     }
+  }
+
+  // The operation handles request errors and resets pending state internally.
+  const handleLogoutSubmit = (event: SubmitEvent<HTMLFormElement>) => {
+    void logout(event)
   }
 
   return (
