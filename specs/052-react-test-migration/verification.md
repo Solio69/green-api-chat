@@ -25,4 +25,4 @@
 
 ## GitHub CI
 
-Кодовый коммит [`c214925dc53857b757675e6acfc914c0478d396a`](https://github.com/Solio69/green-api-chat/commit/c214925dc53857b757675e6acfc914c0478d396a) отправлен в `origin/refactor`. [Run 37160908926](https://github.com/Solio69/green-api-chat/actions/runs/37160908926) завершился `success`: `quality=success`, `browser=success`; сохранены артефакты `quality-1` и `browser-1`. Документационный коммит проверяется следующим CI run.
+Кодовый коммит [`c214925dc53857b757675e6acfc914c0478d396a`](https://github.com/Solio69/green-api-chat/commit/c214925dc53857b757675e6acfc914c0478d396a) отправлен в `origin/refactor`. [Run 37160908926](https://github.com/Solio69/green-api-chat/actions/runs/37160908926) завершился `success`: `quality=success`, `browser=success`; сохранены артефакты `quality-1` и `browser-1`. Документационный коммит [`aa9c716bd3f6001c875f06cb2c9356faff05b382`](https://github.com/Solio69/green-api-chat/commit/aa9c716bd3f6001c875f06cb2c9356faff05b382) также прошёл [CI run 37161301618](https://github.com/Solio69/green-api-chat/actions/runs/37161301618): `quality=success`, `browser=success`, артефакты `quality-1` и `browser-1`.
