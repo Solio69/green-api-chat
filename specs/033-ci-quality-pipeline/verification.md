@@ -14,7 +14,8 @@
 | npm run test:integration -- --output=test-results/integration | Passed: 351 тест; контрольный quality log сохранился |
 | Первый remote run | Job success и все команды Passed, но artifact отсутствует: ошибка в сохранении логов |
 | Повтор после исправления | Passed: run 37117733655 на a568c36, quality-1 artifact 11 337 bytes |
-| Remote negative/restore | NotRun |
+| Remote negative | Passed: run 37118087704 on a9b2d7e failed at TS2322; log artifact 11271958831 saved |
+| Remote restore | NotRun |
 | Manual dispatch / fork PR | NotRun, ограничения описаны в plan |
 
 Локальные команды выполнены 10:42–10:43 UTC, Node 24.14.1/npm 11.11.0.
@@ -29,3 +30,5 @@
 Первый run: https://github.com/Solio69/green-api-chat/actions/runs/37117418374, commit d1ccf99. Job success, но upload выдал No files were found. Причина: Playwright перед integration очищает общий test-results; логи находились внутри. Изолирован output каталога integration, отсутствие логов теперь ошибка upload. Проверка 10:49–10:50 UTC: 351/351, контрольный лог сохранён.
 
 Успешный run: https://github.com/Solio69/green-api-chat/actions/runs/37117733655. Job/все шаги success, artifact id 11272401600. Локальный TS2322 контроль: npm run typecheck Exit 2; файл удалён, продуктовый код не менялся. Следующий commit временно добавляет runner-only контроль к workflow.
+
+Ожидаемый failed run: https://github.com/Solio69/green-api-chat/actions/runs/37118087704, head a9b2d7e. Typecheck failure TS2322 по src/ci-typecheck-probe.ts:1, job/run failure. Upload quality logs success, artifact id 11271958831. Последующие проверки skipped по штатному fail-fast. Временный шаг удалён из рабочего workflow.
