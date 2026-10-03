@@ -19,6 +19,11 @@ export type MessageDTO = {
   acceptedAt: number | null
   status: ProviderMessageStatus | typeof MESSAGE_STATUS.ACCEPTED | null
 }
+export type MessageView = Readonly<MessageDTO>
+export type MessageFact = Readonly<{
+  message: MessageDTO
+  source: MessageSource
+}>
 export type ChatIssueFact = {
   chatId: string | null
   idMessage: string | null
@@ -26,7 +31,7 @@ export type ChatIssueFact = {
 }
 export type MessageApplyResult = { issues: ChatIssueFact[] }
 export type MessageCache = {
-  messages: MessageDTO[]
+  messages: MessageView[]
   contentSources?: Readonly<Record<string, MessageSource>>
 }
 export type MessageSource = (typeof MESSAGE_SOURCE)[keyof typeof MESSAGE_SOURCE]

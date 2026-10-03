@@ -14,32 +14,36 @@ export const normalizeMessageStatus = ({
   credentials: InstanceCredentials
 }): ProviderStatusFact | 'ignored' | null => {
   if (!isRecord(value)) return null
-  if (typeof value.status !== 'string') return null
+  const status = value.status
+  if (typeof status !== 'string') return null
   const known =
-    value.status === DELIVERED ||
-    value.status === READ ||
-    value.status === FAILED ||
-    value.status === NO_ACCOUNT
+    status === DELIVERED ||
+    status === READ ||
+    status === FAILED ||
+    status === NO_ACCOUNT
   if (!known) return 'ignored'
   const secrets = Object.values(credentials)
-  const hasChat = value.chatId !== undefined && value.chatId !== null
-  const hasId = value.idMessage !== undefined && value.idMessage !== null
-  const validChat =
-    !hasChat ||
-    (isChatId(value.chatId) &&
-      isSafeIdentifier({ value: value.chatId, secrets }))
-  const validId =
-    !hasId ||
-    (isChatId(value.idMessage) &&
-      isSafeIdentifier({ value: value.idMessage, secrets }))
-  if (!validChat) return null
-  if (!validId) return null
-  const outsidePersonalChat = hasChat && !isPersonalChatId(value.chatId)
-  if (outsidePersonalChat) return 'ignored'
-  const isFailure = value.status === FAILED || value.status === NO_ACCOUNT
-  const missingIdentity = !hasChat || !hasId
-  const unverifiableSuccess = !isFailure && missingIdentity
-  if (unverifiableSuccess) return null
+  const rawChatId = value.chatId
+  let chatId: string | null = null
+  if (rawChatId !== undefined && rawChatId !== null) {
+    const valid =
+      isChatId(rawChatId) && isSafeIdentifier({ value: rawChatId, secrets })
+    if (!valid) return null
+    chatId = rawChatId
+  }
+  const rawMessageId = value.idMessage
+  let idMessage: string | null = null
+  if (rawMessageId !== undefined && rawMessageId !== null) {
+    const valid =
+      isChatId(rawMessageId) &&
+      isSafeIdentifier({ value: rawMessageId, secrets })
+    if (!valid) return null
+    idMessage = rawMessageId
+  }
+  if (chatId !== null && !isPersonalChatId(chatId)) return 'ignored'
+  const isFailure = status === FAILED || status === NO_ACCOUNT
+  const missingIdentity = chatId === null || idMessage === null
+  if (!isFailure && missingIdentity) return null
   const validTimestamp =
     value.timestamp === undefined ||
     value.timestamp === null ||
@@ -48,9 +52,9 @@ export const normalizeMessageStatus = ({
       value.timestamp >= 0)
   if (!validTimestamp) return null
   return {
-    chatId: hasChat ? (value.chatId as string) : null,
-    idMessage: hasId ? (value.idMessage as string) : null,
-    status: value.status as ProviderStatusFact['status'],
+    chatId,
+    idMessage,
+    status,
     timestamp: typeof value.timestamp === 'number' ? value.timestamp : null,
   }
 }

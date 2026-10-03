@@ -1,5 +1,7 @@
 import type {
   MessageDTO,
+  MessageFact,
+  MessageView,
   MessageApplyResult,
   ChatIssueFact,
   MessageStatusFact,
@@ -7,6 +9,8 @@ import type {
   MessageSource,
   MessageCache,
 } from './types'
+import { isMessageDTO } from './validate-message'
+import { isPersonalChatId } from '@/lib/chats/validate-chat-id'
 import {
   MESSAGE_CACHE_CONFIG,
   MESSAGE_STATUS,
@@ -31,6 +35,9 @@ export const mergeMessageStatus = ({
   previous: Pick<MessageDTO, 'chatId' | 'idMessage' | 'status'>
   next: Pick<MessageDTO, 'chatId' | 'idMessage' | 'status'>
 }): { status: MessageDTO['status']; issue: ChatIssueFact | null } => {
+  const mismatchedIdentity =
+    previous.chatId !== next.chatId || previous.idMessage !== next.idMessage
+  if (mismatchedIdentity) throw new Error(MESSAGE_CACHE_CONFIG.INVALID_FACTS)
   const previousStatus = previous.status
   const nextStatus = next.status
   const previousFailure = isFailure(previousStatus)
@@ -64,40 +71,62 @@ const knownTime = (message: MessageDTO) =>
     ? message.acceptedAt
     : message.timestamp * MILLISECONDS_PER_SECOND
 
-export const mergeMessageFacts = ({
-  current,
-  messages,
-  source = HISTORY,
-  contentSources,
+export const messageIdentity = ({
+  chatId,
+  idMessage,
 }: {
-  current: MessageDTO[]
-  messages: MessageDTO[]
-  source?: MessageSource
+  chatId: string
+  idMessage: string
+}) => JSON.stringify([chatId, idMessage])
+
+export const mergeValidatedMessageFacts = ({
+  current,
+  facts,
+  contentSources,
+  trackSources = false,
+}: {
+  current: MessageView[]
+  facts: MessageFact[]
   contentSources?: MessageCache['contentSources']
+  trackSources?: boolean
 }): MessageCache & MessageApplyResult => {
+  const sourcesAllowed: readonly string[] = Object.values(MESSAGE_SOURCE)
+  const valid =
+    current.every((message) => isMessageDTO(message)) &&
+    facts.every(
+      ({ message, source }) =>
+        isMessageDTO(message) &&
+        isPersonalChatId(message.chatId) &&
+        sourcesAllowed.includes(source),
+    )
+  if (!valid) throw new Error(MESSAGE_CACHE_CONFIG.INVALID_FACTS)
   const records = new Map(
-    current.map((message) => [message.idMessage, { ...message }]),
+    current.map((message) => [messageIdentity(message), { ...message }]),
   )
   const issues: ChatIssueFact[] = []
   const sources = new Map(Object.entries(contentSources ?? {}))
-  const trackSources = contentSources !== undefined || source !== HISTORY
-  for (const message of messages) {
-    const previous = records.get(message.idMessage)
+  const shouldTrackSources =
+    trackSources ||
+    contentSources !== undefined ||
+    facts.some(({ source }) => source !== HISTORY)
+  for (const { message, source } of facts) {
+    const identity = messageIdentity(message)
+    const previous = records.get(identity)
     if (!previous) {
-      records.set(message.idMessage, { ...message })
-      if (trackSources) sources.set(message.idMessage, source)
+      records.set(identity, { ...message })
+      if (shouldTrackSources) sources.set(identity, source)
       continue
     }
     const { status, issue } = mergeMessageStatus({ previous, next: message })
     if (issue) issues.push(issue)
     const hasProviderTimestamp = previous.timestamp !== null
     const hasKnownText = previous.text !== null
-    const previousSource = sources.get(message.idMessage) ?? HISTORY
+    const previousSource = sources.get(identity) ?? HISTORY
     const replacesAccepted =
       previousSource === ACCEPTED_SOURCE && source !== ACCEPTED_SOURCE
     const keepKnownText =
       hasKnownText && (!replacesAccepted || message.text === null)
-    records.set(message.idMessage, {
+    records.set(identity, {
       ...message,
       timestamp: hasProviderTimestamp ? previous.timestamp : message.timestamp,
       acceptedAt: previous.acceptedAt ?? message.acceptedAt,
@@ -105,9 +134,9 @@ export const mergeMessageFacts = ({
       text: keepKnownText ? previous.text : (message.text ?? previous.text),
       status,
     })
-    if (trackSources)
+    if (shouldTrackSources)
       sources.set(
-        message.idMessage,
+        identity,
         sourceRank[source] > sourceRank[previousSource]
           ? source
           : previousSource,
@@ -123,7 +152,7 @@ export const mergeMessageFacts = ({
       firstTime - secondTime || first.idMessage.localeCompare(second.idMessage)
     )
   })
-  if (trackSources)
+  if (shouldTrackSources)
     return {
       messages: result,
       contentSources: Object.fromEntries(sources),
@@ -132,9 +161,25 @@ export const mergeMessageFacts = ({
   return { messages: result, issues }
 }
 
+export const mergeMessageFacts = ({
+  current,
+  messages,
+  source = HISTORY,
+  contentSources,
+}: {
+  current: MessageView[]
+  messages: MessageDTO[]
+  source?: MessageSource
+  contentSources?: MessageCache['contentSources']
+}): MessageCache & MessageApplyResult =>
+  mergeValidatedMessageFacts({
+    current,
+    facts: messages.map((message) => ({ message, source })),
+    contentSources,
+    trackSources: source !== HISTORY,
+  })
 const { EARLY_FACT_TTL_MS, EARLY_FACT_LIMIT } = MESSAGE_CACHE_CONFIG
-const factIdentity = (fact: Pick<MessageStatusFact, 'chatId' | 'idMessage'>) =>
-  JSON.stringify([fact.chatId, fact.idMessage])
+const factIdentity = messageIdentity
 
 export const mergeStatusFacts = ({
   messages,
@@ -183,19 +228,24 @@ export const mergeStatusFacts = ({
       continue
     }
     const result = mergeMessageStatus({ previous: previous.fact, next: fact })
-    const changed = result.status !== previous.fact.status
+    const status = result.status
+    if (status === null || status === ACCEPTED)
+      throw new Error(MESSAGE_CACHE_CONFIG.INVALID_FACTS)
+    const changed = status !== previous.fact.status
     const previousIssues = previous.issues
+    const newIssue = result.issue
     const isNewIssue =
-      result.issue !== null &&
-      !previousIssues.some((issue) => issue.code === result.issue!.code)
-    const nextIssues = isNewIssue
-      ? [...previousIssues, result.issue!]
-      : previousIssues
-    if (isNewIssue) issues.push(result.issue!)
+      newIssue !== null &&
+      !previousIssues.some((issue) => issue.code === newIssue.code)
+    const nextIssues =
+      isNewIssue && newIssue !== null
+        ? [...previousIssues, newIssue]
+        : previousIssues
+    if (isNewIssue && newIssue !== null) issues.push(newIssue)
     pending.set(identity, {
       fact: {
         ...previous.fact,
-        status: result.status as MessageStatusFact['status'],
+        status,
       },
       observedAt: changed ? now : previous.observedAt,
       sequence: changed ? sequence++ : previous.sequence,
