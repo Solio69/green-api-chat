@@ -8,7 +8,7 @@ Input: [spec.md](spec.md), [plan.md](plan.md), [research.md](research.md), [мо
 - [x] T004 Реализовать coordinator и единственное history apply внутри queryFn; удалить per-hook QueryCache subscription/dataUpdateCount. Получить Green T003, проверить cancel/late scope/access, empty/error/refetch.
 - [x] T005 Делегировать accepted/notification применение координатору, добавить `tests/integration/conversation-cache-coordinator.spec.ts` для согласованных проекций, replay, invalid scope/owner и apply-before-ACK; сохранить старые adapters. Проверить предварительную валидацию accepted target до записи.
 - [x] T006 Refactor и повторный read-only analyze; выполнить typecheck/lint/styles/format, полный Vitest/integration/query/production E2E, client/server graph, `git diff --check`, review секретов; записать verification.md.
-- [ ] T007 Предкоммитное review точного diff, commit/push `refactor`, обе GitHub jobs на SHA кода, обновить roadmap/spec/verification и подтвердить CI итогового документационного SHA.
+- [x] T007 Предкоммитное review точного diff, commit/push `refactor`, обе GitHub jobs на SHA кода, обновить roadmap/spec/verification и подтвердить CI итогового документационного SHA.
 
 042 + 041 → T001 → T002 → T003 Red → T004 Green → T005 → T006 → T007.
 

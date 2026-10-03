@@ -1,6 +1,6 @@
 # Проверка 043: координатор кеша переписки
 
-Дата: 2026-10-03. Локальная реализация, полная регрессия и предкоммитный анализ завершены; GitHub CI ожидает commit/push.
+Дата: 2026-10-03. Локальная реализация, полная регрессия и предкоммитный анализ завершены; GitHub CI Passed на SHA кода `8c5d34ab5ada3f6bf2d5aa32a87e762ccf651932`.
 
 | Проверка | Результат |
 | --- | --- |
@@ -20,7 +20,7 @@
 | Граф Client Components → server runtime | Passed: 28 client roots, 229 source TS/TSX, запрещённых runtime-путей 0 |
 | Повторный read-only анализ | Passed: 17 файлов, SHA-256 до/после `c33bc2ebe51dd85132a3002db89afc8ffd9b2dea1121a87ba37222cb307136eb`, unchanged; findings 0 |
 | `git diff --check` | Passed |
-| GitHub Actions quality/browser | NotRun до push кода |
+| GitHub Actions quality/browser | Passed: обе jobs [run 37141219066](https://github.com/Solio69/green-api-chat/actions/runs/37141219066), artifacts `quality-1` и `browser-1` |
 
 История теперь применяется один раз внутри общего Query-запроса, без per-consumer QueryCache-подписки. Координатор последовательно применяет историю, принятое сообщение и уведомление к существующим проекциям; для входящего message/temporary chat/unread доступны до решения об ACK. Request key с accessId, отмена, сохранение прежней модели при ошибке, manual refetch и recovery подтверждены Query/E2E. Внешний HTTP DTO, UI и семантика unread не менялись. Тесты используют фиктивные данные.
 
