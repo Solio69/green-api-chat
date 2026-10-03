@@ -45,6 +45,10 @@ jobs:
       - name: Install dependencies
         run: npm ci 2>&1 | tee test-results/quality/install.log
 
+      - name: Seed expected type error (temporary acceptance control)
+        run: |
+          printf '%s\n' 'export const ciTypecheckProbe: string = 123' > src/ci-typecheck-probe.ts
+
       - name: Check types
         run: npm run typecheck 2>&1 | tee test-results/quality/types.log
 
