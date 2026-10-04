@@ -28,7 +28,7 @@ import { CredentialField } from '@/features/auth/ui'
 
 Внутри `src` импортируй файл из той же папки через `./`, например `./constants` или `./ComponentName.module.scss`. Файлы из других папок импортируй через `@/`. Импорты CSS/SCSS, включая глобальные стили, ставь последними после библиотек, функций, констант и компонентов. В тестах путь `../constants` допустим: алиас `@/` указывает только на `src`, а общие тестовые константы находятся в `tests`. Между features импортируй только публичный `model`, `application`, `ui` или `server` entry по роли; один barrel, смешивающий server/client экспорты, запрещён. `feature/model`, `shared/kernel` и `shared/query` не импортируют feature UI или серверный runtime; `shared/ui` может использовать React, но не feature-код. Клиентский вход не импортирует server entry. Пути `src/components/*` и `src/lib/*` удалены в 054; актуальные владельцы и направление зависимостей описаны в [архитектурной карте](architecture.md).
 
-Так: `import styles from './ComponentName.module.scss'` в файле компонента рядом со стилем. Не так: `import styles from '@/components/ComponentName/ComponentName.module.scss'` из той же папки.
+Так: `import styles from './ComponentName.module.scss'` в файле компонента рядом со стилем. Не так: `import styles from '@/features/auth/ui/CredentialField/CredentialField.module.scss'` из той же папки.
 
 ## Функции и условия
 
