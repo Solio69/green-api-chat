@@ -6,6 +6,17 @@
   min-width: 0;
   margin-inline: auto;
 
+  &WithTheme {
+    padding-block-start: tokens.$control-icon-button-size;
+  }
+
+  &__themeControl {
+    position: fixed;
+    z-index: 1;
+    inset-block-start: tokens.$space-xs;
+    inset-inline-end: tokens.$space-xs;
+  }
+
   &__content {
     max-width: tokens.$content-max-width;
     margin-inline: auto;

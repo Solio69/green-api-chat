@@ -1,0 +1,25 @@
+@use '../../../../styles/tokens' as tokens;
+@use '../../../../styles/mixins' as mixins;
+
+.themeToggle {
+  @include mixins.conversation-header-button;
+
+  width: tokens.$control-icon-button-size;
+  border-radius: tokens.$radius-circle;
+  background: var(--ui-surface-color);
+  box-shadow: tokens.$shadow-control;
+  color: var(--ui-muted-color);
+
+  &:hover {
+    background: var(--ui-selected-color);
+    color: var(--ui-link-color);
+  }
+
+  &__moon {
+    display: var(--ui-theme-moon-display);
+  }
+
+  &__sun {
+    display: var(--ui-theme-sun-display);
+  }
+}

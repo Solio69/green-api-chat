@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
+import { THEME_BOOTSTRAP_SCRIPT } from '@/features/theme/model'
 import { HTML_VALUES } from '@/shared/kernel/ui/constants'
 import './globals.scss'
 
@@ -15,7 +16,10 @@ type RootLayoutProps = Readonly<{
 }>
 
 const RootLayout = ({ children }: RootLayoutProps) => (
-  <html lang={LANGUAGE_RU}>
+  <html lang={LANGUAGE_RU} suppressHydrationWarning>
+    <head>
+      <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP_SCRIPT }} />
+    </head>
     <body>{children}</body>
   </html>
 )

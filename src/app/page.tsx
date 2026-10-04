@@ -14,6 +14,7 @@ import {
 } from '@/features/conversation/ui'
 import { QueryProvider } from '@/features/conversation/ui/QueryProvider'
 import { RecipientSearchForm } from '@/features/recipients/ui'
+import { ThemeToggle } from '@/features/theme/ui'
 import { readPageSession } from '@/server/session'
 import { ROUTES } from '@/shared/kernel/routes/constants'
 import { HOME_COPY } from './constants'
@@ -47,7 +48,10 @@ const HomePage = async () => {
   if (access.kind !== 'authorized') redirect(LOGIN)
   const connectionScope = access.context.connectionScope
   return (
-    <main className={styles.homePage}>
+    <main className={`${styles.homePage} ${styles.homePageWithTheme}`}>
+      <div className={styles.homePage__themeControl}>
+        <ThemeToggle />
+      </div>
       <QueryProvider key={connectionScope} connectionScope={connectionScope}>
         <NotificationProvider>
           <ChatWorkspace

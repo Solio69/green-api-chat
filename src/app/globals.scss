@@ -5,6 +5,14 @@
   @include theme.system-theme;
 }
 
+:root[data-theme='light'] {
+  @include theme.light-theme;
+}
+
+:root[data-theme='dark'] {
+  @include theme.dark-theme;
+}
+
 *,
 *::before,
 *::after {

@@ -21,6 +21,8 @@ export const THEME_CONTRACT = {
 } as const
 
 export const THEME_BROWSER = {
+  STORAGE_KEY: 'green-api-chat-theme',
+  TOGGLE_LABEL: 'Переключить тему',
   COLOR_SCHEME_LIGHT: 'light',
   COLOR_SCHEME_DARK: 'dark',
   REDUCED_MOTION: 'reduce',

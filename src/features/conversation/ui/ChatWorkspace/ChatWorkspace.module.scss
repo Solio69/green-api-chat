@@ -6,7 +6,9 @@
   min-width: 0;
   min-height: 0;
   height: tokens.$chat-workspace-height;
-  max-height: calc(100dvh - 2 * tokens.$padding-page);
+  max-height: calc(
+    100dvh - 2 * tokens.$padding-page - tokens.$control-icon-button-size
+  );
   grid-template-rows: minmax(0, 1fr);
   border: tokens.$border-width solid var(--ui-panel-border-color);
   border-radius: tokens.$max-home-radius;

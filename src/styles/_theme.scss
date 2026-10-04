@@ -1,6 +1,6 @@
 @use 'tokens';
 
-@mixin system-theme {
+@mixin light-theme {
   --ui-link-color: #{tokens.$color-max-action};
   --ui-action-color: #{tokens.$color-max-action};
   --ui-action-hover-color: #{tokens.$color-max-action-hover};
@@ -26,34 +26,50 @@
   --ui-message-text: #{tokens.$color-message-text};
   --ui-message-muted: #{tokens.$color-message-muted};
   --ui-message-shadow: #{tokens.$shadow-message};
+  --ui-theme-moon-display: block;
+  --ui-theme-sun-display: none;
+
+  color-scheme: light;
+}
+
+@mixin dark-theme {
+  --ui-link-color: #{tokens.$color-max-action-hover-dark};
+  --ui-action-color: #{tokens.$color-max-action-dark};
+  --ui-action-hover-color: #{tokens.$color-max-action-hover-dark};
+  --ui-focus-color: #{tokens.$color-max-action-dark};
+  --ui-field-border-color: #{tokens.$color-max-border-dark};
+  --ui-text-color: #{tokens.$color-max-text-dark};
+  --ui-muted-color: #{tokens.$color-max-muted-dark};
+  --ui-focus-shadow: #{tokens.$shadow-max-focus-dark};
+  --ui-canvas-color: #{tokens.$color-max-canvas-dark};
+  --ui-input-color: #{tokens.$color-max-input-dark};
+  --ui-search-focus-shadow: #{tokens.$shadow-search-focus-dark};
+  --ui-search-error-shadow: #{tokens.$shadow-search-error-dark};
+  --ui-surface-color: #{tokens.$color-max-surface-dark};
+  --ui-on-action-color: #{tokens.$color-max-canvas-dark};
+  --ui-error-color: #{tokens.$color-max-error-dark};
+  --ui-error-shadow: #{tokens.$shadow-max-error-dark};
+  --ui-panel-border-color: #{tokens.$color-max-border-dark};
+  --ui-panel-shadow: #{tokens.$shadow-max-panel-dark};
+  --ui-selected-color: #{tokens.$color-max-selected-dark};
+  --ui-success-color: #{tokens.$color-border};
+  --ui-message-incoming: #{tokens.$color-message-incoming-dark};
+  --ui-message-outgoing: #{tokens.$color-message-outgoing-dark};
+  --ui-message-text: #{tokens.$color-message-text-dark};
+  --ui-message-muted: #{tokens.$color-max-muted-dark};
+  --ui-message-shadow: #{tokens.$shadow-message-dark};
+  --ui-theme-moon-display: none;
+  --ui-theme-sun-display: block;
+
+  color-scheme: dark;
+}
+
+@mixin system-theme {
+  @include light-theme;
 
   color-scheme: light dark;
 
   @media (prefers-color-scheme: dark) {
-    --ui-link-color: #{tokens.$color-max-action-hover-dark};
-    --ui-action-color: #{tokens.$color-max-action-dark};
-    --ui-action-hover-color: #{tokens.$color-max-action-hover-dark};
-    --ui-focus-color: #{tokens.$color-max-action-dark};
-    --ui-field-border-color: #{tokens.$color-max-border-dark};
-    --ui-text-color: #{tokens.$color-max-text-dark};
-    --ui-muted-color: #{tokens.$color-max-muted-dark};
-    --ui-focus-shadow: #{tokens.$shadow-max-focus-dark};
-    --ui-canvas-color: #{tokens.$color-max-canvas-dark};
-    --ui-input-color: #{tokens.$color-max-input-dark};
-    --ui-search-focus-shadow: #{tokens.$shadow-search-focus-dark};
-    --ui-search-error-shadow: #{tokens.$shadow-search-error-dark};
-    --ui-surface-color: #{tokens.$color-max-surface-dark};
-    --ui-on-action-color: #{tokens.$color-max-canvas-dark};
-    --ui-error-color: #{tokens.$color-max-error-dark};
-    --ui-error-shadow: #{tokens.$shadow-max-error-dark};
-    --ui-panel-border-color: #{tokens.$color-max-border-dark};
-    --ui-panel-shadow: #{tokens.$shadow-max-panel-dark};
-    --ui-selected-color: #{tokens.$color-max-selected-dark};
-    --ui-success-color: #{tokens.$color-border};
-    --ui-message-incoming: #{tokens.$color-message-incoming-dark};
-    --ui-message-outgoing: #{tokens.$color-message-outgoing-dark};
-    --ui-message-text: #{tokens.$color-message-text-dark};
-    --ui-message-muted: #{tokens.$color-max-muted-dark};
-    --ui-message-shadow: #{tokens.$shadow-message-dark};
+    @include dark-theme;
   }
 }

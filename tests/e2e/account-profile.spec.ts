@@ -67,7 +67,8 @@ const {
   IMAGE_ENCODING,
   ACCESS_LOST_URL_PATTERN,
 } = ACCOUNT_CONTRACT
-const { COLOR_SCHEME_LIGHT, COLOR_SCHEME_DARK } = THEME_BROWSER
+const { COLOR_SCHEME_LIGHT, COLOR_SCHEME_DARK, STORAGE_KEY, TOGGLE_LABEL } =
+  THEME_BROWSER
 const { LIGHT, DARK, MIN_TEXT_CONTRAST } = THEME_CONTRACT
 const {
   username,
@@ -179,6 +180,7 @@ test('account-header: long full label fits mobile and desktop, logout works by k
   await enterAccount({ page, id: longLabel.id })
   const region = page.getByRole(ROLE_REGION, { name: REGION })
   const label = region.getByText(longLabel.username, { exact: true })
+  const toggle = page.getByRole(ROLE_BUTTON, { name: TOGGLE_LABEL })
   const logout = region.getByRole(ROLE_BUTTON, { name: LOGOUT, exact: true })
   for (const viewport of [MOBILE_VIEWPORT, DESKTOP_VIEWPORT]) {
     await page.setViewportSize(viewport)
@@ -204,6 +206,8 @@ test('account-header: long full label fits mobile and desktop, logout works by k
     await logout.evaluate((element) => getComputedStyle(element).color),
   ).toBe(LIGHT.MUTED)
   await page.mouse.click(0, 0)
+  await page.keyboard.press(KEY_TAB)
+  await expect(toggle).toBeFocused()
   await page.keyboard.press(KEY_TAB)
   await expect(logout).toBeFocused()
   expect(
@@ -365,3 +369,145 @@ for (const { viewport, scenario } of [
     await expect(page.getByRole(ROLE_TEXTBOX)).toHaveCount(1)
   })
 }
+
+for (const { viewport, scenario, system, initial, selected } of [
+  {
+    viewport: MOBILE_VIEWPORT,
+    scenario: themeMobile,
+    system: COLOR_SCHEME_DARK,
+    initial: DARK,
+    selected: LIGHT,
+  },
+  {
+    viewport: DESKTOP_VIEWPORT,
+    scenario: themeDesktop,
+    system: COLOR_SCHEME_LIGHT,
+    initial: LIGHT,
+    selected: DARK,
+  },
+]) {
+  test(`theme toggle: corner placement and manual choice persist at ${viewport.width}px`, async ({
+    page,
+  }, testInfo) => {
+    await page.setViewportSize(viewport)
+    await page.emulateMedia({ colorScheme: system })
+    await enterAccount({ page, id: scenario.id })
+
+    const toggle = page.getByRole(ROLE_BUTTON, { name: TOGGLE_LABEL })
+    const moon = toggle.locator(SVG_SELECTOR).first()
+    const sun = toggle.locator(SVG_SELECTOR).last()
+
+    await expect(toggle).toBeVisible()
+    await expect(page.locator('body')).toHaveCSS(
+      'background-color',
+      initial.CANVAS,
+    )
+    await expect(system === COLOR_SCHEME_LIGHT ? moon : sun).toBeVisible()
+
+    const toggleBox = (await toggle.boundingBox())!
+    const sidebarBox = (await page
+      .getByRole(ROLE_COMPLEMENTARY, { name: SIDEBAR_LABEL })
+      .boundingBox())!
+    expect(toggleBox.height).toBeGreaterThanOrEqual(MIN_TOUCH_TARGET_SIZE)
+    expect(toggleBox.width).toBeGreaterThanOrEqual(MIN_TOUCH_TARGET_SIZE)
+    expect(toggleBox.x + toggleBox.width).toBeGreaterThanOrEqual(
+      viewport.width - 8,
+    )
+    expect(toggleBox.y).toBeLessThanOrEqual(8)
+    expect(toggleBox.y + toggleBox.height).toBeLessThan(sidebarBox.y)
+    await page.screenshot({
+      path: testInfo.outputPath(`theme-system-${viewport.width}.png`),
+      fullPage: true,
+    })
+
+    await toggle.focus()
+    await expect(toggle).toBeFocused()
+    await page.keyboard.press(KEY_ENTER)
+    await expect(page.locator('html')).toHaveAttribute(
+      'data-theme',
+      system === COLOR_SCHEME_LIGHT ? COLOR_SCHEME_DARK : COLOR_SCHEME_LIGHT,
+    )
+    await expect(page.locator('body')).toHaveCSS(
+      'background-color',
+      selected.CANVAS,
+    )
+    await expect(system === COLOR_SCHEME_LIGHT ? sun : moon).toBeVisible()
+    await page.screenshot({
+      path: testInfo.outputPath(`theme-manual-${viewport.width}.png`),
+      fullPage: true,
+    })
+
+    await page.reload()
+    await expect(page.locator('body')).toHaveCSS(
+      'background-color',
+      selected.CANVAS,
+    )
+    expect(
+      await page.evaluate((key) => localStorage.getItem(key), STORAGE_KEY),
+    ).toBe(
+      system === COLOR_SCHEME_LIGHT ? COLOR_SCHEME_DARK : COLOR_SCHEME_LIGHT,
+    )
+
+    await page.emulateMedia({
+      colorScheme:
+        system === COLOR_SCHEME_LIGHT ? COLOR_SCHEME_DARK : COLOR_SCHEME_LIGHT,
+    })
+    await expect(page.locator('body')).toHaveCSS(
+      'background-color',
+      selected.CANVAS,
+    )
+    await toggle.click()
+    await expect(page.locator('body')).toHaveCSS(
+      'background-color',
+      initial.CANVAS,
+    )
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true)
+
+    await page.evaluate(
+      (key) => localStorage.setItem(key, 'unknown'),
+      STORAGE_KEY,
+    )
+    await page.emulateMedia({ colorScheme: system })
+    await page.reload()
+    await expect(page.locator('html')).not.toHaveAttribute('data-theme', /.+/)
+    await expect(page.locator('body')).toHaveCSS(
+      'background-color',
+      initial.CANVAS,
+    )
+  })
+}
+
+test('account-header: system theme remains usable without JavaScript', async ({
+  page,
+  browser,
+}) => {
+  await enterAccount({ page, id: themeDesktop.id })
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    colorScheme: COLOR_SCHEME_DARK,
+  })
+
+  try {
+    await context.addCookies(await page.context().cookies())
+    const noJavaScriptPage = await context.newPage()
+    await noJavaScriptPage.goto(page.url())
+
+    await expect(noJavaScriptPage.locator('html')).not.toHaveAttribute(
+      'data-theme',
+      /.+/,
+    )
+    await expect(noJavaScriptPage.locator('body')).toHaveCSS(
+      'background-color',
+      DARK.CANVAS,
+    )
+    await expect(
+      noJavaScriptPage.getByRole(ROLE_REGION, { name: REGION }),
+    ).toBeVisible()
+  } finally {
+    await context.close()
+  }
+})
