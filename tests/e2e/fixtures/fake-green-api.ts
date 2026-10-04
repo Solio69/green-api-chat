@@ -1,6 +1,7 @@
 import accountScenarios from './account-scenarios.json' with { type: 'json' }
 import chatsScenarios from './chats-scenarios.json' with { type: 'json' }
 import historyScenarios from './history-scenarios.json' with { type: 'json' }
+import FAKE_RESET from './reset-contract.json' with { type: 'json' }
 import scenarios from './scenarios.json' with { type: 'json' }
 import sendScenarios from './send-scenarios.json' with { type: 'json' }
 
@@ -32,6 +33,8 @@ const {
 } = NOTIFICATION_FIXTURE
 
 const HOST = 'https://4100.api.green-api.com'
+const PROVIDER_HOST = 'api.green-api.com'
+const UNEXPECTED_PROVIDER_ORIGIN = 'Unexpected GREEN-API origin in E2E fixture'
 const INSTANCE_PATH = /^\/waInstance([^/]+)\/([^/]+)\/[^/]+(?:\/(\d+))?$/
 const STATE_METHOD = 'getStateInstance'
 const ACCOUNT_METHOD = 'getAccountSettings'
@@ -48,6 +51,15 @@ const notificationHeads = new Map<
 >()
 const sendCounts = new Map<string, number>()
 let notificationReceipt = 0
+let generation = 0
+const resetFake = () => {
+  generation += 1
+  notificationHeads.clear()
+  sendCounts.clear()
+  stateCalls.clear()
+  accountCalls.clear()
+  notificationReceipt = 0
+}
 const enqueueNotification = ({ id, body }: { id: string; body: object }) => {
   notificationReceipt += 1
   const queue = notificationHeads.get(id) ?? []
@@ -141,7 +153,13 @@ const fakeGreenApiFetch = async (
 ): Promise<Response> => {
   const requestUrl = input instanceof Request ? input.url : String(input)
   const url = new URL(requestUrl)
-  if (url.origin !== HOST) return originalFetch(input, init)
+  if (url.origin !== HOST) {
+    const isProviderHost =
+      url.hostname === PROVIDER_HOST ||
+      url.hostname.endsWith(`.${PROVIDER_HOST}`)
+    if (isProviderHost) throw new Error(UNEXPECTED_PROVIDER_ORIGIN)
+    return originalFetch(input, init)
+  }
 
   const path = INSTANCE_PATH.exec(url.pathname)
   const id = path?.[1]
@@ -180,23 +198,24 @@ const fakeGreenApiFetch = async (
     const payload = JSON.parse(
       typeof init?.body === 'string' ? init.body : EMPTY_BODY,
     )
+    const sendGeneration = generation
     const count = (sendCounts.get(id) ?? 0) + 1
     sendCounts.set(id, count)
     const idMessage = `e2e-send-${count}`
-    setTimeout(
-      () =>
-        enqueueNotification({
-          id,
-          body: {
-            typeWebhook: STATUS,
-            chatId: payload.chatId,
-            idMessage,
-            status: DELIVERED,
-          },
-        }),
-      DELIVERY_DELAY_MS,
-    )
     setTimeout(() => {
+      if (sendGeneration !== generation) return
+      enqueueNotification({
+        id,
+        body: {
+          typeWebhook: STATUS,
+          chatId: payload.chatId,
+          idMessage,
+          status: DELIVERED,
+        },
+      })
+    }, DELIVERY_DELAY_MS)
+    setTimeout(() => {
+      if (sendGeneration !== generation) return
       enqueueNotification({
         id,
         body: {
@@ -230,6 +249,10 @@ const fakeGreenApiFetch = async (
   )
   if (sendingFixture && method === HISTORY_METHOD) return response({ body: [] })
   if (method === STATE_METHOD) {
+    if (id === FAKE_RESET.ID) {
+      resetFake()
+      return response({ body: { stateInstance: AUTHORIZED } })
+    }
     const calls = (stateCalls.get(id) ?? 0) + 1
     stateCalls.set(id, calls)
     const isBudgetExceeded =

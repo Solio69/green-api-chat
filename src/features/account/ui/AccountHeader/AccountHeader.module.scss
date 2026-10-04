@@ -1,0 +1,61 @@
+@use '../../../../styles/tokens' as tokens;
+@use '../../../../styles/mixins' as mixins;
+
+.accountHeader {
+  --logout-margin-top: 0;
+  --logout-color: var(--ui-muted-color);
+  --logout-border-color: #{tokens.$color-transparent};
+  --logout-hover-color: var(--ui-link-color);
+  --logout-hover-border-color: #{tokens.$color-transparent};
+  --logout-hover-background: var(--ui-selected-color);
+  --logout-font-size: #{tokens.$font-size-small};
+  --logout-padding: #{tokens.$space-xs};
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: tokens.$account-header-gap;
+  min-width: 0;
+  padding: tokens.$account-header-padding-block
+    tokens.$account-header-padding-inline;
+  border-bottom: tokens.$border-width solid var(--ui-panel-border-color);
+  color: var(--ui-text-color);
+
+  & > form {
+    flex: none;
+    max-width: tokens.$logout-error-max-width;
+  }
+
+  &__details {
+    flex: 1 1 tokens.$account-details-min-width;
+    min-width: 0;
+  }
+
+  &__label {
+    @include mixins.typography(
+      tokens.$font-size-caption,
+      tokens.$line-height-control,
+      tokens.$account-header-font-weight
+    );
+
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  &__connection {
+    display: flex;
+    align-items: center;
+    gap: tokens.$small-icon-gap;
+    margin: 0;
+    color: var(--ui-muted-color);
+    font-size: tokens.$font-size-small;
+  }
+
+  &__indicator {
+    flex: none;
+    width: tokens.$connection-indicator-size;
+    height: tokens.$connection-indicator-size;
+    border-radius: tokens.$radius-circle;
+    background: var(--ui-action-color);
+  }
+}

@@ -1,7 +1,7 @@
-import { expect, test } from '@playwright/test'
 import type { Page } from '@playwright/test'
+import { expect, test } from './owner-fixture'
 import { MESSAGING_UI_TEST } from '../notifications/ui-constants'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import { TEST_UI } from '../constants'
 import { HISTORY_TEST } from '../history/constants'
 import { TEST_API_RESPONSE, TEST_API_ROUTES } from '../protocol.constants'
@@ -41,8 +41,7 @@ const prepare = async (page: Page) => {
     route.fulfill({ json: { status: OK, connectionScope: scopeA, chats: [] } }),
   )
 }
-test.beforeEach(async ({ page, request }) => {
-  await request.post(CONTROL_API, { data: { reset: true } })
+test.beforeEach(async ({ page }) => {
   await prepare(page)
 })
 test('browser Web Lock blocks second tab and transfers after first closes without a server release', async ({

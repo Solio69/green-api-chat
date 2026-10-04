@@ -1,0 +1,29 @@
+@use '../../../../styles/tokens' as tokens;
+
+.chatSidebar {
+  min-width: 0;
+  border-start-start-radius: tokens.$max-home-radius;
+  border-end-start-radius: tokens.$max-home-radius;
+  background: var(--ui-surface-color);
+  border-inline-end: tokens.$border-width solid var(--ui-panel-border-color);
+
+  &__search {
+    padding: tokens.$chat-search-padding-top
+      tokens.$account-header-padding-inline
+      tokens.$account-header-padding-inline;
+    border-bottom: tokens.$border-width solid var(--ui-panel-border-color);
+  }
+
+  &__list {
+    min-width: 0;
+  }
+
+  @media (max-width: tokens.$chat-mobile-breakpoint) {
+    border-inline-end: 0;
+    border-radius: tokens.$max-home-radius;
+
+    &__search {
+      padding-inline: tokens.$space-sm;
+    }
+  }
+}

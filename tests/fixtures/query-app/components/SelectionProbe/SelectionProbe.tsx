@@ -1,15 +1,14 @@
 'use client'
 
 import { StrictMode, useState } from 'react'
-import { EMPTY_STRING, HTML_VALUES } from '@/lib/ui/constants'
-import { ChatListPanel } from '@/components/ChatListPanel'
-import { ChatWorkspace } from '@/components/ChatWorkspace'
-import { useConversationSelection } from '@/components/ConversationSelectionProvider'
-import {
-  QueryProvider,
-  useOptionalQuerySession,
-} from '@/components/QueryProvider'
-import { RecipientSearchForm } from '@/components/RecipientSearchForm'
+import { ChatSidebar } from '@/features/chats/ui'
+import { ConversationChatListPanel } from '@/features/conversation/ui'
+import { ChatWorkspace } from '@/features/conversation/ui/ChatWorkspace'
+import { useConversationSelection } from '@/features/conversation/ui/ConversationSelectionProvider'
+import { QueryProvider } from '@/features/conversation/ui/QueryProvider'
+import { RecipientSearchForm } from '@/features/recipients/ui'
+import { useOptionalQuerySession } from '@/shared/query/ui'
+import { EMPTY_STRING, HTML_VALUES } from '@/shared/kernel/ui/constants'
 import {
   CONVERSATION_FIXTURES,
   SELECTION_PROBE_COPY,
@@ -56,7 +55,10 @@ const Controls = () => {
   const handleOpen = () => selection.openConversation(targetA)
   const handleBack = () => selection.showChatList()
   const handleClose = () => selection.closeConversation()
-  const handleEnd = () => session?.close()
+  // The session/Query hook owns completion and error state.
+  const handleEnd = () => {
+    void session?.close()
+  }
   const handleSeed = () =>
     session?.client.setQueryData(messagesKey, [knownMessage])
   const handleInspect = () =>
@@ -111,9 +113,13 @@ export const SelectionProbe = () => {
       <button onClick={handleScope}>{SWITCH_SCOPE}</button>
       <QueryProvider key={scope} connectionScope={scope}>
         <ChatWorkspace
-          account={<Controls />}
-          search={<RecipientSearchForm />}
-          chatList={<ChatListPanel />}
+          sidebar={
+            <ChatSidebar
+              account={<Controls />}
+              search={<RecipientSearchForm />}
+              chatList={<ConversationChatListPanel />}
+            />
+          }
           conversation={<HistorySlot />}
         />
       </QueryProvider>

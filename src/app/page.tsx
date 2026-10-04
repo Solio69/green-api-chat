@@ -1,25 +1,22 @@
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { getQueryScope } from '@/lib/auth/get-query-scope'
-import { resolveHome } from '@/lib/auth/resolve-home'
+import { getAccountSettings } from '@/features/account/server'
+import { AccountHeader } from '@/features/account/ui'
+import { resolveHome } from '@/features/auth/application'
+import { HOME_RESULT_KIND } from '@/features/auth/model'
+import { LogoutButton } from '@/features/auth/ui'
+import { ChatSidebar } from '@/features/chats/ui'
 import {
-  hasSessionPassword,
-  openSession,
-  readCredentials,
-} from '@/lib/auth/session'
-import { getAccountSettings } from '@/lib/green-api/get-account-settings'
-import { HOME_RESULT_KIND, IS_PRODUCTION } from '@/lib/auth/constants'
-import { ROUTES } from '@/lib/routes/constants'
+  ChatHistoryPanel,
+  ChatWorkspace,
+  ConversationChatListPanel,
+  MessageComposer,
+  NotificationProvider,
+} from '@/features/conversation/ui'
+import { QueryProvider } from '@/features/conversation/ui/QueryProvider'
+import { RecipientSearchForm } from '@/features/recipients/ui'
+import { readPageSession } from '@/server/session'
+import { ROUTES } from '@/shared/kernel/routes/constants'
 import { HOME_COPY } from './constants'
-import { AccountHeader } from '@/components/AccountHeader'
-import { ChatHistoryPanel } from '@/components/ChatHistoryPanel'
-import { ChatListPanel } from '@/components/ChatListPanel'
-import { ChatWorkspace } from '@/components/ChatWorkspace'
-import { LogoutButton } from '@/components/LogoutButton'
-import { MessageComposer } from '@/components/MessageComposer'
-import { NotificationProvider } from '@/components/NotificationProvider'
-import { QueryProvider } from '@/components/QueryProvider'
-import { RecipientSearchForm } from '@/components/RecipientSearchForm'
 import styles from './HomePage.module.scss'
 
 const { HOME, LOGIN, END_SESSION } = ROUTES
@@ -30,13 +27,8 @@ const {
 } = HOME_RESULT_KIND
 const { RETRY, RETRY_LINK, LOGOUT } = HOME_COPY
 const HomePage = async () => {
-  const password = process.env.SESSION_PASSWORD
-  const session = await openSession({
-    store: await cookies(),
-    password,
-    production: IS_PRODUCTION,
-  })
-  const credentials = session && readCredentials({ session })
+  const access = await readPageSession()
+  const credentials = access.context?.credentials ?? null
   const result = await resolveHome({ credentials, getAccountSettings })
   if (result.kind === REQUIRE_LOGIN) redirect(LOGIN)
   if (result.kind === END_CURRENT_SESSION) redirect(END_SESSION)
@@ -52,22 +44,25 @@ const HomePage = async () => {
         </div>
       </main>
     )
-  if (!session) redirect(LOGIN)
-  if (!hasSessionPassword(password)) redirect(LOGIN)
-  const connectionScope = getQueryScope({ session, password })
+  if (access.kind !== 'authorized') redirect(LOGIN)
+  const connectionScope = access.context.connectionScope
   return (
     <main className={styles.homePage}>
       <QueryProvider key={connectionScope} connectionScope={connectionScope}>
         <NotificationProvider>
           <ChatWorkspace
-            account={
-              <AccountHeader
-                account={result.body.profile}
-                logoutLabel={LOGOUT}
+            sidebar={
+              <ChatSidebar
+                account={
+                  <AccountHeader
+                    account={result.body.profile}
+                    logoutLabel={LOGOUT}
+                  />
+                }
+                search={<RecipientSearchForm />}
+                chatList={<ConversationChatListPanel />}
               />
             }
-            search={<RecipientSearchForm />}
-            chatList={<ChatListPanel />}
             conversation={<ChatHistoryPanel />}
             composer={<MessageComposer />}
           />

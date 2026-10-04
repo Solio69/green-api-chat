@@ -1,0 +1,8 @@
+# Research 052
+
+- Установлены React 19.3.0, Vitest 5.0.3, Testing Library React 16.3.3, user-event 14.6.7 и jsdom 29.1.1; новые пакеты не нужны.
+- Официальная [Testing Library React API](https://testing-library.com/docs/react-testing-library/api/) предоставляет `render`, `wrapper` и `reactStrictMode`; API рекомендует `render` для наблюдаемого поведения. Существующий `provider-lifecycle.test.tsx` уже подтверждает реальный Strict Mode replay и остаётся обязательным.
+- Официальные [асинхронные методы Testing Library](https://testing-library.com/docs/dom-testing-library/api-async/) используют awaited `findBy`/`waitFor`, где callback ожидания выбрасывает ошибку при незавершённом условии. Нельзя заменять ожидание задержкой `setTimeout`.
+- Вариант A — оставить все 46 Query-сценариев в Playwright: сохраняет работу, но чистые React-изменения требуют медленного Next/browser. Вариант B — перенести все 46 в jsdom: теряет доказательство Web Locks, двух вкладок, scroll/focus, Next route/cookie и верстки. Выбран вариант C — 9 подходящих React-сценариев в RTL, 37 контрактов браузера оставить и пересмотреть в 053.
+- Транспорт контролируется fake `fetch` на границе; `QueryProvider`, `ConversationSelectionProvider`, QueryClient, UI-компоненты и lifecycle остаются настоящими. Вместо тестовых JSON probes UI хост использует доступные роли, имена и текст. Не подменять один production hook мок-версией другого.
+- Старый Query Green и новый RTL Green должны одновременно существовать до удаления девяти старых сценариев. Тесты с реальным браузерным событием остаются Playwright; пересечение гарантий описано в карте, не объявляется потерей/удвоением покрытия.

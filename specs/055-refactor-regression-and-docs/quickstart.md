@@ -1,0 +1,5 @@
+# Quickstart 055
+
+Из корня репозитория задать `SPECIFY_FEATURE_DIRECTORY=specs/055-refactor-regression-and-docs` и передавать абсолютный `ExpectedFeatureDirectory` локальным Spec Kit scripts. Прочитать [spec](spec.md), [plan](plan.md), [research](research.md), [contract](contracts/final-readiness.md), [inventory](inventory.md), затем [tasks](tasks.md). Провести read-only analyze; только после окончания прохода записать `analysis.md` и дать пользователю ссылку.
+
+После адресных документальных правок запустить `npm run typecheck`, `npm run lint`, `npm run lint:styles`, `npm run format:check`, `npm test`, затем последовательно `npm run test:query` и `npm run test:e2e`. Не устанавливать пакеты и не использовать реальные реквизиты. Проверить G01–G08 по [coverage reconciliation](coverage-reconciliation.md), локальные ссылки/команды и exact diff; итог зафиксировать в `verification.md` со статусами. Commit/push в `refactor` по действующему пользовательскому разрешению; проверить GitHub run по full SHA, двум jobs и артефактам. README и roadmap отмечают завершение только после успешного итогового CI.

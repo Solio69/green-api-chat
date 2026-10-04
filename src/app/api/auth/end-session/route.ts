@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
-import { AUTH_CONFIG, AUTH_QUERY } from '@/lib/auth/constants'
-import { HTTP_STATUS } from '@/lib/http/constants'
-import { ROUTES } from '@/lib/routes/constants'
+import { AUTH_QUERY } from '@/features/auth/model'
+import { AUTH_CONFIG } from '@/server/session/constants'
+import { HTTP_STATUS } from '@/shared/kernel/http/constants'
+import { ROUTES } from '@/shared/kernel/routes/constants'
 
 const { COOKIE_NAME } = AUTH_CONFIG
 const { REASON, ACCESS_LOST } = AUTH_QUERY

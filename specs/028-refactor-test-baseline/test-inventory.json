@@ -1,0 +1,6262 @@
+{
+  "schemaVersion": 1,
+  "baselineDate": "2026-10-03",
+  "head": "39547b743a74d6987223bc50883597812a180e30",
+  "branch": "refactor",
+  "sourceDigest": "b996d035b444668f8bf71fe8ce592e88b0712b5f75b8a0488a6c37a973818f6f",
+  "discoveryIsNotExecution": true,
+  "totals": {
+    "integration": {
+      "files": 27,
+      "scenarios": 353
+    },
+    "query": {
+      "files": 8,
+      "scenarios": 45
+    },
+    "e2e": {
+      "files": 19,
+      "scenarios": 109
+    },
+    "workflow": {
+      "files": 1,
+      "scenarios": 12
+    }
+  },
+  "files": [
+    {
+      "file": "tests/integration/account-profile.spec.ts",
+      "suite": "integration",
+      "purpose": "Безопасная нормализация профиля и аватара",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["unit"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0001",
+        "B028-I-0002",
+        "B028-I-0003",
+        "B028-I-0004",
+        "B028-I-0005",
+        "B028-I-0006",
+        "B028-I-0007"
+      ]
+    },
+    {
+      "file": "tests/integration/auth-flow.spec.ts",
+      "suite": "integration",
+      "purpose": "Проверка реквизитов, решение входа и сохранение сессии",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["integration"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0008",
+        "B028-I-0009",
+        "B028-I-0010",
+        "B028-I-0011",
+        "B028-I-0012",
+        "B028-I-0013",
+        "B028-I-0014",
+        "B028-I-0015",
+        "B028-I-0016",
+        "B028-I-0017",
+        "B028-I-0018",
+        "B028-I-0019",
+        "B028-I-0020",
+        "B028-I-0021",
+        "B028-I-0022",
+        "B028-I-0023",
+        "B028-I-0024",
+        "B028-I-0025",
+        "B028-I-0026",
+        "B028-I-0027"
+      ]
+    },
+    {
+      "file": "tests/integration/chat-query.spec.ts",
+      "suite": "integration",
+      "purpose": "QueryClient, запрос списка, ошибки, отмена и scope",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["integration"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0028",
+        "B028-I-0029",
+        "B028-I-0030",
+        "B028-I-0031",
+        "B028-I-0032",
+        "B028-I-0033",
+        "B028-I-0034",
+        "B028-I-0035",
+        "B028-I-0036"
+      ]
+    },
+    {
+      "file": "tests/integration/chats-api.spec.ts",
+      "suite": "integration",
+      "purpose": "Нормализация списка, scope, handler и транспорт GetChats",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["integration"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0037",
+        "B028-I-0038",
+        "B028-I-0039",
+        "B028-I-0040",
+        "B028-I-0041",
+        "B028-I-0042",
+        "B028-I-0043",
+        "B028-I-0044",
+        "B028-I-0045",
+        "B028-I-0046",
+        "B028-I-0047",
+        "B028-I-0048",
+        "B028-I-0049",
+        "B028-I-0050",
+        "B028-I-0051",
+        "B028-I-0052",
+        "B028-I-0053",
+        "B028-I-0054",
+        "B028-I-0055",
+        "B028-I-0056",
+        "B028-I-0057",
+        "B028-I-0058",
+        "B028-I-0059",
+        "B028-I-0060",
+        "B028-I-0061",
+        "B028-I-0062",
+        "B028-I-0063",
+        "B028-I-0064",
+        "B028-I-0065",
+        "B028-I-0066",
+        "B028-I-0067",
+        "B028-I-0068",
+        "B028-I-0069",
+        "B028-I-0070",
+        "B028-I-0071",
+        "B028-I-0072",
+        "B028-I-0073",
+        "B028-I-0074",
+        "B028-I-0075",
+        "B028-I-0076",
+        "B028-I-0077",
+        "B028-I-0078"
+      ]
+    },
+    {
+      "file": "tests/integration/check-account.spec.ts",
+      "suite": "integration",
+      "purpose": "Адаптер проверки получателя: URL, ответы, retry",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["unit"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0079",
+        "B028-I-0080",
+        "B028-I-0081",
+        "B028-I-0082",
+        "B028-I-0083",
+        "B028-I-0084",
+        "B028-I-0085"
+      ]
+    },
+    {
+      "file": "tests/integration/conversation-selection.spec.ts",
+      "suite": "integration",
+      "purpose": "Чистые переходы выбора, accessId и selectionEpoch",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["unit"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0086",
+        "B028-I-0087",
+        "B028-I-0088",
+        "B028-I-0089"
+      ]
+    },
+    {
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "suite": "integration",
+      "purpose": "Адаптер профиля: безопасный ответ, deadline и retry",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["unit"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0090",
+        "B028-I-0091",
+        "B028-I-0092",
+        "B028-I-0093",
+        "B028-I-0094",
+        "B028-I-0095",
+        "B028-I-0096",
+        "B028-I-0097",
+        "B028-I-0098",
+        "B028-I-0099",
+        "B028-I-0100",
+        "B028-I-0101",
+        "B028-I-0102",
+        "B028-I-0103",
+        "B028-I-0104",
+        "B028-I-0105",
+        "B028-I-0106",
+        "B028-I-0107",
+        "B028-I-0108",
+        "B028-I-0109",
+        "B028-I-0110",
+        "B028-I-0111",
+        "B028-I-0112",
+        "B028-I-0113",
+        "B028-I-0114",
+        "B028-I-0115"
+      ]
+    },
+    {
+      "file": "tests/integration/get-state.spec.ts",
+      "suite": "integration",
+      "purpose": "Адаптер проверки доступа: ошибки и ограниченные повторы",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["unit"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0116",
+        "B028-I-0117",
+        "B028-I-0118",
+        "B028-I-0119",
+        "B028-I-0120",
+        "B028-I-0121",
+        "B028-I-0122",
+        "B028-I-0123",
+        "B028-I-0124",
+        "B028-I-0125",
+        "B028-I-0126",
+        "B028-I-0127",
+        "B028-I-0128",
+        "B028-I-0129",
+        "B028-I-0130",
+        "B028-I-0131",
+        "B028-I-0132",
+        "B028-I-0133",
+        "B028-I-0134",
+        "B028-I-0135",
+        "B028-I-0136",
+        "B028-I-0137"
+      ]
+    },
+    {
+      "file": "tests/integration/history-api.spec.ts",
+      "suite": "integration",
+      "purpose": "История: валидация, нормализация, Origin, handler, transport",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["integration", "unit"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0138",
+        "B028-I-0139",
+        "B028-I-0140",
+        "B028-I-0141",
+        "B028-I-0142",
+        "B028-I-0143",
+        "B028-I-0144",
+        "B028-I-0145",
+        "B028-I-0146",
+        "B028-I-0147",
+        "B028-I-0148",
+        "B028-I-0149",
+        "B028-I-0150",
+        "B028-I-0151",
+        "B028-I-0152",
+        "B028-I-0153",
+        "B028-I-0154",
+        "B028-I-0155"
+      ]
+    },
+    {
+      "file": "tests/integration/history-query.spec.ts",
+      "suite": "integration",
+      "purpose": "История: запрос, объединение фактов, отмена и Query-сеанс",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["integration", "unit"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0156",
+        "B028-I-0157",
+        "B028-I-0158",
+        "B028-I-0159",
+        "B028-I-0160",
+        "B028-I-0161",
+        "B028-I-0162",
+        "B028-I-0163",
+        "B028-I-0164"
+      ]
+    },
+    {
+      "file": "tests/integration/home-flow.spec.ts",
+      "suite": "integration",
+      "purpose": "Решение открытия home, потеря доступа и retry",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["integration"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0165",
+        "B028-I-0166",
+        "B028-I-0167",
+        "B028-I-0168",
+        "B028-I-0169",
+        "B028-I-0170",
+        "B028-I-0171",
+        "B028-I-0172",
+        "B028-I-0173",
+        "B028-I-0174",
+        "B028-I-0175",
+        "B028-I-0176",
+        "B028-I-0177",
+        "B028-I-0178"
+      ]
+    },
+    {
+      "file": "tests/integration/login-route.spec.ts",
+      "suite": "integration",
+      "purpose": "Контракт обработчика входа с Request/Response",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["integration"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0179",
+        "B028-I-0180",
+        "B028-I-0181",
+        "B028-I-0182",
+        "B028-I-0183"
+      ]
+    },
+    {
+      "file": "tests/integration/memory-query.spec.ts",
+      "suite": "integration",
+      "purpose": "SSR renderToString читает Query-память без fetch и предупреждений",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["integration"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0184",
+        "B028-I-0185",
+        "B028-I-0186",
+        "B028-I-0187"
+      ]
+    },
+    {
+      "file": "tests/integration/message-cache.spec.ts",
+      "suite": "integration",
+      "purpose": "Накопление сообщений и ранних статусов в QueryClient",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["integration"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0188",
+        "B028-I-0189",
+        "B028-I-0190",
+        "B028-I-0191",
+        "B028-I-0192",
+        "B028-I-0193",
+        "B028-I-0194",
+        "B028-I-0195",
+        "B028-I-0196",
+        "B028-I-0197"
+      ]
+    },
+    {
+      "file": "tests/integration/message-send-controller.spec.ts",
+      "suite": "integration",
+      "purpose": "Привязка отправки, исходы, поздний ответ и редактор",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["integration"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0198",
+        "B028-I-0199",
+        "B028-I-0200",
+        "B028-I-0201",
+        "B028-I-0202",
+        "B028-I-0203"
+      ]
+    },
+    {
+      "file": "tests/integration/message-statuses.spec.ts",
+      "suite": "integration",
+      "purpose": "Статусы до сообщения, монотонность и противоречия",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["integration"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0204",
+        "B028-I-0205",
+        "B028-I-0206",
+        "B028-I-0207",
+        "B028-I-0208",
+        "B028-I-0209",
+        "B028-I-0210"
+      ]
+    },
+    {
+      "file": "tests/integration/notification-cache.spec.ts",
+      "suite": "integration",
+      "purpose": "Применение уведомления к сообщениям и списку",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["integration"],
+      "migrationTasks": ["051"],
+      "scenarioIds": ["B028-I-0211", "B028-I-0212"]
+    },
+    {
+      "file": "tests/integration/notification-normalization.spec.ts",
+      "suite": "integration",
+      "purpose": "Проверка внешних событий и безопасные факты",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["unit"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0213",
+        "B028-I-0214",
+        "B028-I-0215",
+        "B028-I-0216",
+        "B028-I-0217",
+        "B028-I-0218",
+        "B028-I-0219",
+        "B028-I-0220",
+        "B028-I-0221",
+        "B028-I-0222"
+      ]
+    },
+    {
+      "file": "tests/integration/notification-provider.spec.ts",
+      "suite": "integration",
+      "purpose": "Настройки HTTP API, Receive и Delete с фиктивным fetch",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["unit"],
+      "migrationTasks": ["051"],
+      "scenarioIds": ["B028-I-0223", "B028-I-0224", "B028-I-0225"]
+    },
+    {
+      "file": "tests/integration/polling-connection.spec.ts",
+      "suite": "integration",
+      "purpose": "Цикл receive/ACK, recovery, lease, close и ошибки",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["integration"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0226",
+        "B028-I-0227",
+        "B028-I-0228",
+        "B028-I-0229",
+        "B028-I-0230",
+        "B028-I-0231",
+        "B028-I-0232",
+        "B028-I-0233",
+        "B028-I-0234",
+        "B028-I-0235",
+        "B028-I-0236",
+        "B028-I-0237",
+        "B028-I-0238",
+        "B028-I-0239"
+      ]
+    },
+    {
+      "file": "tests/integration/recipient-label.spec.ts",
+      "suite": "integration",
+      "purpose": "Подпись нормализованного получателя",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["unit"],
+      "migrationTasks": ["029"],
+      "scenarioIds": ["B028-I-0240", "B028-I-0241"]
+    },
+    {
+      "file": "tests/integration/recipient-search.spec.ts",
+      "suite": "integration",
+      "purpose": "Валидация поиска и контракт handler",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["integration"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0242",
+        "B028-I-0243",
+        "B028-I-0244",
+        "B028-I-0245",
+        "B028-I-0246",
+        "B028-I-0247",
+        "B028-I-0248"
+      ]
+    },
+    {
+      "file": "tests/integration/send-message.spec.ts",
+      "suite": "integration",
+      "purpose": "Текст, лимиты тела, Origin, исходы отправки и отмена",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["unit", "integration"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0249",
+        "B028-I-0250",
+        "B028-I-0251",
+        "B028-I-0252",
+        "B028-I-0253",
+        "B028-I-0254",
+        "B028-I-0255",
+        "B028-I-0256",
+        "B028-I-0257",
+        "B028-I-0258",
+        "B028-I-0259",
+        "B028-I-0260",
+        "B028-I-0261",
+        "B028-I-0262",
+        "B028-I-0263",
+        "B028-I-0264",
+        "B028-I-0265",
+        "B028-I-0266",
+        "B028-I-0267",
+        "B028-I-0268",
+        "B028-I-0269",
+        "B028-I-0270",
+        "B028-I-0271",
+        "B028-I-0272",
+        "B028-I-0273",
+        "B028-I-0274",
+        "B028-I-0275",
+        "B028-I-0276",
+        "B028-I-0277",
+        "B028-I-0278",
+        "B028-I-0279",
+        "B028-I-0280",
+        "B028-I-0281",
+        "B028-I-0282",
+        "B028-I-0283",
+        "B028-I-0284",
+        "B028-I-0285",
+        "B028-I-0286",
+        "B028-I-0287",
+        "B028-I-0288",
+        "B028-I-0289",
+        "B028-I-0290",
+        "B028-I-0291",
+        "B028-I-0292",
+        "B028-I-0293",
+        "B028-I-0294",
+        "B028-I-0295",
+        "B028-I-0296",
+        "B028-I-0297",
+        "B028-I-0298",
+        "B028-I-0299",
+        "B028-I-0300",
+        "B028-I-0301",
+        "B028-I-0302",
+        "B028-I-0303",
+        "B028-I-0304",
+        "B028-I-0305",
+        "B028-I-0306",
+        "B028-I-0307",
+        "B028-I-0308",
+        "B028-I-0309"
+      ]
+    },
+    {
+      "file": "tests/integration/session-chat-facts.spec.ts",
+      "suite": "integration",
+      "purpose": "Факты временных чатов и согласование со списком",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["integration"],
+      "migrationTasks": ["051"],
+      "scenarioIds": ["B028-I-0310", "B028-I-0311", "B028-I-0312"]
+    },
+    {
+      "file": "tests/integration/session.spec.ts",
+      "suite": "integration",
+      "purpose": "iron-session: шифрование, cookie, срок, отказ конфигурации",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["integration"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0313",
+        "B028-I-0314",
+        "B028-I-0315",
+        "B028-I-0316",
+        "B028-I-0317",
+        "B028-I-0318"
+      ]
+    },
+    {
+      "file": "tests/integration/unread-notifications.spec.ts",
+      "suite": "integration",
+      "purpose": "Уникальные unread, прочтение, scope и исключённые события",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["integration"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0319",
+        "B028-I-0320",
+        "B028-I-0321",
+        "B028-I-0322",
+        "B028-I-0323",
+        "B028-I-0324",
+        "B028-I-0325",
+        "B028-I-0326"
+      ]
+    },
+    {
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "suite": "integration",
+      "purpose": "Статические route-контракты, proof, ACK и недоверенные запросы",
+      "currentEnvironment": "Node / Playwright runner",
+      "targets": ["integration"],
+      "migrationTasks": ["051"],
+      "scenarioIds": [
+        "B028-I-0327",
+        "B028-I-0328",
+        "B028-I-0329",
+        "B028-I-0330",
+        "B028-I-0331",
+        "B028-I-0332",
+        "B028-I-0333",
+        "B028-I-0334",
+        "B028-I-0335",
+        "B028-I-0336",
+        "B028-I-0337",
+        "B028-I-0338",
+        "B028-I-0339",
+        "B028-I-0340",
+        "B028-I-0341",
+        "B028-I-0342",
+        "B028-I-0343",
+        "B028-I-0344",
+        "B028-I-0345",
+        "B028-I-0346",
+        "B028-I-0347",
+        "B028-I-0348",
+        "B028-I-0349",
+        "B028-I-0350",
+        "B028-I-0351",
+        "B028-I-0352",
+        "B028-I-0353"
+      ]
+    },
+    {
+      "file": "tests/query/chat-query.spec.ts",
+      "suite": "query",
+      "purpose": "Несколько потребителей, rerender, scope, ошибки и GC",
+      "currentEnvironment": "Chromium / production query-app",
+      "targets": ["component"],
+      "migrationTasks": ["052"],
+      "scenarioIds": [
+        "B028-Q-0001",
+        "B028-Q-0002",
+        "B028-Q-0003",
+        "B028-Q-0004",
+        "B028-Q-0005",
+        "B028-Q-0006",
+        "B028-Q-0007",
+        "B028-Q-0008",
+        "B028-Q-0009"
+      ]
+    },
+    {
+      "file": "tests/query/conversation-selection.spec.ts",
+      "suite": "query",
+      "purpose": "React Context выбора и независимость access/editor epoch",
+      "currentEnvironment": "Chromium / production query-app",
+      "targets": ["component"],
+      "migrationTasks": ["052"],
+      "scenarioIds": [
+        "B028-Q-0010",
+        "B028-Q-0011",
+        "B028-Q-0012",
+        "B028-Q-0013"
+      ]
+    },
+    {
+      "file": "tests/query/history-query.spec.ts",
+      "suite": "query",
+      "purpose": "React-история: гонки A/B/A, повтор и очистка",
+      "currentEnvironment": "Chromium / production query-app",
+      "targets": ["component"],
+      "migrationTasks": ["052"],
+      "scenarioIds": [
+        "B028-Q-0014",
+        "B028-Q-0015",
+        "B028-Q-0016",
+        "B028-Q-0017",
+        "B028-Q-0018"
+      ]
+    },
+    {
+      "file": "tests/query/history-window.spec.ts",
+      "suite": "query",
+      "purpose": "Состояния истории, безопасный текст и прокрутка",
+      "currentEnvironment": "Chromium / production query-app",
+      "targets": ["component", "browser/E2E"],
+      "migrationTasks": ["052", "053"],
+      "scenarioIds": [
+        "B028-Q-0019",
+        "B028-Q-0020",
+        "B028-Q-0021",
+        "B028-Q-0022"
+      ]
+    },
+    {
+      "file": "tests/query/message-composer.spec.ts",
+      "suite": "query",
+      "purpose": "Редактор, отправка, history/live и владение вкладкой",
+      "currentEnvironment": "Chromium / production query-app",
+      "targets": ["component", "browser/E2E"],
+      "migrationTasks": ["052", "053"],
+      "scenarioIds": [
+        "B028-Q-0023",
+        "B028-Q-0024",
+        "B028-Q-0025",
+        "B028-Q-0026",
+        "B028-Q-0027",
+        "B028-Q-0028",
+        "B028-Q-0029",
+        "B028-Q-0030"
+      ]
+    },
+    {
+      "file": "tests/query/polling-workspace.spec.ts",
+      "suite": "query",
+      "purpose": "Реальный Web Lock, вторая вкладка, reload и отсутствие API",
+      "currentEnvironment": "Chromium / production query-app",
+      "targets": ["browser/E2E"],
+      "migrationTasks": ["053"],
+      "scenarioIds": ["B028-Q-0031", "B028-Q-0032", "B028-Q-0033"]
+    },
+    {
+      "file": "tests/query/session-chat-overlay.spec.ts",
+      "suite": "query",
+      "purpose": "Память временного чата при пустом/ошибочном списке",
+      "currentEnvironment": "Chromium / production query-app",
+      "targets": ["component"],
+      "migrationTasks": ["052"],
+      "scenarioIds": ["B028-Q-0034"]
+    },
+    {
+      "file": "tests/query/unread-indicators.spec.ts",
+      "suite": "query",
+      "purpose": "Счётчики, видимость документа, mobile layout и badge",
+      "currentEnvironment": "Chromium / production query-app",
+      "targets": ["component", "browser/E2E"],
+      "migrationTasks": ["052", "053"],
+      "scenarioIds": [
+        "B028-Q-0035",
+        "B028-Q-0036",
+        "B028-Q-0037",
+        "B028-Q-0038",
+        "B028-Q-0039",
+        "B028-Q-0040",
+        "B028-Q-0041",
+        "B028-Q-0042",
+        "B028-Q-0043",
+        "B028-Q-0044",
+        "B028-Q-0045"
+      ]
+    },
+    {
+      "file": "tests/e2e/account-profile.spec.ts",
+      "suite": "e2e",
+      "purpose": "Профиль, avatar fallback, cookie, theme и layout",
+      "currentEnvironment": "Chromium или HTTP / production app",
+      "targets": ["browser/E2E"],
+      "migrationTasks": ["053"],
+      "scenarioIds": [
+        "B028-E-0001",
+        "B028-E-0002",
+        "B028-E-0003",
+        "B028-E-0004",
+        "B028-E-0005",
+        "B028-E-0006",
+        "B028-E-0007",
+        "B028-E-0008",
+        "B028-E-0009",
+        "B028-E-0010",
+        "B028-E-0011"
+      ]
+    },
+    {
+      "file": "tests/e2e/chat-list-ui.spec.ts",
+      "suite": "e2e",
+      "purpose": "Загрузка, пустота, ошибки, выбор, доступность и layout списка",
+      "currentEnvironment": "Chromium или HTTP / production app",
+      "targets": ["browser/E2E"],
+      "migrationTasks": ["053"],
+      "scenarioIds": [
+        "B028-E-0012",
+        "B028-E-0013",
+        "B028-E-0014",
+        "B028-E-0015",
+        "B028-E-0016",
+        "B028-E-0017",
+        "B028-E-0018",
+        "B028-E-0019"
+      ]
+    },
+    {
+      "file": "tests/e2e/chat-workspace.spec.ts",
+      "suite": "e2e",
+      "purpose": "Мобильная рабочая область и resize",
+      "currentEnvironment": "Chromium или HTTP / production app",
+      "targets": ["browser/E2E"],
+      "migrationTasks": ["053"],
+      "scenarioIds": ["B028-E-0020"]
+    },
+    {
+      "file": "tests/e2e/chats-api.spec.ts",
+      "suite": "e2e",
+      "purpose": "Реальные HTTP-маршруты списка и cookie",
+      "currentEnvironment": "Chromium или HTTP / production app",
+      "targets": ["browser/E2E"],
+      "migrationTasks": ["053"],
+      "scenarioIds": [
+        "B028-E-0021",
+        "B028-E-0022",
+        "B028-E-0023",
+        "B028-E-0024"
+      ]
+    },
+    {
+      "file": "tests/e2e/conversation-selection.spec.ts",
+      "suite": "e2e",
+      "purpose": "Навигация, выбор, фокус, поиск и resize",
+      "currentEnvironment": "Chromium или HTTP / production app",
+      "targets": ["browser/E2E"],
+      "migrationTasks": ["053"],
+      "scenarioIds": [
+        "B028-E-0025",
+        "B028-E-0026",
+        "B028-E-0027",
+        "B028-E-0028",
+        "B028-E-0029",
+        "B028-E-0030"
+      ]
+    },
+    {
+      "file": "tests/e2e/health.spec.ts",
+      "suite": "e2e",
+      "purpose": "Реальный HTTP-контракт health и методы",
+      "currentEnvironment": "Chromium или HTTP / production app",
+      "targets": ["browser/E2E"],
+      "migrationTasks": ["053"],
+      "scenarioIds": ["B028-E-0031", "B028-E-0032"]
+    },
+    {
+      "file": "tests/e2e/history-api.spec.ts",
+      "suite": "e2e",
+      "purpose": "Реальная история, scope, Origin, cookie и сообщения",
+      "currentEnvironment": "Chromium или HTTP / production app",
+      "targets": ["browser/E2E"],
+      "migrationTasks": ["053"],
+      "scenarioIds": [
+        "B028-E-0033",
+        "B028-E-0034",
+        "B028-E-0035",
+        "B028-E-0036",
+        "B028-E-0037",
+        "B028-E-0038",
+        "B028-E-0039"
+      ]
+    },
+    {
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "suite": "e2e",
+      "purpose": "Геометрия переписки и следование новым сообщениям",
+      "currentEnvironment": "Chromium или HTTP / production app",
+      "targets": ["browser/E2E"],
+      "migrationTasks": ["053"],
+      "scenarioIds": [
+        "B028-E-0040",
+        "B028-E-0041",
+        "B028-E-0042",
+        "B028-E-0043",
+        "B028-E-0044",
+        "B028-E-0045",
+        "B028-E-0046",
+        "B028-E-0047",
+        "B028-E-0048",
+        "B028-E-0049"
+      ]
+    },
+    {
+      "file": "tests/e2e/history-window.spec.ts",
+      "suite": "e2e",
+      "purpose": "Геометрия истории и перенос длинного текста",
+      "currentEnvironment": "Chromium или HTTP / production app",
+      "targets": ["browser/E2E"],
+      "migrationTasks": ["053"],
+      "scenarioIds": [
+        "B028-E-0050",
+        "B028-E-0051",
+        "B028-E-0052",
+        "B028-E-0053",
+        "B028-E-0054",
+        "B028-E-0055"
+      ]
+    },
+    {
+      "file": "tests/e2e/home.spec.ts",
+      "suite": "e2e",
+      "purpose": "Стартовая страница и redirect без сессии",
+      "currentEnvironment": "Chromium или HTTP / production app",
+      "targets": ["browser/E2E"],
+      "migrationTasks": ["053"],
+      "scenarioIds": ["B028-E-0056", "B028-E-0057"]
+    },
+    {
+      "file": "tests/e2e/login-flow.spec.ts",
+      "suite": "e2e",
+      "purpose": "Вход, отказы, pending и восстановление",
+      "currentEnvironment": "Chromium или HTTP / production app",
+      "targets": ["browser/E2E"],
+      "migrationTasks": ["053"],
+      "scenarioIds": [
+        "B028-E-0058",
+        "B028-E-0059",
+        "B028-E-0060",
+        "B028-E-0061",
+        "B028-E-0062",
+        "B028-E-0063"
+      ]
+    },
+    {
+      "file": "tests/e2e/login-form-safety.spec.ts",
+      "suite": "e2e",
+      "purpose": "Защита реквизитов до гидратации, storage и viewport",
+      "currentEnvironment": "Chromium или HTTP / production app",
+      "targets": ["browser/E2E"],
+      "migrationTasks": ["053"],
+      "scenarioIds": [
+        "B028-E-0064",
+        "B028-E-0065",
+        "B028-E-0066",
+        "B028-E-0067",
+        "B028-E-0068"
+      ]
+    },
+    {
+      "file": "tests/e2e/login-form.spec.ts",
+      "suite": "e2e",
+      "purpose": "Поля, ошибки, видимость токена, клавиатура и ссылки",
+      "currentEnvironment": "Chromium или HTTP / production app",
+      "targets": ["component", "browser/E2E"],
+      "migrationTasks": ["052", "053"],
+      "scenarioIds": [
+        "B028-E-0069",
+        "B028-E-0070",
+        "B028-E-0071",
+        "B028-E-0072",
+        "B028-E-0073",
+        "B028-E-0074",
+        "B028-E-0075",
+        "B028-E-0076",
+        "B028-E-0077"
+      ]
+    },
+    {
+      "file": "tests/e2e/login-ui.spec.ts",
+      "suite": "e2e",
+      "purpose": "Темы, размеры, accessibility, motion и focus",
+      "currentEnvironment": "Chromium или HTTP / production app",
+      "targets": ["browser/E2E"],
+      "migrationTasks": ["053"],
+      "scenarioIds": [
+        "B028-E-0078",
+        "B028-E-0079",
+        "B028-E-0080",
+        "B028-E-0081",
+        "B028-E-0082",
+        "B028-E-0083",
+        "B028-E-0084",
+        "B028-E-0085",
+        "B028-E-0086",
+        "B028-E-0087",
+        "B028-E-0088",
+        "B028-E-0089",
+        "B028-E-0090",
+        "B028-E-0091",
+        "B028-E-0092"
+      ]
+    },
+    {
+      "file": "tests/e2e/logout-flow.spec.ts",
+      "suite": "e2e",
+      "purpose": "Выход, cookie, client navigation и повтор после ошибки",
+      "currentEnvironment": "Chromium или HTTP / production app",
+      "targets": ["browser/E2E"],
+      "migrationTasks": ["053"],
+      "scenarioIds": [
+        "B028-E-0093",
+        "B028-E-0094",
+        "B028-E-0095",
+        "B028-E-0096"
+      ]
+    },
+    {
+      "file": "tests/e2e/message-composer.spec.ts",
+      "suite": "e2e",
+      "purpose": "Production send и incoming через маршруты с реальной cookie",
+      "currentEnvironment": "Chromium или HTTP / production app",
+      "targets": ["browser/E2E"],
+      "migrationTasks": ["053"],
+      "scenarioIds": ["B028-E-0097", "B028-E-0098", "B028-E-0099"]
+    },
+    {
+      "file": "tests/e2e/recipient-search-ui.spec.ts",
+      "suite": "e2e",
+      "purpose": "Представление результата и действие открытия",
+      "currentEnvironment": "Chromium или HTTP / production app",
+      "targets": ["browser/E2E"],
+      "migrationTasks": ["053"],
+      "scenarioIds": ["B028-E-0100"]
+    },
+    {
+      "file": "tests/e2e/recipient-search.spec.ts",
+      "suite": "e2e",
+      "purpose": "Поиск по двум режимам, отказы и серверная сессия",
+      "currentEnvironment": "Chromium или HTTP / production app",
+      "targets": ["browser/E2E"],
+      "migrationTasks": ["053"],
+      "scenarioIds": [
+        "B028-E-0101",
+        "B028-E-0102",
+        "B028-E-0103",
+        "B028-E-0104",
+        "B028-E-0105",
+        "B028-E-0106",
+        "B028-E-0107",
+        "B028-E-0108"
+      ]
+    },
+    {
+      "file": "tests/e2e/search-layout.spec.ts",
+      "suite": "e2e",
+      "purpose": "Стабильная высота режимов и viewport",
+      "currentEnvironment": "Chromium или HTTP / production app",
+      "targets": ["browser/E2E"],
+      "migrationTasks": ["053"],
+      "scenarioIds": ["B028-E-0109"]
+    },
+    {
+      "file": "tests/spec-kit/workflow.tests.ps1",
+      "suite": "workflow",
+      "purpose": "Контракты локального Spec Kit; не поведение приложения",
+      "currentEnvironment": "PowerShell 7 / Windows / временные фикстуры",
+      "targets": ["workflow"],
+      "migrationTasks": ["keep"],
+      "scenarioIds": [
+        "B028-W-V01",
+        "B028-W-V02",
+        "B028-W-V03",
+        "B028-W-V04",
+        "B028-W-V05",
+        "B028-W-V06",
+        "B028-W-V07",
+        "B028-W-V08",
+        "B028-W-V09",
+        "B028-W-V10",
+        "B028-W-V11",
+        "B028-W-V12"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "B028-I-0001",
+      "suite": "integration",
+      "file": "tests/integration/account-profile.spec.ts",
+      "line": 16,
+      "title": "account-profile: whitelists display fields and trims username before phone",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0002",
+      "suite": "integration",
+      "file": "tests/integration/account-profile.spec.ts",
+      "line": 30,
+      "title": "account-profile: uses phone when username is absent or invalid",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0003",
+      "suite": "integration",
+      "file": "tests/integration/account-profile.spec.ts",
+      "line": 41,
+      "title": "account-profile: missing and mistyped optional fields remain empty",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0004",
+      "suite": "integration",
+      "file": "tests/integration/account-profile.spec.ts",
+      "line": 57,
+      "title": "account-profile: accepts an absolute HTTPS avatar and trims it",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0005",
+      "suite": "integration",
+      "file": "tests/integration/account-profile.spec.ts",
+      "line": 65,
+      "title": "account-profile: rejects unsafe, relative and malformed avatar URLs",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0006",
+      "suite": "integration",
+      "file": "tests/integration/account-profile.spec.ts",
+      "line": 80,
+      "title": "account-profile: suppresses raw and encoded credentials in every display field",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0007",
+      "suite": "integration",
+      "file": "tests/integration/account-profile.spec.ts",
+      "line": 99,
+      "title": "account-profile: safe phone remains usable when username contains a credential",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0008",
+      "suite": "integration",
+      "file": "tests/integration/auth-flow.spec.ts",
+      "line": 65,
+      "title": "auth-flow: authorized saves exact credentials and returns only ok",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0009",
+      "suite": "integration",
+      "file": "tests/integration/auth-flow.spec.ts",
+      "line": 96,
+      "title": "auth-flow: rejects invalid body case 0 before provider",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0010",
+      "suite": "integration",
+      "file": "tests/integration/auth-flow.spec.ts",
+      "line": 96,
+      "title": "auth-flow: rejects invalid body case 1 before provider",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0011",
+      "suite": "integration",
+      "file": "tests/integration/auth-flow.spec.ts",
+      "line": 96,
+      "title": "auth-flow: rejects invalid body case 2 before provider",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0012",
+      "suite": "integration",
+      "file": "tests/integration/auth-flow.spec.ts",
+      "line": 96,
+      "title": "auth-flow: rejects invalid body case 3 before provider",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0013",
+      "suite": "integration",
+      "file": "tests/integration/auth-flow.spec.ts",
+      "line": 96,
+      "title": "auth-flow: rejects invalid body case 4 before provider",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0014",
+      "suite": "integration",
+      "file": "tests/integration/auth-flow.spec.ts",
+      "line": 96,
+      "title": "auth-flow: rejects invalid body case 5 before provider",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0015",
+      "suite": "integration",
+      "file": "tests/integration/auth-flow.spec.ts",
+      "line": 96,
+      "title": "auth-flow: rejects invalid body case 6 before provider",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0016",
+      "suite": "integration",
+      "file": "tests/integration/auth-flow.spec.ts",
+      "line": 96,
+      "title": "auth-flow: rejects invalid body case 7 before provider",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0017",
+      "suite": "integration",
+      "file": "tests/integration/auth-flow.spec.ts",
+      "line": 96,
+      "title": "auth-flow: rejects invalid body case 8 before provider",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0018",
+      "suite": "integration",
+      "file": "tests/integration/auth-flow.spec.ts",
+      "line": 133,
+      "title": "auth-flow: invalid_token never saves a session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0019",
+      "suite": "integration",
+      "file": "tests/integration/auth-flow.spec.ts",
+      "line": 133,
+      "title": "auth-flow: invalid_instance never saves a session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0020",
+      "suite": "integration",
+      "file": "tests/integration/auth-flow.spec.ts",
+      "line": 133,
+      "title": "auth-flow: needs_authorization never saves a session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0021",
+      "suite": "integration",
+      "file": "tests/integration/auth-flow.spec.ts",
+      "line": 133,
+      "title": "auth-flow: instance_restricted never saves a session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0022",
+      "suite": "integration",
+      "file": "tests/integration/auth-flow.spec.ts",
+      "line": 133,
+      "title": "auth-flow: instance_expired never saves a session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0023",
+      "suite": "integration",
+      "file": "tests/integration/auth-flow.spec.ts",
+      "line": 133,
+      "title": "auth-flow: retry_later never saves a session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0024",
+      "suite": "integration",
+      "file": "tests/integration/auth-flow.spec.ts",
+      "line": 133,
+      "title": "auth-flow: service_unavailable never saves a session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0025",
+      "suite": "integration",
+      "file": "tests/integration/auth-flow.spec.ts",
+      "line": 133,
+      "title": "auth-flow: invalid_upstream_response never saves a session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0026",
+      "suite": "integration",
+      "file": "tests/integration/auth-flow.spec.ts",
+      "line": 148,
+      "title": "auth-flow: session storage failure has a safe response",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0027",
+      "suite": "integration",
+      "file": "tests/integration/auth-flow.spec.ts",
+      "line": 167,
+      "title": "auth-flow: exhausted rate limit returns 429 and never saves a session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0028",
+      "suite": "integration",
+      "file": "tests/integration/chat-query.spec.ts",
+      "line": 35,
+      "title": "query: client binds scope/header/signal and returns safe DTO",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0029",
+      "suite": "integration",
+      "file": "tests/integration/chat-query.spec.ts",
+      "line": 55,
+      "title": "query: rejects foreign scope and invalid public payload",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0030",
+      "suite": "integration",
+      "file": "tests/integration/chat-query.spec.ts",
+      "line": 89,
+      "title": "query: normalized error and network failure",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0031",
+      "suite": "integration",
+      "file": "tests/integration/chat-query.spec.ts",
+      "line": 117,
+      "title": "query: two observers share a request, fresh remount reuses data",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0032",
+      "suite": "integration",
+      "file": "tests/integration/chat-query.spec.ts",
+      "line": 144,
+      "title": "query: refresh failure retains confirmed data and manual retry recovers",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0033",
+      "suite": "integration",
+      "file": "tests/integration/chat-query.spec.ts",
+      "line": 172,
+      "title": "query: close aborts and late promise cannot restore cache; new account independent",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0034",
+      "suite": "integration",
+      "file": "tests/integration/chat-query.spec.ts",
+      "line": 199,
+      "title": "query: explicit timing/event policy and closed loader guard",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0035",
+      "suite": "integration",
+      "file": "tests/integration/chat-query.spec.ts",
+      "line": 226,
+      "title": "query: two access errors retire context and notify exactly once",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0036",
+      "suite": "integration",
+      "file": "tests/integration/chat-query.spec.ts",
+      "line": 250,
+      "title": "query: abort during JSON parsing rejects a late body",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0037",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 54,
+      "title": "chats: personal normalization, order, first duplicate and allowlist",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0038",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 80,
+      "title": "chats: valid empty []",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0039",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 80,
+      "title": "chats: valid empty [{\"type\":\"group\"}]",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0040",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 80,
+      "title": "chats: valid empty [{\"type\":\"future\"}]",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0041",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 94,
+      "title": "chats: malformed {}",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0042",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 94,
+      "title": "chats: malformed null",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0043",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 94,
+      "title": "chats: malformed [null]",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0044",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 94,
+      "title": "chats: malformed [[]]",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0045",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 94,
+      "title": "chats: malformed [{}]",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0046",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 94,
+      "title": "chats: malformed [{\"type\":1}]",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0047",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 94,
+      "title": "chats: malformed [{\"type\":\" \"}]",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0048",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 94,
+      "title": "chats: malformed [{\"type\":\"user\"}]",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0049",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 94,
+      "title": "chats: malformed [{\"type\":\"user\",\"chatId\":12}]",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0050",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 97,
+      "title": "chats: optional malformed fields and credential-bearing text are removed",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0051",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 119,
+      "title": "chats: scope uses independently computed protocol and changes with connection",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0052",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 144,
+      "title": "chats: provider GET uses fixed host, encoded credentials, abort and no-store",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0053",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 168,
+      "title": "chats: provider status 401",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0054",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 168,
+      "title": "chats: provider status 403",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0055",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 168,
+      "title": "chats: provider status 503",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0056",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 168,
+      "title": "chats: provider status 418",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0057",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 173,
+      "title": "chats: provider malformed JSON/root and network failure preserve category",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0058",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 192,
+      "title": "chats: provider expired/starting 400 follow existing categories",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0059",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 212,
+      "title": "chats: one rate-limit retry, success=true",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0060",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 212,
+      "title": "chats: one rate-limit retry, success=false",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0061",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 242,
+      "title": "chats: aborted signal prevents initial call and retry",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0062",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 275,
+      "title": "chats: rejects before provider server_unavailable",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0063",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 275,
+      "title": "chats: rejects before provider session_required",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0064",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 275,
+      "title": "chats: rejects before provider invalid_request",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0065",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 275,
+      "title": "chats: rejects before provider connection_changed",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0066",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 301,
+      "title": "chats: internal success is safe and scoped",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0067",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 355,
+      "title": "chats: HTTP error and cookie invalid_token",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0068",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 355,
+      "title": "chats: HTTP error and cookie invalid_instance",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0069",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 355,
+      "title": "chats: HTTP error and cookie instance_expired",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0070",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 355,
+      "title": "chats: HTTP error and cookie needs_authorization",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0071",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 355,
+      "title": "chats: HTTP error and cookie instance_restricted",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0072",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 355,
+      "title": "chats: HTTP error and cookie rate_limited",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0073",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 355,
+      "title": "chats: HTTP error and cookie retry_later",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0074",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 355,
+      "title": "chats: HTTP error and cookie service_unavailable",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0075",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 355,
+      "title": "chats: HTTP error and cookie invalid_upstream_response",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0076",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 376,
+      "title": "chats: deadline aborts an unresponsive provider",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0077",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 396,
+      "title": "chats: failed cookie cleanup never confirms logout of session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0078",
+      "suite": "integration",
+      "file": "tests/integration/chats-api.spec.ts",
+      "line": 412,
+      "title": "chats: cancellation during provider body prevents a late success",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0079",
+      "suite": "integration",
+      "file": "tests/integration/check-account.spec.ts",
+      "line": 62,
+      "title": "check-account: phone lookup uses one fixed-host POST and exposes only chatId",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0080",
+      "suite": "integration",
+      "file": "tests/integration/check-account.spec.ts",
+      "line": 85,
+      "title": "check-account: username lookup sends @ and distinguishes not found",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0081",
+      "suite": "integration",
+      "file": "tests/integration/check-account.spec.ts",
+      "line": 99,
+      "title": "check-account: limit in HTTP 200 and HTTP 429/469 is not absence",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0082",
+      "suite": "integration",
+      "file": "tests/integration/check-account.spec.ts",
+      "line": 116,
+      "title": "check-account: only HTTP 401 proves invalid token",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0083",
+      "suite": "integration",
+      "file": "tests/integration/check-account.spec.ts",
+      "line": 136,
+      "title": "check-account: documented startup is retryable, other HTTP 400 is not",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0084",
+      "suite": "integration",
+      "file": "tests/integration/check-account.spec.ts",
+      "line": 161,
+      "title": "check-account: incomplete or unknown body never confirms a recipient",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0085",
+      "suite": "integration",
+      "file": "tests/integration/check-account.spec.ts",
+      "line": 190,
+      "title": "check-account: provider outage and transport failure are retryable",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0086",
+      "suite": "integration",
+      "file": "tests/integration/conversation-selection.spec.ts",
+      "line": 22,
+      "title": "selection: A → A → B distinguishes access from recipient changes",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0087",
+      "suite": "integration",
+      "file": "tests/integration/conversation-selection.spec.ts",
+      "line": 58,
+      "title": "selection: mobile back preserves target and reopening increments only access",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0088",
+      "suite": "integration",
+      "file": "tests/integration/conversation-selection.spec.ts",
+      "line": 84,
+      "title": "selection: close is idempotent and only increments the selection epoch",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0089",
+      "suite": "integration",
+      "file": "tests/integration/conversation-selection.spec.ts",
+      "line": 104,
+      "title": "selection: empty confirmed ID is ignored and missing label uses actual ID",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0090",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 77,
+      "title": "GetAccountSettings: uses its own encoded URL and safe fetch options",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0091",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 106,
+      "title": "GetAccountSettings: classifies state notAuthorized",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0092",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 106,
+      "title": "GetAccountSettings: classifies state pendingPassword",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0093",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 106,
+      "title": "GetAccountSettings: classifies state blocked",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0094",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 106,
+      "title": "GetAccountSettings: classifies state suspended",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0095",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 106,
+      "title": "GetAccountSettings: classifies state starting",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0096",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 106,
+      "title": "GetAccountSettings: classifies state unrecognized",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0097",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 133,
+      "title": "GetAccountSettings: classifies HTTP 401",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0098",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 133,
+      "title": "GetAccountSettings: classifies HTTP 403",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0099",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 133,
+      "title": "GetAccountSettings: classifies HTTP 500",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0100",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 133,
+      "title": "GetAccountSettings: classifies HTTP 503",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0101",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 133,
+      "title": "GetAccountSettings: classifies HTTP 418",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0102",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 148,
+      "title": "GetAccountSettings: classifies HTTP 400 retry_later instance in starting process try later",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0103",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 148,
+      "title": "GetAccountSettings: classifies HTTP 400 retry_later instance is starting or not authorized",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0104",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 148,
+      "title": "GetAccountSettings: classifies HTTP 400 instance_expired Instance account is expired. Renew your instance from personal area",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0105",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 148,
+      "title": "GetAccountSettings: classifies HTTP 400 invalid_upstream_response {bad json",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0106",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 158,
+      "title": "GetAccountSettings: rejects malformed JSON and non-object or unknown states",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0107",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 175,
+      "title": "GetAccountSettings: optional profile data cannot revoke authorized access",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0108",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 199,
+      "title": "GetAccountSettings: Error becomes a temporary error",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0109",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 199,
+      "title": "GetAccountSettings: TypeError becomes a temporary error",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0110",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 199,
+      "title": "GetAccountSettings: TimeoutError becomes a temporary error",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0111",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 211,
+      "title": "GetAccountSettings: retries 429 once then classifies HTTP 200",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0112",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 211,
+      "title": "GetAccountSettings: retries 429 once then classifies HTTP 429",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0113",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 211,
+      "title": "GetAccountSettings: retries 429 once then classifies HTTP 401",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0114",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 243,
+      "title": "GetAccountSettings: aborted retry stops before a second fetch",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0115",
+      "suite": "integration",
+      "file": "tests/integration/get-account-settings.spec.ts",
+      "line": 259,
+      "title": "GetAccountSettings: the real deadline aborts a stalled provider",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0116",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 72,
+      "title": "get-state: authorized requires the documented body and fixed server URL",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0117",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 100,
+      "title": "get-state: notAuthorized is needs_authorization",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0118",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 100,
+      "title": "get-state: pendingPassword is needs_authorization",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0119",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 100,
+      "title": "get-state: blocked is instance_restricted",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0120",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 100,
+      "title": "get-state: suspended is instance_restricted",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0121",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 100,
+      "title": "get-state: starting is retry_later",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0122",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 115,
+      "title": "get-state: HTTP 401 is invalid_token",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0123",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 115,
+      "title": "get-state: HTTP 403 is invalid_instance",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0124",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 115,
+      "title": "get-state: HTTP 502 is service_unavailable",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0125",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 131,
+      "title": "get-state: HTTP 400 retry_later (instance in starting process try later)",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0126",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 131,
+      "title": "get-state: HTTP 400 retry_later (instance is starting or not authorized)",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0127",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 131,
+      "title": "get-state: HTTP 400 instance_expired (Instance account is expired. Renew your instance from personal area)",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0128",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 131,
+      "title": "get-state: HTTP 400 invalid_upstream_response (unknown provider error)",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0129",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 142,
+      "title": "get-state: invalid body {bad json never authorizes",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0130",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 142,
+      "title": "get-state: invalid body {} never authorizes",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0131",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 142,
+      "title": "get-state: invalid body {\"stateInstance\":42} never authorizes",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0132",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 142,
+      "title": "get-state: invalid body {\"stateInstance\":\"unrecognized\"} never authorizes",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0133",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 151,
+      "title": "get-state: network failure is retryable and contains no raw error",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0134",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 161,
+      "title": "get-state: times out after ten seconds with a retryable result",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0135",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 185,
+      "title": "get-state: retries HTTP 429 once before accepting authorized state",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0136",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 213,
+      "title": "get-state: a second HTTP 429 stops after one retry",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0137",
+      "suite": "integration",
+      "file": "tests/integration/get-state.spec.ts",
+      "line": 230,
+      "title": "get-state: other failures do not trigger a delayed retry",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0138",
+      "suite": "integration",
+      "file": "tests/integration/history-api.spec.ts",
+      "line": 108,
+      "title": "history target Origin: actual loopback Host wins over normalized NextRequest URL",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0139",
+      "suite": "integration",
+      "file": "tests/integration/history-api.spec.ts",
+      "line": 115,
+      "title": "history target Origin: normalized localhost is foreign to actual loopback Host",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0140",
+      "suite": "integration",
+      "file": "tests/integration/history-api.spec.ts",
+      "line": 123,
+      "title": "history target Origin: malformed Host never permits normalized URL fallback",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0141",
+      "suite": "integration",
+      "file": "tests/integration/history-api.spec.ts",
+      "line": 132,
+      "title": "history target Origin: path, query, fragment and non HTTP origin remain invalid",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0142",
+      "suite": "integration",
+      "file": "tests/integration/history-api.spec.ts",
+      "line": 146,
+      "title": "history request: only the confirmed personal chat identifier is accepted",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0143",
+      "suite": "integration",
+      "file": "tests/integration/history-api.spec.ts",
+      "line": 163,
+      "title": "history normalizes text, unsupported messages, timestamps and status without raw metadata",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0144",
+      "suite": "integration",
+      "file": "tests/integration/history-api.spec.ts",
+      "line": 195,
+      "title": "history invalid identity, chat, type and time reject the complete upstream snapshot",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0145",
+      "suite": "integration",
+      "file": "tests/integration/history-api.spec.ts",
+      "line": 216,
+      "title": "history duplicate identifiers merge and optional unknown status does not invent delivery",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0146",
+      "suite": "integration",
+      "file": "tests/integration/history-api.spec.ts",
+      "line": 249,
+      "title": "history handler binds session, scope and chat without leaking credentials",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0147",
+      "suite": "integration",
+      "file": "tests/integration/history-api.spec.ts",
+      "line": 263,
+      "title": "history handler rejects Origin null before body and provider",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0148",
+      "suite": "integration",
+      "file": "tests/integration/history-api.spec.ts",
+      "line": 263,
+      "title": "history handler rejects Origin \"null\" before body and provider",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0149",
+      "suite": "integration",
+      "file": "tests/integration/history-api.spec.ts",
+      "line": 263,
+      "title": "history handler rejects Origin \"not a url\" before body and provider",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0150",
+      "suite": "integration",
+      "file": "tests/integration/history-api.spec.ts",
+      "line": 263,
+      "title": "history handler rejects Origin \"https://foreign.example.test\" before body and provider",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0151",
+      "suite": "integration",
+      "file": "tests/integration/history-api.spec.ts",
+      "line": 276,
+      "title": "history handler rejects session, scope and body in the required order",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0152",
+      "suite": "integration",
+      "file": "tests/integration/history-api.spec.ts",
+      "line": 317,
+      "title": "history handler preserves session on target, upstream and transient failures",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0153",
+      "suite": "integration",
+      "file": "tests/integration/history-api.spec.ts",
+      "line": 339,
+      "title": "history provider uses fixed POST count and bounded rate-limit retry",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0154",
+      "suite": "integration",
+      "file": "tests/integration/history-api.spec.ts",
+      "line": 371,
+      "title": "history provider maps invalid target, response and two rate limits safely",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0155",
+      "suite": "integration",
+      "file": "tests/integration/history-api.spec.ts",
+      "line": 400,
+      "title": "history provider abort during retry or body never publishes a snapshot",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0156",
+      "suite": "integration",
+      "file": "tests/integration/history-query.spec.ts",
+      "line": 48,
+      "title": "history fetch posts only chatId and guards the public normalized response",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0157",
+      "suite": "integration",
+      "file": "tests/integration/history-query.spec.ts",
+      "line": 70,
+      "title": "history fetch accepts empty and rejects foreign or invalid normalized data",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0158",
+      "suite": "integration",
+      "file": "tests/integration/history-query.spec.ts",
+      "line": 97,
+      "title": "history fetch normalized HTTP errors and network failure remain distinct from empty success",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0159",
+      "suite": "integration",
+      "file": "tests/integration/history-query.spec.ts",
+      "line": 120,
+      "title": "history fetch guards closed scope before fetch and after asynchronous JSON",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0160",
+      "suite": "integration",
+      "file": "tests/integration/history-query.spec.ts",
+      "line": 151,
+      "title": "history merge retains messages missing from latest ten and distinguishes equal text with different ids",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0161",
+      "suite": "integration",
+      "file": "tests/integration/history-query.spec.ts",
+      "line": 172,
+      "title": "history merge does not downgrade confirmed status or replace known text with null",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0162",
+      "suite": "integration",
+      "file": "tests/integration/history-query.spec.ts",
+      "line": 201,
+      "title": "history cache is retained independently of request observers and is cleared by session close",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0163",
+      "suite": "integration",
+      "file": "tests/integration/history-query.spec.ts",
+      "line": 227,
+      "title": "history and chats share one normalized session transition and isolated cleanup errors",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0164",
+      "suite": "integration",
+      "file": "tests/integration/history-query.spec.ts",
+      "line": 264,
+      "title": "history normalized 409 alone cannot retire a session without matching connection code and status",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0165",
+      "suite": "integration",
+      "file": "tests/integration/home-flow.spec.ts",
+      "line": 42,
+      "title": "home-flow: passes only the prepared profile from the account loader",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0166",
+      "suite": "integration",
+      "file": "tests/integration/home-flow.spec.ts",
+      "line": 52,
+      "title": "home-flow: missing session never calls GREEN-API",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0167",
+      "suite": "integration",
+      "file": "tests/integration/home-flow.spec.ts",
+      "line": 68,
+      "title": "home-flow: authorized rechecks and returns state for home",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0168",
+      "suite": "integration",
+      "file": "tests/integration/home-flow.spec.ts",
+      "line": 95,
+      "title": "home-flow: invalid_token ends the session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0169",
+      "suite": "integration",
+      "file": "tests/integration/home-flow.spec.ts",
+      "line": 95,
+      "title": "home-flow: invalid_instance ends the session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0170",
+      "suite": "integration",
+      "file": "tests/integration/home-flow.spec.ts",
+      "line": 95,
+      "title": "home-flow: needs_authorization ends the session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0171",
+      "suite": "integration",
+      "file": "tests/integration/home-flow.spec.ts",
+      "line": 95,
+      "title": "home-flow: instance_restricted ends the session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0172",
+      "suite": "integration",
+      "file": "tests/integration/home-flow.spec.ts",
+      "line": 95,
+      "title": "home-flow: instance_expired ends the session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0173",
+      "suite": "integration",
+      "file": "tests/integration/home-flow.spec.ts",
+      "line": 119,
+      "title": "home-flow: retry_later preserves the session for retry",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0174",
+      "suite": "integration",
+      "file": "tests/integration/home-flow.spec.ts",
+      "line": 119,
+      "title": "home-flow: service_unavailable preserves the session for retry",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0175",
+      "suite": "integration",
+      "file": "tests/integration/home-flow.spec.ts",
+      "line": 119,
+      "title": "home-flow: invalid_upstream_response preserves the session for retry",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0176",
+      "suite": "integration",
+      "file": "tests/integration/home-flow.spec.ts",
+      "line": 130,
+      "title": "home-flow: thrown provider error preserves the session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0177",
+      "suite": "integration",
+      "file": "tests/integration/home-flow.spec.ts",
+      "line": 140,
+      "title": "home-flow: end-session deletes only the app cookie and fixes redirect",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0178",
+      "suite": "integration",
+      "file": "tests/integration/home-flow.spec.ts",
+      "line": 150,
+      "title": "home-flow: rate limit preserves the existing session for manual retry",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0179",
+      "suite": "integration",
+      "file": "tests/integration/login-route.spec.ts",
+      "line": 65,
+      "title": "login-route: authorized responds with no-store and no credentials",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0180",
+      "suite": "integration",
+      "file": "tests/integration/login-route.spec.ts",
+      "line": 93,
+      "title": "login-route: malformed request case 0 is rejected before provider",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0181",
+      "suite": "integration",
+      "file": "tests/integration/login-route.spec.ts",
+      "line": 93,
+      "title": "login-route: malformed request case 1 is rejected before provider",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0182",
+      "suite": "integration",
+      "file": "tests/integration/login-route.spec.ts",
+      "line": 93,
+      "title": "login-route: malformed request case 2 is rejected before provider",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0183",
+      "suite": "integration",
+      "file": "tests/integration/login-route.spec.ts",
+      "line": 115,
+      "title": "login-route: provider rejection uses normalized status and body",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0184",
+      "suite": "integration",
+      "file": "tests/integration/memory-query.spec.ts",
+      "line": 23,
+      "title": "memory query: messages reads retained cache without development console errors",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051",
+      "limitation": "SSR renderToString; не проверяет mount/effect cleanup или StrictMode replay."
+    },
+    {
+      "id": "B028-I-0185",
+      "suite": "integration",
+      "file": "tests/integration/memory-query.spec.ts",
+      "line": 23,
+      "title": "memory query: session-chats reads retained cache without development console errors",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051",
+      "limitation": "SSR renderToString; не проверяет mount/effect cleanup или StrictMode replay."
+    },
+    {
+      "id": "B028-I-0186",
+      "suite": "integration",
+      "file": "tests/integration/memory-query.spec.ts",
+      "line": 23,
+      "title": "memory query: message-status-facts reads retained cache without development console errors",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051",
+      "limitation": "SSR renderToString; не проверяет mount/effect cleanup или StrictMode replay."
+    },
+    {
+      "id": "B028-I-0187",
+      "suite": "integration",
+      "file": "tests/integration/memory-query.spec.ts",
+      "line": 23,
+      "title": "memory query: message-status-issues reads retained cache without development console errors",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051",
+      "limitation": "SSR renderToString; не проверяет mount/effect cleanup или StrictMode replay."
+    },
+    {
+      "id": "B028-I-0188",
+      "suite": "integration",
+      "file": "tests/integration/message-cache.spec.ts",
+      "line": 47,
+      "title": "facts: status before a message does not create a bubble and attaches to real history",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0189",
+      "suite": "integration",
+      "file": "tests/integration/message-cache.spec.ts",
+      "line": 61,
+      "title": "facts: early failed and conflicting later status retain confirmation and publish issue",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0190",
+      "suite": "integration",
+      "file": "tests/integration/message-cache.spec.ts",
+      "line": 61,
+      "title": "facts: early delivered and conflicting later status retain confirmation and publish issue",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0191",
+      "suite": "integration",
+      "file": "tests/integration/message-cache.spec.ts",
+      "line": 61,
+      "title": "facts: early read and conflicting later status retain confirmation and publish issue",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0192",
+      "suite": "integration",
+      "file": "tests/integration/message-cache.spec.ts",
+      "line": 83,
+      "title": "facts: duplicate does not extend TTL, stronger status renews it, expired facts never attach",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0193",
+      "suite": "integration",
+      "file": "tests/integration/message-cache.spec.ts",
+      "line": 133,
+      "title": "facts: bounded early queue evicts oldest deterministically and retains GC until close",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0194",
+      "suite": "integration",
+      "file": "tests/integration/message-cache.spec.ts",
+      "line": 165,
+      "title": "facts: provider fields replace accepted fields; late history preserves live content, identity and read",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0195",
+      "suite": "integration",
+      "file": "tests/integration/message-cache.spec.ts",
+      "line": 201,
+      "title": "facts: validation is atomic for wrong-chat messages and partial statuses",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0196",
+      "suite": "integration",
+      "file": "tests/integration/message-cache.spec.ts",
+      "line": 216,
+      "title": "facts: live provider content without timestamp survives later history after local acceptance",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0197",
+      "suite": "integration",
+      "file": "tests/integration/message-cache.spec.ts",
+      "line": 254,
+      "title": "facts: accepted-message API preserves exact text, timestamp semantics and prior read",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0198",
+      "suite": "integration",
+      "file": "tests/integration/message-send-controller.spec.ts",
+      "line": 41,
+      "title": "client sends original text once and validates accepted correlation",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0199",
+      "suite": "integration",
+      "file": "tests/integration/message-send-controller.spec.ts",
+      "line": 91,
+      "title": "shared latch rejects a second send and late acceptance publishes to its captured chat",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0200",
+      "suite": "integration",
+      "file": "tests/integration/message-send-controller.spec.ts",
+      "line": 144,
+      "title": "late send result follows captured owner lifetime: grace",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0201",
+      "suite": "integration",
+      "file": "tests/integration/message-send-controller.spec.ts",
+      "line": 144,
+      "title": "late send result follows captured owner lifetime: revoked",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0202",
+      "suite": "integration",
+      "file": "tests/integration/message-send-controller.spec.ts",
+      "line": 144,
+      "title": "late send result follows captured owner lifetime: closed",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0203",
+      "suite": "integration",
+      "file": "tests/integration/message-send-controller.spec.ts",
+      "line": 191,
+      "title": "unknown outcome is never retried automatically and a rejected manual retry preserves uncertainty",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0204",
+      "suite": "integration",
+      "file": "tests/integration/message-statuses.spec.ts",
+      "line": 28,
+      "title": "status DTO delivered updates only the exact outgoing message and strips descriptions",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0205",
+      "suite": "integration",
+      "file": "tests/integration/message-statuses.spec.ts",
+      "line": 28,
+      "title": "status DTO read updates only the exact outgoing message and strips descriptions",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0206",
+      "suite": "integration",
+      "file": "tests/integration/message-statuses.spec.ts",
+      "line": 28,
+      "title": "status DTO failed updates only the exact outgoing message and strips descriptions",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0207",
+      "suite": "integration",
+      "file": "tests/integration/message-statuses.spec.ts",
+      "line": 28,
+      "title": "status DTO noAccount updates only the exact outgoing message and strips descriptions",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0208",
+      "suite": "integration",
+      "file": "tests/integration/message-statuses.spec.ts",
+      "line": 71,
+      "title": "uncorrelated failed publishes a connection issue without guessing a bubble",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0209",
+      "suite": "integration",
+      "file": "tests/integration/message-statuses.spec.ts",
+      "line": 71,
+      "title": "uncorrelated noAccount publishes a connection issue without guessing a bubble",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0210",
+      "suite": "integration",
+      "file": "tests/integration/message-statuses.spec.ts",
+      "line": 106,
+      "title": "unknown status is a valid ignored event; known success without identity and unsafe identifiers are rejected",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0211",
+      "suite": "integration",
+      "file": "tests/integration/notification-cache.spec.ts",
+      "line": 14,
+      "title": "incoming facts preserve unknown chat immediately and ACK does not wait for chat refresh",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0212",
+      "suite": "integration",
+      "file": "tests/integration/notification-cache.spec.ts",
+      "line": 55,
+      "title": "stale scope or owner deliveries never mutate facts",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0213",
+      "suite": "integration",
+      "file": "tests/integration/notification-normalization.spec.ts",
+      "line": 36,
+      "title": "incoming normalization preserves original text and exposes only safe canonical fields",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0214",
+      "suite": "integration",
+      "file": "tests/integration/notification-normalization.spec.ts",
+      "line": 56,
+      "title": "extended text and known media normalize without downloading attachments",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0215",
+      "suite": "integration",
+      "file": "tests/integration/notification-normalization.spec.ts",
+      "line": 81,
+      "title": "groups and valid unrelated events are acknowledged as ignored",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0216",
+      "suite": "integration",
+      "file": "tests/integration/notification-normalization.spec.ts",
+      "line": 113,
+      "title": "malformed event 0 is not delivered or deleted",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0217",
+      "suite": "integration",
+      "file": "tests/integration/notification-normalization.spec.ts",
+      "line": 113,
+      "title": "malformed event 1 is not delivered or deleted",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0218",
+      "suite": "integration",
+      "file": "tests/integration/notification-normalization.spec.ts",
+      "line": 113,
+      "title": "malformed event 2 is not delivered or deleted",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0219",
+      "suite": "integration",
+      "file": "tests/integration/notification-normalization.spec.ts",
+      "line": 113,
+      "title": "malformed event 3 is not delivered or deleted",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0220",
+      "suite": "integration",
+      "file": "tests/integration/notification-normalization.spec.ts",
+      "line": 113,
+      "title": "malformed event 4 is not delivered or deleted",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0221",
+      "suite": "integration",
+      "file": "tests/integration/notification-normalization.spec.ts",
+      "line": 113,
+      "title": "malformed event 5 is not delivered or deleted",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0222",
+      "suite": "integration",
+      "file": "tests/integration/notification-normalization.spec.ts",
+      "line": 116,
+      "title": "known success status needs exact identity while noAccount without id is a general issue",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0223",
+      "suite": "integration",
+      "file": "tests/integration/notification-provider.spec.ts",
+      "line": 34,
+      "title": "preflight validates HTTP API settings and reports outgoing availability",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0224",
+      "suite": "integration",
+      "file": "tests/integration/notification-provider.spec.ts",
+      "line": 53,
+      "title": "Receive uses GET with 5-second polling and empty response is empty queue",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0225",
+      "suite": "integration",
+      "file": "tests/integration/notification-provider.spec.ts",
+      "line": 74,
+      "title": "Delete uses DELETE with exact receipt and does not expose provider reason",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0226",
+      "suite": "integration",
+      "file": "tests/integration/polling-connection.spec.ts",
+      "line": 129,
+      "title": "loop applies a delivery before ACK and never receives again while ACK is pending",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0227",
+      "suite": "integration",
+      "file": "tests/integration/polling-connection.spec.ts",
+      "line": 156,
+      "title": "duplicate deliveries ACK twice but count once",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0228",
+      "suite": "integration",
+      "file": "tests/integration/polling-connection.spec.ts",
+      "line": 178,
+      "title": "lost ACK retries the same proof without a concurrent receive",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0229",
+      "suite": "integration",
+      "file": "tests/integration/polling-connection.spec.ts",
+      "line": 201,
+      "title": "expired ACK obtains a fresh proof without duplicating incoming facts",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0230",
+      "suite": "integration",
+      "file": "tests/integration/polling-connection.spec.ts",
+      "line": 228,
+      "title": "transient receive failure blocks sending then publishes one recovery",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0231",
+      "suite": "integration",
+      "file": "tests/integration/polling-connection.spec.ts",
+      "line": 252,
+      "title": "busy browser lease blocks all network work and sending",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0232",
+      "suite": "integration",
+      "file": "tests/integration/polling-connection.spec.ts",
+      "line": 262,
+      "title": "unsupported browser locks do not silently create a second reader",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0233",
+      "suite": "integration",
+      "file": "tests/integration/polling-connection.spec.ts",
+      "line": 272,
+      "title": "close during asynchronous lease acquisition releases the late lease without requests",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0234",
+      "suite": "integration",
+      "file": "tests/integration/polling-connection.spec.ts",
+      "line": 285,
+      "title": "StrictMode retain release retain starts one lease and closes once",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051",
+      "limitation": "Ручная последовательность retain/release, без React renderer; не доказывает development effect replay."
+    },
+    {
+      "id": "B028-I-0235",
+      "suite": "integration",
+      "file": "tests/integration/polling-connection.spec.ts",
+      "line": 296,
+      "title": "closing during receive discards the late result and sends no ACK",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0236",
+      "suite": "integration",
+      "file": "tests/integration/polling-connection.spec.ts",
+      "line": 320,
+      "title": "access failure closes Query and releases lock: session_required",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0237",
+      "suite": "integration",
+      "file": "tests/integration/polling-connection.spec.ts",
+      "line": 320,
+      "title": "access failure closes Query and releases lock: connection_changed",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0238",
+      "suite": "integration",
+      "file": "tests/integration/polling-connection.spec.ts",
+      "line": 332,
+      "title": "wrong scope or invalid delivery pauses without applying or acknowledging",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0239",
+      "suite": "integration",
+      "file": "tests/integration/polling-connection.spec.ts",
+      "line": 349,
+      "title": "manual retry while receive is pending cancels it and keeps one browser lease",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0240",
+      "suite": "integration",
+      "file": "tests/integration/recipient-label.spec.ts",
+      "line": 5,
+      "title": "recipient label: displays the normalized submitted username",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "029"
+    },
+    {
+      "id": "B028-I-0241",
+      "suite": "integration",
+      "file": "tests/integration/recipient-label.spec.ts",
+      "line": 12,
+      "title": "recipient label: displays the submitted phone without a Telegram suffix",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "029"
+    },
+    {
+      "id": "B028-I-0242",
+      "suite": "integration",
+      "file": "tests/integration/recipient-search.spec.ts",
+      "line": 88,
+      "title": "recipient-search: parser accepts either username spelling and safe phone",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0243",
+      "suite": "integration",
+      "file": "tests/integration/recipient-search.spec.ts",
+      "line": 106,
+      "title": "recipient-search: parser rejects malformed input before provider",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0244",
+      "suite": "integration",
+      "file": "tests/integration/recipient-search.spec.ts",
+      "line": 122,
+      "title": "recipient-search: configuration and session fail before body is read",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0245",
+      "suite": "integration",
+      "file": "tests/integration/recipient-search.spec.ts",
+      "line": 154,
+      "title": "recipient-search: invalid JSON, media type, size and value skip provider",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0246",
+      "suite": "integration",
+      "file": "tests/integration/recipient-search.spec.ts",
+      "line": 188,
+      "title": "recipient-search: found and absent results expose only safe fields",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0247",
+      "suite": "integration",
+      "file": "tests/integration/recipient-search.spec.ts",
+      "line": 227,
+      "title": "recipient-search: only confirmed invalid token clears current session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0248",
+      "suite": "integration",
+      "file": "tests/integration/recipient-search.spec.ts",
+      "line": 257,
+      "title": "recipient-search: thrown lookup becomes safe retryable error",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0249",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 238,
+      "title": "send validation keeps original text and opaque personal chat identifiers",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0250",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 245,
+      "title": "send validation rejects missing/extra fields, whitespace, groups, aliases and invalid UUIDs",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0251",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 268,
+      "title": "safe identifier permits opaque IDs but never raw or encoded credentials",
+      "project": "node",
+      "target": "unit",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0252",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 284,
+      "title": "send body supports JSON parameters and escaped 4096 Unicode points",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0253",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 299,
+      "title": "send body counts actual UTF-8 bytes and stops oversized streams despite a false Content-Length",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0254",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 317,
+      "title": "send body accepts the exact byte boundary, rejects malformed JSON and invalid UTF-8",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0255",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 339,
+      "title": "send body rejects media type null",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0256",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 339,
+      "title": "send body rejects media type text/plain",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0257",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 339,
+      "title": "send body rejects media type application/jsonp",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0258",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 345,
+      "title": "provider dispatches one POST with original text, encoded credentials, deadline and no retry",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0259",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 439,
+      "title": "provider validation yields upstream_rejected without retry or raw payload",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0260",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 439,
+      "title": "provider expired yields instance_expired without retry or raw payload",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0261",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 439,
+      "title": "provider unknown 400 yields outcome_unknown without retry or raw payload",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0262",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 439,
+      "title": "provider invalid token yields invalid_token without retry or raw payload",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0263",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 439,
+      "title": "provider invalid instance yields invalid_instance without retry or raw payload",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0264",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 439,
+      "title": "provider rate limit yields rate_limited without retry or raw payload",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0265",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 439,
+      "title": "provider server failure yields outcome_unknown without retry or raw payload",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0266",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 439,
+      "title": "provider redirect yields outcome_unknown without retry or raw payload",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0267",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 439,
+      "title": "provider missing ID yields outcome_unknown without retry or raw payload",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0268",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 439,
+      "title": "provider numeric ID yields outcome_unknown without retry or raw payload",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0269",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 439,
+      "title": "provider malformed accepted yields outcome_unknown without retry or raw payload",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0270",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 454,
+      "title": "provider rejects raw and encoded secrets in accepted IDs without changing user-authored text",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0271",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 479,
+      "title": "provider network failure is unknown and never retried",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0272",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 493,
+      "title": "provider uses a 10 second deadline, classifies timeout as unknown, and never retries",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0273",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 521,
+      "title": "handler binds accepted DTO to original scope, chat and attempt without fake timestamp/status",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0274",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 539,
+      "title": "handler rejects Origin null before reading body, dispatching or clearing session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0275",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 539,
+      "title": "handler rejects Origin \"null\" before reading body, dispatching or clearing session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0276",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 539,
+      "title": "handler rejects Origin \"invalid\" before reading body, dispatching or clearing session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0277",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 539,
+      "title": "handler rejects Origin \"https://foreign.example.test\" before reading body, dispatching or clearing session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0278",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 539,
+      "title": "handler rejects Origin \"https://app.example.test/path\" before reading body, dispatching or clearing session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0279",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 539,
+      "title": "handler rejects Origin \"https://app.example.test?q=1\" before reading body, dispatching or clearing session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0280",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 539,
+      "title": "handler rejects Origin \"https://app.example.test#fragment\" before reading body, dispatching or clearing session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0281",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 539,
+      "title": "handler rejects Origin \"ftp://app.example.test\" before reading body, dispatching or clearing session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0282",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 539,
+      "title": "handler rejects Origin \"https://user:password@app.example.test\" before reading body, dispatching or clearing session",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0283",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 569,
+      "title": "handler uses actual loopback Host when Next normalizes the request URL",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0284",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 585,
+      "title": "handler rejects malformed Host app.example.test/path",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0285",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 585,
+      "title": "handler rejects malformed Host user@app.example.test",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0286",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 585,
+      "title": "handler rejects malformed Host app.example.test#fragment",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0287",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 585,
+      "title": "handler rejects malformed Host app.example.test?query",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0288",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 585,
+      "title": "handler rejects malformed Host app.example.test\\path",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0289",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 595,
+      "title": "handler ignores arbitrary forwarded headers for Origin",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0290",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 688,
+      "title": "handler unconfigured prevents provider effects",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0291",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 688,
+      "title": "handler no session prevents provider effects",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0292",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 688,
+      "title": "handler missing scope prevents provider effects",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0293",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 688,
+      "title": "handler invalid scope prevents provider effects",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0294",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 688,
+      "title": "handler foreign scope prevents provider effects",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0295",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 688,
+      "title": "handler invalid input prevents provider effects",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0296",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 688,
+      "title": "handler secret target prevents provider effects",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0297",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 688,
+      "title": "handler body limit prevents provider effects",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0298",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 701,
+      "title": "handler rejects a cancelled request before dispatch",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0299",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 714,
+      "title": "disconnect does not cancel a dispatched send or move the late result to another chat",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0300",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 808,
+      "title": "handler maps invalid_token without retry",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0301",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 808,
+      "title": "handler maps invalid_instance without retry",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0302",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 808,
+      "title": "handler maps instance_expired without retry",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0303",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 808,
+      "title": "handler maps needs_authorization without retry",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0304",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 808,
+      "title": "handler maps instance_restricted without retry",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0305",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 808,
+      "title": "handler maps upstream_rejected without retry",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0306",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 808,
+      "title": "handler maps rate_limited without retry",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0307",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 808,
+      "title": "handler maps outcome_unknown without retry",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0308",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 821,
+      "title": "throwing dispatched provider remains unknown and hides diagnostic data",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0309",
+      "suite": "integration",
+      "file": "tests/integration/send-message.spec.ts",
+      "line": 835,
+      "title": "cookie cleanup failure after a confirmed refusal retains not_sent certainty",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0310",
+      "suite": "integration",
+      "file": "tests/integration/session-chat-facts.spec.ts",
+      "line": 17,
+      "title": "session chats: successful provider confirmation consumes pending fact while retaining independent label",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0311",
+      "suite": "integration",
+      "file": "tests/integration/session-chat-facts.spec.ts",
+      "line": 44,
+      "title": "session chats: empty provider reply does not consume pending chat and close clears both caches",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0312",
+      "suite": "integration",
+      "file": "tests/integration/session-chat-facts.spec.ts",
+      "line": 62,
+      "title": "session chats: accepted/incoming share one fact, independent label and provider priority with safe keys",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0313",
+      "suite": "integration",
+      "file": "tests/integration/session.spec.ts",
+      "line": 70,
+      "title": "session: cookie is encrypted, HttpOnly and scoped for production",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0314",
+      "suite": "integration",
+      "file": "tests/integration/session.spec.ts",
+      "line": 90,
+      "title": "session: local HTTP cookie is not Secure while retaining other protection",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0315",
+      "suite": "integration",
+      "file": "tests/integration/session.spec.ts",
+      "line": 98,
+      "title": "session: absolute 24-hour expiry is not extended by reading",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0316",
+      "suite": "integration",
+      "file": "tests/integration/session.spec.ts",
+      "line": 109,
+      "title": "session: missing and malformed payload do not grant access",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0317",
+      "suite": "integration",
+      "file": "tests/integration/session.spec.ts",
+      "line": 122,
+      "title": "session: modified cookie cannot be read",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0318",
+      "suite": "integration",
+      "file": "tests/integration/session.spec.ts",
+      "line": 140,
+      "title": "session: missing or short secret is unavailable",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0319",
+      "suite": "integration",
+      "file": "tests/integration/unread-notifications.spec.ts",
+      "line": 77,
+      "title": "unread: incoming notification records one unique unread message before ACK",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0320",
+      "suite": "integration",
+      "file": "tests/integration/unread-notifications.spec.ts",
+      "line": 89,
+      "title": "unread: unique IDs increment, replays before and after reading do not",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0321",
+      "suite": "integration",
+      "file": "tests/integration/unread-notifications.spec.ts",
+      "line": 104,
+      "title": "unread: chat identity isolates equal IDs and reading clears only one chat",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0322",
+      "suite": "integration",
+      "file": "tests/integration/unread-notifications.spec.ts",
+      "line": 115,
+      "title": "unread: visible conversation consumes incoming, hidden conversation counts and return clears",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0323",
+      "suite": "integration",
+      "file": "tests/integration/unread-notifications.spec.ts",
+      "line": 128,
+      "title": "unread: history and outgoing facts do not count or erase incoming marks",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0324",
+      "suite": "integration",
+      "file": "tests/integration/unread-notifications.spec.ts",
+      "line": 162,
+      "title": "unread: unsupported incoming counts once, status and ignored events do not count",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0325",
+      "suite": "integration",
+      "file": "tests/integration/unread-notifications.spec.ts",
+      "line": 199,
+      "title": "unread: foreign owner, scope and invalid events cannot mutate marks",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0326",
+      "suite": "integration",
+      "file": "tests/integration/unread-notifications.spec.ts",
+      "line": 225,
+      "title": "unread: memory defaults never refetch and close prevents resurrection or cross-scope reuse",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0327",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 166,
+      "title": "receive returns a notification without registering a process-local owner",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0328",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 178,
+      "title": "receive on A and ACK on a fresh B delete only the signed receipt",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0329",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 197,
+      "title": "empty receive returns bounded JSON and never ACKs/deletes",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0330",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 208,
+      "title": "settings keeps disabled outgoing status distinguishable without an owner registry",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0331",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 217,
+      "title": "signed ACK rejects tamper, different secret, changed scope, malformed and exact expiry",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0332",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 259,
+      "title": "ACK expiry never exceeds cookie expiry",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0333",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 284,
+      "title": "forged, expired and foreign ACK never delete",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0334",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 309,
+      "title": "lost successful delete reply recovers without deleting the next head: empty=true",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0335",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 309,
+      "title": "lost successful delete reply recovers without deleting the next head: empty=false",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0336",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 333,
+      "title": "delete false with the same head requests retry instead of claiming success",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0337",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 344,
+      "title": "damaged event is returned as failure and stays in queue",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0338",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 356,
+      "title": "Origin guard denies null",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0339",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 356,
+      "title": "Origin guard denies https://foreign.example.test",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0340",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 356,
+      "title": "Origin guard denies https://polling.example.test/path",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0341",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 356,
+      "title": "Origin guard denies https://polling.example.test#fragment",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0342",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 362,
+      "title": "scope guard denies null",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0343",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 362,
+      "title": "scope guard denies invalid",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0344",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 362,
+      "title": "scope guard denies bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0345",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 375,
+      "title": "receive body guard denies {}",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0346",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 375,
+      "title": "receive body guard denies {\"ownerEpoch\":null}",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0347",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 375,
+      "title": "receive body guard denies {\"ownerEpoch\":\"polling-browser-epoch\",\"extra\":true}",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0348",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 375,
+      "title": "receive body guard denies []",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0349",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 375,
+      "title": "receive body guard denies null",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0350",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 380,
+      "title": "wrong method, content type, oversized actual bytes and invalid JSON do not reach provider",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0351",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 395,
+      "title": "missing session/configuration never reads; missing session clears cookie",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0352",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 403,
+      "title": "upstream access failure retires cookie; transient Retry-After is preserved",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-I-0353",
+      "suite": "integration",
+      "file": "tests/integration/vercel-notifications.spec.ts",
+      "line": 424,
+      "title": "aborted receive never issues a proof or deletes",
+      "project": "node",
+      "target": "integration",
+      "migrationTask": "051"
+    },
+    {
+      "id": "B028-Q-0001",
+      "suite": "query",
+      "file": "tests/query/chat-query.spec.ts",
+      "line": 99,
+      "title": "React query: two consumers, fresh remount and API recovery on reload",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0002",
+      "suite": "query",
+      "file": "tests/query/chat-query.spec.ts",
+      "line": 125,
+      "title": "React query: empty success differs from loading",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0003",
+      "suite": "query",
+      "file": "tests/query/chat-query.spec.ts",
+      "line": 131,
+      "title": "React query: background refresh/error retain cache while UI shows recovery",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0004",
+      "suite": "query",
+      "file": "tests/query/chat-query.spec.ts",
+      "line": 176,
+      "title": "React query: switching account rejects late data of old scope",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0005",
+      "suite": "query",
+      "file": "tests/query/chat-query.spec.ts",
+      "line": 198,
+      "title": "React query: failed logout preserves cache, successful logout navigates",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0006",
+      "suite": "query",
+      "file": "tests/query/chat-query.spec.ts",
+      "line": 219,
+      "title": "React query: expiry closes and navigates",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0007",
+      "suite": "query",
+      "file": "tests/query/chat-query.spec.ts",
+      "line": 227,
+      "title": "React query: StrictMode replay and rerender preserve one client",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052",
+      "limitation": "Production query-app. Доказательство development replay отсутствует; задача 030 добавляет отдельную проверку."
+    },
+    {
+      "id": "B028-Q-0008",
+      "suite": "query",
+      "file": "tests/query/chat-query.spec.ts",
+      "line": 244,
+      "title": "React query: stale remount and inactive GC use clock, no polling/focus requests",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0009",
+      "suite": "query",
+      "file": "tests/query/chat-query.spec.ts",
+      "line": 271,
+      "title": "React query: 409 closes both consumers and refreshes once without login",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0010",
+      "suite": "query",
+      "file": "tests/query/conversation-selection.spec.ts",
+      "line": 80,
+      "title": "selection Context: StrictMode click is one access, both consumers share A → A → B",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052",
+      "limitation": "Production query-app. Доказательство development replay отсутствует; задача 030 добавляет отдельную проверку."
+    },
+    {
+      "id": "B028-Q-0011",
+      "suite": "query",
+      "file": "tests/query/conversation-selection.spec.ts",
+      "line": 102,
+      "title": "selection Context: found recipient opens without another lookup, Send or list entry",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0012",
+      "suite": "query",
+      "file": "tests/query/conversation-selection.spec.ts",
+      "line": 127,
+      "title": "selection Context: close preserves Query data, closed session hides and guards selection",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0013",
+      "suite": "query",
+      "file": "tests/query/conversation-selection.spec.ts",
+      "line": 148,
+      "title": "selection slots: pending/empty/error differ, access and editor epoch are independent",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0014",
+      "suite": "query",
+      "file": "tests/query/history-query.spec.ts",
+      "line": 68,
+      "title": "history React: one request per access and retained merged cache without debug output",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0015",
+      "suite": "query",
+      "file": "tests/query/history-query.spec.ts",
+      "line": 123,
+      "title": "history React: A to B to A discards the earlier completion",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0016",
+      "suite": "query",
+      "file": "tests/query/history-query.spec.ts",
+      "line": 157,
+      "title": "history React: error retains known messages and manual retry recovers without debug output",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0017",
+      "suite": "query",
+      "file": "tests/query/history-query.spec.ts",
+      "line": 200,
+      "title": "history React: pending refresh is deduplicated, close suppresses its late result",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0018",
+      "suite": "query",
+      "file": "tests/query/history-query.spec.ts",
+      "line": 225,
+      "title": "history React: closed session rejects late data and new connection has independent history",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0019",
+      "suite": "query",
+      "file": "tests/query/history-window.spec.ts",
+      "line": 48,
+      "title": "history window: loading differs from successful empty response and failed retry preserves known messages",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0020",
+      "suite": "query",
+      "file": "tests/query/history-window.spec.ts",
+      "line": 105,
+      "title": "history window: safe literal text, unsupported and accumulated messages use one request per access without scroll fetch",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-Q-0021",
+      "suite": "query",
+      "file": "tests/query/history-window.spec.ts",
+      "line": 167,
+      "title": "history window: guarded history consumer publishes a conflicting failure and retains read",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0022",
+      "suite": "query",
+      "file": "tests/query/history-window.spec.ts",
+      "line": 197,
+      "title": "history window: opening ends at bottom and refreshing while reading retains scroll position",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-Q-0023",
+      "suite": "query",
+      "file": "tests/query/message-composer.spec.ts",
+      "line": 64,
+      "title": "composer submits original text and shows API acceptance before confirmed read",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0024",
+      "suite": "query",
+      "file": "tests/query/message-composer.spec.ts",
+      "line": 121,
+      "title": "pending send survives switching chats and never clears the new editor",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0025",
+      "suite": "query",
+      "file": "tests/query/message-composer.spec.ts",
+      "line": 145,
+      "title": "a second tab is limited and cannot send",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-Q-0026",
+      "suite": "query",
+      "file": "tests/query/message-composer.spec.ts",
+      "line": 166,
+      "title": "lost response preserves input, requires a history check and leaves retry to the user",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0027",
+      "suite": "query",
+      "file": "tests/query/message-composer.spec.ts",
+      "line": 195,
+      "title": "IME Enter and Shift+Enter never submit, blank and over-limit input are rejected locally",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-Q-0028",
+      "suite": "query",
+      "file": "tests/query/message-composer.spec.ts",
+      "line": 237,
+      "title": "incoming is applied and ACKed before late history, which preserves live content without duplicates",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0029",
+      "suite": "query",
+      "file": "tests/query/message-composer.spec.ts",
+      "line": 289,
+      "title": "read notification before HTTP acceptance creates no empty bubble and attaches to the accepted message",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0030",
+      "suite": "query",
+      "file": "tests/query/message-composer.spec.ts",
+      "line": 324,
+      "title": "reopening history replaces API clock with confirmed delivery without a live status",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0031",
+      "suite": "query",
+      "file": "tests/query/polling-workspace.spec.ts",
+      "line": 48,
+      "title": "browser Web Lock blocks second tab and transfers after first closes without a server release",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-Q-0032",
+      "suite": "query",
+      "file": "tests/query/polling-workspace.spec.ts",
+      "line": 67,
+      "title": "reload reacquires browser lease without the old server ownership grace",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-Q-0033",
+      "suite": "query",
+      "file": "tests/query/polling-workspace.spec.ts",
+      "line": 76,
+      "title": "unsupported Web Locks shows explicit limitation instead of reading queue",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-Q-0034",
+      "suite": "query",
+      "file": "tests/query/session-chat-overlay.spec.ts",
+      "line": 11,
+      "title": "session overlay: a pending known chat remains visible after empty and failed list refresh",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0035",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "line": 114,
+      "title": "unread UI: another chat counts, duplicate delivery and ACK preserve one mark, opening clears it",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0036",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "line": 145,
+      "title": "unread UI: hidden selected chat counts and return clears only it; visible incoming/status do not count",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-Q-0037",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "line": 179,
+      "title": "unread UI: unknown chat appears with mark and list refresh does not erase it",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052"
+    },
+    {
+      "id": "B028-Q-0038",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "line": 199,
+      "title": "unread UI: mobile hidden conversation counts, back button totals and resize reveals/clears selected chat",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-Q-0039",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "line": 224,
+      "title": "unread preview: 1280px light count/99+ layout and mobile navigation",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-Q-0040",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "line": 224,
+      "title": "unread preview: 1280px dark count/99+ layout and mobile navigation",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-Q-0041",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "line": 224,
+      "title": "unread preview: 390px light count/99+ layout and mobile navigation",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-Q-0042",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "line": 224,
+      "title": "unread preview: 390px dark count/99+ layout and mobile navigation",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-Q-0043",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "line": 224,
+      "title": "unread preview: 320px light count/99+ layout and mobile navigation",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-Q-0044",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "line": 224,
+      "title": "unread preview: 320px dark count/99+ layout and mobile navigation",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-Q-0045",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "line": 299,
+      "title": "unread UI: long chat label truncates without moving the badge outside its row",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0001",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "line": 99,
+      "title": "account-header: displays own account 900000000001 and survives refresh",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0002",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "line": 99,
+      "title": "account-header: displays own account 900000000002 and survives refresh",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0003",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "line": 99,
+      "title": "account-header: displays own account 900000000003 and survives refresh",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0004",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "line": 126,
+      "title": "account-avatar: loads a direct decorative image without a referrer",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0005",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "line": 149,
+      "title": "account-avatar: failure shows an icon and a new URL can load",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0006",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "line": 176,
+      "title": "account-header: long full label fits mobile and desktop, logout works by keyboard",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0007",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "line": 227,
+      "title": "account-header: temporary failure keeps session and manual retry restores profile",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0008",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "line": 251,
+      "title": "account-header: confirmed invalid access clears session",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0009",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "line": 264,
+      "title": "account-header: one automatic retry after 429 shows profile immediately",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0010",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "line": 280,
+      "title": "account-header: system theme reaches header, avatar and search at 360px",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0011",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "line": 280,
+      "title": "account-header: system theme reaches header, avatar and search at 1280px",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0012",
+      "suite": "e2e",
+      "file": "tests/e2e/chat-list-ui.spec.ts",
+      "line": 136,
+      "title": "chat list: initial loading is distinct from empty and does not block search",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0013",
+      "suite": "e2e",
+      "file": "tests/e2e/chat-list-ui.spec.ts",
+      "line": 158,
+      "title": "chat list: real signatures follow fallbacks with functional selection and without fabricated previews",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0014",
+      "suite": "e2e",
+      "file": "tests/e2e/chat-list-ui.spec.ts",
+      "line": 195,
+      "title": "chat list: initial failure keeps a stable error card during one retry",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0015",
+      "suite": "e2e",
+      "file": "tests/e2e/chat-list-ui.spec.ts",
+      "line": 244,
+      "title": "chat list: failed retry keeps the error and a later empty success clears it",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0016",
+      "suite": "e2e",
+      "file": "tests/e2e/chat-list-ui.spec.ts",
+      "line": 284,
+      "title": "chat list: rate limiting is an error rather than an absent conversation",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0017",
+      "suite": "e2e",
+      "file": "tests/e2e/chat-list-ui.spec.ts",
+      "line": 298,
+      "title": "chat list: long lists remain reachable across themes, resize and enlarged text",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0018",
+      "suite": "e2e",
+      "file": "tests/e2e/chat-list-ui.spec.ts",
+      "line": 350,
+      "title": "chat list: session rejection closes the displayed data and returns to login",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0019",
+      "suite": "e2e",
+      "file": "tests/e2e/chat-list-ui.spec.ts",
+      "line": 369,
+      "title": "chat list: recovery is readable and stable across themes and enlarged mobile text",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0020",
+      "suite": "e2e",
+      "file": "tests/e2e/chat-workspace.spec.ts",
+      "line": 27,
+      "title": "workspace: mobile hides empty pane and resize preserves the search",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0021",
+      "suite": "e2e",
+      "file": "tests/e2e/chats-api.spec.ts",
+      "line": 35,
+      "title": "chats HTTP: no session and unsupported methods do not call provider",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0022",
+      "suite": "e2e",
+      "file": "tests/e2e/chats-api.spec.ts",
+      "line": 50,
+      "title": "chats HTTP: safe real route result, HEAD, mismatch does not destroy session",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0023",
+      "suite": "e2e",
+      "file": "tests/e2e/chats-api.spec.ts",
+      "line": 82,
+      "title": "chats HTTP: cookie on provider 401",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0024",
+      "suite": "e2e",
+      "file": "tests/e2e/chats-api.spec.ts",
+      "line": 82,
+      "title": "chats HTTP: cookie on provider 503",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0025",
+      "suite": "e2e",
+      "file": "tests/e2e/conversation-selection.spec.ts",
+      "line": 101,
+      "title": "conversation: keyboard selects actual recipients, close preserves list and cookie",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0026",
+      "suite": "e2e",
+      "file": "tests/e2e/conversation-selection.spec.ts",
+      "line": 129,
+      "title": "conversation: mobile back, tab order and resize preserve selection",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0027",
+      "suite": "e2e",
+      "file": "tests/e2e/conversation-selection.spec.ts",
+      "line": 173,
+      "title": "conversation: found target opens with one history request, no Send or another lookup",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0028",
+      "suite": "e2e",
+      "file": "tests/e2e/conversation-selection.spec.ts",
+      "line": 205,
+      "title": "conversation: long actual label fits themes and enlarged mobile text",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0029",
+      "suite": "e2e",
+      "file": "tests/e2e/conversation-selection.spec.ts",
+      "line": 246,
+      "title": "conversation focus: hiding the focused search moves focus to the selected conversation",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0030",
+      "suite": "e2e",
+      "file": "tests/e2e/conversation-selection.spec.ts",
+      "line": 264,
+      "title": "conversation focus: resize does not steal focus from an outside control",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0031",
+      "suite": "e2e",
+      "file": "tests/e2e/health.spec.ts",
+      "line": 26,
+      "title": "returns the health contract on consecutive GET requests",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0032",
+      "suite": "e2e",
+      "file": "tests/e2e/health.spec.ts",
+      "line": 42,
+      "title": "rejects POST for the health endpoint",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0033",
+      "suite": "e2e",
+      "file": "tests/e2e/history-api.spec.ts",
+      "line": 47,
+      "title": "history HTTP: missing session and unsupported methods never read upstream history",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0034",
+      "suite": "e2e",
+      "file": "tests/e2e/history-api.spec.ts",
+      "line": 66,
+      "title": "history HTTP: real cookie route returns safe normalized data and validates scope and Origin",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0035",
+      "suite": "e2e",
+      "file": "tests/e2e/history-api.spec.ts",
+      "line": 140,
+      "title": "history HTTP: provider 401 preserves the specified cookie lifecycle",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0036",
+      "suite": "e2e",
+      "file": "tests/e2e/history-api.spec.ts",
+      "line": 140,
+      "title": "history HTTP: provider 503 preserves the specified cookie lifecycle",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0037",
+      "suite": "e2e",
+      "file": "tests/e2e/history-api.spec.ts",
+      "line": 140,
+      "title": "history HTTP: provider 502 preserves the specified cookie lifecycle",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0038",
+      "suite": "e2e",
+      "file": "tests/e2e/history-api.spec.ts",
+      "line": 161,
+      "title": "history HTTP: successful empty response is explicit",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0039",
+      "suite": "e2e",
+      "file": "tests/e2e/history-api.spec.ts",
+      "line": 183,
+      "title": "history UI: fresh requests render messages without history debug logs",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0040",
+      "suite": "e2e",
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "line": 41,
+      "title": "history overflow: conversation keeps its height and follows incoming messages at width 320 and height 800",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0041",
+      "suite": "e2e",
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "line": 41,
+      "title": "history overflow: conversation keeps its height and follows incoming messages at width 320 and height 480",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0042",
+      "suite": "e2e",
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "line": 41,
+      "title": "history overflow: conversation keeps its height and follows incoming messages at width 360 and height 800",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0043",
+      "suite": "e2e",
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "line": 41,
+      "title": "history overflow: conversation keeps its height and follows incoming messages at width 360 and height 480",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0044",
+      "suite": "e2e",
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "line": 41,
+      "title": "history overflow: conversation keeps its height and follows incoming messages at width 390 and height 800",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0045",
+      "suite": "e2e",
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "line": 41,
+      "title": "history overflow: conversation keeps its height and follows incoming messages at width 390 and height 480",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0046",
+      "suite": "e2e",
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "line": 41,
+      "title": "history overflow: conversation keeps its height and follows incoming messages at width 768 and height 800",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0047",
+      "suite": "e2e",
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "line": 41,
+      "title": "history overflow: conversation keeps its height and follows incoming messages at width 768 and height 480",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0048",
+      "suite": "e2e",
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "line": 41,
+      "title": "history overflow: conversation keeps its height and follows incoming messages at width 1280 and height 800",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0049",
+      "suite": "e2e",
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "line": 41,
+      "title": "history overflow: conversation keeps its height and follows incoming messages at width 1280 and height 480",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0050",
+      "suite": "e2e",
+      "file": "tests/e2e/history-window.spec.ts",
+      "line": 19,
+      "title": "history UI: real cookie and production conversation slot render mockup at width 320",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0051",
+      "suite": "e2e",
+      "file": "tests/e2e/history-window.spec.ts",
+      "line": 19,
+      "title": "history UI: real cookie and production conversation slot render mockup at width 360",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0052",
+      "suite": "e2e",
+      "file": "tests/e2e/history-window.spec.ts",
+      "line": 19,
+      "title": "history UI: real cookie and production conversation slot render mockup at width 390",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0053",
+      "suite": "e2e",
+      "file": "tests/e2e/history-window.spec.ts",
+      "line": 19,
+      "title": "history UI: real cookie and production conversation slot render mockup at width 768",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0054",
+      "suite": "e2e",
+      "file": "tests/e2e/history-window.spec.ts",
+      "line": 19,
+      "title": "history UI: real cookie and production conversation slot render mockup at width 1280",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0055",
+      "suite": "e2e",
+      "file": "tests/e2e/history-window.spec.ts",
+      "line": 52,
+      "title": "history UI: long unbroken text wraps inside mobile bubble without page overflow",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0056",
+      "suite": "e2e",
+      "file": "tests/e2e/home.spec.ts",
+      "line": 15,
+      "title": "opens the login card with two required fields",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0057",
+      "suite": "e2e",
+      "file": "tests/e2e/home.spec.ts",
+      "line": 37,
+      "title": "redirects a visitor without a session to login",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0058",
+      "suite": "e2e",
+      "file": "tests/e2e/login-flow.spec.ts",
+      "line": 46,
+      "title": "login flow: direct home visit without a session redirects to login",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0059",
+      "suite": "e2e",
+      "file": "tests/e2e/login-flow.spec.ts",
+      "line": 54,
+      "title": "login flow: authorized response opens home after one POST",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0060",
+      "suite": "e2e",
+      "file": "tests/e2e/login-flow.spec.ts",
+      "line": 85,
+      "title": "login flow: invalid token is shown at token field and input remains",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0061",
+      "suite": "e2e",
+      "file": "tests/e2e/login-flow.spec.ts",
+      "line": 109,
+      "title": "login flow: unavailable provider allows correction and retry",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0062",
+      "suite": "e2e",
+      "file": "tests/e2e/login-flow.spec.ts",
+      "line": 145,
+      "title": "login flow: pending POST blocks duplicate submissions",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0063",
+      "suite": "e2e",
+      "file": "tests/e2e/login-flow.spec.ts",
+      "line": 173,
+      "title": "login flow: exhausted rate limit explains when to try again",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0064",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form-safety.spec.ts",
+      "line": 117,
+      "title": "keeps credentials out of requests, logs and storage and resets on reload",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0065",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form-safety.spec.ts",
+      "line": 156,
+      "title": "prevents credential serialization with JavaScript disabled",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0066",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form-safety.spec.ts",
+      "line": 156,
+      "title": "prevents credential serialization with JavaScript blocked",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0067",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form-safety.spec.ts",
+      "line": 225,
+      "title": "fits the 320px viewport before and after errors",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0068",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form-safety.spec.ts",
+      "line": 225,
+      "title": "fits the 1280px viewport before and after errors",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0069",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form.spec.ts",
+      "line": 86,
+      "title": "hides and reveals the exact token without submitting",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052",
+      "limitation": "Удалять browser-повтор только после эквивалентного RTL; сквозной login-flow и безопасность до гидратации остаются."
+    },
+    {
+      "id": "B028-E-0070",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form.spec.ts",
+      "line": 106,
+      "title": "places an accessible eye inside the token field without overlapping text",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0071",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form.spec.ts",
+      "line": 159,
+      "title": "shows errors after submit and updates them while editing",
+      "project": "chromium",
+      "target": "component",
+      "migrationTask": "052",
+      "limitation": "Удалять browser-повтор только после эквивалентного RTL; сквозной login-flow и безопасность до гидратации остаются."
+    },
+    {
+      "id": "B028-E-0072",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form.spec.ts",
+      "line": 187,
+      "title": "Enter focuses the missing field when only id is filled",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0073",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form.spec.ts",
+      "line": 187,
+      "title": "Enter focuses the missing field when only token is filled",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0074",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form.spec.ts",
+      "line": 209,
+      "title": "Enter validates two empty fields and whitespace without normalizing values",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0075",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form.spec.ts",
+      "line": 227,
+      "title": "preserves complete values and the page on rejected server submissions",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0076",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form.spec.ts",
+      "line": 260,
+      "title": "supports keyboard order, visible focus and accessible errors",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0077",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form.spec.ts",
+      "line": 304,
+      "title": "opens the cabinet in a separate safe tab and preserves input",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0078",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "line": 104,
+      "title": "MAX login fits 320x568 with long errors",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0079",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "line": 104,
+      "title": "MAX login fits 1280x720 with long errors",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0080",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "line": 104,
+      "title": "MAX login fits 360x640 with long errors",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0081",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "line": 104,
+      "title": "MAX login fits 390x844 with long errors",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0082",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "line": 104,
+      "title": "MAX login fits 390x320 with long errors",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0083",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "line": 210,
+      "title": "MAX login allows enlarged text and vertical scrolling",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0084",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "line": 227,
+      "title": "MAX login announces pending request with no-preference motion",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0085",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "line": 227,
+      "title": "MAX login announces pending request with reduce motion",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0086",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "line": 297,
+      "title": "MAX login keeps keyboard and error focus visible with forced colors none",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0087",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "line": 297,
+      "title": "MAX login keeps keyboard and error focus visible with forced colors active",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0088",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "line": 324,
+      "title": "MAX theme is shared across login, home and logout navigation",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0089",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "line": 363,
+      "title": "MAX login follows device theme and keeps compact errors at 320px",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0090",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "line": 363,
+      "title": "MAX login follows device theme and keeps compact errors at 1280px",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0091",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "line": 428,
+      "title": "MAX login reserves field errors without resizing at 320px",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0092",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "line": 428,
+      "title": "MAX login reserves field errors without resizing at 1280px",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0093",
+      "suite": "e2e",
+      "file": "tests/e2e/logout-flow.spec.ts",
+      "line": 45,
+      "title": "logout: POST clears the browser cookie and redirects to login",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0094",
+      "suite": "e2e",
+      "file": "tests/e2e/logout-flow.spec.ts",
+      "line": 75,
+      "title": "logout: missing cookie is safe and GET does not clear cookies",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0095",
+      "suite": "e2e",
+      "file": "tests/e2e/logout-flow.spec.ts",
+      "line": 98,
+      "title": "logout: browser exits without reloading the document",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0096",
+      "suite": "e2e",
+      "file": "tests/e2e/logout-flow.spec.ts",
+      "line": 127,
+      "title": "logout: failed request preserves the page and permits retry",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0097",
+      "suite": "e2e",
+      "file": "tests/e2e/message-composer.spec.ts",
+      "line": 35,
+      "title": "production send and incoming notification follow mockup at width 1280",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0098",
+      "suite": "e2e",
+      "file": "tests/e2e/message-composer.spec.ts",
+      "line": 35,
+      "title": "production send and incoming notification follow mockup at width 360",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0099",
+      "suite": "e2e",
+      "file": "tests/e2e/message-composer.spec.ts",
+      "line": 35,
+      "title": "production send and incoming notification follow mockup at width 320",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0100",
+      "suite": "e2e",
+      "file": "tests/e2e/recipient-search-ui.spec.ts",
+      "line": 46,
+      "title": "search UI: result label and functional write button preserve the request contract",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0101",
+      "suite": "e2e",
+      "file": "tests/e2e/recipient-search.spec.ts",
+      "line": 83,
+      "title": "recipient search: fixture signs in and opens protected home",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0102",
+      "suite": "e2e",
+      "file": "tests/e2e/recipient-search.spec.ts",
+      "line": 91,
+      "title": "recipient search: phone lookup shows the submitted recipient",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0103",
+      "suite": "e2e",
+      "file": "tests/e2e/recipient-search.spec.ts",
+      "line": 121,
+      "title": "recipient search: phone miss offers username without automatic lookup",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0104",
+      "suite": "e2e",
+      "file": "tests/e2e/recipient-search.spec.ts",
+      "line": 161,
+      "title": "recipient search: invalid input is corrected before a request",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0105",
+      "suite": "e2e",
+      "file": "tests/e2e/recipient-search.spec.ts",
+      "line": 190,
+      "title": "recipient search: pending state blocks edits and reload clears result",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0106",
+      "suite": "e2e",
+      "file": "tests/e2e/recipient-search.spec.ts",
+      "line": 210,
+      "title": "recipient search: limit and outage preserve the session for retry",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0107",
+      "suite": "e2e",
+      "file": "tests/e2e/recipient-search.spec.ts",
+      "line": 231,
+      "title": "recipient search: confirmed invalid token ends the browser session",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0108",
+      "suite": "e2e",
+      "file": "tests/e2e/recipient-search.spec.ts",
+      "line": 243,
+      "title": "recipient search: API requires session and returns only safe data",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-E-0109",
+      "suite": "e2e",
+      "file": "tests/e2e/search-layout.spec.ts",
+      "line": 38,
+      "title": "search layout keeps mode height and scales the workspace with the viewport",
+      "project": "chromium",
+      "target": "browser/E2E",
+      "migrationTask": "053"
+    },
+    {
+      "id": "B028-W-V01",
+      "suite": "workflow",
+      "file": "tests/spec-kit/workflow.tests.ps1",
+      "line": 149,
+      "title": "Контекст из корня и вложенного cwd без Git",
+      "project": "PowerShell",
+      "target": "workflow",
+      "migrationTask": "keep"
+    },
+    {
+      "id": "B028-W-V02",
+      "suite": "workflow",
+      "file": "tests/spec-kit/workflow.tests.ps1",
+      "line": 158,
+      "title": "Отсутствующий selector и неправильный ExpectedFeatureDirectory",
+      "project": "PowerShell",
+      "target": "workflow",
+      "migrationTask": "keep"
+    },
+    {
+      "id": "B028-W-V03",
+      "suite": "workflow",
+      "file": "tests/spec-kit/workflow.tests.ps1",
+      "line": 164,
+      "title": "Защита выхода за пределы проекта и формы пути",
+      "project": "PowerShell",
+      "target": "workflow",
+      "migrationTask": "keep"
+    },
+    {
+      "id": "B028-W-V04",
+      "suite": "workflow",
+      "file": "tests/spec-kit/workflow.tests.ps1",
+      "line": 176,
+      "title": "Несовпадение expected feature и внешний cwd",
+      "project": "PowerShell",
+      "target": "workflow",
+      "migrationTask": "keep"
+    },
+    {
+      "id": "B028-W-V05",
+      "suite": "workflow",
+      "file": "tests/spec-kit/workflow.tests.ps1",
+      "line": 183,
+      "title": "Junction feature и артефакта",
+      "project": "PowerShell",
+      "target": "workflow",
+      "migrationTask": "keep"
+    },
+    {
+      "id": "B028-W-V06",
+      "suite": "workflow",
+      "file": "tests/spec-kit/workflow.tests.ps1",
+      "line": 196,
+      "title": "Нормализация путей Windows",
+      "project": "PowerShell",
+      "target": "workflow",
+      "migrationTask": "keep"
+    },
+    {
+      "id": "B028-W-V07",
+      "suite": "workflow",
+      "file": "tests/spec-kit/workflow.tests.ps1",
+      "line": 204,
+      "title": "Повторный setup сохраняет содержимое",
+      "project": "PowerShell",
+      "target": "workflow",
+      "migrationTask": "keep"
+    },
+    {
+      "id": "B028-W-V08",
+      "suite": "workflow",
+      "file": "tests/spec-kit/workflow.tests.ps1",
+      "line": 219,
+      "title": "Предусловия и несовместимые режимы",
+      "project": "PowerShell",
+      "target": "workflow",
+      "migrationTask": "keep"
+    },
+    {
+      "id": "B028-W-V09",
+      "suite": "workflow",
+      "file": "tests/spec-kit/workflow.tests.ps1",
+      "line": 243,
+      "title": "Ошибки шаблона и файловой структуры",
+      "project": "PowerShell",
+      "target": "workflow",
+      "migrationTask": "keep"
+    },
+    {
+      "id": "B028-W-V10",
+      "suite": "workflow",
+      "file": "tests/spec-kit/workflow.tests.ps1",
+      "line": 262,
+      "title": "Help, JSON, stdout/stderr",
+      "project": "PowerShell",
+      "target": "workflow",
+      "migrationTask": "keep"
+    },
+    {
+      "id": "B028-W-V11",
+      "suite": "workflow",
+      "file": "tests/spec-kit/workflow.tests.ps1",
+      "line": 275,
+      "title": "Read-only import и setup-tasks",
+      "project": "PowerShell",
+      "target": "workflow",
+      "migrationTask": "keep"
+    },
+    {
+      "id": "B028-W-V12",
+      "suite": "workflow",
+      "file": "tests/spec-kit/workflow.tests.ps1",
+      "line": 287,
+      "title": "Независимость от Git и внешних инструментов",
+      "project": "PowerShell",
+      "target": "workflow",
+      "migrationTask": "keep"
+    }
+  ]
+}

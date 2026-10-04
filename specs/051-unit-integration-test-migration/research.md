@@ -1,0 +1,8 @@
+# Research: 051
+
+- Текущий Playwright integration runner — Node без `page`/browser fixtures, 28 файлов/366 сценариев. [Инвентарь](inventory.md) связан по заголовку с B028: 351 старый ID и 15 новых после baseline; несовпадающих старых заголовков нет.
+- Семь файлов имеют только чистые unit/adapter проверки и уходят в `tests/unit`. Уже существующий `account-profile.test.ts` не перезаписывается: полная матрица получает имя `account-profile-contract.test.ts`. Остальные 21 проверяют QueryClient, session, Request/Response и реальные модули; их место — Vitest integration Node. `home-flow`, `history-api`, `send-message` не поднимают Next server; настоящий route/cookie остаётся в Playwright E2E/Query.
+- Единственное Playwright-специфическое lifecycle API — `test.afterEach` в `polling-connection`. `expect.poll` встречается в async-наборах и поддерживается установленным Vitest 5 и [официальной API-документацией](https://vitest.dev/api/expect); все вызовы уже `await`. Существующие matchers нужно подтвердить исполнением, а не только поиском.
+- [Официальные Vitest projects](https://vitest.dev/guide/projects) поддерживают отдельные inline конфигурации, `--project` и наследование root-настроек в Vitest 5. Это позволяет сохранить Node unit/component/integration раздельно без новых зависимостей.
+- Конкурирующие пути: один unit project проще, но скрывает интеграцию; оставить Playwright безопасно краткосрочно, но сохраняет второй Node runner. Выбран проект integration, удаление прежнего набора только после эквивалентного Green.
+- В CI `npm test` уже исполняется quality job; прежний `npm run test:integration` вызывается дополнительно. После миграции отдельный шаг создавал бы дубль. Локальный скрипт `test:integration` остаётся для выборочного запуска.

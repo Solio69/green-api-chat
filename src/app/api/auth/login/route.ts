@@ -1,9 +1,9 @@
 import { cookies } from 'next/headers'
-import { handleLoginRequest } from '@/lib/auth/handle-login-request'
-import { openSession, saveCredentials } from '@/lib/auth/session'
-import { getStateInstance } from '@/lib/green-api/get-state'
-import type { InstanceCredentials } from '@/lib/green-api/get-state'
-import { AUTH_ERROR_MESSAGE, IS_PRODUCTION } from '@/lib/auth/constants'
+import { handleLoginRequest } from '@/features/auth/server'
+import { getStateInstance } from '@/server/green-api/get-state'
+import { openSession, saveCredentials } from '@/server/session'
+import type { InstanceCredentials } from '@/shared/kernel/api/instance-credentials'
+import { AUTH_ERROR_MESSAGE, IS_PRODUCTION } from '@/server/session/constants'
 
 const { SESSION_UNAVAILABLE } = AUTH_ERROR_MESSAGE
 

@@ -1,0 +1,111 @@
+@use '../../../../styles/tokens' as tokens;
+@use '../../../../styles/mixins' as mixins;
+
+.chatListRecovery {
+  display: grid;
+  gap: tokens.$chat-recovery-gap;
+  margin: tokens.$space-xs tokens.$chat-recovery-margin-inline
+    tokens.$chat-recovery-margin-bottom;
+  padding: tokens.$chat-recovery-padding;
+  border-radius: tokens.$chat-recovery-radius;
+  background: color-mix(
+    in srgb,
+    var(--ui-error-color) tokens.$chat-recovery-tint,
+    var(--ui-surface-color)
+  );
+  font-size: tokens.$font-size-caption;
+  line-height: tokens.$chat-line-height;
+  overflow-wrap: anywhere;
+
+  @media (max-width: tokens.$chat-mobile-breakpoint) {
+    margin-inline: tokens.$chat-recovery-margin-mobile;
+  }
+
+  &__error {
+    display: flex;
+    align-items: flex-start;
+    gap: tokens.$chat-recovery-copy-gap;
+    color: var(--ui-error-color);
+  }
+
+  &__errorIcon {
+    flex: none;
+    width: tokens.$chat-recovery-icon-size;
+    height: tokens.$chat-recovery-icon-size;
+    margin-top: tokens.$chat-recovery-icon-offset;
+  }
+
+  &__errorTitle {
+    margin: 0;
+    font-weight: tokens.$max-heading-weight;
+  }
+
+  &__errorHint {
+    margin: tokens.$chat-recovery-hint-gap 0 0;
+    color: var(--ui-muted-color);
+  }
+
+  &__retry {
+    @include mixins.focus-ring;
+
+    display: inline-grid;
+    grid-template-columns: tokens.$chat-recovery-icon-size minmax(0, 1fr);
+    align-items: center;
+    justify-self: start;
+    gap: tokens.$chat-recovery-button-gap;
+    min-width: 0;
+    max-width: 100%;
+    min-height: tokens.$control-icon-button-size;
+    padding: tokens.$space-xs tokens.$chat-recovery-gap;
+    border: 0;
+    border-radius: tokens.$chat-recovery-button-radius;
+    background: var(--ui-selected-color);
+    color: color-mix(
+      in srgb,
+      var(--ui-link-color) tokens.$chat-recovery-action-tint,
+      var(--ui-text-color)
+    );
+    font: inherit;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      box-shadow: var(--ui-search-focus-shadow);
+    }
+
+    &:disabled {
+      cursor: wait;
+    }
+  }
+
+  &__retryIcon {
+    width: tokens.$chat-recovery-icon-size;
+    height: tokens.$chat-recovery-icon-size;
+  }
+
+  &__retry:disabled &__retryIcon {
+    animation: chat-list-retry tokens.$loader-duration linear infinite;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  &__retryLabels {
+    display: grid;
+    text-align: center;
+
+    > span {
+      grid-area: 1 / 1;
+    }
+
+    > [aria-hidden] {
+      visibility: hidden;
+    }
+  }
+}
+
+@keyframes chat-list-retry {
+  to {
+    transform: rotate(tokens.$loader-full-turn);
+  }
+}

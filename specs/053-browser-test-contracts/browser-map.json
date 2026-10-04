@@ -1,0 +1,1204 @@
+{
+  "schemaVersion": 1,
+  "baseline": "B028 + 052 migration",
+  "counts": {
+    "e2e": 112,
+    "query": 37,
+    "total": 149,
+    "newSinceB028": 3
+  },
+  "scenarios": [
+    {
+      "id": "B028-E-0005",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "title": "account-avatar: failure shows an icon and a new URL can load",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0004",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "title": "account-avatar: loads a direct decorative image without a referrer",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0008",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "title": "account-header: confirmed invalid access clears session",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0001",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "title": "account-header: displays own account 900000000001 and survives refresh",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0002",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "title": "account-header: displays own account 900000000002 and survives refresh",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0003",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "title": "account-header: displays own account 900000000003 and survives refresh",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0006",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "title": "account-header: long full label fits mobile and desktop, logout works by keyboard",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0009",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "title": "account-header: one automatic retry after 429 shows profile immediately",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0011",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "title": "account-header: system theme reaches header, avatar and search at 1280px",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0010",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "title": "account-header: system theme reaches header, avatar and search at 360px",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0007",
+      "suite": "e2e",
+      "file": "tests/e2e/account-profile.spec.ts",
+      "title": "account-header: temporary failure keeps session and manual retry restores profile",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0015",
+      "suite": "e2e",
+      "file": "tests/e2e/chat-list-ui.spec.ts",
+      "title": "chat list: failed retry keeps the error and a later empty success clears it",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0014",
+      "suite": "e2e",
+      "file": "tests/e2e/chat-list-ui.spec.ts",
+      "title": "chat list: initial failure keeps a stable error card during one retry",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0012",
+      "suite": "e2e",
+      "file": "tests/e2e/chat-list-ui.spec.ts",
+      "title": "chat list: initial loading is distinct from empty and does not block search",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0017",
+      "suite": "e2e",
+      "file": "tests/e2e/chat-list-ui.spec.ts",
+      "title": "chat list: long lists remain reachable across themes, resize and enlarged text",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0016",
+      "suite": "e2e",
+      "file": "tests/e2e/chat-list-ui.spec.ts",
+      "title": "chat list: rate limiting is an error rather than an absent conversation",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0013",
+      "suite": "e2e",
+      "file": "tests/e2e/chat-list-ui.spec.ts",
+      "title": "chat list: real signatures follow fallbacks with functional selection and without fabricated previews",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0019",
+      "suite": "e2e",
+      "file": "tests/e2e/chat-list-ui.spec.ts",
+      "title": "chat list: recovery is readable and stable across themes and enlarged mobile text",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0018",
+      "suite": "e2e",
+      "file": "tests/e2e/chat-list-ui.spec.ts",
+      "title": "chat list: session rejection closes the displayed data and returns to login",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0020",
+      "suite": "e2e",
+      "file": "tests/e2e/chat-workspace.spec.ts",
+      "title": "workspace: mobile hides empty pane and resize preserves the search",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0023",
+      "suite": "e2e",
+      "file": "tests/e2e/chats-api.spec.ts",
+      "title": "chats HTTP: cookie on provider 401",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0024",
+      "suite": "e2e",
+      "file": "tests/e2e/chats-api.spec.ts",
+      "title": "chats HTTP: cookie on provider 503",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0021",
+      "suite": "e2e",
+      "file": "tests/e2e/chats-api.spec.ts",
+      "title": "chats HTTP: no session and unsupported methods do not call provider",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0022",
+      "suite": "e2e",
+      "file": "tests/e2e/chats-api.spec.ts",
+      "title": "chats HTTP: safe real route result, HEAD, mismatch does not destroy session",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0029",
+      "suite": "e2e",
+      "file": "tests/e2e/conversation-selection.spec.ts",
+      "title": "conversation focus: hiding the focused search moves focus to the selected conversation",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "N053-E-0001",
+      "suite": "e2e",
+      "file": "tests/e2e/conversation-selection.spec.ts",
+      "title": "conversation focus: observer delivery can lag viewport resize",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0030",
+      "suite": "e2e",
+      "file": "tests/e2e/conversation-selection.spec.ts",
+      "title": "conversation focus: resize does not steal focus from an outside control",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0027",
+      "suite": "e2e",
+      "file": "tests/e2e/conversation-selection.spec.ts",
+      "title": "conversation: found target opens with one history request, no Send or another lookup",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0025",
+      "suite": "e2e",
+      "file": "tests/e2e/conversation-selection.spec.ts",
+      "title": "conversation: keyboard selects actual recipients, close preserves list and cookie",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0028",
+      "suite": "e2e",
+      "file": "tests/e2e/conversation-selection.spec.ts",
+      "title": "conversation: long actual label fits themes and enlarged mobile text",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0026",
+      "suite": "e2e",
+      "file": "tests/e2e/conversation-selection.spec.ts",
+      "title": "conversation: mobile back, tab order and resize preserve selection",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "N053-E-0002",
+      "suite": "e2e",
+      "file": "tests/e2e/fixture-isolation.spec.ts",
+      "title": "fake provider resets account request counters after another scenario",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "N053-E-0003",
+      "suite": "e2e",
+      "file": "tests/e2e/fixture-isolation.spec.ts",
+      "title": "fake provider resets account request counters first",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0032",
+      "suite": "e2e",
+      "file": "tests/e2e/health.spec.ts",
+      "title": "rejects POST for the health endpoint",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0031",
+      "suite": "e2e",
+      "file": "tests/e2e/health.spec.ts",
+      "title": "returns the health contract on consecutive GET requests",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0033",
+      "suite": "e2e",
+      "file": "tests/e2e/history-api.spec.ts",
+      "title": "history HTTP: missing session and unsupported methods never read upstream history",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0035",
+      "suite": "e2e",
+      "file": "tests/e2e/history-api.spec.ts",
+      "title": "history HTTP: provider 401 preserves the specified cookie lifecycle",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0037",
+      "suite": "e2e",
+      "file": "tests/e2e/history-api.spec.ts",
+      "title": "history HTTP: provider 502 preserves the specified cookie lifecycle",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0036",
+      "suite": "e2e",
+      "file": "tests/e2e/history-api.spec.ts",
+      "title": "history HTTP: provider 503 preserves the specified cookie lifecycle",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0034",
+      "suite": "e2e",
+      "file": "tests/e2e/history-api.spec.ts",
+      "title": "history HTTP: real cookie route returns safe normalized data and validates scope and Origin",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0038",
+      "suite": "e2e",
+      "file": "tests/e2e/history-api.spec.ts",
+      "title": "history HTTP: successful empty response is explicit",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0039",
+      "suite": "e2e",
+      "file": "tests/e2e/history-api.spec.ts",
+      "title": "history UI: fresh requests render messages without history debug logs",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0049",
+      "suite": "e2e",
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "title": "history overflow: conversation keeps its height and follows incoming messages at width 1280 and height 480",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0048",
+      "suite": "e2e",
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "title": "history overflow: conversation keeps its height and follows incoming messages at width 1280 and height 800",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0041",
+      "suite": "e2e",
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "title": "history overflow: conversation keeps its height and follows incoming messages at width 320 and height 480",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0040",
+      "suite": "e2e",
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "title": "history overflow: conversation keeps its height and follows incoming messages at width 320 and height 800",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0043",
+      "suite": "e2e",
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "title": "history overflow: conversation keeps its height and follows incoming messages at width 360 and height 480",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0042",
+      "suite": "e2e",
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "title": "history overflow: conversation keeps its height and follows incoming messages at width 360 and height 800",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0045",
+      "suite": "e2e",
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "title": "history overflow: conversation keeps its height and follows incoming messages at width 390 and height 480",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0044",
+      "suite": "e2e",
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "title": "history overflow: conversation keeps its height and follows incoming messages at width 390 and height 800",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0047",
+      "suite": "e2e",
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "title": "history overflow: conversation keeps its height and follows incoming messages at width 768 and height 480",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0046",
+      "suite": "e2e",
+      "file": "tests/e2e/history-scroll.spec.ts",
+      "title": "history overflow: conversation keeps its height and follows incoming messages at width 768 and height 800",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0055",
+      "suite": "e2e",
+      "file": "tests/e2e/history-window.spec.ts",
+      "title": "history UI: long unbroken text wraps inside mobile bubble without page overflow",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0054",
+      "suite": "e2e",
+      "file": "tests/e2e/history-window.spec.ts",
+      "title": "history UI: real cookie and production conversation slot render mockup at width 1280",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0050",
+      "suite": "e2e",
+      "file": "tests/e2e/history-window.spec.ts",
+      "title": "history UI: real cookie and production conversation slot render mockup at width 320",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0051",
+      "suite": "e2e",
+      "file": "tests/e2e/history-window.spec.ts",
+      "title": "history UI: real cookie and production conversation slot render mockup at width 360",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0052",
+      "suite": "e2e",
+      "file": "tests/e2e/history-window.spec.ts",
+      "title": "history UI: real cookie and production conversation slot render mockup at width 390",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0053",
+      "suite": "e2e",
+      "file": "tests/e2e/history-window.spec.ts",
+      "title": "history UI: real cookie and production conversation slot render mockup at width 768",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0056",
+      "suite": "e2e",
+      "file": "tests/e2e/home.spec.ts",
+      "title": "opens the login card with two required fields",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0057",
+      "suite": "e2e",
+      "file": "tests/e2e/home.spec.ts",
+      "title": "redirects a visitor without a session to login",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0059",
+      "suite": "e2e",
+      "file": "tests/e2e/login-flow.spec.ts",
+      "title": "login flow: authorized response opens home after one POST",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0058",
+      "suite": "e2e",
+      "file": "tests/e2e/login-flow.spec.ts",
+      "title": "login flow: direct home visit without a session redirects to login",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0063",
+      "suite": "e2e",
+      "file": "tests/e2e/login-flow.spec.ts",
+      "title": "login flow: exhausted rate limit explains when to try again",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0060",
+      "suite": "e2e",
+      "file": "tests/e2e/login-flow.spec.ts",
+      "title": "login flow: invalid token is shown at token field and input remains",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0062",
+      "suite": "e2e",
+      "file": "tests/e2e/login-flow.spec.ts",
+      "title": "login flow: pending POST blocks duplicate submissions",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0061",
+      "suite": "e2e",
+      "file": "tests/e2e/login-flow.spec.ts",
+      "title": "login flow: unavailable provider allows correction and retry",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0068",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form-safety.spec.ts",
+      "title": "fits the 1280px viewport before and after errors",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0067",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form-safety.spec.ts",
+      "title": "fits the 320px viewport before and after errors",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0064",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form-safety.spec.ts",
+      "title": "keeps credentials out of requests, logs and storage and resets on reload",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0066",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form-safety.spec.ts",
+      "title": "prevents credential serialization with JavaScript blocked",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0065",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form-safety.spec.ts",
+      "title": "prevents credential serialization with JavaScript disabled",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0072",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form.spec.ts",
+      "title": "Enter focuses the missing field when only id is filled",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0073",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form.spec.ts",
+      "title": "Enter focuses the missing field when only token is filled",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0074",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form.spec.ts",
+      "title": "Enter validates two empty fields and whitespace without normalizing values",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0069",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form.spec.ts",
+      "title": "hides and reveals the exact token without submitting",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0077",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form.spec.ts",
+      "title": "opens the cabinet in a separate safe tab and preserves input",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0070",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form.spec.ts",
+      "title": "places an accessible eye inside the token field without overlapping text",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0075",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form.spec.ts",
+      "title": "preserves complete values and the page on rejected server submissions",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0071",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form.spec.ts",
+      "title": "shows errors after submit and updates them while editing",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0076",
+      "suite": "e2e",
+      "file": "tests/e2e/login-form.spec.ts",
+      "title": "supports keyboard order, visible focus and accessible errors",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0083",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "title": "MAX login allows enlarged text and vertical scrolling",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0084",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "title": "MAX login announces pending request with no-preference motion",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0085",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "title": "MAX login announces pending request with reduce motion",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0079",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "title": "MAX login fits 1280x720 with long errors",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0078",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "title": "MAX login fits 320x568 with long errors",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0080",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "title": "MAX login fits 360x640 with long errors",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0082",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "title": "MAX login fits 390x320 with long errors",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0081",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "title": "MAX login fits 390x844 with long errors",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0090",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "title": "MAX login follows device theme and keeps compact errors at 1280px",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0089",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "title": "MAX login follows device theme and keeps compact errors at 320px",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0087",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "title": "MAX login keeps keyboard and error focus visible with forced colors active",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0086",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "title": "MAX login keeps keyboard and error focus visible with forced colors none",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0092",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "title": "MAX login reserves field errors without resizing at 1280px",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0091",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "title": "MAX login reserves field errors without resizing at 320px",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0088",
+      "suite": "e2e",
+      "file": "tests/e2e/login-ui.spec.ts",
+      "title": "MAX theme is shared across login, home and logout navigation",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0093",
+      "suite": "e2e",
+      "file": "tests/e2e/logout-flow.spec.ts",
+      "title": "logout: POST clears the browser cookie and redirects to login",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0095",
+      "suite": "e2e",
+      "file": "tests/e2e/logout-flow.spec.ts",
+      "title": "logout: browser exits without reloading the document",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0096",
+      "suite": "e2e",
+      "file": "tests/e2e/logout-flow.spec.ts",
+      "title": "logout: failed request preserves the page and permits retry",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0094",
+      "suite": "e2e",
+      "file": "tests/e2e/logout-flow.spec.ts",
+      "title": "logout: missing cookie is safe and GET does not clear cookies",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0097",
+      "suite": "e2e",
+      "file": "tests/e2e/message-composer.spec.ts",
+      "title": "production send and incoming notification follow mockup at width 1280",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0099",
+      "suite": "e2e",
+      "file": "tests/e2e/message-composer.spec.ts",
+      "title": "production send and incoming notification follow mockup at width 320",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0098",
+      "suite": "e2e",
+      "file": "tests/e2e/message-composer.spec.ts",
+      "title": "production send and incoming notification follow mockup at width 360",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0100",
+      "suite": "e2e",
+      "file": "tests/e2e/recipient-search-ui.spec.ts",
+      "title": "search UI: result label and functional write button preserve the request contract",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0108",
+      "suite": "e2e",
+      "file": "tests/e2e/recipient-search.spec.ts",
+      "title": "recipient search: API requires session and returns only safe data",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0107",
+      "suite": "e2e",
+      "file": "tests/e2e/recipient-search.spec.ts",
+      "title": "recipient search: confirmed invalid token ends the browser session",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0101",
+      "suite": "e2e",
+      "file": "tests/e2e/recipient-search.spec.ts",
+      "title": "recipient search: fixture signs in and opens protected home",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0104",
+      "suite": "e2e",
+      "file": "tests/e2e/recipient-search.spec.ts",
+      "title": "recipient search: invalid input is corrected before a request",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0106",
+      "suite": "e2e",
+      "file": "tests/e2e/recipient-search.spec.ts",
+      "title": "recipient search: limit and outage preserve the session for retry",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0105",
+      "suite": "e2e",
+      "file": "tests/e2e/recipient-search.spec.ts",
+      "title": "recipient search: pending state blocks edits and reload clears result",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0102",
+      "suite": "e2e",
+      "file": "tests/e2e/recipient-search.spec.ts",
+      "title": "recipient search: phone lookup shows the submitted recipient",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0103",
+      "suite": "e2e",
+      "file": "tests/e2e/recipient-search.spec.ts",
+      "title": "recipient search: phone miss offers username without automatic lookup",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-E-0109",
+      "suite": "e2e",
+      "file": "tests/e2e/search-layout.spec.ts",
+      "title": "search layout keeps mode height and scales the workspace with the viewport",
+      "boundary": "production Next routes, browser context and synthetic GREEN-API provider",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0001",
+      "suite": "query",
+      "file": "tests/query/chat-query.spec.ts",
+      "title": "React query: two consumers, fresh remount and API recovery on reload",
+      "boundary": "Real Next API request/reload or route-scoped HTTP error alongside visible consumers is asserted.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0003",
+      "suite": "query",
+      "file": "tests/query/chat-query.spec.ts",
+      "title": "React query: background refresh/error retain cache while UI shows recovery",
+      "boundary": "Real Next API request/reload or route-scoped HTTP error alongside visible consumers is asserted.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0004",
+      "suite": "query",
+      "file": "tests/query/chat-query.spec.ts",
+      "title": "React query: switching account rejects late data of old scope",
+      "boundary": "Real Next API request/reload or route-scoped HTTP error alongside visible consumers is asserted.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0005",
+      "suite": "query",
+      "file": "tests/query/chat-query.spec.ts",
+      "title": "React query: failed logout preserves cache, successful logout navigates",
+      "boundary": "Real Next session/error route and browser navigation/refresh must be observed.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0006",
+      "suite": "query",
+      "file": "tests/query/chat-query.spec.ts",
+      "title": "React query: expiry closes and navigates",
+      "boundary": "Real Next session/error route and browser navigation/refresh must be observed.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0007",
+      "suite": "query",
+      "file": "tests/query/chat-query.spec.ts",
+      "title": "React query: production wrapper remount and rerender preserve visible data",
+      "boundary": "Next-rendered production wrapper hydration/remount is the asserted boundary.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0008",
+      "suite": "query",
+      "file": "tests/query/chat-query.spec.ts",
+      "title": "React query: stale remount and inactive GC use clock, no polling/focus requests",
+      "boundary": "Browser clock, document focus and real remount/GC timing are the asserted boundary.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0009",
+      "suite": "query",
+      "file": "tests/query/chat-query.spec.ts",
+      "title": "React query: 409 closes both consumers and refreshes once without login",
+      "boundary": "Real Next session/error route and browser navigation/refresh must be observed.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0011",
+      "suite": "query",
+      "file": "tests/query/conversation-selection.spec.ts",
+      "title": "selection Context: found recipient opens without another lookup, Send or list entry",
+      "boundary": "Recipient search crosses the real HTTP route; the test asserts no extra lookup or send request.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0014",
+      "suite": "query",
+      "file": "tests/query/history-query.spec.ts",
+      "title": "history React: one request per access and retained merged cache without debug output",
+      "boundary": "Real history HTTP response/retry and absence of browser console diagnostics are asserted.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0016",
+      "suite": "query",
+      "file": "tests/query/history-query.spec.ts",
+      "title": "history React: error retains known messages and manual retry recovers without debug output",
+      "boundary": "Real history HTTP response/retry and absence of browser console diagnostics are asserted.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0019",
+      "suite": "query",
+      "file": "tests/query/history-window.spec.ts",
+      "title": "history window: loading differs from successful empty response and failed retry preserves known messages",
+      "boundary": "Production history panel is exercised through the real Next API; RTL state coverage exists in chat-history-panel.test.tsx.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0020",
+      "suite": "query",
+      "file": "tests/query/history-window.spec.ts",
+      "title": "history window: safe literal text, unsupported and accumulated messages use one request per access without scroll fetch",
+      "boundary": "Actual layout, scroll position and browser geometry are asserted.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0021",
+      "suite": "query",
+      "file": "tests/query/history-window.spec.ts",
+      "title": "history window: guarded history consumer publishes a conflicting failure and retains read",
+      "boundary": "Production history panel is exercised through the real Next API; RTL state coverage exists in chat-history-panel.test.tsx.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0022",
+      "suite": "query",
+      "file": "tests/query/history-window.spec.ts",
+      "title": "history window: opening ends at bottom and refreshing while reading retains scroll position",
+      "boundary": "Actual layout, scroll position and browser geometry are asserted.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0023",
+      "suite": "query",
+      "file": "tests/query/message-composer.spec.ts",
+      "title": "composer submits original text and shows API acceptance before confirmed read",
+      "boundary": "Real send HTTP response, browser editor state and chat switching are asserted together.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0024",
+      "suite": "query",
+      "file": "tests/query/message-composer.spec.ts",
+      "title": "pending send survives switching chats and never clears the new editor",
+      "boundary": "Real send HTTP response, browser editor state and chat switching are asserted together.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0025",
+      "suite": "query",
+      "file": "tests/query/message-composer.spec.ts",
+      "title": "a second tab is limited and cannot send",
+      "boundary": "Two real browser tabs and lease ownership gate sending.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0026",
+      "suite": "query",
+      "file": "tests/query/message-composer.spec.ts",
+      "title": "lost response preserves input, requires a history check and leaves retry to the user",
+      "boundary": "Real notification receive/ACK and history/send HTTP ordering is asserted.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0027",
+      "suite": "query",
+      "file": "tests/query/message-composer.spec.ts",
+      "title": "IME Enter and Shift+Enter never submit, blank and over-limit input are rejected locally",
+      "boundary": "Real browser composition/keyboard events and local editor interaction are asserted.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0028",
+      "suite": "query",
+      "file": "tests/query/message-composer.spec.ts",
+      "title": "incoming is applied and ACKed before late history, which preserves live content without duplicates",
+      "boundary": "Real notification receive/ACK and history/send HTTP ordering is asserted.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0029",
+      "suite": "query",
+      "file": "tests/query/message-composer.spec.ts",
+      "title": "read notification before HTTP acceptance creates no empty bubble and attaches to the accepted message",
+      "boundary": "Real notification receive/ACK and history/send HTTP ordering is asserted.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0030",
+      "suite": "query",
+      "file": "tests/query/message-composer.spec.ts",
+      "title": "reopening history replaces API clock with confirmed delivery without a live status",
+      "boundary": "Real notification receive/ACK and history/send HTTP ordering is asserted.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0031",
+      "suite": "query",
+      "file": "tests/query/polling-workspace.spec.ts",
+      "title": "browser Web Lock blocks second tab and transfers after first closes without a server release",
+      "boundary": "Actual browser Web Locks, tab lifecycle or unsupported browser API are asserted.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0032",
+      "suite": "query",
+      "file": "tests/query/polling-workspace.spec.ts",
+      "title": "reload reacquires browser lease without the old server ownership grace",
+      "boundary": "Actual browser Web Locks, tab lifecycle or unsupported browser API are asserted.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0033",
+      "suite": "query",
+      "file": "tests/query/polling-workspace.spec.ts",
+      "title": "unsupported Web Locks shows explicit limitation instead of reading queue",
+      "boundary": "Actual browser Web Locks, tab lifecycle or unsupported browser API are asserted.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0035",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "title": "unread UI: another chat counts, duplicate delivery and ACK preserve one mark, opening clears it",
+      "boundary": "Live notification/ACK HTTP and rendered unread state are asserted together in Chromium.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0036",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "title": "unread UI: hidden selected chat counts and return clears only it; visible incoming/status do not count",
+      "boundary": "Live notification/ACK HTTP and rendered unread state are asserted together in Chromium.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0037",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "title": "unread UI: unknown chat appears with mark and list refresh does not erase it",
+      "boundary": "Live notification/ACK HTTP and rendered unread state are asserted together in Chromium.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0038",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "title": "unread UI: mobile hidden conversation counts, back button totals and resize reveals/clears selected chat",
+      "boundary": "Responsive layout, theme, navigation or visible badge geometry requires Chromium.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0039",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "title": "unread preview: 1280px light count/99+ layout and mobile navigation",
+      "boundary": "Responsive layout, theme, navigation or visible badge geometry requires Chromium.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0040",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "title": "unread preview: 1280px dark count/99+ layout and mobile navigation",
+      "boundary": "Responsive layout, theme, navigation or visible badge geometry requires Chromium.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0041",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "title": "unread preview: 390px light count/99+ layout and mobile navigation",
+      "boundary": "Responsive layout, theme, navigation or visible badge geometry requires Chromium.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0042",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "title": "unread preview: 390px dark count/99+ layout and mobile navigation",
+      "boundary": "Responsive layout, theme, navigation or visible badge geometry requires Chromium.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0043",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "title": "unread preview: 320px light count/99+ layout and mobile navigation",
+      "boundary": "Responsive layout, theme, navigation or visible badge geometry requires Chromium.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0044",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "title": "unread preview: 320px dark count/99+ layout and mobile navigation",
+      "boundary": "Responsive layout, theme, navigation or visible badge geometry requires Chromium.",
+      "decision": "retain-browser"
+    },
+    {
+      "id": "B028-Q-0045",
+      "suite": "query",
+      "file": "tests/query/unread-indicators.spec.ts",
+      "title": "unread UI: long chat label truncates without moving the badge outside its row",
+      "boundary": "Responsive layout, theme, navigation or visible badge geometry requires Chromium.",
+      "decision": "retain-browser"
+    }
+  ]
+}

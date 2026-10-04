@@ -1,0 +1,9 @@
+# Inventory 054 — исходная структура до реализации
+
+Карта [035](../035-feature-module-boundaries/ownership-map.csv) сопоставлена с текущим деревом `src`. В старых `src/lib` и `src/components` остаются **63** исходных файла карты, ещё **6** добавлены после 035. [Поимённая migration map](migration-map.json) содержит 69 уникальных `source → target`, целевых конфликтов нет: 46 conversation, 13 server, 10 shared. Два QueryProvider файла получили обоснованное отклонение от 035: их feature-specific `createConnectionSession` и redirect нельзя поместить в `shared/query/ui`; фактический владелец — `conversation/ui`. Нейтральный Query context выделяется в `shared/query/ui` отдельно.
+
+Кроме старых путей `src/app/api/health/route.ts`, `src/app/{page,layout,...}`, `src/styles` остаются по правилам Next/общих стилей. Исторические документы и проверки не удаляются. У каждого нового файла после 035 владелец назначен явно в карте.
+
+Статический read-only просмотр текущих 261 TS/TSX файлов нашёл 741 связи импортов (без CSS), два файловых цикла: `green-api/get-state ↔ transport` через type-only credentials и `features/chats/server/index ↔ green-api/get-chats` через type-only options/result. План: вынести credential type в нейтральный тип, а `get-chats` импортировать тип непосредственно из `features/chats/server/types` либо перенести DTO на model boundary. `QueryProvider` сейчас импортирует conversation creation из shared-планируемого target; извлечение нейтрального context устраняет инверсию. `notifications/model` использует type-only credentials и чистый identifier через серверный путь — исправить их местоположение до включения lint guard.
+
+Историческая карта 035 отражает исходное состояние и не перезаписывается. Итоговые назначения и обоснованные отклонения фиксируются здесь; действующий граф импортов проверяется после переноса, а не выводится только из имени каталога.

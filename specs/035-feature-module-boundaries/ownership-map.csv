@@ -1,0 +1,362 @@
+current_path,kind,owner,target_area,migration_task,disposition,notes
+src/app/HomePage.module.scss,source,shell,src/app,049,adapt,Next composition remains in app; feature internals move
+src/app/api/auth/end-session/route.ts,source,auth,src/app/api/auth,036,adapt,Route path retained; delegate behavior through feature/server entry
+src/app/api/auth/login/route.ts,source,auth,src/app/api/auth,036,adapt,Route path retained; delegate behavior through feature/server entry
+src/app/api/auth/logout/route.ts,source,auth,src/app/api/auth,036,adapt,Route path retained; delegate behavior through feature/server entry
+src/app/api/chats/history/route.ts,source,chats,src/app/api/chats,048,adapt,Route path retained; delegate behavior through feature/server entry
+src/app/api/chats/route.ts,source,chats,src/app/api/chats,048,adapt,Route path retained; delegate behavior through feature/server entry
+src/app/api/health/route.ts,source,shell,src/app/api/health,retain,retain,Next health route stays in app
+src/app/api/messages/route.ts,source,conversation,src/app/api/messages,039,adapt,Route path retained; delegate behavior through feature/server entry
+src/app/api/notifications/ack/route.ts,source,conversation,src/app/api/notifications,041,adapt,Route path retained; delegate behavior through feature/server entry
+src/app/api/notifications/receive/route.ts,source,conversation,src/app/api/notifications,041,adapt,Route path retained; delegate behavior through feature/server entry
+src/app/api/notifications/settings/route.ts,source,conversation,src/app/api/notifications,041,adapt,Route path retained; delegate behavior through feature/server entry
+src/app/api/recipients/search/route.ts,source,recipients,src/app/api/recipients,046,adapt,Route path retained; delegate behavior through feature/server entry
+src/app/constants.ts,source,shell,src/app,049,adapt,Next composition remains in app; feature internals move
+src/app/globals.scss,source,shell,src/app,retain,retain,Next root composition and global style remain
+src/app/layout.tsx,source,shell,src/app,retain,retain,Next root composition and global style remain
+src/app/login/LoginPage.module.scss,source,auth,src/app/login,045,adapt,Next page/CSS path retained; compose auth UI
+src/app/login/page.tsx,source,auth,src/app/login,045,adapt,Next page/CSS path retained; compose auth UI
+src/app/page.tsx,source,shell,src/app,049,adapt,Next composition remains in app; feature internals move
+src/components/AccountAvatar/AccountAvatar.module.scss,source,account,src/features/account/ui/AccountAvatar,047,move,Feature UI; preserve component contract and accessibility
+src/components/AccountAvatar/AccountAvatar.tsx,source,account,src/features/account/ui/AccountAvatar,047,move,Feature UI; preserve component contract and accessibility
+src/components/AccountAvatar/constants.ts,source,account,src/features/account/ui/AccountAvatar,047,move,Feature UI; preserve component contract and accessibility
+src/components/AccountAvatar/index.ts,source,account,src/features/account/ui/AccountAvatar,047,move,Feature UI; preserve component contract and accessibility
+src/components/AccountHeader/AccountHeader.module.scss,source,account,src/features/account/ui/AccountHeader,047,move,Feature UI; preserve component contract and accessibility
+src/components/AccountHeader/AccountHeader.tsx,source,account,src/features/account/ui/AccountHeader,047,move,Feature UI; preserve component contract and accessibility
+src/components/AccountHeader/constants.ts,source,account,src/features/account/ui/AccountHeader,047,move,Feature UI; preserve component contract and accessibility
+src/components/AccountHeader/index.ts,source,account,src/features/account/ui/AccountHeader,047,move,Feature UI; preserve component contract and accessibility
+src/components/ChatHistoryPanel/ChatHistoryPanel.module.scss,source,conversation,src/features/conversation/ui/ChatHistoryPanel,049,move,Feature UI; preserve component contract and accessibility
+src/components/ChatHistoryPanel/ChatHistoryPanel.tsx,source,conversation,src/features/conversation/ui/ChatHistoryPanel,049,move,Feature UI; preserve component contract and accessibility
+src/components/ChatHistoryPanel/constants.ts,source,conversation,src/features/conversation/ui/ChatHistoryPanel,049,move,Feature UI; preserve component contract and accessibility
+src/components/ChatHistoryPanel/index.ts,source,conversation,src/features/conversation/ui/ChatHistoryPanel,049,move,Feature UI; preserve component contract and accessibility
+src/components/ChatHistoryState/ChatHistoryState.module.scss,source,conversation,src/features/conversation/ui/ChatHistoryState,049,move,Feature UI; preserve component contract and accessibility
+src/components/ChatHistoryState/ChatHistoryState.tsx,source,conversation,src/features/conversation/ui/ChatHistoryState,049,move,Feature UI; preserve component contract and accessibility
+src/components/ChatHistoryState/constants.ts,source,conversation,src/features/conversation/ui/ChatHistoryState,049,move,Feature UI; preserve component contract and accessibility
+src/components/ChatHistoryState/index.ts,source,conversation,src/features/conversation/ui/ChatHistoryState,049,move,Feature UI; preserve component contract and accessibility
+src/components/ChatList/ChatList.module.scss,source,chats,src/features/chats/ui/ChatList,048,move,Feature UI; preserve component contract and accessibility
+src/components/ChatList/ChatList.tsx,source,chats,src/features/chats/ui/ChatList,048,move,Feature UI; preserve component contract and accessibility
+src/components/ChatList/constants.ts,source,chats,src/features/chats/ui/ChatList,048,move,Feature UI; preserve component contract and accessibility
+src/components/ChatList/index.ts,source,chats,src/features/chats/ui/ChatList,048,move,Feature UI; preserve component contract and accessibility
+src/components/ChatListItem/ChatListItem.module.scss,source,chats,src/features/chats/ui/ChatListItem,048,move,Feature UI; preserve component contract and accessibility
+src/components/ChatListItem/ChatListItem.tsx,source,chats,src/features/chats/ui/ChatListItem,048,move,Feature UI; preserve component contract and accessibility
+src/components/ChatListItem/index.ts,source,chats,src/features/chats/ui/ChatListItem,048,move,Feature UI; preserve component contract and accessibility
+src/components/ChatListPanel/ChatListPanel.module.scss,source,chats,src/features/chats/ui/ChatListPanel,048,move,Feature UI; preserve component contract and accessibility
+src/components/ChatListPanel/ChatListPanel.tsx,source,chats,src/features/chats/ui/ChatListPanel,048,move,Feature UI; preserve component contract and accessibility
+src/components/ChatListPanel/constants.ts,source,chats,src/features/chats/ui/ChatListPanel,048,move,Feature UI; preserve component contract and accessibility
+src/components/ChatListPanel/index.ts,source,chats,src/features/chats/ui/ChatListPanel,048,move,Feature UI; preserve component contract and accessibility
+src/components/ChatListRecovery/ChatListRecovery.module.scss,source,chats,src/features/chats/ui/ChatListRecovery,048,move,Feature UI; preserve component contract and accessibility
+src/components/ChatListRecovery/ChatListRecovery.tsx,source,chats,src/features/chats/ui/ChatListRecovery,048,move,Feature UI; preserve component contract and accessibility
+src/components/ChatListRecovery/index.ts,source,chats,src/features/chats/ui/ChatListRecovery,048,move,Feature UI; preserve component contract and accessibility
+src/components/ChatSidebar/ChatSidebar.module.scss,source,chats,src/features/chats/ui/ChatSidebar,048,move,Feature UI; preserve component contract and accessibility
+src/components/ChatSidebar/ChatSidebar.tsx,source,chats,src/features/chats/ui/ChatSidebar,048,move,Feature UI; preserve component contract and accessibility
+src/components/ChatSidebar/constants.ts,source,chats,src/features/chats/ui/ChatSidebar,048,move,Feature UI; preserve component contract and accessibility
+src/components/ChatSidebar/index.ts,source,chats,src/features/chats/ui/ChatSidebar,048,move,Feature UI; preserve component contract and accessibility
+src/components/ChatUnreadBadge/ChatUnreadBadge.module.scss,source,shared,src/shared/ui/ChatUnreadBadge,048,move,"Used by chats and conversation; proven shared UI, verify in 048/049"
+src/components/ChatUnreadBadge/ChatUnreadBadge.tsx,source,shared,src/shared/ui/ChatUnreadBadge,048,move,"Used by chats and conversation; proven shared UI, verify in 048/049"
+src/components/ChatUnreadBadge/constants.ts,source,shared,src/shared/ui/ChatUnreadBadge,048,move,"Used by chats and conversation; proven shared UI, verify in 048/049"
+src/components/ChatUnreadBadge/index.ts,source,shared,src/shared/ui/ChatUnreadBadge,048,move,"Used by chats and conversation; proven shared UI, verify in 048/049"
+src/components/ChatWorkspace/ChatWorkspace.module.scss,source,conversation,src/features/conversation/ui/ChatWorkspace,049,move,Feature UI; preserve component contract and accessibility
+src/components/ChatWorkspace/ChatWorkspace.tsx,source,conversation,src/features/conversation/ui/ChatWorkspace,049,move,Feature UI; preserve component contract and accessibility
+src/components/ChatWorkspace/constants.ts,source,conversation,src/features/conversation/ui/ChatWorkspace,049,move,Feature UI; preserve component contract and accessibility
+src/components/ChatWorkspace/index.ts,source,conversation,src/features/conversation/ui/ChatWorkspace,049,move,Feature UI; preserve component contract and accessibility
+src/components/ChatWorkspace/use-workspace-focus.ts,source,conversation,src/features/conversation/ui/ChatWorkspace,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationBackButton/ConversationBackButton.module.scss,source,conversation,src/features/conversation/ui/ConversationBackButton,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationBackButton/ConversationBackButton.tsx,source,conversation,src/features/conversation/ui/ConversationBackButton,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationBackButton/constants.ts,source,conversation,src/features/conversation/ui/ConversationBackButton,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationBackButton/index.ts,source,conversation,src/features/conversation/ui/ConversationBackButton,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationBackground/ConversationBackground.module.scss,source,conversation,src/features/conversation/ui/ConversationBackground,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationBackground/ConversationBackground.tsx,source,conversation,src/features/conversation/ui/ConversationBackground,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationBackground/index.ts,source,conversation,src/features/conversation/ui/ConversationBackground,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationCloseButton/ConversationCloseButton.module.scss,source,conversation,src/features/conversation/ui/ConversationCloseButton,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationCloseButton/ConversationCloseButton.tsx,source,conversation,src/features/conversation/ui/ConversationCloseButton,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationCloseButton/constants.ts,source,conversation,src/features/conversation/ui/ConversationCloseButton,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationCloseButton/index.ts,source,conversation,src/features/conversation/ui/ConversationCloseButton,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationEmptyState/ConversationEmptyState.module.scss,source,conversation,src/features/conversation/ui/ConversationEmptyState,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationEmptyState/ConversationEmptyState.tsx,source,conversation,src/features/conversation/ui/ConversationEmptyState,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationEmptyState/constants.ts,source,conversation,src/features/conversation/ui/ConversationEmptyState,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationEmptyState/index.ts,source,conversation,src/features/conversation/ui/ConversationEmptyState,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationHeader/ConversationHeader.module.scss,source,conversation,src/features/conversation/ui/ConversationHeader,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationHeader/ConversationHeader.tsx,source,conversation,src/features/conversation/ui/ConversationHeader,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationHeader/constants.ts,source,conversation,src/features/conversation/ui/ConversationHeader,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationHeader/index.ts,source,conversation,src/features/conversation/ui/ConversationHeader,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationPane/ConversationPane.module.scss,source,conversation,src/features/conversation/ui/ConversationPane,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationPane/ConversationPane.tsx,source,conversation,src/features/conversation/ui/ConversationPane,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationPane/constants.ts,source,conversation,src/features/conversation/ui/ConversationPane,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationPane/index.ts,source,conversation,src/features/conversation/ui/ConversationPane,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationSelectionProvider/ConversationSelectionProvider.tsx,source,conversation,src/features/conversation/ui/ConversationSelectionProvider,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationSelectionProvider/constants.ts,source,conversation,src/features/conversation/ui/ConversationSelectionProvider,049,move,Feature UI; preserve component contract and accessibility
+src/components/ConversationSelectionProvider/index.ts,source,conversation,src/features/conversation/ui/ConversationSelectionProvider,049,move,Feature UI; preserve component contract and accessibility
+src/components/CredentialField/CredentialField.module.scss,source,auth,src/features/auth/ui/CredentialField,045,move,Feature UI; preserve component contract and accessibility
+src/components/CredentialField/CredentialField.tsx,source,auth,src/features/auth/ui/CredentialField,045,move,Feature UI; preserve component contract and accessibility
+src/components/CredentialField/index.ts,source,auth,src/features/auth/ui/CredentialField,045,move,Feature UI; preserve component contract and accessibility
+src/components/LoginForm/LoginForm.module.scss,source,auth,src/features/auth/ui/LoginForm,045,move,Feature UI; preserve component contract and accessibility
+src/components/LoginForm/LoginForm.tsx,source,auth,src/features/auth/ui/LoginForm,045,move,Feature UI; preserve component contract and accessibility
+src/components/LoginForm/constants.ts,source,auth,src/features/auth/ui/LoginForm,045,move,Feature UI; preserve component contract and accessibility
+src/components/LoginForm/index.ts,source,auth,src/features/auth/ui/LoginForm,045,move,Feature UI; preserve component contract and accessibility
+src/components/LogoutButton/LogoutButton.module.scss,source,auth,src/features/auth/ui/LogoutButton,045,move,Feature UI; preserve component contract and accessibility
+src/components/LogoutButton/LogoutButton.tsx,source,auth,src/features/auth/ui/LogoutButton,045,move,Feature UI; preserve component contract and accessibility
+src/components/LogoutButton/constants.ts,source,auth,src/features/auth/ui/LogoutButton,045,move,Feature UI; preserve component contract and accessibility
+src/components/LogoutButton/index.ts,source,auth,src/features/auth/ui/LogoutButton,045,move,Feature UI; preserve component contract and accessibility
+src/components/MessageBubble/MessageBubble.module.scss,source,conversation,src/features/conversation/ui/MessageBubble,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageBubble/MessageBubble.tsx,source,conversation,src/features/conversation/ui/MessageBubble,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageBubble/constants.ts,source,conversation,src/features/conversation/ui/MessageBubble,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageBubble/index.ts,source,conversation,src/features/conversation/ui/MessageBubble,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageComposer/MessageComposer.module.scss,source,conversation,src/features/conversation/ui/MessageComposer,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageComposer/MessageComposer.tsx,source,conversation,src/features/conversation/ui/MessageComposer,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageComposer/constants.ts,source,conversation,src/features/conversation/ui/MessageComposer,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageComposer/index.ts,source,conversation,src/features/conversation/ui/MessageComposer,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageComposer/use-message-composer.ts,source,conversation,src/features/conversation/ui/MessageComposer,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageComposerFeedback/MessageComposerFeedback.module.scss,source,conversation,src/features/conversation/ui/MessageComposerFeedback,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageComposerFeedback/MessageComposerFeedback.tsx,source,conversation,src/features/conversation/ui/MessageComposerFeedback,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageComposerFeedback/constants.ts,source,conversation,src/features/conversation/ui/MessageComposerFeedback,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageComposerFeedback/index.ts,source,conversation,src/features/conversation/ui/MessageComposerFeedback,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageList/MessageList.module.scss,source,conversation,src/features/conversation/ui/MessageList,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageList/MessageList.tsx,source,conversation,src/features/conversation/ui/MessageList,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageList/constants.ts,source,conversation,src/features/conversation/ui/MessageList,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageList/index.ts,source,conversation,src/features/conversation/ui/MessageList,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageList/use-message-scroll.ts,source,conversation,src/features/conversation/ui/MessageList,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageSendButton/MessageSendButton.module.scss,source,conversation,src/features/conversation/ui/MessageSendButton,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageSendButton/MessageSendButton.tsx,source,conversation,src/features/conversation/ui/MessageSendButton,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageSendButton/index.ts,source,conversation,src/features/conversation/ui/MessageSendButton,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageSendProvider/MessageSendProvider.tsx,source,conversation,src/features/conversation/ui/MessageSendProvider,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageSendProvider/constants.ts,source,conversation,src/features/conversation/ui/MessageSendProvider,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageSendProvider/index.ts,source,conversation,src/features/conversation/ui/MessageSendProvider,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageStatusIndicator/MessageStatusIndicator.module.scss,source,conversation,src/features/conversation/ui/MessageStatusIndicator,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageStatusIndicator/MessageStatusIndicator.tsx,source,conversation,src/features/conversation/ui/MessageStatusIndicator,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageStatusIndicator/constants.ts,source,conversation,src/features/conversation/ui/MessageStatusIndicator,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageStatusIndicator/index.ts,source,conversation,src/features/conversation/ui/MessageStatusIndicator,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageStatusIssue/MessageStatusIssue.module.scss,source,conversation,src/features/conversation/ui/MessageStatusIssue,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageStatusIssue/MessageStatusIssue.tsx,source,conversation,src/features/conversation/ui/MessageStatusIssue,049,move,Feature UI; preserve component contract and accessibility
+src/components/MessageStatusIssue/index.ts,source,conversation,src/features/conversation/ui/MessageStatusIssue,049,move,Feature UI; preserve component contract and accessibility
+src/components/NotificationNotice/NotificationNotice.module.scss,source,conversation,src/features/conversation/ui/NotificationNotice,049,move,Feature UI; preserve component contract and accessibility
+src/components/NotificationNotice/NotificationNotice.tsx,source,conversation,src/features/conversation/ui/NotificationNotice,049,move,Feature UI; preserve component contract and accessibility
+src/components/NotificationNotice/constants.ts,source,conversation,src/features/conversation/ui/NotificationNotice,049,move,Feature UI; preserve component contract and accessibility
+src/components/NotificationNotice/index.ts,source,conversation,src/features/conversation/ui/NotificationNotice,049,move,Feature UI; preserve component contract and accessibility
+src/components/NotificationProvider/NotificationProvider.tsx,source,conversation,src/features/conversation/ui/NotificationProvider,049,move,Notification runtime owner 041; UI composition remains in conversation
+src/components/NotificationProvider/constants.ts,source,conversation,src/features/conversation/ui/NotificationProvider,049,move,Notification runtime owner 041; UI composition remains in conversation
+src/components/NotificationProvider/context.ts,source,conversation,src/features/conversation/ui/NotificationProvider,049,move,Notification runtime owner 041; UI composition remains in conversation
+src/components/NotificationProvider/index.ts,source,conversation,src/features/conversation/ui/NotificationProvider,049,move,Notification runtime owner 041; UI composition remains in conversation
+src/components/QueryProvider/QueryProvider.tsx,source,shared,src/shared/query/ui,044,move,"Client Query context; expose client-only entry, no feature-specific fetch"
+src/components/QueryProvider/index.ts,source,shared,src/shared/query/ui,044,move,"Client Query context; expose client-only entry, no feature-specific fetch"
+src/components/RecipientSearchField/RecipientSearchField.module.scss,source,recipients,src/features/recipients/ui/RecipientSearchField,046,move,Feature UI; preserve component contract and accessibility
+src/components/RecipientSearchField/RecipientSearchField.tsx,source,recipients,src/features/recipients/ui/RecipientSearchField,046,move,Feature UI; preserve component contract and accessibility
+src/components/RecipientSearchField/index.ts,source,recipients,src/features/recipients/ui/RecipientSearchField,046,move,Feature UI; preserve component contract and accessibility
+src/components/RecipientSearchForm/RecipientSearchForm.module.scss,source,recipients,src/features/recipients/ui/RecipientSearchForm,046,move,Feature UI; preserve component contract and accessibility
+src/components/RecipientSearchForm/RecipientSearchForm.tsx,source,recipients,src/features/recipients/ui/RecipientSearchForm,046,move,Feature UI; preserve component contract and accessibility
+src/components/RecipientSearchForm/constants.ts,source,recipients,src/features/recipients/ui/RecipientSearchForm,046,move,Feature UI; preserve component contract and accessibility
+src/components/RecipientSearchForm/format-recipient-label.ts,source,recipients,src/features/recipients/model,046,move,Pure recipient label formatting without React or server runtime
+src/components/RecipientSearchForm/index.ts,source,recipients,src/features/recipients/ui/RecipientSearchForm,046,move,Feature UI; preserve component contract and accessibility
+src/components/RecipientSearchHint/RecipientSearchHint.module.scss,source,recipients,src/features/recipients/ui/RecipientSearchHint,046,move,Feature UI; preserve component contract and accessibility
+src/components/RecipientSearchHint/RecipientSearchHint.tsx,source,recipients,src/features/recipients/ui/RecipientSearchHint,046,move,Feature UI; preserve component contract and accessibility
+src/components/RecipientSearchHint/index.ts,source,recipients,src/features/recipients/ui/RecipientSearchHint,046,move,Feature UI; preserve component contract and accessibility
+src/components/RecipientSearchModeSwitch/RecipientSearchModeSwitch.module.scss,source,recipients,src/features/recipients/ui/RecipientSearchModeSwitch,046,move,Feature UI; preserve component contract and accessibility
+src/components/RecipientSearchModeSwitch/RecipientSearchModeSwitch.tsx,source,recipients,src/features/recipients/ui/RecipientSearchModeSwitch,046,move,Feature UI; preserve component contract and accessibility
+src/components/RecipientSearchModeSwitch/index.ts,source,recipients,src/features/recipients/ui/RecipientSearchModeSwitch,046,move,Feature UI; preserve component contract and accessibility
+src/components/RecipientSearchResult/RecipientSearchResult.module.scss,source,recipients,src/features/recipients/ui/RecipientSearchResult,046,move,Feature UI; preserve component contract and accessibility
+src/components/RecipientSearchResult/RecipientSearchResult.tsx,source,recipients,src/features/recipients/ui/RecipientSearchResult,046,move,Feature UI; preserve component contract and accessibility
+src/components/RecipientSearchResult/index.ts,source,recipients,src/features/recipients/ui/RecipientSearchResult,046,move,Feature UI; preserve component contract and accessibility
+src/components/SubmitButton/SubmitButton.module.scss,source,shared,src/shared/ui/SubmitButton,045,move,"Used by auth and recipients; migrate as proven shared UI, verify in 045/046"
+src/components/SubmitButton/SubmitButton.tsx,source,shared,src/shared/ui/SubmitButton,045,move,"Used by auth and recipients; migrate as proven shared UI, verify in 045/046"
+src/components/SubmitButton/index.ts,source,shared,src/shared/ui/SubmitButton,045,move,"Used by auth and recipients; migrate as proven shared UI, verify in 045/046"
+src/components/TokenVisibilityButton/TokenVisibilityButton.module.scss,source,auth,src/features/auth/ui/TokenVisibilityButton,045,move,Feature UI; preserve component contract and accessibility
+src/components/TokenVisibilityButton/TokenVisibilityButton.tsx,source,auth,src/features/auth/ui/TokenVisibilityButton,045,move,Feature UI; preserve component contract and accessibility
+src/components/TokenVisibilityButton/index.ts,source,auth,src/features/auth/ui/TokenVisibilityButton,045,move,Feature UI; preserve component contract and accessibility
+src/lib/account/constants.ts,source,account,src/features/account/model,047,move,Account normalization and types
+src/lib/account/normalize-profile.ts,source,account,src/features/account/model,047,move,Account normalization and types
+src/lib/account/types.ts,source,account,src/features/account/model,047,move,Account normalization and types
+src/lib/api/constants.ts,source,shared,src/shared/kernel/api,038,move,Move only neutral protocol/UI constants; no feature runtime dependency
+src/lib/api/is-record.ts,source,shared,src/shared/kernel/api,038,move,Move only neutral protocol/UI constants; no feature runtime dependency
+src/lib/auth/constants.ts,source,auth,src/features/auth/application,036,move,Auth policy and session scope; split pure types when moved
+src/lib/auth/get-query-scope.ts,source,auth,src/features/auth/application,036,move,Auth policy and session scope; split pure types when moved
+src/lib/auth/handle-login-request.ts,source,auth,src/features/auth/server,036,move,Auth route implementation
+src/lib/auth/resolve-home.ts,source,auth,src/features/auth/application,036,move,Auth policy and session scope; split pure types when moved
+src/lib/auth/resolve-login.ts,source,auth,src/features/auth/application,036,move,Auth policy and session scope; split pure types when moved
+src/lib/auth/session.ts,source,auth,src/features/auth/server,037,move,Server session/cookie secret boundary
+src/lib/chats/chats-query-options.ts,source,chats,src/features/chats/application,048,move,Query options introduced after 035 inventory; preserve scope and cache timings
+src/lib/chats/constants.ts,source,chats,src/features/chats,048,split,Split chat domain facts from Query runtime and error copy
+src/lib/chats/fetch-chats.ts,source,chats,src/features/chats/application,048,move,Browser API client; no server runtime import
+src/lib/chats/handle-chats-request.ts,source,chats,src/features/chats/server,048,move,Server HTTP handler; preserve response contract
+src/lib/chats/normalize-chats.ts,source,chats,src/features/chats/model,048,move,Pure provider normalization; filter credentials
+src/lib/chats/session-chat-facts.ts,source,chats,src/features/chats/application,048,move,Physical migration after 043 cache coordination; retain one-way QuerySession contract
+src/lib/chats/types.ts,source,chats,src/features/chats,048,split,Split PersonalChat model from Query error and server credentials/options
+src/lib/chats/use-chats.ts,source,chats,src/features/chats/ui,048,move,UI hook uses public QueryProvider until 049/054
+src/lib/chats/use-session-chat-labels.ts,source,chats,src/features/chats/ui,048,move,UI hook uses public QueryProvider until 049/054
+src/lib/chats/validate-chat-id.ts,source,chats,src/features/chats/model,048,move,Pure chat ID validation shared by consumers
+src/lib/conversations/constants.ts,source,conversation,src/features/conversation/selection/model,049,move,Conversation selection domain
+src/lib/conversations/selection.ts,source,conversation,src/features/conversation/selection/model,049,move,Conversation selection domain
+src/lib/conversations/types.ts,source,conversation,src/features/conversation/selection/model,049,move,Conversation selection domain
+src/lib/green-api/check-account.ts,source,server,src/server/green-api,039,move,Server transport/adapter; secrets never exposed to client
+src/lib/green-api/constants.ts,source,server,src/server/green-api,039,move,Server transport/adapter; secrets never exposed to client
+src/lib/green-api/delete-notification.ts,source,server,src/server/green-api,039,move,Server transport/adapter; secrets never exposed to client
+src/lib/green-api/get-account-settings.ts,source,server,src/server/green-api,039,move,Server transport/adapter; secrets never exposed to client
+src/lib/green-api/get-chat-history.ts,source,server,src/server/green-api,039,move,Server transport/adapter; secrets never exposed to client
+src/lib/green-api/get-chats.ts,source,server,src/server/green-api,039,move,Server transport/adapter; secrets never exposed to client
+src/lib/green-api/get-notification-settings.ts,source,server,src/server/green-api,039,move,Server transport/adapter; secrets never exposed to client
+src/lib/green-api/get-state.ts,source,server,src/server/green-api,039,move,Server transport/adapter; secrets never exposed to client
+src/lib/green-api/notification-request.ts,source,server,src/server/green-api,039,move,Server transport/adapter; secrets never exposed to client
+src/lib/green-api/receive-notification.ts,source,server,src/server/green-api,039,move,Server transport/adapter; secrets never exposed to client
+src/lib/green-api/safe-identifier.ts,source,server,src/server/green-api,039,move,Server transport/adapter; secrets never exposed to client
+src/lib/green-api/send-message.ts,source,server,src/server/green-api,039,move,Server transport/adapter; secrets never exposed to client
+src/lib/history/constants.ts,source,conversation,src/features/conversation/history,043,split,Split history contract from Query runtime configuration
+src/lib/history/fetch-history.ts,source,conversation,src/features/conversation/history/application,043,move,History ownership; UI hook must not import global UI provider
+src/lib/history/handle-history-request.ts,source,conversation,src/features/conversation/history/server,039,move,History ownership; UI hook must not import global UI provider
+src/lib/history/normalize-history.ts,source,conversation,src/features/conversation/history/model,049,move,History ownership; UI hook must not import global UI provider
+src/lib/history/types.ts,source,conversation,src/features/conversation/history,043,split,Split history DTO from Query error and server request options
+src/lib/history/use-chat-history.ts,source,conversation,src/features/conversation/history/ui,043,move,History ownership; UI hook must not import global UI provider
+src/lib/history/validate-history-request.ts,source,conversation,src/features/conversation/history/model,049,move,History ownership; UI hook must not import global UI provider
+src/lib/http/constants.ts,source,shared,src/shared/kernel/http,038,move,Move only neutral protocol/UI constants; no feature runtime dependency
+src/lib/messages/constants.ts,source,conversation,src/features/conversation/messages,042,split,Split status/domain constants from cache/query configuration in 043
+src/lib/messages/merge-message-facts.ts,source,conversation,src/features/conversation/messages/model,042,move,Message facts/status; keep pure model independent of Query/UI
+src/lib/messages/message-cache.ts,source,conversation,src/features/conversation/messages/application,043,move,Message facts/status; keep pure model independent of Query/UI
+src/lib/messages/message-status-issues.ts,source,conversation,src/features/conversation/messages/application,043,move,Message facts/status; keep pure model independent of Query/UI
+src/lib/messages/types.ts,source,conversation,src/features/conversation/messages,042,split,Split message DTO/facts from application cache shapes in 043
+src/lib/messages/use-conversation-messages.ts,source,conversation,src/features/conversation/messages/ui,044,move,Message facts/status; keep pure model independent of Query/UI
+src/lib/messages/use-message-issues.ts,source,conversation,src/features/conversation/messages/ui,044,move,Message facts/status; keep pure model independent of Query/UI
+src/lib/messages/validate-message.ts,source,conversation,src/features/conversation/messages/model,042,move,Message facts/status; keep pure model independent of Query/UI
+src/lib/notifications/ack-proof.ts,source,conversation,src/features/conversation/notifications/model,040,move,Separate notification state from polling/network lifecycle
+src/lib/notifications/apply-notification.ts,source,conversation,src/features/conversation/notifications/application,041,move,Separate notification state from polling/network lifecycle
+src/lib/notifications/browser-tab-lease.ts,source,conversation,src/features/conversation/notifications/application,041,move,Separate notification state from polling/network lifecycle
+src/lib/notifications/constants.ts,source,conversation,src/features/conversation/notifications,040,split,Split state constants from polling/transport settings in 041
+src/lib/notifications/create-notification-connection.ts,source,conversation,src/features/conversation/notifications/application,041,move,Separate notification state from polling/network lifecycle
+src/lib/notifications/handle-notification-request.ts,source,conversation,src/features/conversation/notifications/server,041,move,Separate notification state from polling/network lifecycle
+src/lib/notifications/handle-notification-route.ts,source,conversation,src/features/conversation/notifications/server,041,move,Separate notification state from polling/network lifecycle
+src/lib/notifications/normalize-message-status.ts,source,conversation,src/features/conversation/notifications/model,040,move,Separate notification state from polling/network lifecycle
+src/lib/notifications/normalize-notification.ts,source,conversation,src/features/conversation/notifications/model,040,move,Separate notification state from polling/network lifecycle
+src/lib/notifications/notification-transport.ts,source,conversation,src/features/conversation/notifications/application,041,move,Separate notification state from polling/network lifecycle
+src/lib/notifications/receiver-error.ts,source,conversation,src/features/conversation/notifications/model,040,move,Separate notification state from polling/network lifecycle
+src/lib/notifications/refresh-notification-chats.ts,source,conversation,src/features/conversation/notifications/application,041,move,Separate notification state from polling/network lifecycle
+src/lib/notifications/request-context.ts,source,conversation,src/features/conversation/notifications/server,041,move,Separate notification state from polling/network lifecycle
+src/lib/notifications/types.ts,source,conversation,src/features/conversation/notifications,040,split,Split notification facts from server receiver context/provider port in 041
+src/lib/notifications/validate-delivery.ts,source,conversation,src/features/conversation/notifications/model,040,move,Separate notification state from polling/network lifecycle
+src/lib/query/create-query-session.ts,source,shared,src/shared/query,044,move,Neutral query-session ownership; inject chats behavior to break existing cycle
+src/lib/query/session-query-error.ts,source,shared,src/shared/query,044,move,Neutral client Query runtime
+src/lib/recipients/constants.ts,source,recipients,src/features/recipients/model,046,move,Recipient validation/search contract
+src/lib/recipients/handle-search-request.ts,source,recipients,src/features/recipients/server,046,move,Recipient validation/search contract
+src/lib/recipients/resolve-search.ts,source,recipients,src/features/recipients/server,046,move,Recipient validation/search contract
+src/lib/recipients/validate-search.ts,source,recipients,src/features/recipients/model,046,move,Recipient validation/search contract
+src/lib/routes/constants.ts,source,shared,src/shared/kernel/routes,054,move,Move only neutral protocol/UI constants; no feature runtime dependency
+src/lib/sending/constants.ts,source,conversation,src/features/conversation/sending,039,split,Split send domain contract from transport/runtime configuration
+src/lib/sending/create-send-controller.ts,source,conversation,src/features/conversation/sending/application,043,move,Preserve accepted/unknown send outcomes
+src/lib/sending/editor-guards.ts,source,conversation,src/features/conversation/sending/model,043,move,Preserve accepted/unknown send outcomes
+src/lib/sending/fetch-send-message.ts,source,conversation,src/features/conversation/sending/application,043,move,Preserve accepted/unknown send outcomes
+src/lib/sending/handle-send-request.ts,source,conversation,src/features/conversation/sending/server,039,move,Preserve accepted/unknown send outcomes
+src/lib/sending/read-send-body.ts,source,conversation,src/features/conversation/sending/server,039,move,Preserve accepted/unknown send outcomes
+src/lib/sending/types.ts,source,conversation,src/features/conversation/sending,039,split,Split send DTO/outcome from Request and credential-bearing server options
+src/lib/sending/validate-send-request.ts,source,conversation,src/features/conversation/sending/server,039,move,Preserve accepted/unknown send outcomes
+src/lib/ui/constants.ts,source,shared,src/shared/kernel/ui,054,move,Move only neutral protocol/UI constants; no feature runtime dependency
+src/lib/unread/constants.ts,source,conversation,src/features/conversation/unread/model,043,move,Unread state belongs to conversation; hooks use public query entry
+src/lib/unread/unread-cache.ts,source,conversation,src/features/conversation/unread/application,043,move,Unread state belongs to conversation; hooks use public query entry
+src/lib/unread/use-conversation-read-state.ts,source,conversation,src/features/conversation/unread/ui,044,move,Unread state belongs to conversation; hooks use public query entry
+src/lib/unread/use-unread-counts.ts,source,conversation,src/features/conversation/unread/ui,044,move,Unread state belongs to conversation; hooks use public query entry
+src/styles/_mixins.scss,source,shared,src/styles,retain,retain,Shared SCSS tokens/theme/mixins remain while consumers migrate
+src/styles/_theme.scss,source,shared,src/styles,retain,retain,Shared SCSS tokens/theme/mixins remain while consumers migrate
+src/styles/_tokens.scss,source,shared,src/styles,retain,retain,Shared SCSS tokens/theme/mixins remain while consumers migrate
+tests/chats/constants.ts,test,chats,tests/fixtures/chats,050,retain,Feature-specific test fixture; isolate data in 050
+tests/chats/helpers.ts,test,chats,tests/fixtures/chats,050,retain,Feature-specific test fixture; isolate data in 050
+tests/chats/session-constants.ts,test,chats,tests/fixtures/chats,050,retain,Feature-specific test fixture; isolate data in 050
+tests/component/environment.test.tsx,test,test-platform,tests/component/test-platform,052,retain,Keep runner category; own scenario follows feature migration
+tests/component/provider-lifecycle.test.tsx,test,conversation,tests/component/conversation,052,retain,Keep runner category; own scenario follows feature migration
+tests/component/recipient-search-result.test.tsx,test,recipients,tests/component/recipients,052,retain,Keep runner category; own scenario follows feature migration
+tests/constants.ts,test,test-platform,tests/constants.ts,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/e2e/account-profile.spec.ts,test,account,tests/e2e/account,053,retain,Keep runner category; own scenario follows feature migration
+tests/e2e/chat-list-ui.constants.ts,test,chats,tests/fixtures/chats,050,retain,Scenario data follows its feature; generic runner fixtures remain shared
+tests/e2e/chat-list-ui.spec.ts,test,chats,tests/e2e/chats,053,retain,Keep runner category; own scenario follows feature migration
+tests/e2e/chat-workspace.spec.ts,test,conversation,tests/e2e/conversation,053,retain,Keep runner category; own scenario follows feature migration
+tests/e2e/chats-api.spec.ts,test,chats,tests/e2e/chats,053,retain,Keep runner category; own scenario follows feature migration
+tests/e2e/conversation-selection.spec.ts,test,conversation,tests/e2e/conversation,053,retain,Keep runner category; own scenario follows feature migration
+tests/e2e/fixtures/account-scenarios.json,test,account,tests/fixtures/account,050,retain,Scenario data follows its feature; generic runner fixtures remain shared
+tests/e2e/fixtures/chats-scenarios.json,test,chats,tests/fixtures/chats,050,retain,Scenario data follows its feature; generic runner fixtures remain shared
+tests/e2e/fixtures/fake-green-api.ts,test,test-platform,tests/fixtures/test-platform,050,retain,Scenario data follows its feature; generic runner fixtures remain shared
+tests/e2e/fixtures/history-scenarios.json,test,conversation,tests/fixtures/conversation,050,retain,Scenario data follows its feature; generic runner fixtures remain shared
+tests/e2e/fixtures/package.json,test,test-platform,tests/fixtures/test-platform,050,retain,Scenario data follows its feature; generic runner fixtures remain shared
+tests/e2e/fixtures/scenarios.json,test,test-platform,tests/fixtures/test-platform,050,retain,Scenario data follows its feature; generic runner fixtures remain shared
+tests/e2e/fixtures/send-scenarios.json,test,conversation,tests/fixtures/conversation,050,retain,Scenario data follows its feature; generic runner fixtures remain shared
+tests/e2e/health.spec.ts,test,test-platform,tests/e2e/test-platform,053,retain,Keep runner category; own scenario follows feature migration
+tests/e2e/history-api.spec.ts,test,conversation,tests/e2e/conversation,053,retain,Keep runner category; own scenario follows feature migration
+tests/e2e/history-scroll.spec.ts,test,conversation,tests/e2e/conversation,053,retain,Keep runner category; own scenario follows feature migration
+tests/e2e/history-window.spec.ts,test,conversation,tests/e2e/conversation,053,retain,Keep runner category; own scenario follows feature migration
+tests/e2e/home.spec.ts,test,auth,tests/e2e/auth,053,retain,Keep runner category; own scenario follows feature migration
+tests/e2e/login-flow.spec.ts,test,auth,tests/e2e/auth,053,retain,Keep runner category; own scenario follows feature migration
+tests/e2e/login-form-safety.spec.ts,test,auth,tests/e2e/auth,053,retain,Keep runner category; own scenario follows feature migration
+tests/e2e/login-form.spec.ts,test,auth,tests/e2e/auth,053,retain,Keep runner category; own scenario follows feature migration
+tests/e2e/login-ui.constants.ts,test,auth,tests/fixtures/auth,050,retain,Scenario data follows its feature; generic runner fixtures remain shared
+tests/e2e/login-ui.spec.ts,test,auth,tests/e2e/auth,053,retain,Keep runner category; own scenario follows feature migration
+tests/e2e/logout-flow.spec.ts,test,auth,tests/e2e/auth,053,retain,Keep runner category; own scenario follows feature migration
+tests/e2e/message-composer.spec.ts,test,conversation,tests/e2e/conversation,053,retain,Keep runner category; own scenario follows feature migration
+tests/e2e/owner-fixture.ts,test,test-platform,tests/e2e,050,retain,Runner fixture/helper shared by scenarios
+tests/e2e/recipient-search-ui.spec.ts,test,recipients,tests/e2e/recipients,053,retain,Keep runner category; own scenario follows feature migration
+tests/e2e/recipient-search.spec.ts,test,recipients,tests/e2e/recipients,053,retain,Keep runner category; own scenario follows feature migration
+tests/e2e/search-layout.spec.ts,test,recipients,tests/e2e/recipients,053,retain,Keep runner category; own scenario follows feature migration
+tests/e2e/ui-theme.helpers.ts,test,test-platform,tests/e2e,050,retain,Runner fixture/helper shared by scenarios
+tests/fixtures/query-app/app/api/messages/route.ts,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/app/api/notification-fixture/route.ts,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/app/api/notifications/[action]/route.ts,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/app/layout.tsx,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/app/login/page.tsx,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/app/page.tsx,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/components/HistoryFactsProbe/HistoryFactsProbe.tsx,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/components/HistoryFactsProbe/index.ts,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/components/HistoryProbe/HistoryProbe.module.scss,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/components/HistoryProbe/HistoryProbe.tsx,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/components/HistoryProbe/index.ts,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/components/MessagingProbe/MessagingProbe.tsx,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/components/MessagingProbe/index.ts,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/components/QueryProbe/QueryProbe.tsx,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/components/QueryProbe/index.ts,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/components/SelectionProbe/SelectionProbe.tsx,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/components/SelectionProbe/index.ts,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/components/SessionOverlayProbe/SessionOverlayProbe.tsx,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/components/SessionOverlayProbe/index.ts,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/components/UnreadProbe/UnreadProbe.tsx,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/components/UnreadProbe/index.ts,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/lib/notification-fixture.ts,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/next.config.ts,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/package.json,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/fixtures/query-app/tsconfig.json,test,test-platform,tests/fixtures,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/history/constants.ts,test,conversation,tests/fixtures/conversation,050,retain,Feature-specific test fixture; isolate data in 050
+tests/integration/account-profile.spec.ts,test,account,tests/integration/account,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/auth-flow.spec.ts,test,auth,tests/integration/auth,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/chat-query.spec.ts,test,chats,tests/integration/chats,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/chats-api.spec.ts,test,chats,tests/integration/chats,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/check-account.spec.ts,test,account,tests/integration/account,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/conversation-selection.spec.ts,test,conversation,tests/integration/conversation,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/get-account-settings.spec.ts,test,account,tests/integration/account,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/get-state.spec.ts,test,account,tests/integration/account,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/history-api.spec.ts,test,conversation,tests/integration/conversation,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/history-query.spec.ts,test,conversation,tests/integration/conversation,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/home-flow.spec.ts,test,auth,tests/integration/auth,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/login-route.spec.ts,test,auth,tests/integration/auth,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/memory-query.spec.ts,test,conversation,tests/integration/conversation,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/message-cache.spec.ts,test,conversation,tests/integration/conversation,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/message-send-controller.spec.ts,test,conversation,tests/integration/conversation,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/message-statuses.spec.ts,test,conversation,tests/integration/conversation,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/notification-cache.spec.ts,test,conversation,tests/integration/conversation,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/notification-normalization.spec.ts,test,conversation,tests/integration/conversation,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/notification-provider.spec.ts,test,conversation,tests/integration/conversation,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/polling-connection.spec.ts,test,conversation,tests/integration/conversation,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/recipient-search.spec.ts,test,recipients,tests/integration/recipients,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/send-message.spec.ts,test,conversation,tests/integration/conversation,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/session-chat-facts.spec.ts,test,chats,tests/integration/chats,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/session.spec.ts,test,auth,tests/integration/auth,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/unread-notifications.spec.ts,test,conversation,tests/integration/conversation,051,retain,Keep runner category; own scenario follows feature migration
+tests/integration/vercel-notifications.spec.ts,test,conversation,tests/integration/conversation,051,retain,Keep runner category; own scenario follows feature migration
+tests/notifications/constants.ts,test,conversation,tests/fixtures/conversation,050,retain,Feature-specific test fixture; isolate data in 050
+tests/notifications/ui-constants.ts,test,conversation,tests/fixtures/conversation,050,retain,Feature-specific test fixture; isolate data in 050
+tests/protocol.constants.ts,test,test-platform,tests/protocol.constants.ts,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/query/chat-query.spec.ts,test,chats,tests/query/chats,053,retain,Keep runner category; own scenario follows feature migration
+tests/query/conversation-selection.spec.ts,test,conversation,tests/query/conversation,053,retain,Keep runner category; own scenario follows feature migration
+tests/query/history-query.spec.ts,test,conversation,tests/query/conversation,053,retain,Keep runner category; own scenario follows feature migration
+tests/query/history-window.spec.ts,test,conversation,tests/query/conversation,053,retain,Keep runner category; own scenario follows feature migration
+tests/query/message-composer.spec.ts,test,conversation,tests/query/conversation,053,retain,Keep runner category; own scenario follows feature migration
+tests/query/polling-workspace.spec.ts,test,conversation,tests/query/conversation,053,retain,Keep runner category; own scenario follows feature migration
+tests/query/session-chat-overlay.spec.ts,test,chats,tests/query/chats,053,retain,Keep runner category; own scenario follows feature migration
+tests/query/unread-indicators.spec.ts,test,conversation,tests/query/conversation,053,retain,Keep runner category; own scenario follows feature migration
+tests/setup/dom.ts,test,test-platform,tests/setup,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/setup/node.ts,test,test-platform,tests/setup,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/setup/timers.ts,test,test-platform,tests/setup,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/spec-kit/workflow.tests.ps1,test,test-platform,tests/spec-kit,054,retain,Shared runner/fixture ownership; isolate data in 050
+tests/support/provider-lifecycle.ts,test,test-platform,tests/support,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/support/query-client.ts,test,test-platform,tests/support,050,retain,Shared runner/fixture ownership; isolate data in 050
+tests/unit/environment.test.ts,test,test-platform,tests/unit/test-platform,051,retain,Keep runner category; own scenario follows feature migration
+tests/unit/recipient-label.test.ts,test,recipients,tests/unit/recipients,051,retain,Keep runner category; own scenario follows feature migration
+tests/unread/constants.ts,test,conversation,tests/fixtures/conversation,050,retain,Feature-specific test fixture; isolate data in 050

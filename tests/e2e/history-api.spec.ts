@@ -1,8 +1,8 @@
 import { expect, test } from './owner-fixture'
 import { addChatSession } from '../chats/helpers'
-import { HTTP_HEADERS } from '@/lib/http/constants'
-import { ROUTES } from '@/lib/routes/constants'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { HTTP_HEADERS } from '@/shared/kernel/http/constants'
+import { ROUTES } from '@/shared/kernel/routes/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import { TEST_UI } from '../constants'
 import { HISTORY_TEST, HISTORY_CONSOLE_TEST } from '../history/constants'
 

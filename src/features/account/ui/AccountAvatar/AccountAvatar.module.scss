@@ -1,0 +1,28 @@
+@use '../../../../styles/tokens' as tokens;
+
+.accountAvatar {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: tokens.$account-avatar-size;
+  height: tokens.$account-avatar-size;
+  overflow: hidden;
+  border-radius: tokens.$radius-circle;
+  background: linear-gradient(
+    tokens.$avatar-gradient-angle,
+    var(--ui-selected-color),
+    var(--ui-canvas-color)
+  );
+  box-shadow: inset 0 0 0 tokens.$border-width var(--ui-panel-border-color);
+  color: var(--ui-action-color);
+
+  &__image {
+    object-fit: cover;
+  }
+
+  &__placeholder {
+    width: tokens.$control-icon-size;
+    height: tokens.$control-icon-size;
+  }
+}

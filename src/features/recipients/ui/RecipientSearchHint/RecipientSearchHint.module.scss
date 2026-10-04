@@ -1,0 +1,13 @@
+@use '../../../../styles/tokens' as tokens;
+
+.recipientSearchHint {
+  grid-area: 1 / 1;
+  margin: 0;
+  color: var(--ui-muted-color);
+  font-size: tokens.$font-size-small;
+  overflow-wrap: anywhere;
+
+  &[aria-hidden='true'] {
+    visibility: hidden;
+  }
+}

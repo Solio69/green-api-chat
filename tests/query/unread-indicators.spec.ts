@@ -1,7 +1,7 @@
-import { expect, test } from '@playwright/test'
 import type { APIRequestContext, Page } from '@playwright/test'
+import { expect, test } from './owner-fixture'
 import { MESSAGING_UI_TEST } from '../notifications/ui-constants'
-import { EMPTY_STRING, HTML_VALUES } from '@/lib/ui/constants'
+import { EMPTY_STRING, HTML_VALUES } from '@/shared/kernel/ui/constants'
 import { THEME_BROWSER, TEST_UI } from '../constants'
 import { HISTORY_TEST } from '../history/constants'
 import {
@@ -85,8 +85,7 @@ const waitForOwner = async (page: Page) => {
   await input.fill(EMPTY_STRING)
 }
 
-test.beforeEach(async ({ page, request }) => {
-  await request.post(CONTROL_API, { data: { reset: true } })
+test.beforeEach(async ({ page }) => {
   await page.route(CHATS, (route) =>
     route.fulfill({
       json: {
@@ -270,6 +269,13 @@ for (const width of WIDTHS) {
         expect(closeBounds.y + closeBounds.height / 2).toBeLessThan(
           backBounds.y + backBounds.height,
         )
+        expect(
+          await page.evaluate(
+            () =>
+              document.documentElement.scrollWidth <=
+              document.documentElement.clientWidth,
+          ),
+        ).toBe(true)
         await page.screenshot({
           path: testInfo.outputPath(`${SCREENSHOT_PREFIX}-conversation.png`),
         })

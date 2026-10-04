@@ -1,0 +1,15 @@
+@use '../../../../styles/tokens' as tokens;
+@use '../../../../styles/mixins' as mixins;
+
+.conversationBackButton {
+  @include mixins.conversation-header-button;
+
+  display: none;
+  gap: tokens.$small-icon-gap;
+  color: var(--ui-action-color);
+  font-size: tokens.$font-size-caption;
+
+  @media (max-width: tokens.$chat-mobile-breakpoint) {
+    display: flex;
+  }
+}

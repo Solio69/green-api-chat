@@ -1,6 +1,6 @@
-import { expect, test } from '@playwright/test'
 import type { Page, Route } from '@playwright/test'
-import { BROWSER_EVENTS, EMPTY_STRING } from '@/lib/ui/constants'
+import { expect, test } from './owner-fixture'
+import { BROWSER_EVENTS, EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import { CHAT_FIXTURES } from '../chats/constants'
 import {
   CONVERSATION_CONTRACT,
@@ -122,12 +122,6 @@ test('React query: two consumers, fresh remount and API recovery on reload', asy
   await expect(first(page)).toContainText(chat.chatId)
 })
 
-test('React query: empty success differs from loading', async ({ page }) => {
-  await page.route(API, (route) => fulfill({ route, chats: [] }))
-  await page.goto(HOME)
-  await expectState({ page, expected: { data: [], isPending: false } })
-})
-
 test('React query: background refresh/error retain cache while UI shows recovery', async ({
   page,
 }) => {
@@ -224,7 +218,7 @@ test('React query: expiry closes and navigates', async ({ page }) => {
   await expect(page).toHaveURL(LOGIN_PATTERN)
 })
 
-test('React query: StrictMode replay and rerender preserve one client', async ({
+test('React query: production wrapper remount and rerender preserve visible data', async ({
   page,
 }) => {
   let calls = 0

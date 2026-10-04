@@ -1,6 +1,6 @@
-import { handleNotificationRequest } from '@/lib/notifications/handle-notification-request'
-import { HTTP_STATUS } from '@/lib/http/constants'
-import { NOTIFICATION_ACTION } from '@/lib/notifications/constants'
+import { handleNotificationRequest } from '@/features/conversation/notifications/server/handle-notification-request'
+import { NOTIFICATION_ACTION } from '@/features/conversation/notifications/model/constants'
+import { HTTP_STATUS } from '@/shared/kernel/http/constants'
 import { notificationFixture } from '../../../../lib/notification-fixture'
 
 const { SETTINGS, RECEIVE, ACK } = NOTIFICATION_ACTION

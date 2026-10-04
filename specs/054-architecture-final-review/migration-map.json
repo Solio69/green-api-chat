@@ -1,0 +1,701 @@
+{
+  "schemaVersion": 1,
+  "base": "035 ownership map + six post-035 files",
+  "count": 69,
+  "entries": [
+    {
+      "source": "src/components/QueryProvider/QueryProvider.tsx",
+      "target": "src/features/conversation/ui/QueryProvider/QueryProvider.tsx",
+      "owner": "conversation",
+      "basis": "035-override: feature orchestration cannot live in shared/query",
+      "migrationTask": "044",
+      "finalTargets": [
+        "src/features/conversation/ui/QueryProvider/QueryProvider.tsx"
+      ]
+    },
+    {
+      "source": "src/components/QueryProvider/index.ts",
+      "target": "src/features/conversation/ui/QueryProvider/index.ts",
+      "owner": "conversation",
+      "basis": "035-override: feature orchestration cannot live in shared/query",
+      "migrationTask": "044",
+      "finalTargets": [
+        "src/features/conversation/ui/QueryProvider/index.ts"
+      ]
+    },
+    {
+      "source": "src/components/SubmitButton/SubmitButton.module.scss",
+      "target": "src/shared/ui/SubmitButton/SubmitButton.module.scss",
+      "owner": "shared",
+      "basis": "035",
+      "migrationTask": "045",
+      "finalTargets": [
+        "src/shared/ui/SubmitButton/SubmitButton.module.scss"
+      ]
+    },
+    {
+      "source": "src/components/SubmitButton/SubmitButton.tsx",
+      "target": "src/shared/ui/SubmitButton/SubmitButton.tsx",
+      "owner": "shared",
+      "basis": "035",
+      "migrationTask": "045",
+      "finalTargets": [
+        "src/shared/ui/SubmitButton/SubmitButton.tsx"
+      ]
+    },
+    {
+      "source": "src/components/SubmitButton/index.ts",
+      "target": "src/shared/ui/SubmitButton/index.ts",
+      "owner": "shared",
+      "basis": "035",
+      "migrationTask": "045",
+      "finalTargets": [
+        "src/shared/ui/SubmitButton/index.ts"
+      ]
+    },
+    {
+      "source": "src/lib/api/constants.ts",
+      "target": "src/shared/kernel/api/constants.ts",
+      "owner": "shared",
+      "basis": "035",
+      "migrationTask": "038",
+      "finalTargets": [
+        "src/shared/kernel/api/constants.ts"
+      ]
+    },
+    {
+      "source": "src/lib/api/is-record.ts",
+      "target": "src/shared/kernel/api/is-record.ts",
+      "owner": "shared",
+      "basis": "035",
+      "migrationTask": "038",
+      "finalTargets": [
+        "src/shared/kernel/api/is-record.ts"
+      ]
+    },
+    {
+      "source": "src/lib/conversations/configure-connection-memory.ts",
+      "target": "src/features/conversation/application/configure-connection-memory.ts",
+      "owner": "conversation",
+      "basis": "added-after-035",
+      "migrationTask": "054",
+      "finalTargets": [
+        "src/features/conversation/application/configure-connection-memory.ts"
+      ]
+    },
+    {
+      "source": "src/lib/conversations/conversation-cache-coordinator.ts",
+      "target": "src/features/conversation/application/conversation-cache-coordinator.ts",
+      "owner": "conversation",
+      "basis": "added-after-035",
+      "migrationTask": "054",
+      "finalTargets": [
+        "src/features/conversation/application/conversation-cache-coordinator.ts"
+      ]
+    },
+    {
+      "source": "src/lib/conversations/create-connection-session.ts",
+      "target": "src/features/conversation/application/create-connection-session.ts",
+      "owner": "conversation",
+      "basis": "added-after-035",
+      "migrationTask": "054",
+      "finalTargets": [
+        "src/features/conversation/application/create-connection-session.ts"
+      ]
+    },
+    {
+      "source": "src/lib/green-api/check-account.ts",
+      "target": "src/server/green-api/check-account.ts",
+      "owner": "server",
+      "basis": "035",
+      "migrationTask": "039",
+      "finalTargets": [
+        "src/server/green-api/check-account.ts"
+      ]
+    },
+    {
+      "source": "src/lib/green-api/constants.ts",
+      "target": "src/server/green-api/constants.ts",
+      "owner": "server",
+      "basis": "035",
+      "migrationTask": "039",
+      "finalTargets": [
+        "src/server/green-api/constants.ts"
+      ]
+    },
+    {
+      "source": "src/lib/green-api/delete-notification.ts",
+      "target": "src/server/green-api/delete-notification.ts",
+      "owner": "server",
+      "basis": "035",
+      "migrationTask": "039",
+      "finalTargets": [
+        "src/server/green-api/delete-notification.ts"
+      ]
+    },
+    {
+      "source": "src/lib/green-api/get-account-settings.ts",
+      "target": "src/server/green-api/get-account-settings.ts",
+      "owner": "server",
+      "basis": "035",
+      "migrationTask": "039",
+      "finalTargets": [
+        "src/server/green-api/get-account-settings.ts"
+      ]
+    },
+    {
+      "source": "src/lib/green-api/get-chat-history.ts",
+      "target": "src/server/green-api/get-chat-history.ts",
+      "owner": "server",
+      "basis": "035",
+      "migrationTask": "039",
+      "finalTargets": [
+        "src/server/green-api/get-chat-history.ts"
+      ]
+    },
+    {
+      "source": "src/lib/green-api/get-chats.ts",
+      "target": "src/server/green-api/get-chats.ts",
+      "owner": "server",
+      "basis": "035",
+      "migrationTask": "039",
+      "finalTargets": [
+        "src/server/green-api/get-chats.ts"
+      ]
+    },
+    {
+      "source": "src/lib/green-api/get-notification-settings.ts",
+      "target": "src/server/green-api/get-notification-settings.ts",
+      "owner": "server",
+      "basis": "035",
+      "migrationTask": "039",
+      "finalTargets": [
+        "src/server/green-api/get-notification-settings.ts"
+      ]
+    },
+    {
+      "source": "src/lib/green-api/get-state.ts",
+      "target": "src/server/green-api/get-state.ts",
+      "owner": "server",
+      "basis": "035",
+      "migrationTask": "039",
+      "finalTargets": [
+        "src/server/green-api/get-state.ts"
+      ]
+    },
+    {
+      "source": "src/lib/green-api/notification-request.ts",
+      "target": "src/server/green-api/notification-request.ts",
+      "owner": "server",
+      "basis": "035",
+      "migrationTask": "039",
+      "finalTargets": [
+        "src/server/green-api/notification-request.ts"
+      ]
+    },
+    {
+      "source": "src/lib/green-api/receive-notification.ts",
+      "target": "src/server/green-api/receive-notification.ts",
+      "owner": "server",
+      "basis": "035",
+      "migrationTask": "039",
+      "finalTargets": [
+        "src/server/green-api/receive-notification.ts"
+      ]
+    },
+    {
+      "source": "src/lib/green-api/safe-identifier.ts",
+      "target": "src/server/green-api/safe-identifier.ts",
+      "owner": "server",
+      "basis": "035",
+      "migrationTask": "039",
+      "finalTargets": [
+        "src/shared/kernel/api/safe-identifier.ts"
+      ]
+    },
+    {
+      "source": "src/lib/green-api/send-message.ts",
+      "target": "src/server/green-api/send-message.ts",
+      "owner": "server",
+      "basis": "035",
+      "migrationTask": "039",
+      "finalTargets": [
+        "src/server/green-api/send-message.ts"
+      ]
+    },
+    {
+      "source": "src/lib/green-api/transport.ts",
+      "target": "src/server/green-api/transport.ts",
+      "owner": "server",
+      "basis": "added-after-035",
+      "migrationTask": "054",
+      "finalTargets": [
+        "src/server/green-api/transport.ts"
+      ]
+    },
+    {
+      "source": "src/lib/history/constants.ts",
+      "target": "src/features/conversation/history/constants.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "043",
+      "finalTargets": [
+        "src/features/conversation/history/model/constants.ts"
+      ]
+    },
+    {
+      "source": "src/lib/history/fetch-history.ts",
+      "target": "src/features/conversation/history/application/fetch-history.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "043",
+      "finalTargets": [
+        "src/features/conversation/history/application/fetch-history.ts"
+      ]
+    },
+    {
+      "source": "src/lib/history/handle-history-request.ts",
+      "target": "src/features/conversation/history/server/handle-history-request.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "039",
+      "finalTargets": [
+        "src/features/conversation/history/server/handle-history-request.ts"
+      ]
+    },
+    {
+      "source": "src/lib/history/types.ts",
+      "target": "src/features/conversation/history/types.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "043",
+      "finalTargets": [
+        "src/server/green-api/get-chat-history.types.ts",
+        "src/features/conversation/history/application/history-query-error.ts"
+      ]
+    },
+    {
+      "source": "src/lib/history/use-chat-history.ts",
+      "target": "src/features/conversation/history/ui/use-chat-history.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "043",
+      "finalTargets": [
+        "src/features/conversation/history/ui/use-chat-history.ts"
+      ]
+    },
+    {
+      "source": "src/lib/http/constants.ts",
+      "target": "src/shared/kernel/http/constants.ts",
+      "owner": "shared",
+      "basis": "035",
+      "migrationTask": "038",
+      "finalTargets": [
+        "src/shared/kernel/http/constants.ts"
+      ]
+    },
+    {
+      "source": "src/lib/messages/constants.ts",
+      "target": "src/features/conversation/messages/constants.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "042",
+      "finalTargets": [
+        "src/features/conversation/messages/model/constants.ts"
+      ]
+    },
+    {
+      "source": "src/lib/messages/merge-message-facts.ts",
+      "target": "src/features/conversation/messages/model/merge-message-facts.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "042",
+      "finalTargets": [
+        "src/features/conversation/messages/model/merge-message-facts.ts"
+      ]
+    },
+    {
+      "source": "src/lib/messages/message-cache.ts",
+      "target": "src/features/conversation/messages/application/message-cache.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "043",
+      "finalTargets": [
+        "src/features/conversation/messages/application/message-cache.ts"
+      ]
+    },
+    {
+      "source": "src/lib/messages/message-status-issues.ts",
+      "target": "src/features/conversation/messages/application/message-status-issues.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "043",
+      "finalTargets": [
+        "src/features/conversation/messages/application/message-status-issues.ts"
+      ]
+    },
+    {
+      "source": "src/lib/messages/types.ts",
+      "target": "src/features/conversation/messages/types.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "042",
+      "finalTargets": [
+        "src/features/conversation/messages/model/types.ts"
+      ]
+    },
+    {
+      "source": "src/lib/messages/use-conversation-messages.ts",
+      "target": "src/features/conversation/messages/ui/use-conversation-messages.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "044",
+      "finalTargets": [
+        "src/features/conversation/messages/ui/use-conversation-messages.ts"
+      ]
+    },
+    {
+      "source": "src/lib/messages/use-message-issues.ts",
+      "target": "src/features/conversation/messages/ui/use-message-issues.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "044",
+      "finalTargets": [
+        "src/features/conversation/messages/ui/use-message-issues.ts"
+      ]
+    },
+    {
+      "source": "src/lib/messages/validate-message.ts",
+      "target": "src/features/conversation/messages/model/validate-message.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "042",
+      "finalTargets": [
+        "src/features/conversation/messages/model/validate-message.ts"
+      ]
+    },
+    {
+      "source": "src/lib/notifications/ack-proof.ts",
+      "target": "src/features/conversation/notifications/model/ack-proof.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "040",
+      "finalTargets": [
+        "src/features/conversation/notifications/model/ack-proof.ts"
+      ]
+    },
+    {
+      "source": "src/lib/notifications/apply-notification.ts",
+      "target": "src/features/conversation/notifications/application/apply-notification.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "041",
+      "finalTargets": [
+        "src/features/conversation/notifications/application/apply-notification.ts"
+      ]
+    },
+    {
+      "source": "src/lib/notifications/browser-tab-lease.ts",
+      "target": "src/features/conversation/notifications/application/browser-tab-lease.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "041",
+      "finalTargets": [
+        "src/features/conversation/notifications/application/browser-tab-lease.ts"
+      ]
+    },
+    {
+      "source": "src/lib/notifications/connection-model.ts",
+      "target": "src/features/conversation/notifications/model/connection-model.ts",
+      "owner": "conversation",
+      "basis": "added-after-035",
+      "migrationTask": "054",
+      "finalTargets": [
+        "src/features/conversation/notifications/model/connection-model.ts"
+      ]
+    },
+    {
+      "source": "src/lib/notifications/constants.ts",
+      "target": "src/features/conversation/notifications/constants.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "040",
+      "finalTargets": [
+        "src/features/conversation/notifications/model/constants.ts"
+      ]
+    },
+    {
+      "source": "src/lib/notifications/create-notification-connection.ts",
+      "target": "src/features/conversation/notifications/application/create-notification-connection.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "041",
+      "finalTargets": [
+        "src/features/conversation/notifications/application/create-notification-connection.ts"
+      ]
+    },
+    {
+      "source": "src/lib/notifications/handle-notification-request.ts",
+      "target": "src/features/conversation/notifications/server/handle-notification-request.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "041",
+      "finalTargets": [
+        "src/features/conversation/notifications/server/handle-notification-request.ts"
+      ]
+    },
+    {
+      "source": "src/lib/notifications/handle-notification-route.ts",
+      "target": "src/features/conversation/notifications/server/handle-notification-route.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "041",
+      "finalTargets": [
+        "src/features/conversation/notifications/server/handle-notification-route.ts"
+      ]
+    },
+    {
+      "source": "src/lib/notifications/normalize-message-status.ts",
+      "target": "src/features/conversation/notifications/model/normalize-message-status.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "040",
+      "finalTargets": [
+        "src/features/conversation/notifications/model/normalize-message-status.ts"
+      ]
+    },
+    {
+      "source": "src/lib/notifications/normalize-notification.ts",
+      "target": "src/features/conversation/notifications/model/normalize-notification.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "040",
+      "finalTargets": [
+        "src/features/conversation/notifications/model/normalize-notification.ts"
+      ]
+    },
+    {
+      "source": "src/lib/notifications/notification-transport.ts",
+      "target": "src/features/conversation/notifications/application/notification-transport.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "041",
+      "finalTargets": [
+        "src/features/conversation/notifications/application/notification-transport.ts"
+      ]
+    },
+    {
+      "source": "src/lib/notifications/receiver-error.ts",
+      "target": "src/features/conversation/notifications/model/receiver-error.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "040",
+      "finalTargets": [
+        "src/features/conversation/notifications/model/receiver-error.ts"
+      ]
+    },
+    {
+      "source": "src/lib/notifications/refresh-notification-chats.ts",
+      "target": "src/features/conversation/notifications/application/refresh-notification-chats.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "041",
+      "finalTargets": [
+        "src/features/conversation/notifications/application/refresh-notification-chats.ts"
+      ]
+    },
+    {
+      "source": "src/lib/notifications/run-notification-cycle.ts",
+      "target": "src/features/conversation/notifications/application/run-notification-cycle.ts",
+      "owner": "conversation",
+      "basis": "added-after-035",
+      "migrationTask": "054",
+      "finalTargets": [
+        "src/features/conversation/notifications/application/run-notification-cycle.ts"
+      ]
+    },
+    {
+      "source": "src/lib/notifications/types.ts",
+      "target": "src/features/conversation/notifications/types.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "040",
+      "finalTargets": [
+        "src/features/conversation/notifications/model/types.ts"
+      ]
+    },
+    {
+      "source": "src/lib/notifications/validate-delivery.ts",
+      "target": "src/features/conversation/notifications/model/validate-delivery.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "040",
+      "finalTargets": [
+        "src/features/conversation/notifications/model/validate-delivery.ts"
+      ]
+    },
+    {
+      "source": "src/lib/query/create-query-session.ts",
+      "target": "src/shared/query/create-query-session.ts",
+      "owner": "shared",
+      "basis": "035",
+      "migrationTask": "044",
+      "finalTargets": [
+        "src/shared/query/create-query-session.ts"
+      ]
+    },
+    {
+      "source": "src/lib/query/session-query-error.ts",
+      "target": "src/shared/query/session-query-error.ts",
+      "owner": "shared",
+      "basis": "035",
+      "migrationTask": "044",
+      "finalTargets": [
+        "src/shared/query/session-query-error.ts"
+      ]
+    },
+    {
+      "source": "src/lib/routes/constants.ts",
+      "target": "src/shared/kernel/routes/constants.ts",
+      "owner": "shared",
+      "basis": "035",
+      "migrationTask": "054",
+      "finalTargets": [
+        "src/shared/kernel/routes/constants.ts"
+      ]
+    },
+    {
+      "source": "src/lib/sending/constants.ts",
+      "target": "src/features/conversation/sending/constants.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "039",
+      "finalTargets": [
+        "src/features/conversation/sending/model/constants.ts"
+      ]
+    },
+    {
+      "source": "src/lib/sending/create-send-controller.ts",
+      "target": "src/features/conversation/sending/application/create-send-controller.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "043",
+      "finalTargets": [
+        "src/features/conversation/sending/application/create-send-controller.ts"
+      ]
+    },
+    {
+      "source": "src/lib/sending/editor-guards.ts",
+      "target": "src/features/conversation/sending/model/editor-guards.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "043",
+      "finalTargets": [
+        "src/features/conversation/sending/model/editor-guards.ts"
+      ]
+    },
+    {
+      "source": "src/lib/sending/fetch-send-message.ts",
+      "target": "src/features/conversation/sending/application/fetch-send-message.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "043",
+      "finalTargets": [
+        "src/features/conversation/sending/application/fetch-send-message.ts"
+      ]
+    },
+    {
+      "source": "src/lib/sending/handle-send-request.ts",
+      "target": "src/features/conversation/sending/server/handle-send-request.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "039",
+      "finalTargets": [
+        "src/features/conversation/sending/server/handle-send-request.ts"
+      ]
+    },
+    {
+      "source": "src/lib/sending/read-send-body.ts",
+      "target": "src/features/conversation/sending/server/read-send-body.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "039",
+      "finalTargets": [
+        "src/features/conversation/sending/server/read-send-body.ts"
+      ]
+    },
+    {
+      "source": "src/lib/sending/types.ts",
+      "target": "src/features/conversation/sending/types.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "039",
+      "finalTargets": [
+        "src/features/conversation/sending/model/types.ts",
+        "src/server/green-api/send-message.types.ts",
+        "src/features/conversation/sending/server/types.ts"
+      ]
+    },
+    {
+      "source": "src/lib/sending/validate-send-request.ts",
+      "target": "src/features/conversation/sending/server/validate-send-request.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "039",
+      "finalTargets": [
+        "src/features/conversation/sending/server/validate-send-request.ts"
+      ]
+    },
+    {
+      "source": "src/lib/ui/constants.ts",
+      "target": "src/shared/kernel/ui/constants.ts",
+      "owner": "shared",
+      "basis": "035",
+      "migrationTask": "054",
+      "finalTargets": [
+        "src/shared/kernel/ui/constants.ts"
+      ]
+    },
+    {
+      "source": "src/lib/unread/constants.ts",
+      "target": "src/features/conversation/unread/model/constants.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "043",
+      "finalTargets": [
+        "src/features/conversation/unread/model/constants.ts"
+      ]
+    },
+    {
+      "source": "src/lib/unread/unread-cache.ts",
+      "target": "src/features/conversation/unread/application/unread-cache.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "043",
+      "finalTargets": [
+        "src/features/conversation/unread/application/unread-cache.ts"
+      ]
+    },
+    {
+      "source": "src/lib/unread/use-conversation-read-state.ts",
+      "target": "src/features/conversation/unread/ui/use-conversation-read-state.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "044",
+      "finalTargets": [
+        "src/features/conversation/unread/ui/use-conversation-read-state.ts"
+      ]
+    },
+    {
+      "source": "src/lib/unread/use-unread-counts.ts",
+      "target": "src/features/conversation/unread/ui/use-unread-counts.ts",
+      "owner": "conversation",
+      "basis": "035",
+      "migrationTask": "044",
+      "finalTargets": [
+        "src/features/conversation/unread/ui/use-unread-counts.ts"
+      ]
+    }
+  ],
+  "finalTargetsResolved": true
+}

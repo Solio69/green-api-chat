@@ -1,6 +1,6 @@
-import { expect, test } from '@playwright/test'
 import type { Route } from '@playwright/test'
-import type { MessageDTO } from '@/lib/messages/types'
+import { expect, test } from './owner-fixture'
+import type { MessageDTO } from '@/features/conversation/messages/model/types'
 import { TEST_UI } from '../constants'
 import {
   HISTORY_TEST,

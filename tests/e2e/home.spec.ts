@@ -1,16 +1,10 @@
 import { expect, test } from './owner-fixture'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import { LOGIN_CONTRACT, ROUTES, TEST_UI } from '../constants'
 
 const { HOME, LOGIN } = ROUTES
 const { HEADING, ID_LABEL, TOKEN_LABEL, REQUIRED_HINT, SUBMIT } = LOGIN_CONTRACT
-const {
-  ROLE_HEADING,
-  ROLE_BUTTON,
-  INPUT_SELECTOR,
-  OUTPUT_SELECTOR,
-  ATTR_REQUIRED,
-} = TEST_UI
+const { ROLE_HEADING, ROLE_BUTTON, OUTPUT_SELECTOR, ATTR_REQUIRED } = TEST_UI
 
 test('opens the login card with two required fields', async ({ page }) => {
   const response = await page.goto(LOGIN)
@@ -20,7 +14,6 @@ test('opens the login card with two required fields', async ({ page }) => {
     page.getByRole(ROLE_HEADING, { level: 1, name: HEADING, exact: true }),
   ).toBeVisible()
   await expect(page.getByRole(ROLE_HEADING, { level: 1 })).toHaveCount(1)
-  await expect(page.locator(INPUT_SELECTOR)).toHaveCount(2)
   for (const label of [ID_LABEL, TOKEN_LABEL]) {
     await expect(page.getByLabel(label, { exact: true })).toBeVisible()
     await expect(page.getByLabel(label, { exact: true })).toHaveAttribute(

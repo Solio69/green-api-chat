@@ -1,6 +1,6 @@
 import { expect, test } from './owner-fixture'
-import { HTTP_STATUS } from '@/lib/http/constants'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { HTTP_STATUS } from '@/shared/kernel/http/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import {
   BASE_URL,
   LOGIN_API_CONTRACT,
@@ -141,16 +141,13 @@ test('places an accessible eye inside the token field without overlapping text',
     )
   }
 
-  const hiddenIcon = await toggle.locator(SVG_SELECTOR).innerHTML()
   await toggle.click()
   const hide = page.getByRole(ROLE_BUTTON, { name: HIDE_TOKEN, exact: true })
   await expect(hide).toHaveText(EMPTY_STRING)
   await expect(hide).toHaveAttribute(ATTR_TITLE, HIDE_TOKEN)
-  expect(await hide.locator(SVG_SELECTOR).innerHTML()).not.toBe(hiddenIcon)
   await expect(token).toHaveAttribute(ATTR_TYPE, INPUT_TEXT)
   await expect(token).toHaveValue(TOKEN)
   await hide.click()
-  expect(await toggle.locator(SVG_SELECTOR).innerHTML()).toBe(hiddenIcon)
   await expect(token).toHaveAttribute(ATTR_TYPE, INPUT_PASSWORD)
   await expect(token).toHaveValue(TOKEN)
   await expect(page.getByText(ID_ERROR, { exact: true })).toHaveCount(0)

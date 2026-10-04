@@ -1,7 +1,11 @@
 import { NextResponse } from 'next/server'
-import { AUTH_CONFIG } from '@/lib/auth/constants'
-import { CACHE_CONTROL, HTTP_HEADERS, HTTP_STATUS } from '@/lib/http/constants'
-import { ROUTES } from '@/lib/routes/constants'
+import { AUTH_CONFIG } from '@/server/session/constants'
+import {
+  CACHE_CONTROL,
+  HTTP_HEADERS,
+  HTTP_STATUS,
+} from '@/shared/kernel/http/constants'
+import { ROUTES } from '@/shared/kernel/routes/constants'
 
 const { COOKIE_NAME } = AUTH_CONFIG
 const { CACHE_CONTROL: CACHE_CONTROL_HEADER, LOCATION: LOCATION_HEADER } =

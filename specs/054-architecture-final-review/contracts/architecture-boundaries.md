@@ -1,0 +1,8 @@
+# Architecture contract 054
+
+1. Каждый из 69 исходников `migration-map.json` имеет один target; после переноса старый путь отсутствует, все `src`, `tests`, fixtures и config импорты разрешаются, Git показывает rename/add/delete без бесхозного дубликата. Историческая CSV 035 не переписывается.
+2. `src/app` содержит Next composition/routes; `features/*/model` и `shared/kernel` не импортируют React, Next, UI или server runtime. `shared/query` и `shared/ui` не знают features. Cross-feature данные проходят через явные public entries либо composition; Client UI не импортирует server runtime/secret-bearing entry.
+3. Нейтральный Query context остаётся в `shared/query/ui`; conversation facade создаёт/закрывает session и реагирует на ошибки как раньше. Все старые потребители hook получают новый shared путь, а компонент с `connectionScope` — feature facade.
+4. Тип реквизитов и чистая проверка identifier могут разделяться model/server, но значения реквизитов и URL остаются только server. Два исходных файловых цикла устраняются. Type-only imports не считаются безопасным оправданием архитектурного цикла.
+5. Новое ESLint ограничение должно пропускать допустимый `shared/kernel`/model import и отклонять feature import из shared, UI/server import из model и server import из client UI. Результат проверяется действующим lint engine, после чего обычный `npm run lint` проходит.
+6. Baseline 053: Vitest 470, Query 37, E2E 112. После переноса все применимые suites и production build проходят; статический граф не содержит старых путей, запрещённых связей или циклов. Неприменимое/блокированное явно указано.

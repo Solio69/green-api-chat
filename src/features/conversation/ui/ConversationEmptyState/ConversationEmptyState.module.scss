@@ -1,0 +1,55 @@
+@use '../../../../styles/tokens' as tokens;
+
+.conversationEmptyState {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  overflow: hidden;
+  border-start-end-radius: tokens.$max-home-radius;
+  border-end-end-radius: tokens.$max-home-radius;
+  background: var(--ui-canvas-color);
+
+  &__content {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    padding: tokens.$space-lg;
+    text-align: center;
+  }
+
+  &__icon {
+    display: grid;
+    place-items: center;
+    width: tokens.$chat-empty-icon-size;
+    height: tokens.$chat-empty-icon-size;
+    margin: 0 auto tokens.$space-sm;
+    border-radius: tokens.$radius-circle;
+    background: var(--ui-selected-color);
+    color: var(--ui-action-color);
+
+    svg {
+      width: tokens.$space-lg;
+      height: tokens.$space-lg;
+    }
+  }
+
+  &__heading {
+    margin: 0 0 tokens.$space-xs;
+    font-size: tokens.$font-size-body;
+    font-weight: tokens.$max-heading-weight;
+  }
+
+  &__hint {
+    max-width: tokens.$chat-empty-hint-width;
+    margin: 0 auto;
+    color: var(--ui-muted-color);
+    font-size: tokens.$font-size-caption;
+    line-height: tokens.$line-height-control;
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: tokens.$chat-mobile-breakpoint) {
+    display: none;
+  }
+}

@@ -1,0 +1,39 @@
+export const THEME_CONTRACT = {
+  LIGHT: {
+    CANVAS: 'rgb(239, 245, 251)',
+    INPUT: 'rgb(243, 244, 247)',
+    SURFACE: 'rgb(255, 255, 255)',
+    ACTION: 'rgb(82, 102, 246)',
+    TEXT: 'rgb(23, 25, 29)',
+    MUTED: 'rgb(98, 110, 126)',
+    ERROR: 'rgb(180, 35, 24)',
+  },
+  DARK: {
+    CANVAS: 'rgb(17, 20, 25)',
+    INPUT: 'rgb(44, 46, 53)',
+    SURFACE: 'rgb(32, 33, 38)',
+    ACTION: 'rgb(100, 117, 255)',
+    TEXT: 'rgb(241, 243, 246)',
+    MUTED: 'rgb(146, 152, 165)',
+    ERROR: 'rgb(255, 147, 145)',
+  },
+  MIN_TEXT_CONTRAST: 4.5,
+} as const
+
+export const THEME_BROWSER = {
+  COLOR_SCHEME_LIGHT: 'light',
+  COLOR_SCHEME_DARK: 'dark',
+  REDUCED_MOTION: 'reduce',
+  ACTION_PROPERTY: '--ui-action-color',
+  RGB_COMPONENTS: /[\d.]+/g,
+  SRGB_MAX_CHANNEL: 255,
+  SRGB_LINEAR_THRESHOLD: 0.04045,
+  SRGB_LINEAR_DIVISOR: 12.92,
+  SRGB_OFFSET: 0.055,
+  SRGB_SCALE: 1.055,
+  SRGB_EXPONENT: 2.4,
+  LUMINANCE_RED_WEIGHT: 0.2126,
+  LUMINANCE_GREEN_WEIGHT: 0.7152,
+  LUMINANCE_BLUE_WEIGHT: 0.0722,
+  CONTRAST_OFFSET: 0.05,
+} as const

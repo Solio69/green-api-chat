@@ -1,0 +1,42 @@
+@use '../../../../styles/tokens' as tokens;
+
+.messageBubble {
+  flex: none;
+  align-self: flex-start;
+  min-width: 0;
+  max-width: tokens.$message-max-width;
+  padding: tokens.$message-padding-top tokens.$message-padding-inline
+    tokens.$message-padding-bottom;
+  border-radius: tokens.$message-radius tokens.$message-radius
+    tokens.$message-radius tokens.$message-tail-radius;
+  background: var(--ui-message-incoming);
+  color: var(--ui-message-text);
+  box-shadow: var(--ui-message-shadow);
+
+  &[data-direction='outgoing'] {
+    align-self: flex-end;
+    border-radius: tokens.$message-radius tokens.$message-radius
+      tokens.$message-tail-radius tokens.$message-radius;
+    background: var(--ui-message-outgoing);
+  }
+
+  &__text {
+    margin: 0;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  &__metadata {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: tokens.$message-metadata-gap;
+    margin-top: tokens.$message-metadata-gap;
+    color: var(--ui-message-muted);
+    font-size: tokens.$message-time-size;
+  }
+
+  @media (max-width: tokens.$chat-mobile-breakpoint) {
+    max-width: tokens.$message-max-width-mobile;
+  }
+}

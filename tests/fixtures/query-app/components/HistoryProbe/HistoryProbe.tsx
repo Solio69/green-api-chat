@@ -2,17 +2,15 @@
 
 import { StrictMode, useState } from 'react'
 import { HistoryFactsProbe } from '../HistoryFactsProbe'
-import { useChatHistory } from '@/lib/history/use-chat-history'
-import { HTML_VALUES } from '@/lib/ui/constants'
-import { ChatHistoryPanel } from '@/components/ChatHistoryPanel'
+import { useChatHistory } from '@/features/conversation/history/ui/use-chat-history'
+import { ChatHistoryPanel } from '@/features/conversation/ui/ChatHistoryPanel'
 import {
   ConversationSelectionProvider,
   useConversationSelection,
-} from '@/components/ConversationSelectionProvider'
-import {
-  QueryProvider,
-  useOptionalQuerySession,
-} from '@/components/QueryProvider'
+} from '@/features/conversation/ui/ConversationSelectionProvider'
+import { QueryProvider } from '@/features/conversation/ui/QueryProvider'
+import { useOptionalQuerySession } from '@/shared/query/ui'
+import { HTML_VALUES } from '@/shared/kernel/ui/constants'
 import { HISTORY_TEST } from '../../../../history/constants'
 import styles from './HistoryProbe.module.scss'
 
@@ -55,8 +53,14 @@ const HistoryControls = () => {
   const handleOpenB = () => openConversation(TARGET_B)
   const handleBack = () => showChatList()
   const handleClose = () => closeConversation()
-  const handleEnd = () => session?.close()
-  const handleRefresh = () => refetch()
+  // The session/Query hook owns completion and error state.
+  const handleEnd = () => {
+    void session?.close()
+  }
+  // The session/Query hook owns completion and error state.
+  const handleRefresh = () => {
+    void refetch()
+  }
   return (
     <>
       <button type={BUTTON} onClick={handleOpenA}>

@@ -243,6 +243,32 @@ test('conversation: long actual label fits themes and enlarged mobile text', asy
   }
 })
 
+test('conversation focus: observer delivery can lag viewport resize', async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    const NativeResizeObserver = window.ResizeObserver
+    window.ResizeObserver = class extends NativeResizeObserver {
+      observe() {
+        // Deliver no observer callback before the viewport-focus assertion.
+      }
+    }
+  })
+  await page.setViewportSize(mobileViewport)
+  await prepare(page)
+  const selected = page.getByRole(ROLE_BUTTON, {
+    name: targetA.label,
+    exact: true,
+  })
+  await selected.click()
+  await page.getByRole(ROLE_BUTTON, { name: BACK, exact: true }).click()
+  await expect(selected).toBeFocused()
+  await page.setViewportSize(desktopViewport)
+  await page.getByRole(ROLE_BUTTON, { name: CLOSE, exact: true }).focus()
+  await page.setViewportSize(mobileViewport)
+  await expect(selected).toBeFocused()
+})
+
 test('conversation focus: hiding the focused search moves focus to the selected conversation', async ({
   page,
 }) => {

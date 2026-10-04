@@ -1,0 +1,28 @@
+@use '../../../../styles/tokens' as tokens;
+@use '../../../../styles/mixins' as mixins;
+
+.messageList {
+  @include mixins.focus-ring;
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: tokens.$message-list-gap;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: tokens.$message-list-padding-top tokens.$message-list-padding-inline
+    tokens.$message-list-padding-bottom;
+  overflow: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ui-muted-color) tokens.$color-transparent;
+  list-style: none;
+  font-size: tokens.$font-size-caption;
+  line-height: tokens.$chat-line-height;
+  overflow-anchor: none;
+
+  @media (max-width: tokens.$chat-mobile-breakpoint) {
+    padding: tokens.$message-list-padding-mobile tokens.$space-sm;
+  }
+}

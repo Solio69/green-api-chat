@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test'
+import { expect, test } from './owner-fixture'
 import { MESSAGING_UI_TEST } from '../notifications/ui-constants'
 import { HISTORY_TEST } from '../history/constants'
 import {
@@ -39,8 +39,7 @@ const {
   OVERSIZED_TEXT,
   ENTER,
 } = MESSAGING_UI_TEST
-test.beforeEach(async ({ page, request }) => {
-  await request.post(CONTROL_API, { data: { reset: true } })
+test.beforeEach(async ({ page }) => {
   await page.route(API, (route) =>
     route.fulfill({
       json: {

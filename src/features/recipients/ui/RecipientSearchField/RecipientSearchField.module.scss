@@ -1,0 +1,72 @@
+@use '../../../../styles/tokens' as tokens;
+@use '../../../../styles/mixins' as mixins;
+
+.recipientSearchField {
+  display: grid;
+  gap: tokens.$search-label-gap;
+  min-width: 0;
+
+  &__labels {
+    display: grid;
+  }
+
+  &__label {
+    grid-area: 1 / 1;
+    color: var(--ui-muted-color);
+    font-size: tokens.$font-size-small;
+
+    &[aria-hidden='true'] {
+      visibility: hidden;
+    }
+  }
+
+  &__input {
+    width: 100%;
+    min-width: 0;
+    min-height: tokens.$control-icon-button-size;
+    padding: tokens.$search-input-padding-block
+      tokens.$search-input-padding-inline;
+    border: tokens.$border-width solid var(--ui-panel-border-color);
+    border-radius: tokens.$search-control-radius;
+    background: var(--ui-input-color);
+    color: var(--ui-text-color);
+    font: inherit;
+    font-size: tokens.$font-size-caption;
+
+    @media (max-width: tokens.$chat-mobile-breakpoint) {
+      font-size: tokens.$font-size-body;
+    }
+
+    &:enabled:hover:not([aria-invalid='true']) {
+      border-color: var(--ui-action-color);
+    }
+
+    &:focus-visible {
+      border-color: var(--ui-focus-color);
+      outline: 0;
+      box-shadow: var(--ui-search-focus-shadow);
+    }
+
+    &[aria-invalid='true'] {
+      border-color: var(--ui-error-color);
+
+      &:focus-visible {
+        box-shadow: var(--ui-search-error-shadow);
+      }
+    }
+
+    @media (forced-colors: active) {
+      &:focus-visible {
+        outline: tokens.$control-focus-width solid tokens.$color-system-focus;
+      }
+    }
+  }
+
+  &__error {
+    @include mixins.error-message;
+
+    &:empty {
+      display: none;
+    }
+  }
+}

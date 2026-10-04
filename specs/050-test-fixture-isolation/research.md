@@ -1,0 +1,8 @@
+# Research: 050
+
+- E2E `fake-green-api.ts` загружается в общий Next process; maps `notificationHeads`, `sendCounts`, `stateCalls`, `accountCalls` и receipt глобальны. Playwright уже `workers: 1`, но без reset состояние переживает scenario. Отложенные status timers способны записать событие после reset.
+- `owner-fixture.ts` используют почти все E2E; `login-form-safety.spec.ts` — исключение. Общая automatic fixture с `try/finally` покрывает успех и падение. Штатный `request` контекст участвует в сценариях и может сохранить cookie reset-логина. Поэтому setup создаёт собственный Playwright API-контекст и закрывает его через `dispose()` к имеющемуся `/api/auth/login`. Специальный тестовый ID распознаётся только загруженным fake, product route остаётся прежним. Тестовая зависимость от исправности login route осознанна.
+- Query app хранит fixture через `Symbol.for` и имеет `reset` route, а specs вручную вызывают reset в beforeEach не в afterEach. Общая automatic fixture закроет обе границы; epoch защищает завершающийся поздно send.
+- `tests/constants.ts` смешивает account/auth/recipient/conversation/theme/query/runner; test-only domain files с barrel сохранят совместимость при переносе. `tests/protocol.constants.ts` уже независим. Query fake ошибочно использует production API/notification constants для своих ответов — заменить явными test literals.
+- `recipient-search-ui.spec.ts` ждёт 300 мс. Для pending нужен управляемый Promise у route, затем release через `finally`, а не sleep. Browser APIs остаются реальными.
+- Альтернативы: per-test server (затратно), новый product reset endpoint (лишняя поверхность), только уникальные IDs (не защищает process maps/timers). Выбрана serial/reset модель.

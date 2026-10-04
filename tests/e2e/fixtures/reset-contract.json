@@ -1,0 +1,5 @@
+{
+  "ID": "fictional-fixture-reset-050",
+  "TOKEN": "fictional-fixture-reset-token",
+  "LOGIN_PATH": "/api/auth/login"
+}

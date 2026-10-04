@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "incremental": false,
+    "plugins": [],
+    "types": ["node", "vite/client"]
+  },
+  "include": [
+    "vitest.config.mts",
+    "tests/unit/**/*.ts",
+    "tests/unit/**/*.tsx",
+    "tests/integration/**/*.test.ts",
+    "tests/component/**/*.ts",
+    "tests/component/**/*.tsx",
+    "tests/setup/**/*.ts",
+    "tests/setup/**/*.tsx",
+    "tests/support/**/*.ts",
+    "tests/support/**/*.tsx"
+  ],
+  "exclude": ["node_modules"]
+}

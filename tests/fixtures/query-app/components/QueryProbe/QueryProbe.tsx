@@ -1,11 +1,11 @@
 'use client'
 
 import { StrictMode, useState } from 'react'
-import { useChats } from '@/lib/chats/use-chats'
-import { ChatListPanel } from '@/components/ChatListPanel'
-import { ConversationSelectionProvider } from '@/components/ConversationSelectionProvider'
-import { LogoutButton } from '@/components/LogoutButton'
-import { QueryProvider } from '@/components/QueryProvider'
+import { LogoutButton } from '@/features/auth/ui'
+import { useChats } from '@/features/chats/ui'
+import { ConversationChatListPanel } from '@/features/conversation/ui'
+import { ConversationSelectionProvider } from '@/features/conversation/ui/ConversationSelectionProvider'
+import { QueryProvider } from '@/features/conversation/ui/QueryProvider'
 import { CHAT_FIXTURES } from '../../../../chats/constants'
 import { QUERY_PROBE_COPY, QUERY_PROBE_IDS } from '../../../../constants'
 
@@ -16,7 +16,10 @@ const { REFRESH, SWITCH_ACCOUNT, CONSUMERS, STRICT_MODE, RENDER, LOGOUT } =
 
 const Consumer = ({ id }: { id: string }) => {
   const { data, isPending, isFetching, error, refetch } = useChats()
-  const handleRefetch = () => refetch()
+  // The session/Query hook owns completion and error state.
+  const handleRefetch = () => {
+    void refetch()
+  }
   return (
     <section data-testid={id}>
       <output>
@@ -47,7 +50,7 @@ export const QueryProbe = () => {
           <>
             <Consumer id={FIRST} />
             <Consumer id={SECOND} />
-            <ChatListPanel />
+            <ConversationChatListPanel />
           </>
         )}
         <LogoutButton label={LOGOUT} />

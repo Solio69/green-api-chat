@@ -1,0 +1,23 @@
+@use '../../../../styles/tokens' as tokens;
+@use '../../../../styles/mixins' as mixins;
+
+.messageSendButton {
+  @include mixins.focus-ring;
+
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: tokens.$composer-control-size;
+  height: tokens.$composer-control-size;
+  padding: 0;
+  border: 0;
+  border-radius: tokens.$radius-circle;
+  background: var(--ui-action-color);
+  color: var(--ui-on-action-color);
+  cursor: pointer;
+
+  &:disabled {
+    opacity: tokens.$composer-disabled-opacity;
+    cursor: default;
+  }
+}
