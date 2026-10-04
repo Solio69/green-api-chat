@@ -9,11 +9,35 @@ import type {
   ConnectionEvent,
   ConnectionModel,
 } from '@/features/conversation/notifications/model/connection-model'
+import { NOTIFICATION_CONNECTION_TEST } from '../notifications/constants'
 
-const step = (model: ConnectionModel, event: ConnectionEvent) =>
-  transitionConnection(model, event).model
+const {
+  CLOSED,
+  CONNECTING,
+  CONNECTED,
+  RETRYING,
+  LIMITED,
+  PAUSED,
+  OWNERSHIP_BUSY,
+  LOCK_UNAVAILABLE,
+  INVALID_UPSTREAM,
+  NOT_CONFIGURED,
+  OUTGOING_DISABLED,
+  RETRY_LATER,
+} = NOTIFICATION_CONNECTION_TEST
+
+const step = ({
+  model,
+  event,
+}: {
+  model: ConnectionModel
+  event: ConnectionEvent
+}) => transitionConnection(model, event).model
 const connected = (outgoingEnabled = true) => {
-  const started = step(initialConnectionModel, { type: 'start' })
+  const started = step({
+    model: initialConnectionModel,
+    event: { type: 'start' },
+  })
   return transitionConnection(started, {
     type: 'settings_ready',
     generation: started.generation,
@@ -24,17 +48,20 @@ const connected = (outgoingEnabled = true) => {
 describe('notification connection model', () => {
   it('starts once, derives send availability and keeps outgoing status warning separate', () => {
     expect(toConnectionState(initialConnectionModel)).toEqual({
-      status: 'closed',
+      status: CLOSED,
       canSend: false,
       issue: null,
     })
-    const started = step(initialConnectionModel, { type: 'start' })
+    const started = step({
+      model: initialConnectionModel,
+      event: { type: 'start' },
+    })
     expect(toConnectionState(started)).toEqual({
-      status: 'connecting',
+      status: CONNECTING,
       canSend: false,
       issue: null,
     })
-    expect(step(started, { type: 'start' })).toBe(started)
+    expect(step({ model: started, event: { type: 'start' } })).toBe(started)
     const first = transitionConnection(started, {
       type: 'settings_ready',
       generation: started.generation,
@@ -42,45 +69,56 @@ describe('notification connection model', () => {
     })
     expect(first.commands).toEqual([])
     expect(toConnectionState(first.model)).toEqual({
-      status: 'connected',
+      status: CONNECTED,
       canSend: true,
-      issue: 'outgoing_notifications_disabled',
+      issue: OUTGOING_DISABLED,
     })
   })
 
   it('keeps an applied delivery pending through transient failure and clears proof only on ACK/expiry', () => {
+    const pendingProof = 'fictional-proof'
+    const renewedProof = 'second-proof'
     let model = connected().model
-    model = step(model, {
-      type: 'delivery_applied',
-      generation: model.generation,
-      token: 'fictional-proof',
+    model = step({
+      model,
+      event: {
+        type: 'delivery_applied',
+        generation: model.generation,
+        token: pendingProof,
+      },
     })
-    expect(pendingAckToken(model)).toBe('fictional-proof')
+    expect(pendingAckToken(model)).toBe(pendingProof)
     expect(toConnectionState(model).canSend).toBe(true)
-    model = step(model, {
-      type: 'temporary_failure',
-      generation: model.generation,
+    model = step({
+      model,
+      event: { type: 'temporary_failure', generation: model.generation },
     })
     expect(toConnectionState(model)).toEqual({
-      status: 'retrying',
-      canSend: false,
-      issue: 'retry_later',
+      status: RETRYING,
+      canSend: true,
+      issue: RETRY_LATER,
     })
-    expect(pendingAckToken(model)).toBe('fictional-proof')
-    model = step(model, {
-      type: 'ack_expired',
-      generation: model.generation,
+    expect(pendingAckToken(model)).toBe(pendingProof)
+    model = step({
+      model,
+      event: { type: 'ack_expired', generation: model.generation },
     })
     expect(pendingAckToken(model)).toBeNull()
-    model = step(model, {
-      type: 'delivery_applied',
-      generation: model.generation,
-      token: 'second-proof',
+    model = step({
+      model,
+      event: {
+        type: 'delivery_applied',
+        generation: model.generation,
+        token: renewedProof,
+      },
     })
-    model = step(model, {
-      type: 'ack_confirmed',
-      generation: model.generation,
-      token: 'second-proof',
+    model = step({
+      model,
+      event: {
+        type: 'ack_confirmed',
+        generation: model.generation,
+        token: renewedProof,
+      },
     })
     expect(pendingAckToken(model)).toBeNull()
   })
@@ -88,7 +126,7 @@ describe('notification connection model', () => {
   it('emits recovery exactly once for each transition back from a failure', () => {
     let model = connected().model
     const generation = model.generation
-    model = step(model, { type: 'temporary_failure', generation })
+    model = step({ model, event: { type: 'temporary_failure', generation } })
     const restored = transitionConnection(model, {
       type: 'cycle_succeeded',
       generation,
@@ -101,87 +139,155 @@ describe('notification connection model', () => {
         generation,
       }).commands,
     ).toEqual([])
-    model = step(restored.model, { type: 'temporary_failure', generation })
+    model = step({
+      model: restored.model,
+      event: { type: 'temporary_failure', generation },
+    })
     expect(
       transitionConnection(model, { type: 'cycle_succeeded', generation })
         .commands,
     ).toEqual(['publish_recovery'])
   })
 
+  it('keeps sending unavailable until the first successful connection', () => {
+    const started = step({
+      model: initialConnectionModel,
+      event: { type: 'start' },
+    })
+    const retrying = step({
+      model: started,
+      event: { type: 'temporary_failure', generation: started.generation },
+    })
+    expect(toConnectionState(retrying)).toEqual({
+      status: RETRYING,
+      canSend: false,
+      issue: RETRY_LATER,
+    })
+    const restored = step({
+      model: retrying,
+      event: {
+        type: 'settings_ready',
+        generation: retrying.generation,
+        outgoingEnabled: true,
+      },
+    })
+    expect(toConnectionState(restored).canSend).toBe(true)
+  })
+
+  it('keeps restricted and closed connections unable to send after previous success', () => {
+    const live = connected().model
+    const limited = step({
+      model: live,
+      event: {
+        type: LIMITED,
+        generation: live.generation,
+        issue: OWNERSHIP_BUSY,
+      },
+    })
+    const paused = step({
+      model: live,
+      event: {
+        type: PAUSED,
+        generation: live.generation,
+        issue: NOT_CONFIGURED,
+      },
+    })
+    const closed = step({ model: live, event: { type: 'close' } })
+    for (const model of [limited, paused, closed])
+      expect(toConnectionState(model).canSend).toBe(false)
+  })
+
   it('derives limited and paused warnings, invalidates stale generation on manual retry', () => {
-    const started = step(initialConnectionModel, { type: 'start' })
+    const started = step({
+      model: initialConnectionModel,
+      event: { type: 'start' },
+    })
     const oldGeneration = started.generation
-    const limited = step(started, {
-      type: 'limited',
-      generation: oldGeneration,
-      issue: 'ownership_busy',
+    const limited = step({
+      model: started,
+      event: {
+        type: LIMITED,
+        generation: oldGeneration,
+        issue: OWNERSHIP_BUSY,
+      },
     })
     expect(toConnectionState(limited)).toEqual({
-      status: 'limited',
+      status: LIMITED,
       canSend: false,
-      issue: 'ownership_busy',
+      issue: OWNERSHIP_BUSY,
     })
-    const retried = step(limited, { type: 'retry_requested' })
+    const retried = step({ model: limited, event: { type: 'retry_requested' } })
     expect(retried.generation).toBe(oldGeneration + 1)
     expect(
-      step(retried, {
-        type: 'settings_ready',
-        generation: oldGeneration,
-        outgoingEnabled: true,
+      step({
+        model: retried,
+        event: {
+          type: 'settings_ready',
+          generation: oldGeneration,
+          outgoingEnabled: true,
+        },
       }),
     ).toBe(retried)
-    const restarted = step(retried, { type: 'start' })
-    const paused = step(restarted, {
-      type: 'paused',
-      generation: restarted.generation,
-      issue: 'invalid_upstream_response',
+    const restarted = step({ model: retried, event: { type: 'start' } })
+    const paused = step({
+      model: restarted,
+      event: {
+        type: PAUSED,
+        generation: restarted.generation,
+        issue: INVALID_UPSTREAM,
+      },
     })
     expect(toConnectionState(paused)).toEqual({
-      status: 'paused',
+      status: PAUSED,
       canSend: false,
-      issue: 'invalid_upstream_response',
+      issue: INVALID_UPSTREAM,
     })
   })
 
   it('makes close terminal and ignores late success or repeated start/retry', () => {
     const live = connected().model
     const oldGeneration = live.generation
-    const closed = step(live, { type: 'close' })
+    const closed = step({ model: live, event: { type: 'close' } })
     expect(closed.generation).toBe(oldGeneration + 1)
     expect(toConnectionState(closed)).toEqual({
-      status: 'closed',
+      status: CLOSED,
       canSend: false,
       issue: null,
     })
     expect(
-      step(closed, {
-        type: 'cycle_succeeded',
-        generation: oldGeneration,
+      step({
+        model: closed,
+        event: { type: 'cycle_succeeded', generation: oldGeneration },
       }),
     ).toBe(closed)
-    expect(step(closed, { type: 'start' })).toBe(closed)
-    expect(step(closed, { type: 'retry_requested' })).toBe(closed)
-    expect(step(closed, { type: 'close' })).toBe(closed)
+    expect(step({ model: closed, event: { type: 'start' } })).toBe(closed)
+    expect(step({ model: closed, event: { type: 'retry_requested' } })).toBe(
+      closed,
+    )
+    expect(step({ model: closed, event: { type: 'close' } })).toBe(closed)
   })
 })
 
 describe('additional transition boundaries', () => {
   it.each([
     {
-      event: { type: 'limited', issue: 'browser_lock_unavailable' },
-      status: 'limited',
+      event: { type: LIMITED, issue: LOCK_UNAVAILABLE },
+      status: LIMITED,
     },
     {
-      event: { type: 'paused', issue: 'notifications_not_configured' },
-      status: 'paused',
+      event: { type: PAUSED, issue: NOT_CONFIGURED },
+      status: PAUSED,
     },
   ] as const)(
     'projects $event.issue without enabling send',
     ({ event, status }) => {
-      const started = step(initialConnectionModel, { type: 'start' })
-      const next = step(started, {
-        ...event,
-        generation: started.generation,
+      const started = step({
+        model: initialConnectionModel,
+        event: { type: 'start' },
+      })
+      const next = step({
+        model: started,
+        event: { ...event, generation: started.generation },
       })
       expect(toConnectionState(next)).toEqual({
         status,
@@ -195,24 +301,33 @@ describe('additional transition boundaries', () => {
   it('ignores wrong ACK token and clears pending proof on manual retry', () => {
     let model = connected().model
     const oldGeneration = model.generation
-    model = step(model, {
-      type: 'delivery_applied',
-      generation: oldGeneration,
-      token: 'current-proof',
+    model = step({
+      model,
+      event: {
+        type: 'delivery_applied',
+        generation: oldGeneration,
+        token: 'current-proof',
+      },
     })
     expect(
-      step(model, {
-        type: 'ack_confirmed',
-        generation: oldGeneration,
-        token: 'stale-proof',
+      step({
+        model,
+        event: {
+          type: 'ack_confirmed',
+          generation: oldGeneration,
+          token: 'stale-proof',
+        },
       }),
     ).toBe(model)
-    model = step(model, { type: 'retry_requested' })
+    model = step({ model, event: { type: 'retry_requested' } })
     expect(pendingAckToken(model)).toBeNull()
     expect(
-      step(model, { type: 'temporary_failure', generation: oldGeneration }),
+      step({
+        model,
+        event: { type: 'temporary_failure', generation: oldGeneration },
+      }),
     ).toBe(model)
-    model = step(model, { type: 'start' })
+    model = step({ model, event: { type: 'start' } })
     const restored = transitionConnection(model, {
       type: 'settings_ready',
       generation: model.generation,

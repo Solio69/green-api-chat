@@ -228,7 +228,7 @@ test('expired ACK obtains a fresh proof without duplicating incoming facts', asy
     deriveUnreadCounts(session.client.getQueryData(unreadKey(scopeA))).total,
   ).toBe(1)
 })
-test('transient receive failure blocks sending then publishes one recovery', async () => {
+test('transient receive failure leaves sending available and publishes one recovery', async () => {
   let reads = 0
   let recoveries = 0
   const { connection } = setup({
@@ -248,7 +248,7 @@ test('transient receive failure blocks sending then publishes one recovery', asy
   })
   connection.start()
   await expect.poll(() => connection.getSnapshot().status).toBe(RETRYING)
-  expect(connection.getSnapshot().canSend).toBe(false)
+  expect(connection.getSnapshot().canSend).toBe(true)
   await waitForConnected(connection)
   expect(recoveries).toBe(1)
 })

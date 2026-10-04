@@ -3,6 +3,7 @@ export const MESSAGING_UI_TEST = {
   CONTROL_API: '/api/notification-fixture',
   LABEL: 'Сообщение',
   SEND: 'Отправить сообщение',
+  SENDING: 'Отправляется…',
   OPEN_A: 'Открыть историю А',
   OPEN_B: 'Открыть историю Б',
   DRAFT: 'Новый черновик',
@@ -20,4 +21,15 @@ export const MESSAGING_UI_TEST = {
   FAILURE: 'Получатель недоступен',
   LIVE_TEXT: 'Новое входящее сообщение',
   LIMIT: 'Рабочий чат уже открыт в другой вкладке.',
+} as const
+
+// Expected UI copy remains independent of production constants.
+export const NOTIFICATION_NOTICE_TEST = {
+  OWNERSHIP_BUSY: 'Рабочий чат уже открыт в другой вкладке.',
+  LOCK_UNAVAILABLE: 'Браузер не поддерживает работу с единственной вкладкой.',
+  INVALID_UPSTREAM: 'Получено некорректное уведомление.',
+  PAUSED: 'Получение уведомлений приостановлено.',
+  RETRY: 'Подключиться снова',
+  OUTGOING_DISABLED: 'Статусы отправки могут не поступать.',
+  RECONNECTING: 'Соединение восстанавливается. Отправка временно недоступна.',
 } as const

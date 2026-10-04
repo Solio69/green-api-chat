@@ -7,7 +7,6 @@ export const NOTIFICATION_NOTICE_COPY = {
   INVALID:
     'Получено некорректное уведомление. Оно не удалено из очереди; получение приостановлено.',
   RETRY: 'Подключиться снова',
-  RECONNECTING: 'Соединение восстанавливается. Отправка временно недоступна.',
   SETTINGS:
     'Статусы отправки могут не поступать. Включите outgoingMessageWebhook, outgoingAPIMessageWebhook и outgoingWebhook в настройках GREEN-API.',
 } as const

@@ -16,49 +16,47 @@ import styles from './NotificationNotice.module.scss'
 const { OUTGOING_DISABLED } = NOTIFICATION_CONFIG
 const { INVALID_UPSTREAM } = NOTIFICATION_CODE
 const { LOCK_UNAVAILABLE } = POLLING_CONFIG
-const { LIMITED, PAUSED, RETRYING } = NOTIFICATION_STATE
+const { LIMITED, PAUSED } = NOTIFICATION_STATE
 const { BUTTON, ROLE_ALERT, ROLE_STATUS } = HTML_VALUES
 const {
   LIMIT,
   LOCK_UNAVAILABLE: LOCK_UNAVAILABLE_COPY,
   PAUSE,
   RETRY,
-  RECONNECTING,
   SETTINGS,
   INVALID,
 } = NOTIFICATION_NOTICE_COPY
 export const NotificationNotice = () => {
   const { connection: issue } = useMessageIssues(null)
   const connection = useNotificationConnection()
-  const restricted =
+  const isRestricted =
     connection.status === LIMITED || connection.status === PAUSED
-  const reconnecting = connection.status === RETRYING
-  const settingsIssue = connection.issue === OUTGOING_DISABLED
-  const visible = restricted || reconnecting || settingsIssue
-  if (!visible) return <MessageStatusIssue issue={issue} />
-  let copy: string = SETTINGS
+  const hasSettingsIssue = connection.issue === OUTGOING_DISABLED
+  const shouldShowNotice = isRestricted || hasSettingsIssue
+  if (!shouldShowNotice) return <MessageStatusIssue issue={issue} />
+  let noticeText: string = SETTINGS
   if (connection.status === LIMITED)
-    copy = connection.issue === LOCK_UNAVAILABLE ? LOCK_UNAVAILABLE_COPY : LIMIT
+    noticeText =
+      connection.issue === LOCK_UNAVAILABLE ? LOCK_UNAVAILABLE_COPY : LIMIT
   else if (connection.status === PAUSED) {
-    copy = PAUSE
-    if (connection.issue === INVALID_UPSTREAM) copy = INVALID
-  } else if (reconnecting) copy = RECONNECTING
+    noticeText = PAUSE
+    if (connection.issue === INVALID_UPSTREAM) noticeText = INVALID
+  }
+
+  const handleRetry = () => {
+    // The controller owns transport failures and recovery state.
+    void connection.retry()
+  }
   return (
     <>
       <MessageStatusIssue issue={issue} />
       <div
         className={styles.notificationNotice}
-        role={restricted ? ROLE_ALERT : ROLE_STATUS}
+        role={isRestricted ? ROLE_ALERT : ROLE_STATUS}
       >
-        <p>{copy}</p>
-        {restricted && (
-          <button
-            type={BUTTON}
-            onClick={() => {
-              // The controller owns transport failures and recovery state.
-              void connection.retry()
-            }}
-          >
+        <p>{noticeText}</p>
+        {isRestricted && (
+          <button type={BUTTON} onClick={handleRetry}>
             {RETRY}
           </button>
         )}

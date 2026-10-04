@@ -12,6 +12,22 @@ export const NOTIFICATION_TEST = {
   LABEL: 'Василиса',
   TIMESTAMP: 1_800_000_000,
 } as const
+
+export const NOTIFICATION_CONNECTION_TEST = {
+  CLOSED: 'closed',
+  CONNECTING: 'connecting',
+  CONNECTED: 'connected',
+  RETRYING: 'retrying',
+  LIMITED: 'limited',
+  PAUSED: 'paused',
+  OWNERSHIP_BUSY: 'ownership_busy',
+  LOCK_UNAVAILABLE: 'browser_lock_unavailable',
+  INVALID_UPSTREAM: 'invalid_upstream_response',
+  NOT_CONFIGURED: 'notifications_not_configured',
+  OUTGOING_DISABLED: 'outgoing_notifications_disabled',
+  RETRY_LATER: 'retry_later',
+} as const
+
 const { CREDENTIALS, CHAT, MESSAGE, RECEIPT, TEXT, LABEL, TIMESTAMP } =
   NOTIFICATION_TEST
 export const envelope = (patch: Record<string, unknown> = {}) => ({

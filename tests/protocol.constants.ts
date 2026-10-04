@@ -77,4 +77,5 @@ export const TEST_HTTP_PROTOCOL = {
 export const TEST_API_ROUTES = {
   MESSAGES: '/api/messages',
   CHATS: '/api/chats',
+  NOTIFICATIONS_RECEIVE: '/api/notifications/receive',
 } as const

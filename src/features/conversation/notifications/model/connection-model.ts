@@ -216,7 +216,9 @@ const connectionIssue = (model: ConnectionModel): string | null => {
 }
 export const toConnectionState = (model: ConnectionModel): ConnectionState => ({
   status: model.status,
-  canSend: model.status === CONNECTED,
+  canSend:
+    model.status === CONNECTED ||
+    (model.status === RETRYING && model.everConnected),
   issue: connectionIssue(model),
 })
 export const pendingAckToken = (model: ConnectionModel): string | null =>
