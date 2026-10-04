@@ -19,8 +19,7 @@
   text-align: start;
   cursor: pointer;
 
-  &[aria-pressed='true'],
-  &:hover {
+  &[aria-pressed='true'] {
     background: var(--ui-selected-color);
   }
 
