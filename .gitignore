@@ -11,3 +11,4 @@ playwright-report/
 next-env.d.ts
 npm-debug.log*
 *.log
+.vscode/
