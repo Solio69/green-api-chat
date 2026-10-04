@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers'
 import { readRequestSession } from './read-request-session'
-import { IS_PRODUCTION } from '@/features/auth/server'
+import { IS_PRODUCTION } from './constants'
 
 export const readPageSession = async () =>
   readRequestSession({

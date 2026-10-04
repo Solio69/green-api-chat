@@ -1,6 +1,6 @@
 import { fetchChats } from './fetch-chats'
 import { reconcileSessionChats } from './session-chat-facts'
-import type { QuerySession } from '@/lib/query/create-query-session'
+import type { QuerySession } from '@/shared/query/create-query-session'
 import { CHAT_QUERY_CONFIG } from './constants'
 
 const { KEY, STALE_TIME_MS, GC_TIME_MS } = CHAT_QUERY_CONFIG

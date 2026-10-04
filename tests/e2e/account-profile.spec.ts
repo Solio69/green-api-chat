@@ -1,7 +1,7 @@
 import type { Page } from '@playwright/test'
 import { expect, test } from './owner-fixture'
 import { readStyles, textContrast } from './ui-theme.helpers'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import {
   ACCOUNT_CONTRACT,
   ACCOUNT_SCENARIOS,

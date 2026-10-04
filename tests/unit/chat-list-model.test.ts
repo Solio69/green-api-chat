@@ -6,7 +6,7 @@ import {
   sessionChatKey,
 } from '@/features/chats/application'
 import type { SessionChatCache } from '@/features/chats/application'
-import { createQuerySession } from '@/lib/query/create-query-session'
+import { createQuerySession } from '@/shared/query/create-query-session'
 
 const connectionScope = 'a'.repeat(43)
 const chatId = 'fictional-personal-chat'

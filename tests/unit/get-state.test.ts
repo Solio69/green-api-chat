@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
-import { getStateInstance } from '@/lib/green-api/get-state'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { getStateInstance } from '@/server/green-api/get-state'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import {
   CREDENTIALS,
   GREEN_API_CONTRACT,

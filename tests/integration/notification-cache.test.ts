@@ -1,9 +1,9 @@
 import { expect, test } from 'vitest'
 import { sessionChatKey } from '@/features/chats/application'
-import { messageKey } from '@/lib/messages/message-cache'
-import { applyNotification } from '@/lib/notifications/apply-notification'
-import { normalizeNotification } from '@/lib/notifications/normalize-notification'
-import { createQuerySession } from '@/lib/query/create-query-session'
+import { messageKey } from '@/features/conversation/messages/application/message-cache'
+import { applyNotification } from '@/features/conversation/notifications/application/apply-notification'
+import { normalizeNotification } from '@/features/conversation/notifications/model/normalize-notification'
+import { createQuerySession } from '@/shared/query/create-query-session'
 import { envelope, NOTIFICATION_TEST } from '../notifications/constants'
 import { TEST_NOTIFICATION_PROTOCOL } from '../protocol.constants'
 

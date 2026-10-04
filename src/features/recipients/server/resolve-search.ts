@@ -1,8 +1,11 @@
 import { RECIPIENT_RESULT_KIND } from '@/features/recipients/model'
-import type { CheckAccountResult } from '@/lib/green-api/check-account'
+import type { CheckAccountResult } from '@/server/green-api/check-account'
 import { jsonNoStore } from '@/server/http'
-import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
-import { HTTP_STATUS } from '@/lib/http/constants'
+import {
+  API_ERROR_CODE,
+  API_RESPONSE_STATUS,
+} from '@/shared/kernel/api/constants'
+import { HTTP_STATUS } from '@/shared/kernel/http/constants'
 
 const {
   SESSION_REQUIRED,

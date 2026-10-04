@@ -1,4 +1,4 @@
-import type { InstanceCredentials } from '@/lib/green-api/get-state'
+import type { InstanceCredentials } from '@/shared/kernel/api/instance-credentials'
 
 export type AuthorizedContext = {
   credentials: InstanceCredentials

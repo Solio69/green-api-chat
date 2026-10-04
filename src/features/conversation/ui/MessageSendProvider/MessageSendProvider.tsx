@@ -8,12 +8,12 @@ import {
   useSyncExternalStore,
 } from 'react'
 import type { ReactNode } from 'react'
+import { createSendController } from '@/features/conversation/sending/application/create-send-controller'
+import { fetchSendMessage } from '@/features/conversation/sending/application/fetch-send-message'
 import { useNotificationOwner } from '@/features/conversation/ui/NotificationProvider'
-import { createSendController } from '@/lib/sending/create-send-controller'
-import { fetchSendMessage } from '@/lib/sending/fetch-send-message'
-import { SEND_CONFIG } from '@/lib/sending/constants'
+import { useOptionalQuerySession } from '@/shared/query/ui'
+import { SEND_CONFIG } from '@/features/conversation/sending/model/constants'
 import { MESSAGE_SEND_PROVIDER_COPY } from './constants'
-import { useOptionalQuerySession } from '@/components/QueryProvider'
 
 const { NETWORK_MODE } = SEND_CONFIG
 

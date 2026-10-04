@@ -3,8 +3,8 @@ import { useRef, useState } from 'react'
 import type { SubmitEvent } from 'react'
 import { requestLogout } from './request-logout'
 import { useOptionalNotificationOwner } from '@/features/conversation/ui/NotificationProvider'
-import { ROUTES } from '@/lib/routes/constants'
-import { useOptionalQuerySession } from '@/components/QueryProvider'
+import { useOptionalQuerySession } from '@/shared/query/ui'
+import { ROUTES } from '@/shared/kernel/routes/constants'
 
 const { LOGIN } = ROUTES
 

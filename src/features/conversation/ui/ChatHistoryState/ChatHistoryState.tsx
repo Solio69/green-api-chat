@@ -1,5 +1,5 @@
 import { HISTORY_PANEL_STATE } from '@/features/conversation/ui/ChatHistoryPanel/constants'
-import { HTML_VALUES } from '@/lib/ui/constants'
+import { HTML_VALUES } from '@/shared/kernel/ui/constants'
 import { HISTORY_STATE_COPY } from './constants'
 import styles from './ChatHistoryState.module.scss'
 

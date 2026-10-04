@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest'
-import { createNotificationTransport } from '@/lib/notifications/notification-transport'
-import { createQuerySession } from '@/lib/query/create-query-session'
+import { createNotificationTransport } from '@/features/conversation/notifications/application/notification-transport'
+import { createQuerySession } from '@/shared/query/create-query-session'
 
 it('uses the supplied clock for an HTTP-date Retry-After', async () => {
   const fixedNow = Date.UTC(2025, 0, 1)

@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 import { normalizeAccountProfile } from '@/features/account/model'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import { ACCOUNT_CONTRACT, ACCOUNT_SCENARIOS, CREDENTIALS } from '../constants'
 
 const INVALID_AVATAR_URL = 'http://avatars.example.test/a.png'

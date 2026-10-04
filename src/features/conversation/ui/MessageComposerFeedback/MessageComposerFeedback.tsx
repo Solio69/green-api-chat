@@ -1,4 +1,4 @@
-import { HTML_VALUES } from '@/lib/ui/constants'
+import { HTML_VALUES } from '@/shared/kernel/ui/constants'
 import { MESSAGE_COMPOSER_FEEDBACK_COPY } from './constants'
 import styles from './MessageComposerFeedback.module.scss'
 

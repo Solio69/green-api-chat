@@ -1,4 +1,4 @@
-import { HTML_VALUES } from '@/lib/ui/constants'
+import { HTML_VALUES } from '@/shared/kernel/ui/constants'
 import styles from './TokenVisibilityButton.module.scss'
 
 const { BUTTON } = HTML_VALUES

@@ -1,13 +1,16 @@
-import { isRecord } from '@/lib/api/is-record'
-import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
+import { isRecord } from '@/shared/kernel/api/is-record'
+import {
+  API_ERROR_CODE,
+  API_RESPONSE_STATUS,
+} from '@/shared/kernel/api/constants'
 import {
   CACHE_CONTROL,
   HTTP_CONTENT_TYPE,
   HTTP_HEADERS,
   HTTP_METHOD,
   HTTP_STATUS,
-} from '@/lib/http/constants'
-import { ROUTES } from '@/lib/routes/constants'
+} from '@/shared/kernel/http/constants'
+import { ROUTES } from '@/shared/kernel/routes/constants'
 import { LOGIN_ERROR_COPY } from './constants'
 
 const { INVALID_UPSTREAM_RESPONSE, SERVICE_UNAVAILABLE } = API_ERROR_CODE

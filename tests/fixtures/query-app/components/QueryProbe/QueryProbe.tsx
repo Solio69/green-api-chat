@@ -5,7 +5,7 @@ import { LogoutButton } from '@/features/auth/ui'
 import { useChats } from '@/features/chats/ui'
 import { ConversationChatListPanel } from '@/features/conversation/ui'
 import { ConversationSelectionProvider } from '@/features/conversation/ui/ConversationSelectionProvider'
-import { QueryProvider } from '@/components/QueryProvider'
+import { QueryProvider } from '@/features/conversation/ui/QueryProvider'
 import { CHAT_FIXTURES } from '../../../../chats/constants'
 import { QUERY_PROBE_COPY, QUERY_PROBE_IDS } from '../../../../constants'
 

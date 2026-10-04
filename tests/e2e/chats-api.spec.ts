@@ -1,6 +1,6 @@
 import { expect, test } from './owner-fixture'
 import { addChatSession } from '../chats/helpers'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import { CHAT_FIXTURES } from '../chats/constants'
 import {
   CHAT_HTTP_CONTRACT,

@@ -1,6 +1,9 @@
-import type { MessageDTO } from '@/lib/messages/types'
-import { MESSAGE_DIRECTION, MESSAGE_STATUS } from '@/lib/messages/constants'
-import { HTML_VALUES } from '@/lib/ui/constants'
+import type { MessageDTO } from '@/features/conversation/messages/model/types'
+import {
+  MESSAGE_DIRECTION,
+  MESSAGE_STATUS,
+} from '@/features/conversation/messages/model/constants'
+import { HTML_VALUES } from '@/shared/kernel/ui/constants'
 import { MESSAGE_STATUS_COPY } from './constants'
 import styles from './MessageStatusIndicator.module.scss'
 

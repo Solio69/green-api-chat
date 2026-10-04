@@ -5,7 +5,7 @@ import type { PersonalChat } from '@/features/chats/model'
 import type { ChatListTarget } from '@/features/chats/ui/types'
 import { RECIPIENT_VALIDATION } from '@/features/recipients/model'
 import { ChatUnreadBadge } from '@/shared/ui'
-import { HTML_VALUES } from '@/lib/ui/constants'
+import { HTML_VALUES } from '@/shared/kernel/ui/constants'
 import styles from './ChatListItem.module.scss'
 
 const { USERNAME_PREFIX } = RECIPIENT_VALIDATION

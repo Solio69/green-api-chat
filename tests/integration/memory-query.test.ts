@@ -3,7 +3,7 @@ import type { QueryKey } from '@tanstack/react-query'
 import { createElement } from 'react'
 import { renderToString } from 'react-dom/server'
 import { expect, test } from 'vitest'
-import { createConnectionSession } from '@/lib/conversations/create-connection-session'
+import { createConnectionSession } from '@/features/conversation/application/create-connection-session'
 import { HISTORY_TEST, MESSAGE_CACHE_TEST } from '../history/constants'
 
 const { scopeA, chatA, message } = HISTORY_TEST

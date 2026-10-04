@@ -10,7 +10,7 @@ import {
 } from '@/features/conversation/ui/ConversationSelectionProvider'
 import { MessageSendProvider } from '@/features/conversation/ui/MessageSendProvider'
 import { useOptionalNotificationOwner } from '@/features/conversation/ui/NotificationProvider'
-import { useConversationReadState } from '@/lib/unread/use-conversation-read-state'
+import { useConversationReadState } from '@/features/conversation/unread/ui/use-conversation-read-state'
 import styles from './ChatWorkspace.module.scss'
 
 type ChatWorkspaceProps = {

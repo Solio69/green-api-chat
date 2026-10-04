@@ -1,2 +1,1 @@
-export { getAccountSettings } from '@/lib/green-api/get-account-settings'
-export type { AccountSettingsResult } from '@/lib/green-api/get-account-settings'
+export { getAccountSettings } from '@/server/green-api/get-account-settings'

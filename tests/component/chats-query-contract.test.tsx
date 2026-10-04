@@ -1,15 +1,17 @@
 import { act, cleanup, render, screen } from '@testing-library/react'
 import { afterEach, expect, test, vi } from 'vitest'
 import { ChatListPanel } from '@/features/chats/ui/ChatListPanel'
-import { createConnectionSession } from '@/lib/conversations/create-connection-session'
+import { createConnectionSession } from '@/features/conversation/application/create-connection-session'
+import { QueryProvider } from '@/features/conversation/ui/QueryProvider'
 import { CHAT_FIXTURES } from '../chats/constants'
 import { TEST_API_RESPONSE } from '../protocol.constants'
-import { QueryProvider } from '@/components/QueryProvider'
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ replace: vi.fn(), refresh: vi.fn() }),
 }))
-vi.mock('@/lib/conversations/create-connection-session', { spy: true })
+vi.mock('@/features/conversation/application/create-connection-session', {
+  spy: true,
+})
 
 const { scopeA } = CHAT_FIXTURES
 const { OK } = TEST_API_RESPONSE

@@ -1,12 +1,12 @@
 import { isChatId, isPersonalChatId } from '@/features/chats/model'
-import { isRecord } from '@/lib/api/is-record'
-import { mergeMessageFacts } from '@/lib/messages/merge-message-facts'
-import type { MessageDTO } from '@/lib/messages/types'
+import { mergeMessageFacts } from '@/features/conversation/messages/model/merge-message-facts'
+import type { MessageDTO } from '@/features/conversation/messages/model/types'
+import { isRecord } from '@/shared/kernel/api/is-record'
 import {
   MESSAGE_DIRECTION,
   MESSAGE_KIND,
   MESSAGE_STATUS,
-} from '@/lib/messages/constants'
+} from '@/features/conversation/messages/model/constants'
 import { HISTORY_MODEL_CONFIG } from './constants'
 
 type CredentialsForFiltering = { idInstance: string; apiTokenInstance: string }

@@ -4,19 +4,19 @@ import { afterEach, expect, test, vi } from 'vitest'
 import { SESSION_CHAT_TEST } from '../chats/session-constants'
 import { rememberPersonalChat } from '@/features/chats/application'
 import { useChats } from '@/features/chats/ui'
+import { createConnectionSession } from '@/features/conversation/application/create-connection-session'
 import { ConversationChatListPanel } from '@/features/conversation/ui'
 import { ConversationSelectionProvider } from '@/features/conversation/ui/ConversationSelectionProvider'
-import { createConnectionSession } from '@/lib/conversations/create-connection-session'
+import { QueryProvider } from '@/features/conversation/ui/QueryProvider'
+import { useOptionalQuerySession } from '@/shared/query/ui'
 import { HISTORY_TEST } from '../history/constants'
-import {
-  QueryProvider,
-  useOptionalQuerySession,
-} from '@/components/QueryProvider'
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ replace: vi.fn(), refresh: vi.fn() }),
 }))
-vi.mock('@/lib/conversations/create-connection-session', { spy: true })
+vi.mock('@/features/conversation/application/create-connection-session', {
+  spy: true,
+})
 
 const { scopeA, chatA } = HISTORY_TEST
 const { LABEL, ADD, REFRESH, SOURCE } = SESSION_CHAT_TEST

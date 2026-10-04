@@ -2,7 +2,7 @@
 
 import { useId } from 'react'
 import { ChatUnreadBadge } from '@/shared/ui'
-import { HTML_VALUES } from '@/lib/ui/constants'
+import { HTML_VALUES } from '@/shared/kernel/ui/constants'
 import { CONVERSATION_BACK_COPY } from './constants'
 import styles from './ConversationBackButton.module.scss'
 

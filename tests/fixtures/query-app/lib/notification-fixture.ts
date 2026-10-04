@@ -1,9 +1,9 @@
 import { setTimeout as wait } from 'node:timers/promises'
-import type { ReceiverProvider } from '@/lib/notifications/types'
+import type { ReceiverProvider } from '@/features/conversation/notifications/model/types'
 import type {
   SendMessageOptions,
   ProviderSendResult,
-} from '@/lib/sending/types'
+} from '@/server/green-api/send-message.types'
 import { HISTORY_TEST } from '../../../history/constants'
 import { NOTIFICATION_TEST } from '../../../notifications/constants'
 import {

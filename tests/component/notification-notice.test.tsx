@@ -1,12 +1,12 @@
 import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { expect, test, vi } from 'vitest'
+import type { createNotificationConnection } from '@/features/conversation/notifications/application/create-notification-connection'
+import type { ConnectionState } from '@/features/conversation/notifications/model/connection-model'
 import { NotificationNotice } from '@/features/conversation/ui/NotificationNotice'
 import { NotificationContext } from '@/features/conversation/ui/NotificationProvider/context'
-import type { ConnectionState } from '@/lib/notifications/connection-model'
-import type { createNotificationConnection } from '@/lib/notifications/create-notification-connection'
 
-vi.mock('@/lib/messages/use-message-issues', () => ({
+vi.mock('@/features/conversation/messages/ui/use-message-issues', () => ({
   useMessageIssues: () => ({ connection: null }),
 }))
 

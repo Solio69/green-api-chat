@@ -1,7 +1,7 @@
 import { createHmac } from 'node:crypto'
 import type { BrowserContext } from '@playwright/test'
 import { sealData } from 'iron-session'
-import type { InstanceCredentials } from '@/lib/green-api/get-state'
+import type { InstanceCredentials } from '@/shared/kernel/api/instance-credentials'
 import { TEST_SESSION_FIXTURES } from '../constants'
 
 const { PASSWORD } = TEST_SESSION_FIXTURES

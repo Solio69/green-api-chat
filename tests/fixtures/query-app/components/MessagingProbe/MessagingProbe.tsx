@@ -9,8 +9,8 @@ import {
 import { MessageComposer } from '@/features/conversation/ui/MessageComposer'
 import { MessageSendProvider } from '@/features/conversation/ui/MessageSendProvider'
 import { NotificationProvider } from '@/features/conversation/ui/NotificationProvider'
-import { HTML_VALUES } from '@/lib/ui/constants'
-import { QueryProvider } from '@/components/QueryProvider'
+import { QueryProvider } from '@/features/conversation/ui/QueryProvider'
+import { HTML_VALUES } from '@/shared/kernel/ui/constants'
 import { HISTORY_TEST } from '../../../../history/constants'
 
 const {

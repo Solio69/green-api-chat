@@ -1,6 +1,6 @@
 import type { BrowserContext } from '@playwright/test'
 import { expect, test } from './owner-fixture'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import {
   BASE_URL,
   CREDENTIALS,

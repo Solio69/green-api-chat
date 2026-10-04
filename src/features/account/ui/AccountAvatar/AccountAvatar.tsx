@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import { ACCOUNT_AVATAR_HTML } from './constants'
 import styles from './AccountAvatar.module.scss'
 

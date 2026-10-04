@@ -1,9 +1,9 @@
 'use client'
 
 import { useLogout } from './use-logout'
-import { HTTP_METHOD } from '@/lib/http/constants'
-import { ROUTES } from '@/lib/routes/constants'
-import { HTML_VALUES } from '@/lib/ui/constants'
+import { HTTP_METHOD } from '@/shared/kernel/http/constants'
+import { ROUTES } from '@/shared/kernel/routes/constants'
+import { HTML_VALUES } from '@/shared/kernel/ui/constants'
 import { LOGOUT_COPY } from './constants'
 import styles from './LogoutButton.module.scss'
 

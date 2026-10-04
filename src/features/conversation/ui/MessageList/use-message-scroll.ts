@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useRef } from 'react'
 import type { UIEvent } from 'react'
-import type { MessageDTO } from '@/lib/messages/types'
+import type { MessageDTO } from '@/features/conversation/messages/model/types'
 import { MESSAGE_SCROLL_CONFIG } from './constants'
 
 const { BOTTOM_TOLERANCE } = MESSAGE_SCROLL_CONFIG

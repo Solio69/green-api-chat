@@ -1,17 +1,17 @@
 import { describe, expect, it, vi } from 'vitest'
+import { NotificationTransportError } from '@/features/conversation/notifications/application/notification-transport'
+import {
+  runNotificationCycle,
+  type NotificationCyclePorts,
+} from '@/features/conversation/notifications/application/run-notification-cycle'
 import {
   initialConnectionModel,
   pendingAckToken,
   transitionConnection,
-} from '@/lib/notifications/connection-model'
-import type { ConnectionEvent } from '@/lib/notifications/connection-model'
-import { NotificationTransportError } from '@/lib/notifications/notification-transport'
-import {
-  runNotificationCycle,
-  type NotificationCyclePorts,
-} from '@/lib/notifications/run-notification-cycle'
-import { SessionQueryError } from '@/lib/query/session-query-error'
-import { NOTIFICATION_ROUTES } from '@/lib/notifications/constants'
+} from '@/features/conversation/notifications/model/connection-model'
+import type { ConnectionEvent } from '@/features/conversation/notifications/model/connection-model'
+import { SessionQueryError } from '@/shared/query/session-query-error'
+import { NOTIFICATION_ROUTES } from '@/features/conversation/notifications/model/constants'
 
 const { SETTINGS, RECEIVE, ACK } = NOTIFICATION_ROUTES
 const owner = {

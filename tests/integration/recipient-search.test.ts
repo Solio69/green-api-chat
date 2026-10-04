@@ -1,9 +1,9 @@
 import { expect, test } from 'vitest'
 import { parseSearchRequest } from '@/features/recipients/model'
 import { handleSearchRequest } from '@/features/recipients/server'
-import type { InstanceCredentials } from '@/lib/green-api/get-state'
-import { HTTP_HEADERS, HTTP_METHOD } from '@/lib/http/constants'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import type { InstanceCredentials } from '@/shared/kernel/api/instance-credentials'
+import { HTTP_HEADERS, HTTP_METHOD } from '@/shared/kernel/http/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import {
   CREDENTIALS,
   LOGIN_API_CONTRACT,

@@ -1,15 +1,15 @@
 import { expect, test } from 'vitest'
-import { createConnectionSession } from '@/lib/conversations/create-connection-session'
+import { createConnectionSession } from '@/features/conversation/application/create-connection-session'
 import {
   applyMessageFacts as apply,
   messageKey,
   addAcceptedMessage,
-} from '@/lib/messages/message-cache'
+} from '@/features/conversation/messages/application/message-cache'
 import type {
   MessageDTO,
   MessageStatusFact as Status,
-} from '@/lib/messages/types'
-import type { QuerySession } from '@/lib/query/create-query-session'
+} from '@/features/conversation/messages/model/types'
+import type { QuerySession } from '@/shared/query/create-query-session'
 import { HISTORY_TEST, MESSAGE_CACHE_TEST } from '../history/constants'
 
 const { scopeA, chatA, chatB, message, MESSAGE } = HISTORY_TEST

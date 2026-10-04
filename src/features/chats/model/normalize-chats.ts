@@ -1,5 +1,5 @@
 import type { PersonalChat } from './types'
-import { isRecord } from '@/lib/api/is-record'
+import { isRecord } from '@/shared/kernel/api/is-record'
 
 type CredentialsForFiltering = { idInstance: string; apiTokenInstance: string }
 

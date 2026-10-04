@@ -1,4 +1,4 @@
-import type { API_ERROR_CODE } from '@/lib/api/constants'
+import type { API_ERROR_CODE } from '@/shared/kernel/api/constants'
 
 export type PersonalChat = {
   chatId: string

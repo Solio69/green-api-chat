@@ -1,8 +1,8 @@
 import { expect, test } from 'vitest'
 import { GET as endSession } from '@/app/api/auth/end-session/route'
-import type { AccountSettingsResult } from '@/features/account/server'
+import type { AccountSettingsResult } from '@/features/account/model'
 import { resolveHome } from '@/features/auth/application'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import {
   CREDENTIALS,
   ACCOUNT_CONTRACT,

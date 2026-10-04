@@ -1,4 +1,4 @@
-import { handleSendRequest } from '@/lib/sending/handle-send-request'
+import { handleSendRequest } from '@/features/conversation/sending/server/handle-send-request'
 import { notificationFixture } from '../../../lib/notification-fixture'
 
 export const POST = (request: Request) =>

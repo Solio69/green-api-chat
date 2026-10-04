@@ -1,5 +1,5 @@
 import type { ChatsErrorCode } from '@/features/chats/model'
-import { SessionQueryError } from '@/lib/query/session-query-error'
+import { SessionQueryError } from '@/shared/query/session-query-error'
 import { CHAT_QUERY_CONFIG } from './constants'
 
 const { QUERY_ERROR_NAME } = CHAT_QUERY_CONFIG

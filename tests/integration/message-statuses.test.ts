@@ -1,10 +1,13 @@
 import { expect, test } from 'vitest'
-import { addAcceptedMessage, messageKey } from '@/lib/messages/message-cache'
-import { messageIssuesKey } from '@/lib/messages/message-status-issues'
-import type { MessageCache } from '@/lib/messages/types'
-import { applyNotification } from '@/lib/notifications/apply-notification'
-import { normalizeNotification } from '@/lib/notifications/normalize-notification'
-import { createQuerySession } from '@/lib/query/create-query-session'
+import {
+  addAcceptedMessage,
+  messageKey,
+} from '@/features/conversation/messages/application/message-cache'
+import { messageIssuesKey } from '@/features/conversation/messages/application/message-status-issues'
+import type { MessageCache } from '@/features/conversation/messages/model/types'
+import { applyNotification } from '@/features/conversation/notifications/application/apply-notification'
+import { normalizeNotification } from '@/features/conversation/notifications/model/normalize-notification'
+import { createQuerySession } from '@/shared/query/create-query-session'
 import { envelope, NOTIFICATION_TEST } from '../notifications/constants'
 import { TEST_NOTIFICATION_PROTOCOL } from '../protocol.constants'
 

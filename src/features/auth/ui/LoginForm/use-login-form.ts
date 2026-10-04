@@ -3,9 +3,9 @@ import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import type { SubmitEvent } from 'react'
 import { requestLogin } from './request-login'
 import type { LoginErrorCode } from './request-login'
-import { API_ERROR_CODE } from '@/lib/api/constants'
-import { ROUTES } from '@/lib/routes/constants'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { API_ERROR_CODE } from '@/shared/kernel/api/constants'
+import { ROUTES } from '@/shared/kernel/routes/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import { LOGIN_COPY, LOGIN_ERROR_COPY } from './constants'
 
 const { ID_REQUIRED, TOKEN_REQUIRED } = LOGIN_COPY

@@ -1,5 +1,5 @@
 import { isPersonalChatId } from '@/features/chats/model'
-import { isRecord } from '@/lib/api/is-record'
+import { isRecord } from '@/shared/kernel/api/is-record'
 import { HISTORY_MODEL_CONFIG } from './constants'
 
 const { REQUEST_CHAT_ID_FIELD } = HISTORY_MODEL_CONFIG

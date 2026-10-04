@@ -1,6 +1,6 @@
 import { afterEach, expect, it, vi } from 'vitest'
-import { createNotificationChatRefresh } from '@/lib/notifications/refresh-notification-chats'
-import { createQuerySession } from '@/lib/query/create-query-session'
+import { createNotificationChatRefresh } from '@/features/conversation/notifications/application/refresh-notification-chats'
+import { createQuerySession } from '@/shared/query/create-query-session'
 
 const scope = 'fictional-scope'
 

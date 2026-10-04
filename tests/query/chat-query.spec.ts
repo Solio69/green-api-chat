@@ -1,6 +1,6 @@
 import type { Page, Route } from '@playwright/test'
 import { expect, test } from './owner-fixture'
-import { BROWSER_EVENTS, EMPTY_STRING } from '@/lib/ui/constants'
+import { BROWSER_EVENTS, EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import { CHAT_FIXTURES } from '../chats/constants'
 import {
   CONVERSATION_CONTRACT,

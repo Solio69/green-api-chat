@@ -1,7 +1,7 @@
 import type { Page, Route } from '@playwright/test'
 import { expect, test } from './owner-fixture'
-import type { MessageDTO } from '@/lib/messages/types'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import type { MessageDTO } from '@/features/conversation/messages/model/types'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import { TEST_UI } from '../constants'
 import { HISTORY_TEST, HISTORY_CONSOLE_TEST } from '../history/constants'
 

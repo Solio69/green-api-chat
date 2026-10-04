@@ -12,11 +12,11 @@ import {
   MessageComposer,
   NotificationProvider,
 } from '@/features/conversation/ui'
+import { QueryProvider } from '@/features/conversation/ui/QueryProvider'
 import { RecipientSearchForm } from '@/features/recipients/ui'
 import { readPageSession } from '@/server/session'
-import { ROUTES } from '@/lib/routes/constants'
+import { ROUTES } from '@/shared/kernel/routes/constants'
 import { HOME_COPY } from './constants'
-import { QueryProvider } from '@/components/QueryProvider'
 import styles from './HomePage.module.scss'
 
 const { HOME, LOGIN, END_SESSION } = ROUTES

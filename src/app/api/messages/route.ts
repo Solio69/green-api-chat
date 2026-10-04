@@ -1,5 +1,5 @@
-import { sendMessage } from '@/lib/green-api/send-message'
-import { handleSendRequest } from '@/lib/sending/handle-send-request'
+import { handleSendRequest } from '@/features/conversation/sending/server/handle-send-request'
+import { sendMessage } from '@/server/green-api/send-message'
 import { readRouteSession } from '@/server/session'
 
 export const runtime = 'nodejs'

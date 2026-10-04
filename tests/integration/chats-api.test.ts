@@ -1,12 +1,12 @@
 import { createHmac } from 'node:crypto'
 import { expect, test } from 'vitest'
-import { getQueryScope } from '@/features/auth/server'
 import { normalizeChats } from '@/features/chats/model'
 import type { ChatsErrorCode } from '@/features/chats/model'
 import { handleChatsRequest } from '@/features/chats/server'
 import type { GetChatsResult } from '@/features/chats/server'
-import { getChats } from '@/lib/green-api/get-chats'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { getChats } from '@/server/green-api/get-chats'
+import { getQueryScope } from '@/server/session/get-query-scope'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import { CHAT_FIXTURES } from '../chats/constants'
 import {
   TEST_PROVIDER_PROTOCOL,

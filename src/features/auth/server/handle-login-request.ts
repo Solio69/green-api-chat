@@ -1,11 +1,12 @@
 import { resolveLogin } from '@/features/auth/application'
-import type {
-  InstanceCredentials,
-  StateResult,
-} from '@/lib/green-api/get-state'
+import type { StateResult } from '@/features/auth/model'
 import { isJsonMediaType, jsonNoStore } from '@/server/http'
-import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
-import { HTTP_STATUS } from '@/lib/http/constants'
+import type { InstanceCredentials } from '@/shared/kernel/api/instance-credentials'
+import {
+  API_ERROR_CODE,
+  API_RESPONSE_STATUS,
+} from '@/shared/kernel/api/constants'
+import { HTTP_STATUS } from '@/shared/kernel/http/constants'
 
 const { INVALID_REQUEST } = API_ERROR_CODE
 const { ERROR: RESPONSE_ERROR } = API_RESPONSE_STATUS

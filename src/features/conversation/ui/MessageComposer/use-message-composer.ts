@@ -2,18 +2,18 @@
 
 import { useId, useRef, useState } from 'react'
 import type { ChangeEvent, KeyboardEvent, SubmitEvent } from 'react'
+import { useChatHistory } from '@/features/conversation/history/ui/use-chat-history'
+import { matchesEditorSnapshot } from '@/features/conversation/sending/model/editor-guards'
+import type { MessageEditor } from '@/features/conversation/sending/model/editor-guards'
 import { useConversationSelection } from '@/features/conversation/ui/ConversationSelectionProvider'
 import { useMessageSend } from '@/features/conversation/ui/MessageSendProvider'
 import { useNotificationConnection } from '@/features/conversation/ui/NotificationProvider'
-import { useChatHistory } from '@/lib/history/use-chat-history'
-import { matchesEditorSnapshot } from '@/lib/sending/editor-guards'
-import type { MessageEditor } from '@/lib/sending/editor-guards'
 import {
   SEND_CONFIG,
   SEND_OUTCOME,
   SEND_RESULT_KIND,
-} from '@/lib/sending/constants'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+} from '@/features/conversation/sending/model/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import { MESSAGE_COMPOSER_KEYS } from './constants'
 
 const { UNKNOWN: OUTCOME_UNKNOWN } = SEND_OUTCOME

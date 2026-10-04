@@ -1,14 +1,12 @@
 import { expect, test } from 'vitest'
+import type { StateResult } from '@/features/auth/model'
 import { handleLoginRequest } from '@/features/auth/server'
-import type {
-  InstanceCredentials,
-  StateResult,
-} from '@/lib/green-api/get-state'
+import type { InstanceCredentials } from '@/shared/kernel/api/instance-credentials'
 import {
   HTTP_CONTENT_TYPE,
   HTTP_HEADERS,
   HTTP_METHOD,
-} from '@/lib/http/constants'
+} from '@/shared/kernel/http/constants'
 import {
   CREDENTIALS,
   GREEN_API_CONTRACT,

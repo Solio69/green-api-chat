@@ -1,9 +1,12 @@
 import { afterEach, expect, test } from 'vitest'
-import { createNotificationConnection } from '@/lib/notifications/create-notification-connection'
-import { normalizeNotification } from '@/lib/notifications/normalize-notification'
-import { createQuerySession } from '@/lib/query/create-query-session'
-import { SessionQueryError } from '@/lib/query/session-query-error'
-import { deriveUnreadCounts, unreadKey } from '@/lib/unread/unread-cache'
+import { createNotificationConnection } from '@/features/conversation/notifications/application/create-notification-connection'
+import { normalizeNotification } from '@/features/conversation/notifications/model/normalize-notification'
+import {
+  deriveUnreadCounts,
+  unreadKey,
+} from '@/features/conversation/unread/application/unread-cache'
+import { createQuerySession } from '@/shared/query/create-query-session'
+import { SessionQueryError } from '@/shared/query/session-query-error'
 import { HISTORY_TEST } from '../history/constants'
 import { envelope, NOTIFICATION_TEST } from '../notifications/constants'
 import { TEST_API_RESPONSE, TEST_API_CODE } from '../protocol.constants'

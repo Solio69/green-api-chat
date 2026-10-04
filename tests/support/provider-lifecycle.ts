@@ -1,6 +1,6 @@
 import { vi } from 'vitest'
-import { HTTP_HEADERS } from '@/lib/http/constants'
-import { NOTIFICATION_ROUTES } from '@/lib/notifications/constants'
+import { NOTIFICATION_ROUTES } from '@/features/conversation/notifications/model/constants'
+import { HTTP_HEADERS } from '@/shared/kernel/http/constants'
 
 const { SETTINGS, RECEIVE } = NOTIFICATION_ROUTES
 const { CONNECTION_SCOPE } = HTTP_HEADERS

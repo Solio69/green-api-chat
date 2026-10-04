@@ -3,9 +3,9 @@
 import { useId } from 'react'
 import { useLoginForm } from './use-login-form'
 import { CredentialField } from '@/features/auth/ui/CredentialField'
-import { EMPTY_STRING, HTML_VALUES } from '@/lib/ui/constants'
+import { SubmitButton } from '@/shared/ui/SubmitButton'
+import { EMPTY_STRING, HTML_VALUES } from '@/shared/kernel/ui/constants'
 import { LOGIN_COPY, LOGIN_FIELD_ID_SUFFIX, LOGIN_LINKS } from './constants'
-import { SubmitButton } from '@/components/SubmitButton'
 import styles from './LoginForm.module.scss'
 
 const {

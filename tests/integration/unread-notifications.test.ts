@@ -1,21 +1,24 @@
 import { expect, test } from 'vitest'
-import { createConnectionSession } from '@/lib/conversations/create-connection-session'
-import { applyMessageFacts, messageKey } from '@/lib/messages/message-cache'
-import { applyNotification } from '@/lib/notifications/apply-notification'
-import { normalizeNotification } from '@/lib/notifications/normalize-notification'
-import type { NotificationDelivery } from '@/lib/notifications/types'
-import type { QuerySession } from '@/lib/query/create-query-session'
+import { createConnectionSession } from '@/features/conversation/application/create-connection-session'
+import {
+  applyMessageFacts,
+  messageKey,
+} from '@/features/conversation/messages/application/message-cache'
+import { applyNotification } from '@/features/conversation/notifications/application/apply-notification'
+import { normalizeNotification } from '@/features/conversation/notifications/model/normalize-notification'
+import type { NotificationDelivery } from '@/features/conversation/notifications/model/types'
 import {
   deriveUnreadCounts,
   setReadableConversation,
   unreadKey,
-} from '@/lib/unread/unread-cache'
-import type { UnreadCache } from '@/lib/unread/unread-cache'
-import { MESSAGE_SOURCE } from '@/lib/messages/constants'
+} from '@/features/conversation/unread/application/unread-cache'
+import type { UnreadCache } from '@/features/conversation/unread/application/unread-cache'
+import type { QuerySession } from '@/shared/query/create-query-session'
+import { MESSAGE_SOURCE } from '@/features/conversation/messages/model/constants'
 import {
   NOTIFICATION_CONFIG,
   NOTIFICATION_KIND,
-} from '@/lib/notifications/constants'
+} from '@/features/conversation/notifications/model/constants'
 import { envelope, NOTIFICATION_TEST } from '../notifications/constants'
 import {
   TEST_MESSAGE_PROTOCOL,

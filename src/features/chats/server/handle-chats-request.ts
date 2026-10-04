@@ -1,9 +1,15 @@
-import type { GetChatsOptions, GetChatsResult } from './types'
 import type { ChatsErrorCode } from '@/features/chats/model'
-import type { InstanceCredentials } from '@/lib/green-api/get-state'
+import type {
+  GetChatsOptions,
+  GetChatsResult,
+} from '@/server/green-api/get-chats.types'
 import { jsonNoStore, readConnectionScope } from '@/server/http'
-import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
-import { HTTP_STATUS } from '@/lib/http/constants'
+import type { InstanceCredentials } from '@/shared/kernel/api/instance-credentials'
+import {
+  API_ERROR_CODE,
+  API_RESPONSE_STATUS,
+} from '@/shared/kernel/api/constants'
+import { HTTP_STATUS } from '@/shared/kernel/http/constants'
 
 const {
   INVALID_REQUEST,

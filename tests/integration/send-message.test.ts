@@ -1,20 +1,18 @@
 import { NextRequest } from 'next/server'
 import { expect, test } from 'vitest'
-import { isSafeIdentifier } from '@/lib/green-api/safe-identifier'
-import { sendMessage } from '@/lib/green-api/send-message'
-import { handleSendRequest } from '@/lib/sending/handle-send-request'
-import { readSendBody } from '@/lib/sending/read-send-body'
-import type {
-  ProviderSendResult,
-  SendRequestOptions,
-} from '@/lib/sending/types'
-import { validateSendRequest } from '@/lib/sending/validate-send-request'
+import { handleSendRequest } from '@/features/conversation/sending/server/handle-send-request'
+import { readSendBody } from '@/features/conversation/sending/server/read-send-body'
+import type { SendRequestOptions } from '@/features/conversation/sending/server/types'
+import { validateSendRequest } from '@/features/conversation/sending/server/validate-send-request'
+import { sendMessage } from '@/server/green-api/send-message'
+import type { ProviderSendResult } from '@/server/green-api/send-message.types'
+import { isSafeIdentifier } from '@/shared/kernel/api/safe-identifier'
 import {
   HTTP_HEADERS,
   HTTP_METHOD,
   HTTP_CONTENT_TYPE,
-} from '@/lib/http/constants'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+} from '@/shared/kernel/http/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import { HISTORY_TEST } from '../history/constants'
 import { TEST_HTTP_PROTOCOL, TEST_API_CODE } from '../protocol.constants'
 

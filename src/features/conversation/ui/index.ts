@@ -14,3 +14,4 @@ export {
   useNotificationConnection,
   useOptionalNotificationConnection,
 } from './NotificationProvider'
+export { QueryProvider } from './QueryProvider'

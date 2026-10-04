@@ -2,10 +2,10 @@
 
 import type { ReactNode } from 'react'
 import { useMessageScroll } from './use-message-scroll'
+import type { MessageDTO } from '@/features/conversation/messages/model/types'
 import { MessageBubble } from '@/features/conversation/ui/MessageBubble'
 import { MessageStatusIndicator } from '@/features/conversation/ui/MessageStatusIndicator'
-import type { MessageDTO } from '@/lib/messages/types'
-import { HTML_VALUES } from '@/lib/ui/constants'
+import { HTML_VALUES } from '@/shared/kernel/ui/constants'
 import { MESSAGE_LIST_COPY } from './constants'
 import styles from './MessageList.module.scss'
 

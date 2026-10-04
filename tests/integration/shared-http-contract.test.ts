@@ -1,10 +1,10 @@
 import { expect, test } from 'vitest'
 import { handleLoginRequest } from '@/features/auth/server'
 import { handleChatsRequest } from '@/features/chats/server'
+import { handleHistoryRequest } from '@/features/conversation/history/server/handle-history-request'
+import { handleNotificationRequest } from '@/features/conversation/notifications/server/handle-notification-request'
+import { handleSendRequest } from '@/features/conversation/sending/server/handle-send-request'
 import { handleSearchRequest } from '@/features/recipients/server'
-import { handleHistoryRequest } from '@/lib/history/handle-history-request'
-import { handleNotificationRequest } from '@/lib/notifications/handle-notification-request'
-import { handleSendRequest } from '@/lib/sending/handle-send-request'
 import { HISTORY_TEST } from '../history/constants'
 
 const { credentials, scopeA } = HISTORY_TEST

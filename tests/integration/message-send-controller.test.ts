@@ -1,11 +1,11 @@
 import { expect, test } from 'vitest'
-import { messageKey } from '@/lib/messages/message-cache'
-import { createQuerySession } from '@/lib/query/create-query-session'
-import { createSendController } from '@/lib/sending/create-send-controller'
+import { messageKey } from '@/features/conversation/messages/application/message-cache'
+import { createSendController } from '@/features/conversation/sending/application/create-send-controller'
 import {
   SendMessageError,
   fetchSendMessage,
-} from '@/lib/sending/fetch-send-message'
+} from '@/features/conversation/sending/application/fetch-send-message'
+import { createQuerySession } from '@/shared/query/create-query-session'
 import { NOTIFICATION_TEST } from '../notifications/constants'
 import {
   TEST_HTTP_PROTOCOL,

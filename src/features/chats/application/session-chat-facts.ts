@@ -1,6 +1,6 @@
 import type { PersonalChat } from '@/features/chats/model'
 import { isPersonalChatId, SESSION_CHAT_SOURCE } from '@/features/chats/model'
-import type { QuerySession } from '@/lib/query/create-query-session'
+import type { QuerySession } from '@/shared/query/create-query-session'
 import { SESSION_CHAT_CONFIG } from './constants'
 
 const { KEY, INVALID_FACTS } = SESSION_CHAT_CONFIG

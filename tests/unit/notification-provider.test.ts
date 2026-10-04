@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest'
-import { deleteNotification } from '@/lib/green-api/delete-notification'
-import { getNotificationSettings } from '@/lib/green-api/get-notification-settings'
-import { receiveNotification } from '@/lib/green-api/receive-notification'
+import { deleteNotification } from '@/server/green-api/delete-notification'
+import { getNotificationSettings } from '@/server/green-api/get-notification-settings'
+import { receiveNotification } from '@/server/green-api/receive-notification'
 import { envelope, NOTIFICATION_TEST } from '../notifications/constants'
 import {
   TEST_PROVIDER_PROTOCOL,

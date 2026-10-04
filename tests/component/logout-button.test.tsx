@@ -20,7 +20,7 @@ vi.mock('@/features/conversation/ui/NotificationProvider', () => ({
     getOwnedHeaders: dependencies.getOwnedHeaders,
   }),
 }))
-vi.mock('@/components/QueryProvider', () => ({
+vi.mock('@/shared/query/ui', () => ({
   useOptionalQuerySession: () => ({ close: dependencies.close }),
 }))
 

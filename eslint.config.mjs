@@ -4,6 +4,42 @@ import nextTypescript from 'eslint-config-next/typescript'
 import prettier from 'eslint-config-prettier/flat'
 import importPlugin from 'eslint-plugin-import'
 
+const parentImport = {
+  regex: '^[.][.]/',
+  message: 'Use the @/ alias for imports outside the current directory.',
+}
+
+const sharedImport = {
+  regex: '^(?:@/(?:features|server|app)(?:/|$)|next(?:/|$))',
+  message:
+    'Shared modules cannot depend on features, app, server, or Next runtime.',
+}
+
+const modelImport = {
+  regex:
+    '^(?:@/(?:server|app|shared/(?:ui|query))(?:/|$)|@/features/[^/]+/(?:ui|application|server)(?:/|$)|@/features/conversation/[^/]+/(?:ui|application|server)(?:/|$)|(?:react|next)(?:/|$)|@tanstack/react-query$)',
+  message: 'A pure model may depend only on other models and shared kernel.',
+}
+
+const applicationImport = {
+  regex:
+    '^(?:@/(?:server|app|shared/ui)(?:/|$)|@/features/[^/]+/(?:ui|server)(?:/|$)|@/features/conversation/[^/]+/(?:ui|server)(?:/|$)|next(?:/|$))',
+  message: 'Application orchestration cannot import UI or server runtime.',
+}
+
+const clientImport = {
+  regex:
+    '^@/(?:server(?:/|$)|features/[^/]+/server(?:/|$)|features/conversation/[^/]+/server(?:/|$))',
+  message: 'Client UI cannot import server runtime or secret-bearing entries.',
+}
+
+const serverAdapterImport = {
+  regex:
+    '^@/features/(?:[^/]+|conversation/[^/]+)/(?:ui|application|server)(?:/|$)',
+  message:
+    'Server adapters may consume feature models, not feature runtime layers.',
+}
+
 export default defineConfig([
   ...nextVitals,
   ...nextTypescript,
@@ -91,14 +127,71 @@ export default defineConfig([
       'no-restricted-imports': [
         'error',
         {
+          patterns: [parentImport],
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/shared/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        { patterns: [parentImport, sharedImport] },
+      ],
+    },
+  },
+  {
+    files: ['src/shared/kernel/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
           patterns: [
+            parentImport,
+            sharedImport,
             {
-              regex: '^[.][.]/',
-              message:
-                'Use the @/ alias for imports outside the current directory.',
+              regex: '^(?:react(?:/|$)|@tanstack/react-query$)',
+              message: 'Shared kernel contains no React or Query runtime.',
             },
           ],
         },
+      ],
+    },
+  },
+  {
+    files: ['src/features/**/model/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        { patterns: [parentImport, modelImport] },
+      ],
+    },
+  },
+  {
+    files: ['src/features/**/application/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        { patterns: [parentImport, applicationImport] },
+      ],
+    },
+  },
+  {
+    files: ['src/features/**/ui/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        { patterns: [parentImport, clientImport] },
+      ],
+    },
+  },
+  {
+    files: ['src/server/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        { patterns: [parentImport, serverAdapterImport] },
       ],
     },
   },

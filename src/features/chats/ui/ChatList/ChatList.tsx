@@ -1,7 +1,7 @@
 import type { PersonalChat } from '@/features/chats/model'
 import { ChatListItem } from '@/features/chats/ui/ChatListItem'
 import type { ChatListTarget } from '@/features/chats/ui/types'
-import { HTML_VALUES } from '@/lib/ui/constants'
+import { HTML_VALUES } from '@/shared/kernel/ui/constants'
 import { CHAT_LIST_COPY } from './constants'
 import styles from './ChatList.module.scss'
 

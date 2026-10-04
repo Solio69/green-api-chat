@@ -19,8 +19,8 @@ import {
   reduceConversationSelection,
   CONVERSATION_ACTION,
 } from '@/features/conversation/selection/model'
+import { useOptionalQuerySession } from '@/shared/query/ui'
 import { SELECTION_PROVIDER_ERRORS } from './constants'
-import { useOptionalQuerySession } from '@/components/QueryProvider'
 
 const { OPEN, SHOW_LIST, CLOSE } = CONVERSATION_ACTION
 const { QUERY_PROVIDER_REQUIRED, SELECTION_PROVIDER_REQUIRED } =

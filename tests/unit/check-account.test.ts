@@ -1,8 +1,8 @@
 import { expect, test } from 'vitest'
-import { checkAccount } from '@/lib/green-api/check-account'
-import type { InstanceCredentials } from '@/lib/green-api/get-state'
-import { HTTP_HEADERS } from '@/lib/http/constants'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { checkAccount } from '@/server/green-api/check-account'
+import type { InstanceCredentials } from '@/shared/kernel/api/instance-credentials'
+import { HTTP_HEADERS } from '@/shared/kernel/http/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import {
   CREDENTIALS,
   GREEN_API_CONTRACT,

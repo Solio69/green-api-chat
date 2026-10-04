@@ -2,17 +2,15 @@
 
 import { StrictMode, useState } from 'react'
 import { HistoryFactsProbe } from '../HistoryFactsProbe'
+import { useChatHistory } from '@/features/conversation/history/ui/use-chat-history'
 import { ChatHistoryPanel } from '@/features/conversation/ui/ChatHistoryPanel'
 import {
   ConversationSelectionProvider,
   useConversationSelection,
 } from '@/features/conversation/ui/ConversationSelectionProvider'
-import { useChatHistory } from '@/lib/history/use-chat-history'
-import { HTML_VALUES } from '@/lib/ui/constants'
-import {
-  QueryProvider,
-  useOptionalQuerySession,
-} from '@/components/QueryProvider'
+import { QueryProvider } from '@/features/conversation/ui/QueryProvider'
+import { useOptionalQuerySession } from '@/shared/query/ui'
+import { HTML_VALUES } from '@/shared/kernel/ui/constants'
 import { HISTORY_TEST } from '../../../../history/constants'
 import styles from './HistoryProbe.module.scss'
 

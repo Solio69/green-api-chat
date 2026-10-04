@@ -1,15 +1,15 @@
 'use client'
 
+import { useMessageIssues } from '@/features/conversation/messages/ui/use-message-issues'
 import { MessageStatusIssue } from '@/features/conversation/ui/MessageStatusIssue'
 import { useNotificationConnection } from '@/features/conversation/ui/NotificationProvider/context'
-import { useMessageIssues } from '@/lib/messages/use-message-issues'
 import {
   NOTIFICATION_STATE,
   NOTIFICATION_CONFIG,
   NOTIFICATION_CODE,
   POLLING_CONFIG,
-} from '@/lib/notifications/constants'
-import { HTML_VALUES } from '@/lib/ui/constants'
+} from '@/features/conversation/notifications/model/constants'
+import { HTML_VALUES } from '@/shared/kernel/ui/constants'
 import { NOTIFICATION_NOTICE_COPY } from './constants'
 import styles from './NotificationNotice.module.scss'
 

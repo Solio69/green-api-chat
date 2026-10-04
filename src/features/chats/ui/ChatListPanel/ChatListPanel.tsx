@@ -7,8 +7,8 @@ import { ChatListRecovery } from '@/features/chats/ui/ChatListRecovery'
 import type { ChatListTarget } from '@/features/chats/ui/types'
 import { useChats } from '@/features/chats/ui/use-chats'
 import { useSessionChatLabels } from '@/features/chats/ui/use-session-chat-labels'
-import { API_ERROR_CODE } from '@/lib/api/constants'
-import { EMPTY_STRING, HTML_VALUES } from '@/lib/ui/constants'
+import { API_ERROR_CODE } from '@/shared/kernel/api/constants'
+import { EMPTY_STRING, HTML_VALUES } from '@/shared/kernel/ui/constants'
 import {
   CHAT_LIST_ERROR_COPY,
   CHAT_LIST_RECOVERY_COPY,

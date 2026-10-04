@@ -1,4 +1,4 @@
-import { API_ERROR_CODE } from '@/lib/api/constants'
+import { API_ERROR_CODE } from '@/shared/kernel/api/constants'
 
 const {
   INVALID_REQUEST,

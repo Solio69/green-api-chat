@@ -1,0 +1,56 @@
+@use '../../../styles/tokens' as tokens;
+@use '../../../styles/mixins' as mixins;
+
+.submitButton {
+  @include mixins.focus-ring(var(--ui-focus-color, #{tokens.$color-focus}));
+
+  width: 100%;
+  min-height: var(--submit-min-height, #{tokens.$control-min-height});
+  padding: var(--submit-padding, #{tokens.$space-xs} #{tokens.$space-sm});
+  border: tokens.$border-width solid
+    var(--ui-action-color, #{tokens.$color-interactive});
+  border-radius: var(--submit-radius, #{tokens.$radius-control});
+  background: var(--ui-action-color, #{tokens.$color-interactive});
+  color: var(--ui-on-action-color, #{tokens.$color-on-interactive});
+  font: inherit;
+  font-weight: var(--submit-font-weight, #{tokens.$font-weight-medium});
+  overflow-wrap: anywhere;
+  cursor: pointer;
+
+  &:enabled:hover {
+    border-color: var(
+      --ui-action-hover-color,
+      #{tokens.$color-interactive-hover}
+    );
+    background: var(
+      --ui-action-hover-color,
+      #{tokens.$color-interactive-hover}
+    );
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &__loader {
+    display: inline-block;
+    width: tokens.$loader-size;
+    height: tokens.$loader-size;
+    margin-inline-end: tokens.$space-xs;
+    border: tokens.$loader-border-width solid tokens.$color-loader-track;
+    border-top-color: currentcolor;
+    border-radius: 50%;
+    vertical-align: middle;
+    animation: loading tokens.$loader-duration linear infinite;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+}
+
+@keyframes loading {
+  to {
+    transform: rotate(tokens.$loader-full-turn);
+  }
+}

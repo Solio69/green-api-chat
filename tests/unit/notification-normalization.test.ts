@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { normalizeNotification } from '@/lib/notifications/normalize-notification'
+import { normalizeNotification } from '@/features/conversation/notifications/model/normalize-notification'
 import { envelope, NOTIFICATION_TEST } from '../notifications/constants'
 import {
   TEST_NOTIFICATION_PROTOCOL,

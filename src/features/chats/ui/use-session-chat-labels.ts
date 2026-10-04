@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useSyncExternalStore } from 'react'
 import type { SessionChatCache } from '@/features/chats/application'
 import { sessionChatKey, CHAT_QUERY_CONFIG } from '@/features/chats/application'
-import { useOptionalQuerySession } from '@/components/QueryProvider'
+import { useOptionalQuerySession } from '@/shared/query/ui'
 
 const { PROVIDER_REQUIRED } = CHAT_QUERY_CONFIG
 export const useSessionChatLabels = (): Readonly<Record<string, string>> => {

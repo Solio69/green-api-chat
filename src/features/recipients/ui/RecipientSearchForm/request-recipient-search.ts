@@ -1,15 +1,18 @@
 import type { RECIPIENT_SEARCH_MODE } from '@/features/recipients/model'
 import { RECIPIENT_RESULT_KIND } from '@/features/recipients/model'
-import { isRecord } from '@/lib/api/is-record'
-import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
+import { isRecord } from '@/shared/kernel/api/is-record'
+import {
+  API_ERROR_CODE,
+  API_RESPONSE_STATUS,
+} from '@/shared/kernel/api/constants'
 import {
   CACHE_CONTROL,
   HTTP_CONTENT_TYPE,
   HTTP_HEADERS,
   HTTP_METHOD,
   HTTP_STATUS,
-} from '@/lib/http/constants'
-import { ROUTES } from '@/lib/routes/constants'
+} from '@/shared/kernel/http/constants'
+import { ROUTES } from '@/shared/kernel/routes/constants'
 import { RECIPIENT_ERROR_COPY } from './constants'
 
 const { FOUND, NOT_FOUND } = RECIPIENT_RESULT_KIND

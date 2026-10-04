@@ -6,7 +6,7 @@ import { RECIPIENT_CONTRACT, RECIPIENT_SCENARIOS } from '../constants'
 
 const selection = vi.hoisted(() => ({ openConversation: vi.fn() }))
 const owner = vi.hoisted(() => ({ current: null as unknown }))
-vi.mock('@/components/QueryProvider', () => ({
+vi.mock('@/shared/query/ui', () => ({
   useOptionalQuerySession: () => owner.current,
 }))
 beforeEach(() => {

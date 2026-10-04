@@ -5,7 +5,7 @@ import {
   fetchChats,
   ChatsQueryError,
 } from '@/features/chats/application'
-import { createQuerySession } from '@/lib/query/create-query-session'
+import { createQuerySession } from '@/shared/query/create-query-session'
 import { CHAT_FIXTURES } from '../chats/constants'
 import {
   TEST_API_RESPONSE,

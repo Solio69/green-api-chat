@@ -1,8 +1,7 @@
-import type { AccountSettingsResult } from '@/features/account/server'
-import { HOME_RESULT_KIND } from '@/features/auth/model'
-import type { InstanceCredentials } from '@/lib/green-api/get-state'
-import { API_ERROR_CODE } from '@/lib/api/constants'
-import { GREEN_API_STATES } from '@/lib/green-api/constants'
+import type { AccountSettingsResult } from '@/features/account/model'
+import { HOME_RESULT_KIND, GREEN_API_STATES } from '@/features/auth/model'
+import type { InstanceCredentials } from '@/shared/kernel/api/instance-credentials'
+import { API_ERROR_CODE } from '@/shared/kernel/api/constants'
 
 const { AUTHORIZED } = GREEN_API_STATES
 const { LOGIN, END_SESSION, RETRY } = HOME_RESULT_KIND

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { fetchGreenApi } from '@/lib/green-api/transport'
+import { fetchGreenApi } from '@/server/green-api/transport'
 
 const credentials = {
   idInstance: 'fictional/id',

@@ -3,11 +3,11 @@
 import { useEffect, useState, useSyncExternalStore } from 'react'
 import type { ReactNode } from 'react'
 import { NotificationContext } from './context'
+import { createNotificationConnection } from '@/features/conversation/notifications/application/create-notification-connection'
 import { NotificationNotice } from '@/features/conversation/ui/NotificationNotice'
-import { createNotificationConnection } from '@/lib/notifications/create-notification-connection'
-import { NOTIFICATION_STATE } from '@/lib/notifications/constants'
+import { useOptionalQuerySession } from '@/shared/query/ui'
+import { NOTIFICATION_STATE } from '@/features/conversation/notifications/model/constants'
 import { NOTIFICATION_PROVIDER_COPY } from './constants'
-import { useOptionalQuerySession } from '@/components/QueryProvider'
 
 const { LIMITED, PAUSED } = NOTIFICATION_STATE
 const { QUERY_REQUIRED } = NOTIFICATION_PROVIDER_COPY

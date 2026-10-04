@@ -1,6 +1,10 @@
 import { connection } from 'next/server'
-import { API_RESPONSE_STATUS } from '@/lib/api/constants'
-import { CACHE_CONTROL, HTTP_HEADERS, HTTP_STATUS } from '@/lib/http/constants'
+import { API_RESPONSE_STATUS } from '@/shared/kernel/api/constants'
+import {
+  CACHE_CONTROL,
+  HTTP_HEADERS,
+  HTTP_STATUS,
+} from '@/shared/kernel/http/constants'
 
 const { OK: HTTP_OK } = HTTP_STATUS
 const { OK: RESPONSE_OK } = API_RESPONSE_STATUS

@@ -1,6 +1,6 @@
 import { RECIPIENT_RESULT_KIND } from '@/features/recipients/model'
 import { RECIPIENT_COPY } from '@/features/recipients/ui/RecipientSearchForm/constants'
-import { HTML_VALUES } from '@/lib/ui/constants'
+import { HTML_VALUES } from '@/shared/kernel/ui/constants'
 import styles from './RecipientSearchResult.module.scss'
 
 const { FOUND } = RECIPIENT_RESULT_KIND

@@ -1,6 +1,6 @@
 import { expect, test } from './owner-fixture'
-import { HTTP_STATUS } from '@/lib/http/constants'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { HTTP_STATUS } from '@/shared/kernel/http/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import {
   BASE_URL,
   LOGIN_API_CONTRACT,

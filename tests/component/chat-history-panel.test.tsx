@@ -10,13 +10,16 @@ const mocks = vi.hoisted(() => ({
   owner: vi.fn(),
 }))
 
-vi.mock('@/lib/history/use-chat-history', () => ({
+vi.mock('@/features/conversation/history/ui/use-chat-history', () => ({
   useChatHistory: mocks.history,
 }))
-vi.mock('@/lib/messages/use-conversation-messages', () => ({
-  useConversationMessages: mocks.messages,
-}))
-vi.mock('@/lib/messages/use-message-issues', () => ({
+vi.mock(
+  '@/features/conversation/messages/ui/use-conversation-messages',
+  () => ({
+    useConversationMessages: mocks.messages,
+  }),
+)
+vi.mock('@/features/conversation/messages/ui/use-message-issues', () => ({
   useMessageIssues: mocks.issues,
 }))
 vi.mock('@/features/conversation/ui/ConversationSelectionProvider', () => ({

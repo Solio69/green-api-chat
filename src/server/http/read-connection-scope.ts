@@ -1,5 +1,5 @@
 import { CHAT_SCOPE_CONFIG } from '@/features/chats/model'
-import { HTTP_HEADERS } from '@/lib/http/constants'
+import { HTTP_HEADERS } from '@/shared/kernel/http/constants'
 
 const { PATTERN: SCOPE_PATTERN } = CHAT_SCOPE_CONFIG
 const { CONNECTION_SCOPE } = HTTP_HEADERS

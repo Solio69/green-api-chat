@@ -1,11 +1,11 @@
 'use client'
 
 import { useEffect } from 'react'
+import { useChatHistory } from '@/features/conversation/history/ui/use-chat-history'
+import { useConversationMessages } from '@/features/conversation/messages/ui/use-conversation-messages'
+import { useMessageIssues } from '@/features/conversation/messages/ui/use-message-issues'
 import { useConversationSelection } from '@/features/conversation/ui/ConversationSelectionProvider'
 import { useOptionalNotificationOwner } from '@/features/conversation/ui/NotificationProvider'
-import { useChatHistory } from '@/lib/history/use-chat-history'
-import { useConversationMessages } from '@/lib/messages/use-conversation-messages'
-import { useMessageIssues } from '@/lib/messages/use-message-issues'
 import { HISTORY_PANEL_STATE } from './constants'
 
 const { LOADING, REFRESHING, EMPTY, ERROR } = HISTORY_PANEL_STATE

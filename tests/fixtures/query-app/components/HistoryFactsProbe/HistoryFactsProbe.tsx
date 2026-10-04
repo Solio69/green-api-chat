@@ -2,10 +2,13 @@
 
 import { hashKey, useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
-import { applyHistoryMessages, messageKey } from '@/lib/messages/message-cache'
-import type { ChatIssueFact } from '@/lib/messages/types'
-import { HTML_VALUES } from '@/lib/ui/constants'
-import { useOptionalQuerySession } from '@/components/QueryProvider'
+import {
+  applyHistoryMessages,
+  messageKey,
+} from '@/features/conversation/messages/application/message-cache'
+import type { ChatIssueFact } from '@/features/conversation/messages/model/types'
+import { useOptionalQuerySession } from '@/shared/query/ui'
+import { HTML_VALUES } from '@/shared/kernel/ui/constants'
 import { HISTORY_TEST, MESSAGE_CACHE_TEST } from '../../../../history/constants'
 
 const { chatA, message, MESSAGE } = HISTORY_TEST

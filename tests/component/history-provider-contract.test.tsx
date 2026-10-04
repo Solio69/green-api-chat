@@ -9,23 +9,23 @@ import {
 import userEvent from '@testing-library/user-event'
 import { useState } from 'react'
 import { afterEach, expect, test, vi } from 'vitest'
+import { createConnectionSession } from '@/features/conversation/application/create-connection-session'
+import { useChatHistory } from '@/features/conversation/history/ui/use-chat-history'
+import type { MessageDTO } from '@/features/conversation/messages/model/types'
 import {
   ConversationSelectionProvider,
   useConversationSelection,
 } from '@/features/conversation/ui/ConversationSelectionProvider'
-import { createConnectionSession } from '@/lib/conversations/create-connection-session'
-import { useChatHistory } from '@/lib/history/use-chat-history'
-import type { MessageDTO } from '@/lib/messages/types'
+import { QueryProvider } from '@/features/conversation/ui/QueryProvider'
+import { useOptionalQuerySession } from '@/shared/query/ui'
 import { HISTORY_TEST } from '../history/constants'
-import {
-  QueryProvider,
-  useOptionalQuerySession,
-} from '@/components/QueryProvider'
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ replace: vi.fn(), refresh: vi.fn() }),
 }))
-vi.mock('@/lib/conversations/create-connection-session', { spy: true })
+vi.mock('@/features/conversation/application/create-connection-session', {
+  spy: true,
+})
 
 const {
   scopeA,

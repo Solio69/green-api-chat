@@ -1,5 +1,5 @@
 import { RECIPIENT_COPY } from '@/features/recipients/ui/RecipientSearchForm/constants'
-import { HTML_VALUES } from '@/lib/ui/constants'
+import { HTML_VALUES } from '@/shared/kernel/ui/constants'
 import styles from './RecipientSearchModeSwitch.module.scss'
 
 const { BUTTON, ROLE_GROUP } = HTML_VALUES

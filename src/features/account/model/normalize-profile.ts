@@ -1,6 +1,6 @@
 import type { AccountProfile } from './types'
-import { isRecord } from '@/lib/api/is-record'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { isRecord } from '@/shared/kernel/api/is-record'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import { ACCOUNT_AVATAR_URL } from './constants'
 
 const { PROTOCOL, ABSOLUTE_PREFIX } = ACCOUNT_AVATAR_URL

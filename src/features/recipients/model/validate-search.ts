@@ -1,4 +1,4 @@
-import { isRecord } from '@/lib/api/is-record'
+import { isRecord } from '@/shared/kernel/api/is-record'
 import {
   RECIPIENT_REQUEST_KEYS,
   RECIPIENT_SEARCH_MODE,

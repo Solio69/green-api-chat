@@ -6,9 +6,9 @@ import { RecipientSearchField } from '@/features/recipients/ui/RecipientSearchFi
 import { RecipientSearchHint } from '@/features/recipients/ui/RecipientSearchHint'
 import { RecipientSearchModeSwitch } from '@/features/recipients/ui/RecipientSearchModeSwitch'
 import { RecipientSearchResult } from '@/features/recipients/ui/RecipientSearchResult'
-import { EMPTY_STRING, HTML_VALUES } from '@/lib/ui/constants'
+import { SubmitButton } from '@/shared/ui/SubmitButton'
+import { EMPTY_STRING, HTML_VALUES } from '@/shared/kernel/ui/constants'
 import { RECIPIENT_COPY, RECIPIENT_FIELD_ID_SUFFIX } from './constants'
-import { SubmitButton } from '@/components/SubmitButton'
 import styles from './RecipientSearchForm.module.scss'
 
 const {

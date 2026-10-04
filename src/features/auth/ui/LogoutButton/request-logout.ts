@@ -1,5 +1,5 @@
-import { CACHE_CONTROL, HTTP_METHOD } from '@/lib/http/constants'
-import { ROUTES } from '@/lib/routes/constants'
+import { CACHE_CONTROL, HTTP_METHOD } from '@/shared/kernel/http/constants'
+import { ROUTES } from '@/shared/kernel/routes/constants'
 
 const { POST } = HTTP_METHOD
 const { NO_STORE } = CACHE_CONTROL

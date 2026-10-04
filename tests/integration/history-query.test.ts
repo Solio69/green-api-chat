@@ -1,11 +1,11 @@
 import { CancelledError } from '@tanstack/react-query'
 import { expect, test } from 'vitest'
-import { createConnectionSession } from '@/lib/conversations/create-connection-session'
-import { fetchHistory } from '@/lib/history/fetch-history'
-import { HistoryQueryError } from '@/lib/history/types'
-import { mergeMessageFacts } from '@/lib/messages/merge-message-facts'
-import { applyHistoryMessages } from '@/lib/messages/message-cache'
-import type { MessageDTO } from '@/lib/messages/types'
+import { createConnectionSession } from '@/features/conversation/application/create-connection-session'
+import { fetchHistory } from '@/features/conversation/history/application/fetch-history'
+import { HistoryQueryError } from '@/features/conversation/history/application/history-query-error'
+import { applyHistoryMessages } from '@/features/conversation/messages/application/message-cache'
+import { mergeMessageFacts } from '@/features/conversation/messages/model/merge-message-facts'
+import type { MessageDTO } from '@/features/conversation/messages/model/types'
 import { HISTORY_TEST } from '../history/constants'
 
 const {

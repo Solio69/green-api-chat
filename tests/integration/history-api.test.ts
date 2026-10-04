@@ -4,11 +4,11 @@ import {
   normalizeHistory,
   validateHistoryRequest,
 } from '@/features/conversation/history/model'
-import { getChatHistory } from '@/lib/green-api/get-chat-history'
-import { handleHistoryRequest } from '@/lib/history/handle-history-request'
-import type { HistoryRequestOptions } from '@/lib/history/handle-history-request'
-import { HTTP_HEADERS } from '@/lib/http/constants'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { handleHistoryRequest } from '@/features/conversation/history/server/handle-history-request'
+import type { HistoryRequestOptions } from '@/features/conversation/history/server/handle-history-request'
+import { getChatHistory } from '@/server/green-api/get-chat-history'
+import { HTTP_HEADERS } from '@/shared/kernel/http/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import { HISTORY_TEST } from '../history/constants'
 
 const UNSUPPORTED_ATTACHMENT_URL = 'https://example.test/private'

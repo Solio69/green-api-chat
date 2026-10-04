@@ -5,12 +5,10 @@ import { ChatSidebar } from '@/features/chats/ui'
 import { ConversationChatListPanel } from '@/features/conversation/ui'
 import { ChatWorkspace } from '@/features/conversation/ui/ChatWorkspace'
 import { useConversationSelection } from '@/features/conversation/ui/ConversationSelectionProvider'
+import { QueryProvider } from '@/features/conversation/ui/QueryProvider'
 import { RecipientSearchForm } from '@/features/recipients/ui'
-import { EMPTY_STRING, HTML_VALUES } from '@/lib/ui/constants'
-import {
-  QueryProvider,
-  useOptionalQuerySession,
-} from '@/components/QueryProvider'
+import { useOptionalQuerySession } from '@/shared/query/ui'
+import { EMPTY_STRING, HTML_VALUES } from '@/shared/kernel/ui/constants'
 import {
   CONVERSATION_FIXTURES,
   SELECTION_PROBE_COPY,

@@ -4,11 +4,11 @@ import {
   transitionConnection,
   toConnectionState,
   pendingAckToken,
-} from '@/lib/notifications/connection-model'
+} from '@/features/conversation/notifications/model/connection-model'
 import type {
   ConnectionEvent,
   ConnectionModel,
-} from '@/lib/notifications/connection-model'
+} from '@/features/conversation/notifications/model/connection-model'
 
 const step = (model: ConnectionModel, event: ConnectionEvent) =>
   transitionConnection(model, event).model

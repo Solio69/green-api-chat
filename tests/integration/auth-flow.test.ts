@@ -1,10 +1,8 @@
 import { expect, test } from 'vitest'
 import { resolveLogin } from '@/features/auth/application'
-import type {
-  InstanceCredentials,
-  StateResult,
-} from '@/lib/green-api/get-state'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import type { StateResult } from '@/features/auth/model'
+import type { InstanceCredentials } from '@/shared/kernel/api/instance-credentials'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import {
   CREDENTIALS,
   GREEN_API_CONTRACT,

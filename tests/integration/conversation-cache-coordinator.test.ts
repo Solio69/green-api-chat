@@ -4,13 +4,22 @@ import {
   applyAcceptedConversation,
   applyConversationDelivery,
   fetchAndApplyConversationHistory,
-} from '@/lib/conversations/conversation-cache-coordinator'
-import { applyMessageFacts, messageKey } from '@/lib/messages/message-cache'
-import type { MessageCache, MessageDTO } from '@/lib/messages/types'
-import { normalizeNotification } from '@/lib/notifications/normalize-notification'
-import { createQuerySession } from '@/lib/query/create-query-session'
-import { deriveUnreadCounts, unreadKey } from '@/lib/unread/unread-cache'
-import type { UnreadCache } from '@/lib/unread/unread-cache'
+} from '@/features/conversation/application/conversation-cache-coordinator'
+import {
+  applyMessageFacts,
+  messageKey,
+} from '@/features/conversation/messages/application/message-cache'
+import type {
+  MessageCache,
+  MessageDTO,
+} from '@/features/conversation/messages/model/types'
+import { normalizeNotification } from '@/features/conversation/notifications/model/normalize-notification'
+import {
+  deriveUnreadCounts,
+  unreadKey,
+} from '@/features/conversation/unread/application/unread-cache'
+import type { UnreadCache } from '@/features/conversation/unread/application/unread-cache'
+import { createQuerySession } from '@/shared/query/create-query-session'
 import { HISTORY_TEST } from '../history/constants'
 import { envelope, NOTIFICATION_TEST } from '../notifications/constants'
 

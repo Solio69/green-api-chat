@@ -2,7 +2,7 @@ import {
   HTTP_CONTENT_TYPE,
   HTTP_HEADERS,
   HTTP_SYNTAX,
-} from '@/lib/http/constants'
+} from '@/shared/kernel/http/constants'
 
 const { CONTENT_TYPE } = HTTP_HEADERS
 const { JSON: JSON_CONTENT_TYPE } = HTTP_CONTENT_TYPE

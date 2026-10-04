@@ -1,6 +1,9 @@
 import type { ReactNode } from 'react'
-import type { MessageDTO } from '@/lib/messages/types'
-import { MESSAGE_KIND, MESSAGE_CACHE_CONFIG } from '@/lib/messages/constants'
+import type { MessageDTO } from '@/features/conversation/messages/model/types'
+import {
+  MESSAGE_KIND,
+  MESSAGE_CACHE_CONFIG,
+} from '@/features/conversation/messages/model/constants'
 import { MESSAGE_BUBBLE_COPY, MESSAGE_TIME_CONFIG } from './constants'
 import styles from './MessageBubble.module.scss'
 

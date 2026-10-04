@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 import { getAccountSettings } from '@/features/account/server'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import {
   ACCOUNT_CONTRACT,
   CREDENTIALS,

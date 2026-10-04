@@ -1,11 +1,12 @@
-import { isRecord } from '@/lib/api/is-record'
-import type {
-  InstanceCredentials,
-  StateResult,
-} from '@/lib/green-api/get-state'
-import { API_ERROR_CODE, API_RESPONSE_STATUS } from '@/lib/api/constants'
-import { GREEN_API_STATES } from '@/lib/green-api/constants'
-import { HTTP_BODY_LIMIT, HTTP_STATUS } from '@/lib/http/constants'
+import type { StateResult } from '@/features/auth/model'
+import { GREEN_API_STATES } from '@/features/auth/model'
+import type { InstanceCredentials } from '@/shared/kernel/api/instance-credentials'
+import { isRecord } from '@/shared/kernel/api/is-record'
+import {
+  API_ERROR_CODE,
+  API_RESPONSE_STATUS,
+} from '@/shared/kernel/api/constants'
+import { HTTP_BODY_LIMIT, HTTP_STATUS } from '@/shared/kernel/http/constants'
 
 const {
   INVALID_REQUEST,

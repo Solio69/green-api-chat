@@ -1,6 +1,6 @@
 import { isJsonMediaType } from './is-json-media-type'
-import { HTTP_HEADERS, TEXT_ENCODING } from '@/lib/http/constants'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { HTTP_HEADERS, TEXT_ENCODING } from '@/shared/kernel/http/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 
 const { CONTENT_LENGTH } = HTTP_HEADERS
 const { UTF_8 } = TEXT_ENCODING

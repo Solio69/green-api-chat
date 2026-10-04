@@ -1,11 +1,11 @@
 import type { CookieStore } from 'iron-session'
+import { getQueryScope } from './get-query-scope'
 import {
   hasSessionPassword,
   openSession,
   readCredentials,
 } from './iron-session'
 import type { SessionReadResult } from './types'
-import { getQueryScope } from '@/features/auth/server'
 
 export const readRequestSession = async ({
   store,

@@ -4,8 +4,8 @@ import {
   mergeValidatedMessageFacts,
   mergeMessageStatus,
   mergeStatusFacts,
-} from '@/lib/messages/merge-message-facts'
-import type { MessageDTO } from '@/lib/messages/types'
+} from '@/features/conversation/messages/model/merge-message-facts'
+import type { MessageDTO } from '@/features/conversation/messages/model/types'
 
 const message = ({
   chatId = 'fictional-chat-a',

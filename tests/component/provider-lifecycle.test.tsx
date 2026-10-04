@@ -3,27 +3,25 @@ import { useEffect } from 'react'
 import type { ReactNode } from 'react'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 import { createLifecycleTransport } from '../support/provider-lifecycle'
+import { acquireBrowserTabLease } from '@/features/conversation/notifications/application/browser-tab-lease'
+import type { NotificationDelivery } from '@/features/conversation/notifications/model/types'
+import { isNotificationDelivery } from '@/features/conversation/notifications/model/validate-delivery'
 import { NotificationProvider } from '@/features/conversation/ui/NotificationProvider'
 import {
   useNotificationOwner,
   useNotificationConnection,
 } from '@/features/conversation/ui/NotificationProvider/context'
-import { acquireBrowserTabLease } from '@/lib/notifications/browser-tab-lease'
-import type { NotificationDelivery } from '@/lib/notifications/types'
-import { isNotificationDelivery } from '@/lib/notifications/validate-delivery'
-import { createQuerySession } from '@/lib/query/create-query-session'
-import { NOTIFICATION_ROUTES } from '@/lib/notifications/constants'
+import { QueryProvider } from '@/features/conversation/ui/QueryProvider'
+import { createQuerySession } from '@/shared/query/create-query-session'
+import { useOptionalQuerySession } from '@/shared/query/ui'
+import { NOTIFICATION_ROUTES } from '@/features/conversation/notifications/model/constants'
 import { CHAT_FIXTURES } from '../chats/constants'
-import {
-  QueryProvider,
-  useOptionalQuerySession,
-} from '@/components/QueryProvider'
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ replace: vi.fn(), refresh: vi.fn() }),
 }))
-vi.mock('@/lib/notifications/browser-tab-lease')
-vi.mock('@/lib/query/create-query-session', { spy: true })
+vi.mock('@/features/conversation/notifications/application/browser-tab-lease')
+vi.mock('@/shared/query/create-query-session', { spy: true })
 
 const { scopeA, scopeB } = CHAT_FIXTURES
 const { ACK } = NOTIFICATION_ROUTES

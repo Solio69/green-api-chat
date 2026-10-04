@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers'
 import { readRequestSession } from './read-request-session'
-import { AUTH_CONFIG, IS_PRODUCTION } from '@/features/auth/server'
+import { AUTH_CONFIG, IS_PRODUCTION } from './constants'
 
 const { COOKIE_NAME } = AUTH_CONFIG
 

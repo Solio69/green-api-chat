@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { chatsQueryOptions } from '@/features/chats/application'
-import { createConnectionSession } from '@/lib/conversations/create-connection-session'
-import { createQuerySession } from '@/lib/query/create-query-session'
+import { createConnectionSession } from '@/features/conversation/application/create-connection-session'
+import { createQuerySession } from '@/shared/query/create-query-session'
 
 const scope = 'fictional-connection-scope'
 const memoryPrefixes = [

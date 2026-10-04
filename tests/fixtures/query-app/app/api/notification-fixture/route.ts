@@ -1,4 +1,4 @@
-import { isRecord } from '@/lib/api/is-record'
+import { isRecord } from '@/shared/kernel/api/is-record'
 import { TEST_API_RESPONSE } from '../../../../../protocol.constants'
 import { notificationFixture } from '../../../lib/notification-fixture'
 

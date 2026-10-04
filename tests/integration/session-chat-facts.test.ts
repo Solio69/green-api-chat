@@ -8,7 +8,7 @@ import {
   reconcileSessionChats,
 } from '@/features/chats/application'
 import type { SessionChatCache } from '@/features/chats/application'
-import { createConnectionSession } from '@/lib/conversations/create-connection-session'
+import { createConnectionSession } from '@/features/conversation/application/create-connection-session'
 import { HISTORY_TEST } from '../history/constants'
 
 const { scopeA, chatA, SUCCESS } = HISTORY_TEST

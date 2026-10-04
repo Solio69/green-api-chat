@@ -1,4 +1,4 @@
-import { HTML_VALUES } from '@/lib/ui/constants'
+import { HTML_VALUES } from '@/shared/kernel/ui/constants'
 import { CONVERSATION_CLOSE_COPY } from './constants'
 import styles from './ConversationCloseButton.module.scss'
 

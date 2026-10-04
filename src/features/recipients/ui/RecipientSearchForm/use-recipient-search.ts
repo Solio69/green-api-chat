@@ -10,11 +10,11 @@ import {
   RECIPIENT_SEARCH_MODE,
 } from '@/features/recipients/model'
 import type { RecipientSearchDisplayResult } from '@/features/recipients/ui/RecipientSearchResult'
-import { API_ERROR_CODE } from '@/lib/api/constants'
-import { ROUTES } from '@/lib/routes/constants'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { useOptionalQuerySession } from '@/shared/query/ui'
+import { API_ERROR_CODE } from '@/shared/kernel/api/constants'
+import { ROUTES } from '@/shared/kernel/routes/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import { RECIPIENT_COPY, RECIPIENT_ERROR_COPY } from './constants'
-import { useOptionalQuerySession } from '@/components/QueryProvider'
 
 const { PHONE, USERNAME } = RECIPIENT_SEARCH_MODE
 const { FOUND, NOT_FOUND } = RECIPIENT_RESULT_KIND

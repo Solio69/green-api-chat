@@ -1,5 +1,5 @@
-import { HTTP_HEADERS, HTTP_URL_PROTOCOL } from '@/lib/http/constants'
-import { EMPTY_STRING } from '@/lib/ui/constants'
+import { HTTP_HEADERS, HTTP_URL_PROTOCOL } from '@/shared/kernel/http/constants'
+import { EMPTY_STRING } from '@/shared/kernel/ui/constants'
 import { HTTP_ORIGIN_CONFIG } from './constants'
 
 const { ORIGIN, HOST } = HTTP_HEADERS

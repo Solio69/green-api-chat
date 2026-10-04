@@ -4,8 +4,8 @@ import { createContext, useContext, useSyncExternalStore } from 'react'
 import type {
   createNotificationConnection,
   ConnectionState,
-} from '@/lib/notifications/create-notification-connection'
-import { NOTIFICATION_STATE } from '@/lib/notifications/constants'
+} from '@/features/conversation/notifications/application/create-notification-connection'
+import { NOTIFICATION_STATE } from '@/features/conversation/notifications/model/constants'
 import { NOTIFICATION_PROVIDER_COPY } from './constants'
 
 const { CLOSED } = NOTIFICATION_STATE

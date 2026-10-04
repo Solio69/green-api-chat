@@ -1,7 +1,7 @@
 import type { APIRequestContext, Page } from '@playwright/test'
 import { expect, test } from './owner-fixture'
 import { MESSAGING_UI_TEST } from '../notifications/ui-constants'
-import { EMPTY_STRING, HTML_VALUES } from '@/lib/ui/constants'
+import { EMPTY_STRING, HTML_VALUES } from '@/shared/kernel/ui/constants'
 import { THEME_BROWSER, TEST_UI } from '../constants'
 import { HISTORY_TEST } from '../history/constants'
 import {

@@ -1,12 +1,15 @@
 import { expect, test } from 'vitest'
-import { createAckProof, verifyAckProof } from '@/lib/notifications/ack-proof'
-import { handleNotificationRequest } from '@/lib/notifications/handle-notification-request'
-import type { NotificationRequestOptions } from '@/lib/notifications/handle-notification-request'
-import { ReceiverError } from '@/lib/notifications/receiver-error'
+import {
+  createAckProof,
+  verifyAckProof,
+} from '@/features/conversation/notifications/model/ack-proof'
+import { ReceiverError } from '@/features/conversation/notifications/model/receiver-error'
 import type {
   ReceiverContext,
   ReceiverProvider,
-} from '@/lib/notifications/types'
+} from '@/features/conversation/notifications/model/types'
+import { handleNotificationRequest } from '@/features/conversation/notifications/server/handle-notification-request'
+import type { NotificationRequestOptions } from '@/features/conversation/notifications/server/handle-notification-request'
 import { HISTORY_TEST } from '../history/constants'
 import { envelope, NOTIFICATION_TEST } from '../notifications/constants'
 import {

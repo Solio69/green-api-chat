@@ -1,11 +1,11 @@
 import { resolveSearchResult, searchErrorResponse } from './resolve-search'
 import { parseSearchRequest } from '@/features/recipients/model'
 import type { RecipientQuery } from '@/features/recipients/model'
-import type { CheckAccountResult } from '@/lib/green-api/check-account'
-import type { InstanceCredentials } from '@/lib/green-api/get-state'
+import type { CheckAccountResult } from '@/server/green-api/check-account'
 import { isJsonMediaType, readUnboundedJsonBody } from '@/server/http'
-import { API_ERROR_CODE } from '@/lib/api/constants'
-import { HTTP_STATUS } from '@/lib/http/constants'
+import type { InstanceCredentials } from '@/shared/kernel/api/instance-credentials'
+import { API_ERROR_CODE } from '@/shared/kernel/api/constants'
+import { HTTP_STATUS } from '@/shared/kernel/http/constants'
 
 const {
   INVALID_REQUEST,
