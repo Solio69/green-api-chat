@@ -15,7 +15,7 @@ README и действующие документы приведены к стр
 | `npm test` | Passed | 59 файлов, 470/470 тестов |
 | `npm run test:query` | Passed | 37/37, настоящий Chromium |
 | `npm run test:e2e` | Passed | 112/112, production Next build и Chromium |
-| Локальные Markdown-ссылки и npm-команды | Passed | 256 ссылок и 65 команд в активных документах, отсутствующих целей 0 |
+| Локальные Markdown-ссылки и npm-команды | Passed | 261 ссылка и 65 команд в активных документах, отсутствующих целей 0 |
 | Read-only post-analysis | Passed | 1099 файлов, snapshot до/после совпал; 8 FR, 3 SC, 7 T-ID, 8 гарантий и 28 реальных scenario rows |
 | Exact staged review | Passed | Ровно 19 проверенных файлов; `git diff --cached --check` и `git diff --cached --name-status` без замечаний |
 
@@ -23,6 +23,6 @@ README и действующие документы приведены к стр
 
 ## GitHub CI и ограничения
 
-Final commit SHA и относящийся к нему GitHub run пока **NotRun**. Предшествующий [документационный run 054](https://github.com/Solio69/green-api-chat/actions/runs/37165249053) успешно проверил SHA `caa6ae48ac6daa6de3ac765e9d462dab6c8c27fe` с двумя jobs и артефактами; он не является доказательством финального состояния 055.
+Итоговый коммит [c17f122d6f5ba04f48895ca99f3b0a0891be363b](https://github.com/Solio69/green-api-chat/commit/c17f122d6f5ba04f48895ca99f3b0a0891be363b) отправлен в `origin/refactor`. [GitHub run 37167126013](https://github.com/Solio69/green-api-chat/actions/runs/37167126013) завершился `success` на этом `head_sha`: `quality=success`, `browser=success`; опубликованы `quality-1` (artifact 11290330708) и `browser-1` (artifact 11290306029). Предшествующий [документационный run 054](https://github.com/Solio69/green-api-chat/actions/runs/37165249053) успешно проверил SHA `caa6ae48ac6daa6de3ac765e9d462dab6c8c27fe` с двумя jobs и артефактами; финальное состояние подтверждено отдельным run выше.
 
 Автоматические сценарии используют фиктивные реквизиты. Настоящая доставка GREEN-API/Telegram, деплой и публичное демо остаются за пределами этой регрессии. Эти ограничения не скрываются статусом локальных тестов или CI.
